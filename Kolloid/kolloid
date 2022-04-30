@@ -4,6 +4,7 @@
 # @Version:         1.0
 # @Copyright:       Johannes a.d.F. K r ä m e r
 
+
 # CTRL + C abfangen & Relais ausschalten
 trap ctrl_c INT
 function ctrl_c() {
