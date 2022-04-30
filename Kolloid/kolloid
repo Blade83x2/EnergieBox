@@ -10,7 +10,6 @@
 heizplatteRelais=7;
 trafoRelais=8;
 
-
 # CTRL + C abfangen & Relais ausschalten
 trap ctrl_c INT
 function ctrl_c() {
@@ -19,10 +18,10 @@ function ctrl_c() {
     echo -e "\n > Abbruch!\n"
     exit 1;
 }
-
+# Alle Geräte ausschalten
 230V $heizplatteRelais 0
 230V $trafoRelais 0
-
+# Programm Variablen
 programmName="Kolloid Station"
 programmVersion="1.0"
 # Umgebung lesen und in Variablen speichern
@@ -46,8 +45,7 @@ source "$libsPath/getops.sh" || exit 1;
 clear;
 showLogo
 
-
-# Heizplatten Zeiten & Zeit fürs Nachjustieren --geschätzt!!!
+# Heizplatten Zeiten & Zeit fürs Nachjustieren
 _start=0;
 if (( ${size} == 100 )); then
     _endPlatte=480; # geprüft: 480 ok
@@ -95,7 +93,7 @@ elif (( ${size} == 1000 )); then
         maxRuntime=7200;
     fi
 elif (( ${size} == 2000 )); then
-    _endPlatte=2600; # nicht geprüft:
+    _endPlatte=2600; ############################################## nicht geprüft:   --geschätzt!!!
     if [ $metal == "au" ]; then
         maxRuntime=900; # 15 minuten
     elif [ $metal == "ag" ]; then
@@ -110,8 +108,6 @@ elif (( ${size} == 2000 )); then
         maxRuntime=7200;
     fi
 fi
-
-
 # Plasma- Blitz Zeit kalkulieren
 if [ $metal == "au" ]; then
     if (( ${size} == 100 )); then
@@ -175,7 +171,6 @@ elif [ $metal == "mg" ]; then
     fi
 fi
 
-
 timeAll=$(($_endPlatte + $time));
 timeAll=$(date -d@$timeAll -u +%H:%M:%S);
 
@@ -184,140 +179,21 @@ echo -e " | Material\\tMenge (ml)\\tPPM\\t\\tZeit      |";
 echo -e " |--------------------------------------------------------|";
 echo -e " | ${metal}\\t\\t${size} ml\\t\\t${ppm} PPM\\t\\t${timeAll}  |";
 echo -e " *--------------------------------------------------------*\n";
-
-printf "\n > 1) Spannungswandler einschalten!";
 if [ $metal == "au" ]; then
-    printf "\n > 2) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
+    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
 elif [ $metal == "ag" ]; then
-    printf "\n > 2) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
+    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
 elif [ $metal == "pt" ]; then
-    printf "\n > 2) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
+    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
 elif [ $metal == "cu" ]; then
-    printf "\n > 2) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
+    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand parallel einstellen!";
 elif [ $metal == "zn" ]; then
-    printf "\n > 2) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
+    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand parallel einstellen!";
 elif [ $metal == "mg" ]; then
-    printf "\n > 2) Elektroden (${metal}) einspannen & Abstand parallel einstellen!";
+    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand parallel einstellen!";
 fi
-
-printf "\n > 3) ${size} ml Borosilikatglas bis zum Rand mit H²O füllen & auf Heizplatte stellen!";
-printf "\n > 4) Heizplatte auf 5 stellen!";
-if [ $metal == "au" ]; then
-    printf "\n > 5) Elektroden ~ 1,2 cm tief im Wasser positionieren!\n\n";
-    printf "           \          /      \n";
-    printf "            \        /       \n";
-    printf "   |         \      /        |\n";
-    printf "   |~~~~~~~~~~\~~~~/~~~~~~~~~|\n";
-    printf "   |           \  /          |\n";
-    printf "   |            \/           |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |_________________________|\n\n";
-elif [ $metal == "ag" ]; then
-    printf "\n > 5) Elektroden maximal ~ 2 mm tief im Wasser positionieren!\n\n";
-
-    printf "              \    /          \n";
-    printf "               \  /           \n";
-    printf "   |~~~~~~~~~~~~\/~~~~~~~~~~~|\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |_________________________|\n\n";
-elif [ $metal == "pt" ]; then
-    printf "\n > 5) Elektroden ~ 1,2 cm tief im Wasser positionieren!\n\n";
-    printf "           \          /      \n";
-    printf "            \        /       \n";
-    printf "   |         \      /        |\n";
-    printf "   |~~~~~~~~~~\~~~~/~~~~~~~~~|\n";
-    printf "   |           \  /          |\n";
-    printf "   |            \/           |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |_________________________|\n\n";
-elif [ $metal == "cu" ]; then
-    printf "\n > 5) Elektroden parallel so tief es geht im Wasser positionieren!\n\n";
-    printf "          |           |       \n";
-    printf "          |           |       \n";
-    printf "   |      |           |      |\n";
-    printf "   |~~~~~~|~~~~~~~~~~~|~~~~~~|\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |_________________________|\n\n";
-elif [ $metal == "zn" ]; then
-    printf "\n > 5) Elektroden parallel so tief es geht im Wasser positionieren!\n\n";
-    printf "          |           |       \n";
-    printf "          |           |       \n";
-    printf "   |      |           |      |\n";
-    printf "   |~~~~~~|~~~~~~~~~~~|~~~~~~|\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |_________________________|\n\n";
-elif [ $metal == "mg" ]; then
-    printf "\n > 5) Elektroden parallel so tief es geht im Wasser positionieren!\n\n";
-    printf "          |           |       \n";
-    printf "          |           |       \n";
-    printf "   |      |           |      |\n";
-    printf "   |~~~~~~|~~~~~~~~~~~|~~~~~~|\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |      |           |      |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |_________________________|\n\n";
-fi
+printf "\n > 2) ${size} ml Borosilikatglas bis zum Rand mit H²O füllen & auf Heizplatte stellen!";
+source "$libsPath/elektrodenPosition.sh" || exit 1; 
 printf "\n > Taste drücken um fortzufahren oder beenden mit ctrl+c!"
 read -n 1 -s -r -p ""
 printf "\n\n";
@@ -339,7 +215,7 @@ do
     sleep 1;
     ProgressBar ${number} ${_endPlatte} "$(date -d@$_endPlatte -u +%H:%M:%S) Aufheizen";
 done
-230V $heizplatteRelais 0 # Heizplatte ausschalten
+230V $heizplatteRelais 0
 printf '\n > Heizen abgeschlossen!\n';
 
 rounds=$(($time/$maxRuntime));
