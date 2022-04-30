@@ -174,7 +174,7 @@ do
     230V $trafoRelais 1
     [ $size -gt 200 ] && 230V $heizplatteRelais 1; # Wenn Menge >= 200 dann immer Köcheln
     if [ $size -lt 1000 ]; then # Kleine Mengen mit vielen Runden
-        if [ $(($r % 3)) == 0 ]; then  # jede dritte Runde Köcheln für 5 Minuten
+        if [ $(($r % 2)) == 0 ]; then  # jede zweite Runde Köcheln für 5 Minuten
             230V $heizplatteRelais 1
             230V $heizplatteRelais 0 5 & disown
         fi
