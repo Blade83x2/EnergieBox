@@ -5,6 +5,10 @@
 # @Copyright:       Johannes a.d.F. K r ä m e r
 
 
+# Kompilieren mit: sudo make
+# Git: sudo git add -A && sudo git commit -m "Initial Version" && sudo git push -u origin main
+
+
 # CTRL + C abfangen & Relais ausschalten
 trap ctrl_c INT
 function ctrl_c() {

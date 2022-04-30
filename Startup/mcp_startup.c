@@ -9,6 +9,11 @@
 #include <ctype.h>
 #include <stdlib.h> // atoi()
 
+
+// Kompilieren mit: sudo make
+// Git: sudo git add -A && sudo git commit -m "Initial Version" && sudo git push -u origin main
+
+
 // MCP Setup
 typedef struct {
     int address;
@@ -44,8 +49,7 @@ typedef struct {
 char deviceNames[16][40];
 char deviceActiveOnStart[16][6];
 
-static int handler(void* config, const char* section, const char* name, const char* value)
-{
+static int handler(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
     #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
     if(MATCH("mcp", "address")) {  pconfig->mcp.address = atoi(value); } 
@@ -129,8 +133,9 @@ int main(int argc, char**argv) {
     }
     
     
+
     // Wenn es zwischen 21:00 Uhr Abends und 05:59 Uhr Morgens ist, auch das Licht(Relais 16) anschalten      
-    if((ts->tm_hour >= 21) || (ts->tm_hour <= 5)   ) {
+    if( (ts->tm_hour > 20 && ts->tm_hour < 24) || (ts->tm_hour >= 0 && ts->tm_hour < 6) ) {
         delay(333);
         mcp_digitalWrite(15, 0); 
     }

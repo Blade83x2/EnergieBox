@@ -37,7 +37,7 @@ sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install manpages-
 
 ---
 
-Der Ordner EnergieBox muss ins Root Verzeichnis kopiert werden und folgende Berechtigungen müssen gesetzt werden
+Der Inhalt dieses Ordners hier muss ins Root Verzeichnis kopiert werden mit dem Namen "EnergieBox" und folgende Berechtigungen müssen gesetzt werden
  
 sudo chmod -R 777 /Energiebox
 
