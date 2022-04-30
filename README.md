@@ -4,9 +4,7 @@
 Willkommen bei der Einrichtung der EnergieBox!
 
 Die EnergieBox ist eine 24 Volt Photovoltaik Anlage mit Batteriespeicher und 3000 Watt starkem 230V Spannungswandler.
-
 Die gesamelte Energie kann dann über Relais an angeschlossene Geräte verteilt werden.
-
 Jedes Gerät muss dazu mit einem eigenen Kabel an einem der 24 Relais angeschlossen sein!
 
 
