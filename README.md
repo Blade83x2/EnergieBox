@@ -1,7 +1,15 @@
 
 Willkommen bei der Einrichtung der EnergieBox!
 
-Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS läuft. Andernfalls kann eine SD Karte mit dem Programm Raspberry Pi Imager erstellt werden!
+Die EnergieBox ist eine 24 Volt Photovoltaik Anlage mit Batteriespeicher.
+
+Die gesamelte Energie kann dann über Relais an angeschlossene Geräte verteilt werden.
+
+
+
+Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS auf dem Raspberry läuft. 
+
+Andernfalls kann eine Raspberry OS SD Karte mit dem Programm Raspberry Pi Imager erstellt werden!
 
 Download: https://www.raspberrypi.com/software/
 

@@ -73,7 +73,7 @@ elif (( ${size} == 200 )); then
         maxRuntime=7200;
     fi
 elif (( ${size} == 1000 )); then
-    _endPlatte=10; # geprüft: 2070 ok
+    _endPlatte=2070; # geprüft: 2070 ok
     if [ $metal == "au" ]; then
         maxRuntime=900; # 15 minuten
     elif [ $metal == "ag" ]; then
