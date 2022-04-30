@@ -11,7 +11,6 @@
 // Kompilieren mit: sudo make
 // Git: sudo git add -A && sudo git commit -m "Parameter Validierung hinzugefügt" && sudo git push -u origin main
 
-
 int getBit(int Port);
 void setBit(int Port, int Status);
 bool checkMainParameter(char* paramName, int number, void* config);
@@ -23,7 +22,7 @@ typedef struct {
     int numberOfRelaisActive;
 } mcp_setup;
 
-// Relais Strukturen
+// Relais Struktur
 typedef struct {
     const char* name;
     bool activateOnStart;
@@ -48,7 +47,6 @@ typedef struct {
     relais_config r15;
     relais_config r16;    
 } configuration;
-
 
 char deviceNames[16][40];
 char deviceActiveOnStart[16][6];
@@ -119,25 +117,22 @@ int main(int argc, char**argv) {
         printf("\n");
     }
     else if(argc == 2) {
-        // Nur Relais Nr. übergeben. Bit auslesen ob gesetzt oder nicht und integer zurück geben
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config)) {
             return showHelp(argv, &config);
         }
-        printf("%d", getBit(atoi(argv[1])));
+        printf("%d", getBit(atoi(argv[1]))); // Nur Relais Nr. übergeben. Bit auslesen ob gesetzt oder nicht und integer printen
     }
     else if(argc == 3) {
-        // Relais Nr. & Zustand übergeben. Bit setzen und Feierabend
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config)) {
             return showHelp(argv, &config);
         }
-        setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1);
+        setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais Nr. & Zustand übergeben. Bit setzen
     }
     else if(argc == 4) {
-        // Relais Nr., Zustand & Schaltzeit in Minuten übergeben. 
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config) || !checkMainParameter("relaisTime", atoi(argv[3]), &config )) {
             return showHelp(argv, &config);
         }
-        sleep(atoi(argv[3]) * 60);
+        sleep(atoi(argv[3]) * 60); // Relais Nr., Zustand & Schaltzeit in Minuten übergeben. 
         setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1);
     }
     else {
@@ -212,6 +207,5 @@ int showHelp(char**argv, void* config) {
     printf("  %s 10 1 5 & disown\t[schaltet Relais 10 im Hintergrund an in 5 Minuten und gibt die Konsole frei]\n\n", argv[0]);
     printf("  In der Konfigurationsdatei können Namen für denn Belegungsplan vergeben werden!\n");
     printf("  /Energiebox/%s/config.ini\e[0m \n\n", argv[0]);
-    
     return -1;
 }
