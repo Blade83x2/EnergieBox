@@ -51,8 +51,7 @@ typedef struct {
 char deviceNames[16][40];
 char deviceActiveOnStart[16][6];
 
-static int handler(void* config, const char* section, const char* name, const char* value)
-{
+static int handler(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
     #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
     if(MATCH("mcp", "address")) {  pconfig->mcp.address = atoi(value); } 
