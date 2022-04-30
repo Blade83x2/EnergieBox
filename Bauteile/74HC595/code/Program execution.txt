@@ -1,0 +1,6 @@
+C£º
+gcc -Wall -o 74HC595 74HC595.c -lwiringPi
+sudo ./74HC595
+
+Python:
+python 74HC595.py

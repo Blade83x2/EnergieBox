@@ -1,0 +1,6 @@
+C£º
+gcc -Wall -o activeBuzzer activeBuzzer.c -lwiringPi
+sudo ./activeBuzzer
+
+Python:
+python buzzer_active.py

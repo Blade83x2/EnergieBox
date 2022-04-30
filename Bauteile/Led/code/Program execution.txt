@@ -1,0 +1,6 @@
+C£º
+gcc -Wall -o blinkLed blinkLed.c -lwiringPi
+sudo ./blinkLed
+
+Python:
+python blinkLed.py

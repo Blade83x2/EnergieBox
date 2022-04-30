@@ -1,0 +1,46 @@
+
+NEUERUNGEN in Version 2
+
+Mit der neuen Hardware lassen sich ohne Probleme große Verbraucher (z.B. Waschmaschine, Herd) betreiben
+
+ [UPDATE] Systemspannung 24 Volt (Vorher 12 Volt)
+ [BUGFIX] Keine Spannungsschwankungen am Mikrocontroller mehr während dem Laden der Batterien - Dauerbetrieb möglich
+ [NEW] An/Aus Schalter für Mikrocontroller
+ [NEW] VictronEnergie DC-DC Konverter von 24 Volt auf 12 Volt (240 Watt)
+ [NEW] VictronEnergie Batterie Balancer
+ [NEW] Solartronics Spannungswandler 24 Volt, 3000 Watt Dauerleistung (Peak: 6000 Watt)
+ [BUGFIX] Abstandshalter hinterm Brett hinzugefügt - Nun bleibt die Wand unbeschadet
+ [NEW] 2 neue Spannungswandler mit Volt Anzeige für Mikrocontroller
+ [BUGFIX] Keine nervigen Lüftergeräusche mehr bei minimalem Verbrauch (<=500W)
+ [UPDATE] Tiefenentladungs Schutz - Mikrocontroller schaltet sich bei 18 Volt aus und trennt alle Verbraucher per Relais
+ [NEW] Wenn die Programme 12V und 230V ohne Parameter aufgerufen werden, wird eine Liste angezeigt was an/aus ist
+ [NEW] Konfigurationsdatei für 12V & 230V. Es kann ein Name für das angeschlossene Gerät am Relais und der Start Status (An/Aus) eingestellt werden.
+ [UPDATE] Aufteilung der Komponenten in 3 Bereiche
+  
+ 
+PLANUNG für Version 3
+ 
+ + EPEVER MPPT Laderegler
+ + Batteriekapazität auf 8640 Wh erhöhen (Aktuell 5760 Wh)
+ + Batterie Schalter
+ + 2 Bus Bars
+ + 100A Sicherung pro Batterie String
+ + 2 weitere 140 Watt Panels
+ + 4 200 Watt Panels
+ + Infrarot Fernbedienung für Spannungswandler
+ + Zweites Relais für 230V. 
+ 
+ 
+PLANUNG für Version 4
+ 
+ + OLED Display mit 4 Tasten (Hoch, Runter, Auswählen, Zurück) - Für das an/aus- schalten der Relais ohne App oder PC
+ + Schickes Gehäuse
+ + Photovoltaik Panelen sollen sich im 90° Winkel automatisch zur Sonne drehen - ohne Linearmotor
+ 
+ 
+PLANUNG für Version 5
+ 
+ - DONT TOUCH A RUNNING SYSTEM!!!
+ 
+ 
+ 

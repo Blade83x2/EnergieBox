@@ -1,0 +1,6 @@
+C£º
+gcc -Wall -o lcd1602 lcd1602.c -lwiringPi -lwiringPiDev
+sudo ./lcd1602
+
+Python:
+python lcd1602.py

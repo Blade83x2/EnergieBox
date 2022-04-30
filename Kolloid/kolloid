@@ -1,0 +1,378 @@
+#!/bin/bash
+# @Name:            Automatische Kolloid Produktions Software
+# @Description:     Programm für die automatische Herstellung von Kolloidalen Metalen
+# @Version:         1.0
+# @Copyright:       Johannes a.d.F. K r ä m e r
+
+# CTRL + C abfangen & Relais ausschalten
+trap ctrl_c INT
+function ctrl_c() {
+    230V 7 0 & disown
+    230V 8 0 & disown
+    echo -e "\n > Abbruch!\n"
+    exit 1;
+}
+
+230V 7 0
+230V 8 0
+
+programmName="Kolloid Station"
+programmVersion="1.0"
+# Umgebung lesen und in Variablen speichern
+scriptPath=$(cd $(dirname "$0"); pwd);
+# Library Path
+libsPath="$scriptPath/libs";
+soundPath="$scriptPath/sounds";
+# Array für alle verfügbaren Kolloid- Metale
+kolloidElementsArray=(au ag pt cu mg zn)
+# Array für alle verfügbaren Borosilikatglas größen in milli Liter
+kolloidWaterSizeArray=(100 200 1000 2000)
+
+# Bibliotheken laden
+source "$libsPath/pattern.sh" || exit 1; 
+source "$libsPath/getENV.sh" || exit 1; 
+source "$libsPath/colors.sh" || exit 1; 
+source "$libsPath/functions.sh" || exit 1; 
+source "$libsPath/startup.sh" || exit 1; 
+source "$libsPath/getops.sh" || exit 1; 
+
+clear;
+showLogo
+
+
+# Heizplatten Zeiten & Zeit fürs Nachjustieren --geschätzt!!!
+_start=0;
+if (( ${size} == 100 )); then
+    _endPlatte=480; # geprüft: 480 ok
+    if [ $metal == "au" ]; then
+        maxRuntime=600;
+    elif [ $metal == "ag" ]; then
+        maxRuntime=300;
+    elif [ $metal == "pt" ]; then
+        maxRuntime=900;
+    elif [ $metal == "cu" ]; then
+        maxRuntime=600;  
+    elif [ $metal == "zn" ]; then
+        maxRuntime=600; 
+    elif [ $metal == "mg" ]; then
+        maxRuntime=7200;
+    fi        
+elif (( ${size} == 200 )); then
+    _endPlatte=550; # geprüft: 550 ok
+    if [ $metal == "au" ]; then
+        maxRuntime=900; # 15 minuten
+    elif [ $metal == "ag" ]; then
+        maxRuntime=300; # 5 minuten
+    elif [ $metal == "pt" ]; then
+        maxRuntime=900;
+    elif [ $metal == "cu" ]; then
+        maxRuntime=600;  
+    elif [ $metal == "zn" ]; then
+        maxRuntime=600; 
+    elif [ $metal == "mg" ]; then
+        maxRuntime=7200;
+    fi
+elif (( ${size} == 1000 )); then
+    _endPlatte=10; # geprüft: 2070 ok
+    if [ $metal == "au" ]; then
+        maxRuntime=900; # 15 minuten
+    elif [ $metal == "ag" ]; then
+        maxRuntime=300; # 5 minuten
+    elif [ $metal == "pt" ]; then
+        maxRuntime=900;
+    elif [ $metal == "cu" ]; then
+        maxRuntime=600;  
+    elif [ $metal == "zn" ]; then
+        maxRuntime=600; 
+    elif [ $metal == "mg" ]; then
+        maxRuntime=7200;
+    fi
+elif (( ${size} == 2000 )); then
+    _endPlatte=2600; # nicht geprüft:
+    if [ $metal == "au" ]; then
+        maxRuntime=900; # 15 minuten
+    elif [ $metal == "ag" ]; then
+        maxRuntime=300; # 5 minuten
+    elif [ $metal == "pt" ]; then
+        maxRuntime=900;
+    elif [ $metal == "cu" ]; then
+        maxRuntime=600;  
+    elif [ $metal == "zn" ]; then
+        maxRuntime=600; 
+    elif [ $metal == "mg" ]; then
+        maxRuntime=7200;
+    fi
+fi
+
+
+# Plasma- Blitz Zeit kalkulieren
+if [ $metal == "au" ]; then
+    if (( ${size} == 100 )); then
+        time=$((90*$ppm));
+    elif (( ${size} == 200 )); then
+        time=$((180*$ppm));
+    elif (( ${size} == 1000 )); then
+        time=$((720*$ppm));
+    elif (( ${size} == 2000 )); then
+        time=$((1440*$ppm));
+    fi
+elif [ $metal == "ag" ]; then
+    if (( ${size} == 100 )); then
+        time=$((25*$ppm));
+    elif (( ${size} == 200 )); then
+        time=$((50*$ppm));
+    elif (( ${size} == 1000 )); then
+        time=$((250*$ppm));
+    elif (( ${size} == 2000 )); then
+        time=$((500*$ppm));
+    fi
+elif [ $metal == "pt" ]; then
+    if (( ${size} == 100 )); then
+        time=$((1200*$ppm));  
+    elif (( ${size} == 200 )); then
+        time=$((2400*$ppm));  
+    elif (( ${size} == 1000 )); then
+        time=$((12000*$ppm));             
+    elif (( ${size} == 2000 )); then
+        time=$((24000*$ppm));              
+    fi
+elif [ $metal == "cu" ]; then
+    if (( ${size} == 100 )); then
+        time=$((5*$ppm));   
+    elif (( ${size} == 200 )); then
+        time=$((10*$ppm)); 
+    elif (( ${size} == 1000 )); then
+        time=$((50*$ppm));        
+    elif (( ${size} == 2000 )); then
+        time=$((100*$ppm));          
+    fi
+elif [ $metal == "zn" ]; then
+    if (( ${size} == 100 )); then
+        time=$((6*$ppm));  
+    elif (( ${size} == 200 )); then
+        time=$((12*$ppm));  
+    elif (( ${size} == 1000 )); then
+        time=$((60*$ppm));        
+    elif (( ${size} == 2000 )); then
+        time=$((120*$ppm));             
+    fi
+elif [ $metal == "mg" ]; then
+    if (( ${size} == 100 )); then
+        time=$((10*$ppm));  
+    elif (( ${size} == 200 )); then
+        time=$((20*$ppm));  
+    elif (( ${size} == 1000 )); then
+        time=$((100*$ppm));            
+    elif (( ${size} == 2000 )); then
+        time=$((200*$ppm));              
+    fi
+fi
+
+
+timeAll=$(($_endPlatte + $time));
+timeAll=$(date -d@$timeAll -u +%H:%M:%S);
+
+echo -e "\n .--------------------------------------------------------.";
+echo -e " | Material\\tMenge (ml)\\tPPM\\t\\tZeit      |";
+echo -e " |--------------------------------------------------------|";
+echo -e " | ${metal}\\t\\t${size} ml\\t\\t${ppm} PPM\\t\\t${timeAll}  |";
+echo -e " *--------------------------------------------------------*\n";
+
+printf "\n > 1) Spannungswandler einschalten!";
+if [ $metal == "au" ]; then
+    printf "\n > 2) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
+elif [ $metal == "ag" ]; then
+    printf "\n > 2) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
+elif [ $metal == "pt" ]; then
+    printf "\n > 2) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
+elif [ $metal == "cu" ]; then
+    printf "\n > 2) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
+elif [ $metal == "zn" ]; then
+    printf "\n > 2) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
+elif [ $metal == "mg" ]; then
+    printf "\n > 2) Elektroden (${metal}) einspannen & Abstand parallel einstellen!";
+fi
+
+printf "\n > 3) ${size} ml Borosilikatglas bis zum Rand mit H²O füllen & auf Heizplatte stellen!";
+printf "\n > 4) Heizplatte auf 5 stellen!";
+if [ $metal == "au" ]; then
+    printf "\n > 5) Elektroden ~ 1,2 cm tief im Wasser positionieren!\n\n";
+    printf "           \          /      \n";
+    printf "            \        /       \n";
+    printf "   |         \      /        |\n";
+    printf "   |~~~~~~~~~~\~~~~/~~~~~~~~~|\n";
+    printf "   |           \  /          |\n";
+    printf "   |            \/           |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |_________________________|\n\n";
+elif [ $metal == "ag" ]; then
+    printf "\n > 5) Elektroden maximal ~ 2 mm tief im Wasser positionieren!\n\n";
+
+    printf "              \    /          \n";
+    printf "               \  /           \n";
+    printf "   |~~~~~~~~~~~~\/~~~~~~~~~~~|\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |_________________________|\n\n";
+elif [ $metal == "pt" ]; then
+    printf "\n > 5) Elektroden ~ 1,2 cm tief im Wasser positionieren!\n\n";
+    printf "           \          /      \n";
+    printf "            \        /       \n";
+    printf "   |         \      /        |\n";
+    printf "   |~~~~~~~~~~\~~~~/~~~~~~~~~|\n";
+    printf "   |           \  /          |\n";
+    printf "   |            \/           |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |_________________________|\n\n";
+elif [ $metal == "cu" ]; then
+    printf "\n > 5) Elektroden parallel so tief es geht im Wasser positionieren!\n\n";
+    printf "          |           |       \n";
+    printf "          |           |       \n";
+    printf "   |      |           |      |\n";
+    printf "   |~~~~~~|~~~~~~~~~~~|~~~~~~|\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |_________________________|\n\n";
+elif [ $metal == "zn" ]; then
+    printf "\n > 5) Elektroden parallel so tief es geht im Wasser positionieren!\n\n";
+    printf "          |           |       \n";
+    printf "          |           |       \n";
+    printf "   |      |           |      |\n";
+    printf "   |~~~~~~|~~~~~~~~~~~|~~~~~~|\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |_________________________|\n\n";
+elif [ $metal == "mg" ]; then
+    printf "\n > 5) Elektroden parallel so tief es geht im Wasser positionieren!\n\n";
+    printf "          |           |       \n";
+    printf "          |           |       \n";
+    printf "   |      |           |      |\n";
+    printf "   |~~~~~~|~~~~~~~~~~~|~~~~~~|\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |      |           |      |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |                         |\n";
+    printf "   |_________________________|\n\n";
+fi
+printf "\n > Taste drücken um fortzufahren oder beenden mit ctrl+c!"
+read -n 1 -s -r -p ""
+printf "\n\n";
+
+OIFS=$IFS;
+IFS=','; # Delimeter auf , setzen
+for kunde in $kunde
+do
+    # Logdatei: Wann was an wenn Verkauft worden ist
+    kundeTrim="$(echo -e "${kunde}" | sed -e 's/^[[:space:]]*//')";
+    invoiceDir="/home/$(whoami)/KolloidProduktion/$(date +"%Y")"
+    [ ! -d "$invoiceDir" ] && mkdir -p "$invoiceDir"
+    echo "$(date +"%d.%m.%Y")|${size}ml|${metal^^}|(${ppm}PPM)|${kundeTrim^}" >> "$invoiceDir/$(date +"%m").txt"
+done
+IFS=$OIFS;
+230V 7 1 # Heizplatte einschalten & Progress Bar anzeigen
+for number in $(seq ${_start} ${_endPlatte})
+do
+    sleep 1;
+    ProgressBar ${number} ${_endPlatte} "$(date -d@$_endPlatte -u +%H:%M:%S) Aufheizen";
+done
+230V 7 0 # Heizplatte ausschalten
+printf '\n > Heizen abgeschlossen!\n';
+
+rounds=$(($time/$maxRuntime));
+restwert=$(($time % $maxRuntime));
+if [ $restwert -gt 0 ]; then
+    rounds=$(($rounds + 1));
+fi
+if [ $rounds -lt 1 ]; then
+    rounds=1;
+fi
+echo -e "\n > Produktionsdauer: ~$(($time/60)) min";
+if [ $rounds -gt 1 ]; then
+    echo -e " > Nachjustieren jede: $(($maxRuntime/60)) min";
+fi
+for (( r=1; r<=$rounds; r++ ))
+do 
+    # hier eventuell nochmal vorheizen........
+    $soundPath/enableTrafo
+    printf ' > Trafo eingeschaltet!\n';
+    230V 8 1
+    _startt=0;
+    if [ $time -lt $maxRuntime ]; then
+        _endt=$time;
+    else
+        _endt=$maxRuntime;
+    fi
+    for numbera in $(seq ${_startt} ${_endt})
+    do
+        sleep 1;
+        ProgressBar ${numbera} ${_endt} "Runde $r/$rounds";
+    done
+    230V 8 0
+    time=$(($time - $_endt))
+    if [ "$rounds" == "$r" ]; then
+        echo -e " > Fertig!\n\n";
+        $soundPath/finishedTrafo
+        exit 0;
+    else
+        $soundPath/disableTrafo
+        printf "\n > Elektroden neu positionieren und Taste drücken um fortzufahren oder beenden mit ctrl+c!\n\n"
+        read -n 1 -s -r -p ""
+    fi
+done

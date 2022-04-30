@@ -1,0 +1,6 @@
+C£º
+gcc -Wall -o button button.c -lwiringPi
+sudo ./button
+
+Python:
+python button.py

@@ -1,0 +1,15 @@
+Development Software Installation
+
+
+	a. Install Python Interpreter and GPIO library
+	
+		sudo apt-get install python-dev
+		sudo apt-get install python-pip
+		sudo pip install rpi.gpio
+		
+	b. Install Git (to access the most recent WiringPi library)
+	                sudo apt-get update
+		sudo apt-get install git-core         	
+	                git clone git://git.drogon.net/wiringPi
+                                cd wiringPi
+		./build
