@@ -10,9 +10,13 @@ Ein Buzzer sollte am GPIO Pin 17 eingesteckt sein!
 
 
 Benötigte Bauteile:
+
 2x MCP23017
+
 2x Relais 8fach bis 30Volt DC
+
 2x Relais 8fach bis 230Volt, 10A AC
+
 1x Buzzer
 
 
@@ -47,6 +51,7 @@ sudo nano /boot/config.txt
 folgendes auskommentieren oder hinzufügen
 
 dtoverlay=w1-gpio
+
 dtoverlay=disable-wifi
 dtoverlay=disable-bt
 
