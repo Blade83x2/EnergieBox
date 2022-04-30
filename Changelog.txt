@@ -29,6 +29,7 @@ PLANUNG für Version 3
  + 4 200 Watt Panels
  + Infrarot Fernbedienung für Spannungswandler
  + Zweites Relais für 230V. 
+ + 16mm² Potential Ausgleichs Kabel anschliessen
  
  
 PLANUNG für Version 4

@@ -54,13 +54,13 @@ if (( ${size} == 100 )); then
     elif [ $metal == "ag" ]; then
         maxRuntime=300;
     elif [ $metal == "pt" ]; then
-        maxRuntime=900;
+        maxRuntime=900;# 15 minuten
     elif [ $metal == "cu" ]; then
-        maxRuntime=600;  
+        maxRuntime=7200;  # elektrolyse 
     elif [ $metal == "zn" ]; then
-        maxRuntime=600; 
+        maxRuntime=7200;  # elektrolyse
     elif [ $metal == "mg" ]; then
-        maxRuntime=7200;
+        maxRuntime=7200; # elektrolyse
     fi        
 elif (( ${size} == 200 )); then
     _endPlatte=550; # geprüft: 550 ok
@@ -69,45 +69,46 @@ elif (( ${size} == 200 )); then
     elif [ $metal == "ag" ]; then
         maxRuntime=300; # 5 minuten
     elif [ $metal == "pt" ]; then
-        maxRuntime=900;
+        maxRuntime=900; # 15 minuten
     elif [ $metal == "cu" ]; then
-        maxRuntime=600;  
+        maxRuntime=7200;  # elektrolyse 
     elif [ $metal == "zn" ]; then
-        maxRuntime=600; 
+        maxRuntime=7200;  # elektrolyse
     elif [ $metal == "mg" ]; then
-        maxRuntime=7200;
+        maxRuntime=7200; # elektrolyse
     fi
 elif (( ${size} == 1000 )); then
     _endPlatte=2070; # geprüft: 2070 ok
     if [ $metal == "au" ]; then
         maxRuntime=900; # 15 minuten
     elif [ $metal == "ag" ]; then
-        maxRuntime=300; # 5 minuten
+        maxRuntime=600; # 10 minuten
     elif [ $metal == "pt" ]; then
-        maxRuntime=900;
+        maxRuntime=900; # 15 minuten
     elif [ $metal == "cu" ]; then
-        maxRuntime=600;  
+        maxRuntime=7200;  # elektrolyse
     elif [ $metal == "zn" ]; then
-        maxRuntime=600; 
+        maxRuntime=7200;  # elektrolyse
     elif [ $metal == "mg" ]; then
-        maxRuntime=7200;
+        maxRuntime=7200; # elektrolyse
     fi
 elif (( ${size} == 2000 )); then
     _endPlatte=2600; ############################################## nicht geprüft:   --geschätzt!!!
     if [ $metal == "au" ]; then
         maxRuntime=900; # 15 minuten
     elif [ $metal == "ag" ]; then
-        maxRuntime=300; # 5 minuten
+        maxRuntime=600; # 10 minuten
     elif [ $metal == "pt" ]; then
-        maxRuntime=900;
+        maxRuntime=900; # 15 minuten
     elif [ $metal == "cu" ]; then
-        maxRuntime=600;  
+        maxRuntime=7200;   # elektrolyse
     elif [ $metal == "zn" ]; then
-        maxRuntime=600; 
+        maxRuntime=7200;  # elektrolyse
     elif [ $metal == "mg" ]; then
-        maxRuntime=7200;
+        maxRuntime=7200; # elektrolyse
     fi
 fi
+
 # Plasma- Blitz Zeit kalkulieren
 if [ $metal == "au" ]; then
     if (( ${size} == 100 )); then
@@ -232,7 +233,6 @@ if [ $rounds -gt 1 ]; then
 fi
 for (( r=1; r<=$rounds; r++ ))
 do 
-    # hier eventuell nochmal vorheizen........
     $soundPath/enableTrafo
     printf ' > Trafo eingeschaltet!\n';
     230V $trafoRelais 1
@@ -257,5 +257,15 @@ do
         $soundPath/disableTrafo
         printf "\n > Elektroden neu positionieren und Taste drücken um fortzufahren oder beenden mit ctrl+c!\n\n"
         read -n 1 -s -r -p ""
+        # prüfen welche $size gewählt ist, demnach aufheizen. Programmaufruf mit Timer und eigener Prozess
+        if (( ${size} == 1000 )); then
+            230V $heizplatteRelais 1 & disown
+            230V $heizplatteRelais 0 7 & disown
+        elif (( ${size} == 2000 )); then
+            # PRÜFEN !!!!!!!!!!!!1
+            #   2000 ml <<<<<------------------------
+            230V $heizplatteRelais 1 & disown
+            230V $heizplatteRelais 0 12 & disown
+        fi
     fi
 done
