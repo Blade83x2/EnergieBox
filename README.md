@@ -22,7 +22,10 @@ Ein Buzzer sollte am GPIO Pin 17 eingesteckt sein!
 
 ---
 
-Benötigte Bauteile:
+------------------------
+Benötigte Bauteile:    |
+------------------------
+
 
 2x MCP23017
 
