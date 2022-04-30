@@ -141,5 +141,18 @@ if [ -z "${ppm}" ]; then # Wenn -p nicht übergeben worden ist
     done
 fi
 
-
-
+# Kunde
+if [ -z "${kunde}" ]; then # Wenn -k nicht übergeben worden ist
+    while true; do
+        echo -e "$Green";
+        echo -n " > Kunde Vorname Nachname: ";      
+        OIFS=$IFS;
+        IFS=','; # Delimeter auf , setzen
+        read read_kunde echo;
+        kunde=$read_kunde;
+        IFS=$OIFS;
+        unset OIFS;
+        echo -e "$ColorOff";
+        break;
+    done
+fi

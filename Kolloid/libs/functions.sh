@@ -16,7 +16,7 @@ function ProgressBar() {
     _fill=$(printf "%${_done}s");
     _empty=$(printf "%${_left}s")  ;                    
     # 1.2.1.1 Progress : [########################################] 100%
-    printf "\r > ${3}: [${_fill// /#}${_empty// /-}] ${_progress}%%";
+    printf "\r\e[44m > ${3}: [${_fill// /#}${_empty// /-}] ${_progress}%% \e[0m";
     # usage
     #_start=1;
     #_end=500;
