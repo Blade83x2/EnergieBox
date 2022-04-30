@@ -59,7 +59,8 @@ Raspi Konfiguration
 
 sudo nano /boot/config.txt
 
-folgendes auskommentieren oder hinzufügen
+folgendes auskommentieren oder hinzufügen:
+
 
 dtoverlay=w1-gpio
 
@@ -70,6 +71,7 @@ dtoverlay=disable-bt
 ---
 
 sudo raspi-config
+
 
 (unter Interfaceing Options)
 
@@ -98,6 +100,9 @@ PrintLastLog no
 ---
 
 sudo nano /etc/motd
+
+und alles ersetzen mit:
+
 
 
 Willkommen auf der EnergieBox. 
@@ -151,7 +156,8 @@ vor exit 0
                    
 sudo nano /etc/rc.shutdown
 
-und folgendes einfügen
+und folgendes einfügen:
+
 
 #!/bin/bash
 
@@ -163,7 +169,8 @@ exit 0
 
 sudo nano /etc/systemd/system/rcshutdown.service
 
-und folgendes einfügen
+und folgendes einfügen:
+
 
 [Unit]
 
@@ -193,7 +200,8 @@ PATH Variablen
 
 sudo nano /etc/bash.bashrc
 
-am Ende hinzufügen
+am Ende hinzufügen:
+
 
 PATH=$PATH:/Energiebox/12V
 
