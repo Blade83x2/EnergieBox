@@ -9,12 +9,13 @@
 #include <ctype.h>
 
 // Kompilieren mit: sudo make
-// Git: sudo git add -A && sudo git commit -m "Initial Version" && sudo git push -u origin main
+// Git: sudo git add -A && sudo git commit -m "Parameter Validierung hinzugefügt" && sudo git push -u origin main
 
 
 int getBit(int Port);
 void setBit(int Port, int Status);
-int showHelp(char**argv);
+bool checkMainParameter(char* paramName, int number, void* config);
+int showHelp(char**argv, void* config);
 
 // MCP Setup
 typedef struct {
@@ -99,7 +100,6 @@ int main(int argc, char**argv) {
         printf("Can't load '/Energiebox/12V/config.ini'\n");
         return 1;
     }
-
     if(wiringPiSetup()<0) {
         printf("wiringPiSetup error!!!");
         return -1;
@@ -110,7 +110,6 @@ int main(int argc, char**argv) {
         printf("wiringPi I2C Setup error!!!");
         return -1;
     }
-   
     if(argc == 1) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
         printf("\n\e[0;34m\e[43m Rel.\tState\t  Name                 \e[0m\n");
@@ -120,33 +119,35 @@ int main(int argc, char**argv) {
         printf("\n");
     }
     else if(argc == 2) {
-        // Nur Relais Nr. übergeben. Bit ausgeben ob gesetzt oder nicht
+        // Nur Relais Nr. übergeben. Bit auslesen ob gesetzt oder nicht und integer zurück geben
+        if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config)) {
+            return showHelp(argv, &config);
+        }
         printf("%d", getBit(atoi(argv[1])));
     }
     else if(argc == 3) {
-        // Relais Nr. und Zustand übergeben.
-        int relaisNr = atoi(argv[1])-1;
-        int zustand = atoi(argv[2])==1?0:1;
-        setBit(relaisNr, zustand);
+        // Relais Nr. & Zustand übergeben. Bit setzen und Feierabend
+        if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config)) {
+            return showHelp(argv, &config);
+        }
+        setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1);
     }
     else if(argc == 4) {
-        // Relais Nr. , Zustand & Timerzeit übergeben.
-        int relaisNr = atoi(argv[1])-1;
-        int zustand = atoi(argv[2])==1?0:1;
-        int waitTime = atoi(argv[3]) * 60;
-        sleep(waitTime);
-        setBit(relaisNr, zustand);
+        // Relais Nr., Zustand & Schaltzeit in Minuten übergeben. 
+        if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config) || !checkMainParameter("relaisTime", atoi(argv[3]), &config )) {
+            return showHelp(argv, &config);
+        }
+        sleep(atoi(argv[3]) * 60);
+        setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1);
     }
     else {
-        
-        return showHelp(argv);
+        return showHelp(argv, &config);
     }
     return 0;
 }
 
 void setBit(int Port, int Status) {
-    int Get_Port;
-    int PIN;
+    int Get_Port, PIN;
     if (Port > -1 && Port < 8) {
         Get_Port = mcp_readRegister(0x12);
         PIN = Port;
@@ -168,8 +169,7 @@ void setBit(int Port, int Status) {
 
 int getBit(int Port) {
     Port = Port - 1;
-    int Get_Port;
-    int PIN;
+    int Get_Port, PIN;
     if (Port > -1 && Port < 8) {
         Get_Port = mcp_readRegister(0x12);
         PIN = Port;
@@ -185,9 +185,33 @@ int getBit(int Port) {
     }
 }
 
-int showHelp(char**argv) {
-        printf("Wrong Parameter! Usage:\n");
-        printf("%s [INT]RelaisNummner(1...16) [INT]Zustand(0 or 1)\n", argv[0]);
-        printf("%s [INT]RelaisNummner(1...16) [INT]Zustand(0 or 1) [INT]Timer(Minutes)\n\n", argv[0]);
-        return -1;
+bool checkMainParameter(char* paramName, int number, void* config) {
+    configuration* pconfig = (configuration*)config;
+    if (strcmp(paramName, "relaisNumber") == 0)  {
+        if ( number < 1 || number > pconfig->mcp.numberOfRelaisActive )
+            return false;
+    } 
+    else if (strcmp(paramName, "relaisZustand") == 0) {
+        if ( number < 0 || number > 1 )
+            return false;
+    } 
+    else if (strcmp(paramName, "relaisTime") == 0) {
+        if ( number < 1 || number > 86400000 )
+            return false;
+    } 
+    return true;
+}
+
+int showHelp(char**argv, void* config) {
+    configuration* pconfig = (configuration*)config;
+    printf("\n\e[0;31m Falsche Parameter! Beispiel:\n\n");
+    printf("  %s\t\t\t[zeigt denn aktuellen Belegungsplan an]\n", argv[0]);
+    printf("  %s 5\t\t\t[gibt denn aktuellen Schaltzustand von Relais 5 zurück. Relais verfügbar: 1 bis %d)]\n", argv[0], pconfig->mcp.numberOfRelaisActive);
+    printf("  %s 5 1\t\t[schaltet Relais 5 auf 1 (an)]\n", argv[0]);
+    printf("  %s 7 0 10\t\t[schaltet Relais 7 aus in 10 Minuten]\n", argv[0]);
+    printf("  %s 10 1 5 & disown\t[schaltet Relais 10 im Hintergrund an in 5 Minuten und gibt die Konsole frei]\n\n", argv[0]);
+    printf("  In der Konfigurationsdatei können Namen für denn Belegungsplan vergeben werden!\n");
+    printf("  /Energiebox/%s/config.ini\e[0m \n\n", argv[0]);
+    
+    return -1;
 }
