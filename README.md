@@ -9,9 +9,7 @@ Jedes Gerät muss dazu mit einem eigenen Kabel an einem der 24 Relais angeschlos
 
 
 Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS auf dem Raspberry läuft. 
-
 Andernfalls kann eine Raspberry OS SD Karte mit dem Programm Raspberry Pi Imager erstellt werden!
-
 Download: https://www.raspberrypi.com/software/
 
 Diese Textdatei sollte einmal nach einer Neuinstallation des Betriebssystems abgearbeitet werden damit die EnergieBox wieder wie gewohnt auf dem Raspberry 3B+ funktioniert!
