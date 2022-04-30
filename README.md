@@ -44,7 +44,7 @@ Benötigte Bauteile:
 
 
 -------------------------------------
-Installation benötigter Pakete      |
+Installation benötigter Pakete
 -------------------------------------
 
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install manpages-de figlet python-dev python-pip -y && sudo pip install rpi.gpio && sudo apt-get install git-core -y && git clone git://git.drogon.net/wiringPi && cd wiringPi && ./build
@@ -56,7 +56,7 @@ Der Ordner EnergieBox muss ins Root Verzeichnis kopiert werden und folgende Bere
 sudo chmod -R 755 /Energiebox
 
 -------------------------------------
-Raspi Konfiguration                 |
+Raspi Konfiguration
 -------------------------------------
 
 sudo nano /boot/config.txt
@@ -140,7 +140,7 @@ und folgendes am Ende einfügen
 230V
 
 -------------------------------------
-Startup & Shutdown Service          |
+Startup & Shutdown Service
 -------------------------------------  
                    
 sudo nano /etc/rc.local
@@ -190,7 +190,7 @@ WantedBy=multi-user.target
 sudo systemctl enable rcshutdown.service
                   
 -------------------------------------
-PATH Variablen                      |
+PATH Variablen
 -------------------------------------  
 
 sudo nano /etc/bash.bashrc
@@ -205,7 +205,7 @@ PATH=$PATH:/Energiebox/Kolloid
 
 
 -------------------------------------
-SSH KEY auf Clients einrichten      |
+SSH KEY auf Clients einrichten
 -------------------------------------  
                    
 Zugriffspasswort als Key speichern auf anderen Geräten
