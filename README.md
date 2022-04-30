@@ -185,7 +185,9 @@ sudo nano /etc/bash.bashrc
 am Ende hinzufügen
 
 PATH=$PATH:/Energiebox/12V
+
 PATH=$PATH:/Energiebox/230V
+
 PATH=$PATH:/Energiebox/Kolloid
 
 -------------------------------------
@@ -195,15 +197,14 @@ GPIO Zustände                       |
 sudo nano /etc/rc.local                  
                    
 sleep 0.1
+
 echo "20" > /sys/class/gpio/export
+
 sleep 0.1
+
 echo "out" > /sys/class/gpio/gpio20/direction
+
 echo "1" > /sys/class/gpio/gpio20/value
-   
-   
-   
-   
-   
    
    
 -------------------------------------
@@ -214,13 +215,8 @@ Zugriffspasswort als Key speichern auf anderen Geräten
 
 ssh-keygen -t rsa -P ""
 
-Intranet
-
 ssh-copy-id pi@EnergieBox
+
 ssh pi@EnergieBox
 
-DynDNS
-
-ssh-copy-id -p 222 pi@home.cplusplus-development.de
-ssh pi@home.cplusplus-development.de
 
