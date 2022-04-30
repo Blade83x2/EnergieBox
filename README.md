@@ -16,7 +16,8 @@ Andernfalls kann eine Raspberry OS SD Karte mit dem Programm Raspberry Pi Imager
 Download: https://www.raspberrypi.com/software/
 
 Diese Textdatei sollte einmal nach einer Neuinstallation des Betriebssystems abgearbeitet werden damit die EnergieBox wieder wie gewohnt auf dem Raspberry 3B+ funktioniert!
-Die beiden MCP´s für die Relais müssen am I2C Port auf die Adresse 0x22 (für 12 Volt) und 0x27 (für 230 Volt) gejumpt sein!
+Die beiden MCP´s für die Relais müssen am I2C Port auf die Adresse 0x22 (für 12 Volt) und 0x27 (für 230 Volt) gejumpt sein! Die 4 Relais werden dann an den zwei MCP´s angeschlossen!
+
 Ein Buzzer sollte am GPIO Pin 17 eingesteckt sein!
 
 ---
