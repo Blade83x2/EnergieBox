@@ -1,3 +1,5 @@
+@Copyright: Johannes a.d.F. K r ä m e r
+---
 
 Willkommen bei der Einrichtung der EnergieBox!
 
