@@ -7,6 +7,7 @@ Die EnergieBox ist eine 24 Volt Photovoltaik Anlage mit Batteriespeicher.
 
 Die gesamelte Energie kann dann über Relais an angeschlossene Geräte verteilt werden.
 
+Jedes Gerät muss dazu mit einem eigenen Kabel an einem der 24 Relais angeschlossen sein!
 
 
 Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS auf dem Raspberry läuft. 
