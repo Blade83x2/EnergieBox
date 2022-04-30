@@ -40,7 +40,7 @@ sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install manpages-
 
 Der Ordner EnergieBox muss ins Root Verzeichnis kopiert werden und folgende Berechtigungen müssen gesetzt werden
  
-sudo chmod -R 777 /Energiebox
+sudo chmod -R 755 /Energiebox
 
 -------------------------------------
 Raspi Konfiguration                 |
@@ -124,7 +124,7 @@ und folgendes am Ende einfügen
 
 12V
 
-23V
+230V
 
 -------------------------------------
 Startup & Shutdown Service          |
@@ -143,8 +143,6 @@ sudo nano /etc/rc.shutdown
 und folgendes einfügen
 
 #!/bin/bash
-#rc.shutdown
-#Für das deaktivieren der Relais vom MCP23017
 /Energiebox/Shutdown/mcp_shutdown
 exit 0
 

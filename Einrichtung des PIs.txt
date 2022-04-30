@@ -119,7 +119,7 @@ sudo nano ~/.bashrc
 und folgendes am Ende einfügen
 
 12V
-23V
+230V
 
 -------------------------------------
 Startup & Shutdown Service          |
