@@ -7,17 +7,21 @@
 # Git: sudo git add -A && sudo git commit -m "Initial Version" && sudo git push -u origin main
 
 
+heizplatteRelais=7;
+trafoRelais=8;
+
+
 # CTRL + C abfangen & Relais ausschalten
 trap ctrl_c INT
 function ctrl_c() {
-    230V 7 0 & disown
-    230V 8 0 & disown
+    230V $heizplatteRelais 0 & disown
+    230V $trafoRelais 0 & disown
     echo -e "\n > Abbruch!\n"
     exit 1;
 }
 
-230V 7 0
-230V 8 0
+230V $heizplatteRelais 0
+230V $trafoRelais 0
 
 programmName="Kolloid Station"
 programmVersion="1.0"
@@ -329,13 +333,13 @@ do
     echo "$(date +"%d.%m.%Y")|${size}ml|${metal^^}|(${ppm}PPM)|${kundeTrim^}" >> "$invoiceDir/$(date +"%m").txt"
 done
 IFS=$OIFS;
-230V 7 1 # Heizplatte einschalten & Progress Bar anzeigen
+230V $heizplatteRelais 1 # Heizplatte einschalten & Progress Bar anzeigen
 for number in $(seq ${_start} ${_endPlatte})
 do
     sleep 1;
     ProgressBar ${number} ${_endPlatte} "$(date -d@$_endPlatte -u +%H:%M:%S) Aufheizen";
 done
-230V 7 0 # Heizplatte ausschalten
+230V $heizplatteRelais 0 # Heizplatte ausschalten
 printf '\n > Heizen abgeschlossen!\n';
 
 rounds=$(($time/$maxRuntime));
@@ -355,7 +359,7 @@ do
     # hier eventuell nochmal vorheizen........
     $soundPath/enableTrafo
     printf ' > Trafo eingeschaltet!\n';
-    230V 8 1
+    230V $trafoRelais 1
     _startt=0;
     if [ $time -lt $maxRuntime ]; then
         _endt=$time;
@@ -367,7 +371,7 @@ do
         sleep 1;
         ProgressBar ${numbera} ${_endt} "Runde $r/$rounds";
     done
-    230V 8 0
+    230V $trafoRelais 0
     time=$(($time - $_endt))
     if [ "$rounds" == "$r" ]; then
         echo -e " > Fertig!\n\n";
