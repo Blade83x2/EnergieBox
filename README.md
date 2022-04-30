@@ -28,7 +28,7 @@ Benötigte Bauteile:
 
 1x Buzzer
 
-
+---
 
 1) Installation benötigter Pakete
 2) Raspi Konfiguration
