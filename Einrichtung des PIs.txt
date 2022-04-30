@@ -25,6 +25,7 @@ Benötigte Bauteile:
 4) PATH Variablen setzen
 5) GPIO Zustände beim starten
 6) SSH KEY auf Clients einrichten 
+7) Upload auf GitHub
 
 
 
@@ -188,11 +189,6 @@ sleep 0.1
 echo "out" > /sys/class/gpio/gpio20/direction
 echo "1" > /sys/class/gpio/gpio20/value
    
-   
-      
-   
-   
-   
 -------------------------------------
 SSH KEY auf Clients einrichten      |
 -------------------------------------  
@@ -211,3 +207,8 @@ DynDNS
 ssh-copy-id -p 222 pi@home.cplusplus-development.de
 ssh pi@home.cplusplus-development.de
 
+-------------------------------------
+Upload auf GitHub                   |
+-------------------------------------  
+
+sudo git add -A && sudo git commit -m "Initial Version" && sudo git push -u origin main
