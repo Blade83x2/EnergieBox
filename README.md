@@ -61,17 +61,21 @@ dtoverlay=disable-bt
 sudo raspi-config
 
 (unter Interfaceing Options)
+
 -> SSH aktivieren
 
 -> I2C aktivieren
 
 (unter Network Options -> Hostname)
+
 -> EnergieBox
 
 (unter Boot Options -> Desktop / CLI)
+
 -> Console
 
 (unter Advanced Options -> Memory Split)
+
 -> 64
 
 ---
