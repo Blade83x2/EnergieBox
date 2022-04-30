@@ -88,13 +88,6 @@ PrintLastLog no
 
 sudo nano /etc/motd
 
- _____                      _      ____
-| ____|_ __   ___ _ __ __ _(_) ___| __ )  _____  __
-|  _| | '_ \ / _ \ '__/ _` | |/ _ \  _ \ / _ \ \/ /
-| |___| | | |  __/ | | (_| | |  __/ |_) | (_) >  <
-|_____|_| |_|\___|_|  \__, |_|\___|____/ \___/_/\_\
-                      |___/ V 1.0 by Johannes Krämer
-
 
 Willkommen auf der EnergieBox. 
 Von Hier aus kann die generierte Sonnen- Energie über Relais verteilt werden.
@@ -130,6 +123,7 @@ sudo nano ~/.bashrc
 und folgendes am Ende einfügen
 
 12V
+
 23V
 
 -------------------------------------
@@ -149,8 +143,8 @@ sudo nano /etc/rc.shutdown
 und folgendes einfügen
 
 #!/bin/bash
-# rc.shutdown
-# Für das deaktivieren der Relais vom MCP23017
+#rc.shutdown
+#Für das deaktivieren der Relais vom MCP23017
 /Energiebox/Shutdown/mcp_shutdown
 exit 0
 
