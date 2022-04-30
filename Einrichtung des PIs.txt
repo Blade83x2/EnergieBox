@@ -9,13 +9,14 @@ Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS läuft
 Download: https://www.raspberrypi.com/software/
 
 
-Benötigte Bauteile:
+-------------------------------------
+Benötigte Bauteile                  |
+-------------------------------------
+
 2x MCP23017
 2x Relais 8fach bis 30Volt DC
 2x Relais 8fach bis 230Volt, 10A AC
 1x Buzzer
-
-
 
 
 
@@ -25,21 +26,24 @@ Benötigte Bauteile:
 4) PATH Variablen setzen
 5) GPIO Zustände beim starten
 6) SSH KEY auf Clients einrichten 
-7) Upload auf GitHub
-
 
 
 -------------------------------------
 Installation benötigter Pakete      |
 -------------------------------------
 
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install manpages-de figlet python-dev python-pip -y && sudo pip install rpi.gpio && sudo apt-get install git-core -y && git clone git://git.drogon.net/wiringPi && cd wiringPi && ./build
+sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install manpages-de figlet python-dev python-pip git-core -y
+sudo pip install rpi.gpio && git clone git://git.drogon.net/wiringPi && cd wiringPi && ./build
 
----
+
+-------------------------------------
+Daten kopieren                      |
+-------------------------------------
 
 Der Inhalt dieses Ordners hier muss ins Root Verzeichnis kopiert werden mit dem Namen "EnergieBox" und folgende Berechtigungen müssen gesetzt werden
  
-sudo chmod -R 777 /Energiebox
+sudo chmod -R 755 /Energiebox
+
 
 -------------------------------------
 Raspi Konfiguration                 |
@@ -47,7 +51,7 @@ Raspi Konfiguration                 |
 
 sudo nano /boot/config.txt
 
-folgendes auskommentieren oder hinzufügen
+folgendes auskommentieren oder hinzufügen:
 
 dtoverlay=w1-gpio
 dtoverlay=disable-wifi
@@ -76,6 +80,9 @@ PrintLastLog no
 ---
 
 sudo nano /etc/motd
+
+alles ersetzen mit:
+
 
  _____                      _      ____
 | ____|_ __   ___ _ __ __ _(_) ___| __ )  _____  __
@@ -116,10 +123,11 @@ Schaltbeispiel für 230V Relais:
 
 sudo nano ~/.bashrc
 
-und folgendes am Ende einfügen
+und folgendes am Ende einfügen:
 
 12V
 230V
+
 
 -------------------------------------
 Startup & Shutdown Service          |
@@ -129,13 +137,14 @@ sudo nano /etc/rc.local
 
 vor exit 0
 
+
 /Energiebox/Startup/mcp_startup
 
 ---
                    
 sudo nano /etc/rc.shutdown
 
-und folgendes einfügen
+und folgendes einfügen:
 
 #!/bin/bash
 # rc.shutdown
@@ -147,7 +156,7 @@ exit 0
 
 sudo nano /etc/systemd/system/rcshutdown.service
 
-und folgendes einfügen
+und folgendes einfügen:
 
 [Unit]
 Description=/etc/rc.shutdown
@@ -164,23 +173,27 @@ WantedBy=multi-user.target
 ---
 
 sudo systemctl enable rcshutdown.service
-                  
+
+
 -------------------------------------
 PATH Variablen                      |
 -------------------------------------  
 
 sudo nano /etc/bash.bashrc
 
-am Ende hinzufügen
+am Ende hinzufügen:
 
 PATH=$PATH:/Energiebox/12V
 PATH=$PATH:/Energiebox/230V
 PATH=$PATH:/Energiebox/Kolloid
 
+
 -------------------------------------
 GPIO Zustände                       |
 -------------------------------------  
-    
+
+Beispiel für das Setzen der GPIO Direction (in/out) sowie Wert bei out
+
 sudo nano /etc/rc.local                  
                    
 sleep 0.1
@@ -188,6 +201,7 @@ echo "20" > /sys/class/gpio/export
 sleep 0.1
 echo "out" > /sys/class/gpio/gpio20/direction
 echo "1" > /sys/class/gpio/gpio20/value
+   
    
 -------------------------------------
 SSH KEY auf Clients einrichten      |
