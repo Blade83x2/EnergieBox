@@ -42,6 +42,3 @@ PLANUNG für Version 4
 PLANUNG für Version 5
  
  - DONT TOUCH A RUNNING SYSTEM!!!
- 
-
- 
