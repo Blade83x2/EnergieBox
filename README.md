@@ -21,7 +21,7 @@ Die beiden MCP´s für die Relais müssen am I2C Port auf die Adresse 0x22 (für
 Ein Buzzer sollte am GPIO Pin 17 eingesteckt sein!
 
 ------------------------
-Benötigte Bauteile:    |
+Benötigte Bauteile:
 ------------------------
 
 
