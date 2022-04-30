@@ -204,7 +204,7 @@ int showHelp(char**argv, void* config) {
     configuration* pconfig = (configuration*)config;
     printf("\n\e[0;31m Falsche Parameter! Beispiel:\n\n");
     printf("  %s\t\t\t[zeigt denn aktuellen Belegungsplan an]\n", argv[0]);
-    printf("  %s 5\t\t\t[gibt denn aktuellen Schaltzustand von Relais 5 zurück. Relais verfügbar: 1 bis %d)]\n", argv[0], pconfig->mcp.numberOfRelaisActive);
+    printf("  %s 5\t\t[gibt denn aktuellen Schaltzustand von Relais 5 zurück. Relais verfügbar: 1 bis %d)]\n", argv[0], pconfig->mcp.numberOfRelaisActive);
     printf("  %s 5 1\t\t[schaltet Relais 5 auf 1 (an)]\n", argv[0]);
     printf("  %s 7 0 6\t\t[schaltet Relais 7 aus in 6 Minuten]\n", argv[0]);
     printf("  %s 2 1 15 & disown\t[schaltet Relais 2 im Hintergrund an in 15 Minuten und gibt die Konsole frei]\n\n", argv[0]);
