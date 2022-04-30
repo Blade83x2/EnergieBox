@@ -143,7 +143,9 @@ sudo nano /etc/rc.shutdown
 und folgendes einfügen
 
 #!/bin/bash
+
 /Energiebox/Shutdown/mcp_shutdown
+
 exit 0
 
 ---
@@ -153,15 +155,21 @@ sudo nano /etc/systemd/system/rcshutdown.service
 und folgendes einfügen
 
 [Unit]
+
 Description=/etc/rc.shutdown
+
 Before=shutdown.target
 
 [Service]
+
 ExecStart=/bin/true
+
 ExecStop=/etc/rc.shutdown
+
 RemainAfterExit=yes
 
 [Install]
+
 WantedBy=multi-user.target
 
 ---
