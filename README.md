@@ -2,6 +2,7 @@
 Willkommen bei der Einrichtung der EnergieBox!
 
 Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS läuft. Andernfalls kann eine SD Karte mit dem Programm Raspberry Pi Imager erstellt werden!
+
 Download: https://www.raspberrypi.com/software/
 
 Diese Textdatei sollte einmal nach einer Neuinstallation des Betriebssystems abgearbeitet werden damit die EnergieBox wieder wie gewohnt auf dem Raspberry 3B+ funktioniert!
