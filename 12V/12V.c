@@ -8,11 +8,13 @@
 #include <stdbool.h> 
 #include <ctype.h>
 
+// Kompilieren mit: sudo make
+// Git: sudo git add -A && sudo git commit -m "Initial Version" && sudo git push -u origin main
+
+
 int getBit(int Port);
 void setBit(int Port, int Status);
 int showHelp(char**argv);
-
-
 
 // MCP Setup
 typedef struct {
@@ -50,13 +52,11 @@ typedef struct {
 char deviceNames[16][40];
 char deviceActiveOnStart[16][6];
 
-static int handler(void* config, const char* section, const char* name, const char* value)
-{
+static int handler(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
     #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
     if(MATCH("mcp", "address")) {  pconfig->mcp.address = atoi(value); } 
     else if(MATCH("mcp", "numberOfRelaisActive")) { pconfig->mcp.numberOfRelaisActive = atoi(value); } 
-    
     else if(MATCH("Relais 1", "name")) { strcpy(deviceNames[0], strdup(value)); } 
     else if(MATCH("Relais 1", "activateOnStart")) { strcpy(deviceActiveOnStart[0], value); } 
     else if(MATCH("Relais 2", "name")) { strcpy(deviceNames[1], strdup(value)); } 
@@ -191,10 +191,3 @@ int showHelp(char**argv) {
         printf("%s [INT]RelaisNummner(1...16) [INT]Zustand(0 or 1) [INT]Timer(Minutes)\n\n", argv[0]);
         return -1;
 }
-
-
-
-
-
-
-
