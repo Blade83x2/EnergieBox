@@ -34,8 +34,7 @@ Benötigte Bauteile:
 2) Raspi Konfiguration
 3) Startup & Shutdown Service
 4) PATH Variablen setzen
-5) GPIO Zustände beim starten
-6) SSH KEY auf Clients einrichten 
+5) SSH KEY auf Clients einrichten 
 
 
 
@@ -199,23 +198,7 @@ PATH=$PATH:/Energiebox/230V
 
 PATH=$PATH:/Energiebox/Kolloid
 
--------------------------------------
-GPIO Zustände                       |
--------------------------------------  
-    
-sudo nano /etc/rc.local                  
-                   
-sleep 0.1
 
-echo "20" > /sys/class/gpio/export
-
-sleep 0.1
-
-echo "out" > /sys/class/gpio/gpio20/direction
-
-echo "1" > /sys/class/gpio/gpio20/value
-   
-   
 -------------------------------------
 SSH KEY auf Clients einrichten      |
 -------------------------------------  
