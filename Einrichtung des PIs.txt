@@ -206,9 +206,3 @@ DynDNS
 
 ssh-copy-id -p 222 pi@home.cplusplus-development.de
 ssh pi@home.cplusplus-development.de
-
--------------------------------------
-Upload auf GitHub                   |
--------------------------------------  
-
-sudo git add -A && sudo git commit -m "Initial Version" && sudo git push -u origin main
