@@ -131,8 +131,7 @@ int main(int argc, char**argv) {
             delay(333);
         }
     }
-    
-    
+        
 
     // Wenn es zwischen 21:00 Uhr Abends und 05:59 Uhr Morgens ist, auch das Licht(Relais 16) anschalten      
     if( (ts->tm_hour > 20 && ts->tm_hour < 24) || (ts->tm_hour >= 0 && ts->tm_hour < 6) ) {
