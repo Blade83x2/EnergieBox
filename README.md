@@ -208,7 +208,9 @@ PATH=$PATH:/Energiebox/Kolloid
 SSH KEY auf Clients einrichten
 -------------------------------------  
                    
-Zugriffspasswort als Key speichern auf anderen Geräten
+Wer nicht immer das Passwort des PI´s eingeben möchte, der kann das Zugriffspasswort als Key speichern.
+
+Hierzu auf dem Client folgendes eingeben:
 
 ssh-keygen -t rsa -P ""
 
