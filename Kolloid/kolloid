@@ -1,11 +1,11 @@
 #!/bin/bash
 # @Name:            Kolloid Produktions Software
-# @Version:         1.3
+# @Version:         1.4
 # @Copyright:       @2022 by Johannes a.d.F. K r ä m e r
-# Git push:         cd /Energiebox && sudo git add -A && sudo git commit -m "Initial Version" && sudo git push -u origin main
+# Git push:         cd /Energiebox && sudo git add -A && sudo git commit -m "changes.." && sudo git push -u origin main
 
 programmName="Kolloid Station"
-programmVersion="1.3"
+programmVersion="1.4"
 scriptPath=$(cd $(dirname "$0"); pwd);
 libsPath="$scriptPath/libs";
 soundPath="$scriptPath/sounds";
@@ -174,9 +174,9 @@ do
     230V $trafoRelais 1
     [ $size -gt 200 ] && 230V $heizplatteRelais 1; # Wenn Menge >= 200 dann immer Köcheln
     if [ $size -lt 1000 ]; then # Kleine Mengen mit vielen Runden
-        if [ $(($r % 2)) == 0 ]; then  # Jede zweite Runde Köcheln für 3 Minuten
+        if [ $(($r % 3)) == 0 ]; then  # jede dritte Runde Köcheln für 5 Minuten
             230V $heizplatteRelais 1
-            230V $heizplatteRelais 0 3 & disown
+            230V $heizplatteRelais 0 5 & disown
         fi
     fi
     [ $time -lt $maxRuntime ] && _endt=$time || _endt=$maxRuntime;
