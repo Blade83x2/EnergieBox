@@ -20,12 +20,16 @@ int showHelp(char**argv, void* config);
 typedef struct {
     int address;
     int numberOfRelaisActive;
+    int maxOutputPower;
 } mcp_setup;
 
 // Relais Strukturen
 typedef struct {
     const char* name;
     bool activateOnStart;
+    int pMax;
+    int eltakoState;
+
 } relais_config;
 
 typedef struct {
@@ -45,49 +49,86 @@ typedef struct {
     relais_config r13;
     relais_config r14;
     relais_config r15;
-    relais_config r16;    
+    relais_config r16;
 } configuration;
 
 char deviceNames[16][40];
 char deviceActiveOnStart[16][6];
+int devicePowerMax[16][4];
+int deviceEltakoState[16][1];
+
 
 static int handler(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
     #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
     if(MATCH("mcp", "address")) {  pconfig->mcp.address = atoi(value); } 
-    else if(MATCH("mcp", "numberOfRelaisActive")) { pconfig->mcp.numberOfRelaisActive = atoi(value); } 
+    else if(MATCH("mcp", "numberOfRelaisActive")) { pconfig->mcp.numberOfRelaisActive = atoi(value); }
+    else if(MATCH("mcp", "maxOutputPower")) { pconfig->mcp.maxOutputPower = atoi(value); } 
     else if(MATCH("Relais 1", "name")) { strcpy(deviceNames[0], strdup(value)); } 
     else if(MATCH("Relais 1", "activateOnStart")) { strcpy(deviceActiveOnStart[0], value); } 
+    else if(MATCH("Relais 1", "pMax")) { strcpy(devicePowerMax[0], strdup(value)); } 
+
     else if(MATCH("Relais 2", "name")) { strcpy(deviceNames[1], strdup(value)); } 
     else if(MATCH("Relais 2", "activateOnStart")) { strcpy(deviceActiveOnStart[1], value); } 
+    else if(MATCH("Relais 2", "pMax")) { strcpy(devicePowerMax[1], strdup(value)); } 
+
     else if(MATCH("Relais 3", "name")) { strcpy(deviceNames[2], strdup(value)); } 
     else if(MATCH("Relais 3", "activateOnStart")) { strcpy(deviceActiveOnStart[2], value); } 
+    else if(MATCH("Relais 3", "pMax")) { strcpy(devicePowerMax[2], strdup(value)); } 
+
     else if(MATCH("Relais 4", "name")) { strcpy(deviceNames[3], strdup(value)); } 
     else if(MATCH("Relais 4", "activateOnStart")) {  strcpy(deviceActiveOnStart[3], value);  } 
+    else if(MATCH("Relais 4", "pMax")) { strcpy(devicePowerMax[3], strdup(value)); } 
+
     else if(MATCH("Relais 5", "name")) { strcpy(deviceNames[4], strdup(value)); } 
     else if(MATCH("Relais 5", "activateOnStart")) { strcpy(deviceActiveOnStart[4], value);  } 
+    else if(MATCH("Relais 5", "pMax")) { strcpy(devicePowerMax4], strdup(value)); } 
+
     else if(MATCH("Relais 6", "name")) { strcpy(deviceNames[5], strdup(value)); } 
     else if(MATCH("Relais 6", "activateOnStart")) { strcpy(deviceActiveOnStart[5], value);  } 
+    else if(MATCH("Relais 6", "pMax")) { strcpy(devicePowerMax[5], strdup(value)); } 
+
     else if(MATCH("Relais 7", "name")) { strcpy(deviceNames[6], strdup(value)); } 
     else if(MATCH("Relais 7", "activateOnStart")) { strcpy(deviceActiveOnStart[6], value); } 
+    else if(MATCH("Relais 7", "pMax")) { strcpy(devicePowerMax[6], strdup(value)); } 
+
     else if(MATCH("Relais 8", "name")) { strcpy(deviceNames[7], strdup(value)); } 
     else if(MATCH("Relais 8", "activateOnStart")) { strcpy(deviceActiveOnStart[7], value);  } 
+    else if(MATCH("Relais 8", "pMax")) { strcpy(devicePowerMax[7], strdup(value)); } 
+
     else if(MATCH("Relais 9", "name")) { strcpy(deviceNames[8], strdup(value)); } 
     else if(MATCH("Relais 9", "activateOnStart")) { strcpy(deviceActiveOnStart[8], value);  } 
+    else if(MATCH("Relais 9", "pMax")) { strcpy(devicePowerMax[8], strdup(value)); } 
+
     else if(MATCH("Relais 10", "name")) { strcpy(deviceNames[9], strdup(value)); } 
     else if(MATCH("Relais 10", "activateOnStart")) {  strcpy(deviceActiveOnStart[9], value);  } 
+    else if(MATCH("Relais 10", "pMax")) { strcpy(devicePowerMax[9], strdup(value)); } 
+
     else if(MATCH("Relais 11", "name")) { strcpy(deviceNames[10], strdup(value)); } 
     else if(MATCH("Relais 11", "activateOnStart")) {  strcpy(deviceActiveOnStart[10], value);  } 
+    else if(MATCH("Relais 11", "pMax")) { strcpy(devicePowerMax[10], strdup(value)); } 
+
     else if(MATCH("Relais 12", "name")) { strcpy(deviceNames[11], strdup(value)); } 
     else if(MATCH("Relais 12", "activateOnStart")) {  strcpy(deviceActiveOnStart[11], value);  } 
+    else if(MATCH("Relais 12", "pMax")) { strcpy(devicePowerMax[11], strdup(value)); } 
+
     else if(MATCH("Relais 13", "name")) { strcpy(deviceNames[12], strdup(value)); } 
     else if(MATCH("Relais 13", "activateOnStart")) {  strcpy(deviceActiveOnStart[12], value);  } 
+    else if(MATCH("Relais 13", "pMax")) { strcpy(devicePowerMax[12], strdup(value)); } 
+
     else if(MATCH("Relais 14", "name")) { strcpy(deviceNames[13], strdup(value)); } 
     else if(MATCH("Relais 14", "activateOnStart")) {  strcpy(deviceActiveOnStart[13], value);  } 
+    else if(MATCH("Relais 14", "pMax")) { strcpy(devicePowerMax[13], strdup(value)); } 
+
     else if(MATCH("Relais 15", "name")) { strcpy(deviceNames[14], strdup(value)); } 
     else if(MATCH("Relais 15", "activateOnStart")) {  strcpy(deviceActiveOnStart[14], value);  } 
+    else if(MATCH("Relais 15", "pMax")) { strcpy(devicePowerMax[14], strdup(value)); } 
+
     else if(MATCH("Relais 16", "name")) { strcpy(deviceNames[15], strdup(value)); } 
     else if(MATCH("Relais 16", "activateOnStart")) {  strcpy(deviceActiveOnStart[15], value);  } 
+    else if(MATCH("Relais 16", "pMax")) { strcpy(devicePowerMax[15], strdup(value)); } 
+
+
     else { return 0; }
     return 1;
 }
@@ -112,6 +153,10 @@ int main(int argc, char**argv) {
     if(argc == 1) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
         printf("\n\e[0;34m\e[43m Rel.\tState\t  Name                 \e[0m\n");
+
+        // TODO aus configuration auslesen und anzeigen
+
+
         for(int x=1; x<=config.mcp.numberOfRelaisActive; x++) {
             printf("\e[0;36m  %d\t%s %s\t  %s\e[0m\n", x, (getBit(x)==0?"\e[0;31m":"\e[0;32m"), ((getBit(x)==0)?"Off":"On"), deviceNames[x-1]);
         }
@@ -130,11 +175,14 @@ int main(int argc, char**argv) {
         setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais Nr. & Zustand übergeben. Bit setzen
     }
     else if(argc == 4) {
-        
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config) || !checkMainParameter("relaisTime", atoi(argv[3]), &config )) {
             return showHelp(argv, &config);
         }
         sleep(atoi(argv[3]) * 60); // Relais Nr., Zustand & Schaltzeit in Minuten übergeben. 
+
+
+        // TODO auslesen aus config wie eltakoState ist und gegenteil in config schreiben
+        // TODO setBit() für eine Sekunde ausführen
         setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1);
     }
     else {
@@ -145,10 +193,10 @@ int main(int argc, char**argv) {
 
 void setBit(int Port, int Status) {
     int Get_Port, PIN;
-    if (Port > -1 && Port < 8) {
+    if (Port > -1 && Port < 8) { // Erstes register bearbeiten
         Get_Port = mcp_readRegister(0x12);
         PIN = Port;
-    } else {
+    } else { // Zweites Register bearbeiten
         Get_Port = mcp_readRegister(0x13);
         PIN = Port % 8;
     }
