@@ -31,6 +31,10 @@ Benötigte Bauteile
 
 1x Buzzer
 
+
+
+
+
 ---
 
 1) Installation benötigter Pakete
@@ -38,6 +42,9 @@ Benötigte Bauteile
 3) Startup & Shutdown Service
 4) PATH Variablen setzen
 5) SSH KEY auf Clients einrichten 
+
+
+
 
 
 
@@ -209,6 +216,7 @@ PATH=$PATH:/Energiebox/230V
 
 PATH=$PATH:/Energiebox/Kolloid
 
+PATH=$PATH:/Energiebox/h2o
 
 -------------------------------------
 SSH KEY auf Clients einrichten

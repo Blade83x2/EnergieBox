@@ -20,12 +20,15 @@ int showHelp(char**argv, void* config);
 typedef struct {
     int address;
     int numberOfRelaisActive;
+    float maxAmpere;
+    float maxMicroControllerAmpere;
 } mcp_setup;
 
 // Relais Struktur
 typedef struct {
     const char* name;
     bool activateOnStart;
+    float aMax;
 } relais_config;
 
 typedef struct {
@@ -45,11 +48,15 @@ typedef struct {
     relais_config r13;
     relais_config r14;
     relais_config r15;
-    relais_config r16;    
+    relais_config r16;
 } configuration;
 
 char deviceNames[16][40];
 char deviceActiveOnStart[16][6];
+
+
+
+
 
 static int handler(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
@@ -111,6 +118,10 @@ int main(int argc, char**argv) {
     if(argc == 1) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
         printf("\n\e[0;34m\e[43m Rel.\tState\t  Name                 \e[0m\n");
+
+	// TODO SCHALTZUSTAND aus config lesen
+
+
         for(int x=1; x<=config.mcp.numberOfRelaisActive; x++) {
             printf("\e[0;36m  %d\t%s %s\t  %s\e[0m\n", x, (getBit(x)==0?"\e[0;31m":"\e[0;32m"), ((getBit(x)==0)?"Off":"On"), deviceNames[x-1]);
         }
@@ -126,6 +137,9 @@ int main(int argc, char**argv) {
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config)) {
             return showHelp(argv, &config);
         }
+	// TODO BIT kurz setzen und Relais wieder aus machen
+	// TODO config eltakoState setzen
+
         setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais Nr. & Zustand übergeben. Bit setzen
     }
     else if(argc == 4) {
@@ -133,6 +147,7 @@ int main(int argc, char**argv) {
             return showHelp(argv, &config);
         }
         sleep(atoi(argv[3]) * 60); // Relais Nr., Zustand & Schaltzeit in Minuten übergeben. 
+
         setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1);
     }
     else {
