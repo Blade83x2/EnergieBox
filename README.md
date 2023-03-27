@@ -4,8 +4,8 @@
 Willkommen bei der Einrichtung der EnergieBox!
 
 Die EnergieBox ist eine 24 Volt Photovoltaik Anlage mit Batteriespeicher und 3000 Watt starkem 230V Spannungswandler.
-Die gesamelte Energie kann dann über Relais an angeschlossene Geräte verteilt werden.
-Jedes Gerät muss dazu mit einem eigenen Kabel an einem der 24 Relais angeschlossen sein!
+Die gesamelte Energie kann dann über Eltakos die durch Relais gesteuert werden, angeschlossene Geräte schalten.
+Jedes Gerät muss dazu mit einem eigenen Kabel an einem der 32 Relais angeschlossen sein!
 
 
 Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS auf dem Raspberry läuft. 
@@ -13,8 +13,9 @@ Andernfalls kann eine Raspberry OS SD Karte mit dem Programm Raspberry Pi Imager
 
 Download: https://www.raspberrypi.com/software/
 
-Diese Textdatei sollte einmal nach einer Neuinstallation des Betriebssystems abgearbeitet werden damit die EnergieBox auf dem Raspberry 3B+ funktioniert!
-Die beiden MCP Portexpander müssen am I2C Port auf die Adresse 0x22 (für 12 Volt) und 0x27 (für 230 Volt) gejumpt sein! Die 4 Relais werden dann an den zwei MCP´s angeschlossen!
+Diese Textdatei sollte einmal nach einer Neuinstallation des Betriebssystems abgearbeitet werden damit die EnergieBox auf einem Raspberry 3B+ funktioniert!
+Die beiden MCP Portexpander müssen am I2C Port auf die Adresse 0x22 (für 12 Volt) und 0x27 (für 230 Volt) gejumpt sein! 
+
 
 Ein Buzzer sollte am GPIO Pin 17 eingesteckt sein!
 
@@ -25,9 +26,9 @@ Benötigte Bauteile
 
 2x MCP23017
 
-2x Relais 8fach bis 30Volt DC
+2x Relais 16 fach bis 230Volt, 10A AC
 
-2x Relais 8fach bis 230Volt, 10A AC
+32x Eltakos Stromstoßschalter
 
 1x Buzzer
 

@@ -1,8 +1,34 @@
+NEUERUNGEN in Version 3
+
+Bei dieser Version ist die gesamte Anlage schon 3 Monate am Stück gelaufen. Die Schaltkontakte der Relais sind bei größeren Verbrauchern abgenutzt und waren nicht
+für den Dauerbetrieb geeignet. Dieser Planungsfehler wurde mit Stromstoß Eltakos behoben! Die Sicherung wurde deutlich erhöht. Mögliche Einstellfehler werden abgefangen.
+
+ [BUGFIX] 230 Volt Schaltkreise sind jetzt auch bei Mikrocontroller Neustart aktiv geschaltet
+ [BUGFIX] Eltakos für 230 Volt Schaltkreise verbaut
+ [BUGFIX] Neues 16 fach Relais für 230 Volt Anschluß als Steuereinheit für Eltakos verbaut
+ [UPDATE] Stromverbrauch für Mikrocontroller stark optimiert (Dauerspannung für Relais entfallen)
+ [NEW] EPVER 100 Ampere MPPT Laderegler verbaut
+ [NEW] 2 neue Busbars installiert
+ [NEW] Not aus Schalter für Batterie
+ [UPDATE] Batterie Kapazität auf 14.440 Wattstunden erhöht (10x 120 Ampere LKW Batterien)
+ [NEW] 150 Ampere Batterie Sicherung verbaut
+ [UPDATE] 16mm² Potentialausgleichs Kabel mit Erdpol angeschlossen
+ [NEW] 150 Ampere Shunt für die Anzeige aller Messbare  Werte an der Batterie
+ [UPDATE] Neue 3 Pannelen Stringbildung. Gesamte Eingangsleistung der Pannelen: 2.500 Watt
+ [NEW] Kontrolle für Gesamt Abnahme Leistung verbaut. Funktioniert als Überlastungsschutz für Spannungswandler
+ [NEW] Namensvergabe für Anschlußvergabe in Konfigurationsdatei eingebaut
+ [NEW] Steuerprogramme für Automatische Wasserfilterung erstellt
+ [NEW] Steuerprogramme für Automatische Kolloid Herstellung erstellt
+ [NEW] Webserver mit SSL Zertifikat installiert
+ [UPDATE] Zeitschaltuhr für Relais Schaltung verbaut
+ [NEW] Watt Anzeige bei 230V Anzeige
+
 
 NEUERUNGEN in Version 2
 
-Mit der neuen Hardware lassen sich ohne Probleme große Verbraucher (z.B. Waschmaschine, Herd) betreiben
+Mit der neuen Hardware lassen sich ohne Probleme große Verbraucher (z.B. Waschmaschine, Herd) betreiben.
 
+ [UPDATE] Remote Steuerung mit Raspberry Controller App möglich
  [UPDATE] Systemspannung 24 Volt (Vorher 12 Volt)
  [BUGFIX] Keine Spannungsschwankungen am Mikrocontroller mehr während dem Laden der Batterien - Dauerbetrieb möglich
  [NEW] An/Aus Schalter für Mikrocontroller
@@ -15,30 +41,26 @@ Mit der neuen Hardware lassen sich ohne Probleme große Verbraucher (z.B. Waschm
  [UPDATE] Tiefenentladungs Schutz - Mikrocontroller schaltet sich bei 18 Volt aus und trennt alle Verbraucher per Relais
  [NEW] Wenn die Programme 12V und 230V ohne Parameter aufgerufen werden, wird eine Liste angezeigt was an/aus ist
  [NEW] Konfigurationsdatei für 12V & 230V. Es kann ein Name für das angeschlossene Gerät am Relais und der Start Status (An/Aus) eingestellt werden.
- [UPDATE] Aufteilung der Komponenten in 3 Bereiche
-  
- 
-PLANUNG für Version 3
- 
- + EPEVER MPPT Laderegler
- + Batteriekapazität auf 8640 Wh erhöhen (Aktuell 5760 Wh)
- + Batterie Schalter
- + 2 Bus Bars
- + 100A Sicherung pro Batterie String
- + 2 weitere 140 Watt Panels
- + 4 200 Watt Panels
- + Infrarot Fernbedienung für Spannungswandler
- + Zweites Relais für 230V. 
- + 16mm² Potential Ausgleichs Kabel anschliessen
- 
- 
+ [UPDATE] Aufteilung der Komponenten in 3 getrennte Bereiche mit Kabelanschluß
+
+Initial Version
+
+Es wurde eine Photovoltaik Anlage bestehend aus Solar Pannelen, einem Akkupack, sowie PWM Laderegler und Spannungswandler verbaut.
+Der integrierte Mikrocontroller Raspberry 3B+ ist an 2 Port Expander (MCP) angeschlossen und steuert 32 Relais Schaltkreise (12Volt & 230Volt)
+
+
+_______________________________________________________________________________________________________________________________________
+
 PLANUNG für Version 4
- 
+
  + OLED Display mit 4 Tasten (Hoch, Runter, Auswählen, Zurück) - Für das an/aus- schalten der Relais ohne App oder PC
- + Schickes Gehäuse
- + Photovoltaik Panelen sollen sich im 90° Winkel automatisch zur Sonne drehen - ohne Linearmotor
- 
- 
+ + Schickes abgeschirmtes Gehäuse 
+ + Vollständiger Anschluß aller verfügbaren Geräte
+ + Wizzard für Namensvergabe der zu Steuernden Geräte
+ + Shunt verbinden mit Mikrocontroller
+
 PLANUNG für Version 5
  
+ + Grafische Oberfläche für Schaltkreis Steuerung auf Display
+ + Optimierte Automatische Energie Steuerung
  - DONT TOUCH A RUNNING SYSTEM!!!

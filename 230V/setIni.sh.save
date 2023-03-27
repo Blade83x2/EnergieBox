@@ -1,0 +1,25 @@
+#!/bin/bash
+relais=$(echo $1);
+state=$(echo $2);
+
+if [ "$relais" -eq "1" ]; then
+ if [ "$state" -eq "1" ]; then
+   echo "eins, an";
+   sudo sed -i '/^\[Relais 1]$/,/^\[/ s/^eltakoState = 0/eltakoState = 1/' /Energiebox/230V/config.ini
+ else
+   echo "eins, aus";
+   sudo sed -i '/^\[Relais 1]$/,/^\[/ s/^eltakoState = 1/eltakoState = 0/' /Energiebox/230V/config.ini
+ fi
+fi
+
+if [ "$relais" -eq "2" ]; then
+ if [ "Relais $relais wird eingeschaltet" -eq "1" ]; then
+   echo ", an";
+   sudo sed -i '/^\[Relais 2]$/,/^\[/ s/^eltakoState = 0/eltakoState = 1/' /Energiebox/230V/config.ini
+ else
+   echo "eins, aus";
+   sudo sed -i '/^\[Relais 2]$/,/^\[/ s/^eltakoState = 1/eltakoState = 0/' /Energiebox/230V/config.ini
+ fi
+fi
+
+

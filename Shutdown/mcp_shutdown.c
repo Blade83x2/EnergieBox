@@ -3,6 +3,9 @@
 #include <wiringPiI2C.h>
 #include "mymcp23017.h"
 #include <unistd.h>
+
+// sudo make zum Kompilieren nutzen!
+
 int main(int argc, char**argv) {
     if(wiringPiSetup()<0) {
         printf("wiringPiSetup error!!!");
@@ -30,18 +33,18 @@ int main(int argc, char**argv) {
 
 
     // 230 Volt
-    mcp_begin(7);
-    fd = wiringPiI2CSetup(MCP23017_ADDRESS | i2caddr);
-    if(fd <0) {
-        printf("wiringPiI2CSetup error!!!");
-        return -1;
-    }
-    mcp_initReg();
+//    mcp_begin(7);
+//    fd = wiringPiI2CSetup(MCP23017_ADDRESS | i2caddr);
+//    if(fd <0) {
+//        printf("wiringPiI2CSetup error!!!");
+//        return -1;
+//    }
+//    mcp_initReg();
 
     // Alle als OUTPUT definieren und ausschalten
-    for(int i = 0; i<16; i++) {
-        mcp_pinMode(i, 0);
-        mcp_digitalWrite(i,1);
-    }
+//    for(int i = 0; i<16; i++) {
+//        mcp_pinMode(i, 0);
+//        mcp_digitalWrite(i,1);
+//    }
     return 0;
 }

@@ -140,6 +140,14 @@ int main(int argc, char**argv) {
     }
 
 
+
+
+
+
+
+
+
+
     if (ini_parse("/Energiebox/230V/config.ini", handler, &config) < 0) {
         printf("Can't load '/Energiebox/230V/config.ini'\n");
         return 1;
@@ -160,15 +168,12 @@ int main(int argc, char**argv) {
         mcp_digitalWrite(i,1);
     }
 
-    // Autostart Einträge aktivieren für 12V
-    for(int f=0; f<config.mcp.numberOfRelaisActive; f++){
-        if( strcmp(deviceActiveOnStart[f],"true") == 0){
-            mcp_digitalWrite(f, 0);
-            delay(333);
-        }
-    }
-    
-   
-    
+    // Autostart Einträge aktivieren für 230V
+    //for(int f=0; f<config.mcp.numberOfRelaisActive; f++){
+    //    if( strcmp(deviceActiveOnStart[f],"true") == 0){
+    //        mcp_digitalWrite(f, 0);
+    //        delay(333);
+    //    }
+    //}
     return 0;
 }
