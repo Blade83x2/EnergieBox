@@ -1,17 +1,16 @@
 #include <stdio.h>
 #include <unistd.h> // sleep()
 #include <string.h>
-#include <stdbool.h> 
+#include <stdbool.h>
 #include <ctype.h>
 #include <unistd.h>
 #include <stdlib.h>
 
 
-int gpd=50;   // Galone per Day angeben von der Osmose Anlage um Wassermenge zu berechnen
-float oneGalloneInLiter=3.785;
-float literPerDay;
-float literPerHour;
-float literPerMinute;
+int gpd=50;   //  Filtermenge in GPD einstellen
+float literProMinute=0.07893 // bei 25gpd
+int pumpeRelaisNr=6; // Pumpe beim Aufruf deaktivieren
+float zielMengeInLiter=0.2;
 
 
 int runtime=0;  // laufzeit minuten vom abwasser
@@ -24,7 +23,7 @@ void showHelp() {
 
 int main(int argc, char**argv) { 
     printf("\033[2J\033[1;1H"); // clear screen
-    system("12V 6 0"); // disable relais
+    system("12V $pumpeRelaisNr 0"); // disable relais
     printf("\n\n\tHHHHHHHHH     HHHHHHHHH 222222222222222         OOOOOOOOO     \n");
     printf("\tH:::::::H     H:::::::H2:::::::::::::::22     OO:::::::::OO   \n"); 
     printf("\tH:::::::H     H:::::::H2::::::222222:::::2  OO:::::::::::::OO  \n");
