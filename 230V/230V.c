@@ -9,7 +9,8 @@
 #include <ctype.h>
 
 // sudo make
-// Git: sudo git add -A && sudo git commit -m "Parameter Validierung + Hilfe für Konsole hinzugefügt" && sudo git push -u origin main
+// sudo git add -A && sudo git commit -m "Parameter Versions Kommentar"
+// sudo git push -u origin main
 
 int getBit(int Port);
 void setBit(int Port, int Status);
