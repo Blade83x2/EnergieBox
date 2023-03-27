@@ -8,7 +8,7 @@
 
 
 int gpd=50;   //  Filtermenge in GPD einstellen
-float literProMinute=0.07893 // bei 25gpd
+float literProMinute=0.07893; // bei 25gpd
 int pumpeRelaisNr=6; // Pumpe beim Aufruf deaktivieren
 float zielMengeInLiter=0.2;
 
