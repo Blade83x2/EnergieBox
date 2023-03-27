@@ -8,9 +8,6 @@
 #include <stdbool.h> 
 #include <ctype.h>
 
-// Kompilieren mit: sudo make
-// Git: sudo git add -A && sudo git commit -m "Parameter Validierung hinzugefügt" && sudo git push -u origin main
-
 int getBit(int Port);
 void setBit(int Port, int Status);
 bool checkMainParameter(char* paramName, int number, void* config);
@@ -53,10 +50,6 @@ typedef struct {
 
 char deviceNames[16][40];
 char deviceActiveOnStart[16][6];
-
-
-
-
 
 static int handler(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
@@ -118,7 +111,7 @@ int main(int argc, char**argv) {
     if(argc == 1) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
         printf("\n\e[0;34m\e[43m Rel.\tState\t  Name                 \e[0m\n");
-
+	// TODO Ampere aus liste anzeigen
 	// TODO SCHALTZUSTAND aus config lesen
 
 
