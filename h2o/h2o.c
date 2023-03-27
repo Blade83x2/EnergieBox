@@ -46,18 +46,30 @@ int main(int argc, char**argv) {
     printf("\t|  __| | |  / \\ |  \\ |  \\/|  |     \\  /|    \\ / \\ |  \\ | |\\/|| \n");
     printf("\t| |  | | |_/| | |  /_|    /  \\___ |/ / \\___ | | | |  /_| |  || \n");
     printf("\t\\_/  \\_\\____\\_/ \\____\\_/\\_\\  \\____/_/  \\____/ \\_/ \\____\\_/  \\| \n");
-                                                                  
-    if(argc == 3) {
-        const char * liter=argv[2];
 
-        
-        printf("\n\n\tes werden %s liter produziert\n\n", liter);
-        
-        printf("literPerDay: %2f\n", literPerDay=gpd*oneGalloneInLiter);
 
-        
+    if(argc == 1) {
+        // direkt wasser filtern
+        printf("zeige tabelle mit eingabe für nummer\n");
+
         return 0;
     }
-    showHelp();
+
+
+
+
+
+
+
+    // wenn ein parameter übergeben worden ist
+    if(argc == 2) {
+        const char * liter=argv[1];
+	// direkt wasser filtern
+        printf("\n\n\tes werden %s liter produziert\n\n", liter);
+       
+
+        return 0;
+    }
+    //showHelp();
 }
 
