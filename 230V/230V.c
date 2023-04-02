@@ -300,7 +300,7 @@ int main(int argc, char**argv) {
 		else {
    			// wenn ausgeschaltet wird
                          // impuls für Elko 
-                         setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais einschalten 
+                         setBit(atoi(argv[1])-1, 0); // Relais einschalten 
                          //  elkoState in config.ini schreiben
                          sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
@@ -337,7 +337,7 @@ int main(int argc, char**argv) {
                 else {
                         // wenn ausgeschaltet wird
                          // impuls für Elko 
-                         setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais einschalten 
+                         setBit(atoi(argv[1])-1, 0); // Relais einschalten 
                          //  elkoState in config.ini schreiben
                          sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
