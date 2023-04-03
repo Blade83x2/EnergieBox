@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <string.h>
-#include <stdbool.h> 
+#include <stdbool.h>
 #include <ctype.h>
 #include <stdlib.h> // atoi()
 
@@ -15,6 +15,8 @@ typedef struct {
     int address;
     int numberOfRelaisActive;
     int maxOutputPower;
+    char maxMicroControllerAmpere;
+    float maxAmpere;
 } mcp_setup;
 
 // Relais Strukturen
@@ -23,6 +25,7 @@ typedef struct {
     bool activateOnStart;
     int eltakoState[1];
     int pMax[4];
+
 } relais_config;
 
 typedef struct {
@@ -51,14 +54,14 @@ char deviceActiveOnStart[16][6];
 int deviceEltakoState[16][1];
 int devicePMax[16];
 int pMaxCurrent;
-
+float maxAmpere;
 
 static int handler12(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
     #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
     if(MATCH("mcp", "address")) {  pconfig->mcp.address = atoi(value); } 
     else if(MATCH("mcp", "numberOfRelaisActive")) { pconfig->mcp.numberOfRelaisActive = atoi(value); } 
-    //else if(MATCH("mcp", "maxOutputPower")) { pconfig->mcp.maxOutputPower = atoi(value); }
+//    else if(MATCH("mcp", "maxMicroControllerAmpere")) {  strcpy(pconfig->mcp.maxMicroControllerAmpere, strdup(value)); }
 
     else if(MATCH("Relais 1", "name")) { strcpy(deviceNames[0], strdup(value)); } 
     else if(MATCH("Relais 1", "activateOnStart")) { strcpy(deviceActiveOnStart[0], value); } 
@@ -262,7 +265,8 @@ int main(int argc, char**argv) {
             delay(33);
         }
     }
-
+//maxAmpere = 1.34f;
+  //   printf("%f", maxAmpere);
 
     // Wenn es zwischen 21:00 Uhr Abends und 05:59 Uhr Morgens ist, auch das Licht(Relais 16) anschalten      
     if( (ts->tm_hour > 20 && ts->tm_hour < 24) || (ts->tm_hour >= 0 && ts->tm_hour < 6) ) {
@@ -287,12 +291,21 @@ int main(int argc, char**argv) {
 
 
 
+
+
+
+
+
+
+
+
+
+
     // 230 Volt
     if (ini_parse("/Energiebox/230V/config.ini", handler230, &config) < 0) {
         printf("Can't load '/Energiebox/230V/config.ini'\n");
         return 1;
     }
-
     mcp_begin(config.mcp.address);
     fd = wiringPiI2CSetup(MCP23017_ADDRESS | i2caddr);
     if(fd <0) {
@@ -300,13 +313,11 @@ int main(int argc, char**argv) {
         return -1;
     }
     mcp_initReg();
-
     // Alle als OUTPUT definieren und ausschalten
     for(int i = 0; i<config.mcp.numberOfRelaisActive; i++) {
         mcp_pinMode(i, 0);
         mcp_digitalWrite(i,1);
     }
-
     // Autostart Einträge aktivieren für 230V
     for(int f=0; f<config.mcp.numberOfRelaisActive; f++){
         // wenn autostart aktiviert ist, 
