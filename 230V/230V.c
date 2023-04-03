@@ -216,6 +216,31 @@ int getRestPower(void * config) {
      return pconfig->mcp.maxOutputPower - watt;
 }
 
+// Gibt gesamten Watt Verbrauch zurück
+int getCurrentPower(void * config) {
+     configuration* pconfig = (configuration*)config;
+     int watt;
+     watt=0;
+     // checken welche geräte an sind, watt addieren
+     if(pconfig->r1.eltakoState==1) watt += pconfig->r1.pMax;
+     if(pconfig->r2.eltakoState==1) watt += pconfig->r2.pMax;
+     if(pconfig->r3.eltakoState==1) watt += pconfig->r3.pMax;
+     if(pconfig->r4.eltakoState==1) watt += pconfig->r4.pMax;
+     if(pconfig->r5.eltakoState==1) watt += pconfig->r5.pMax;
+     if(pconfig->r6.eltakoState==1) watt += pconfig->r6.pMax;
+     if(pconfig->r7.eltakoState==1) watt += pconfig->r7.pMax;
+     if(pconfig->r8.eltakoState==1) watt += pconfig->r8.pMax;
+     if(pconfig->r9.eltakoState==1) watt += pconfig->r9.pMax;
+     if(pconfig->r10.eltakoState==1) watt += pconfig->r10.pMax;
+     if(pconfig->r11.eltakoState==1) watt += pconfig->r11.pMax;
+     if(pconfig->r12.eltakoState==1) watt += pconfig->r12.pMax;
+     if(pconfig->r13.eltakoState==1) watt += pconfig->r13.pMax;
+     if(pconfig->r14.eltakoState==1) watt += pconfig->r14.pMax;
+     if(pconfig->r15.eltakoState==1) watt += pconfig->r15.pMax;
+     if(pconfig->r16.eltakoState==1) watt += pconfig->r16.pMax;
+     return watt;
+}
+
 
 // Gibt benötigte Watt vom gerät zurück
 int getDevicePower(int relais, void * config) {
@@ -261,7 +286,7 @@ int main(int argc, char**argv) {
 
     if(argc == 1) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
-        printf("\n\e[0;34m\e[43m Rel.\tState\t\t Gerätename   \e[0m\n");
+        printf("\n\e[0;30m\e[47m Rel.\tStatus\t> %dW\t Gerätename   \e[0m\n", getCurrentPower(&config));
         for(int x=1; x<=config.mcp.numberOfRelaisActive; x++) {
 		printf("\e[0;36m %d\t%s %s\t %d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config)==0)?"\e[0;31m":"\e[0;32m"), ((getElkoState(x, &config)==0)?"aus":"an"), (getDevicePower(x, &config)), "W", deviceNames[x-1] );
         }
