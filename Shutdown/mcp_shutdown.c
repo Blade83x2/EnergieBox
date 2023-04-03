@@ -4,16 +4,14 @@
 #include "mymcp23017.h"
 #include <unistd.h>
 
-// sudo make zum Kompilieren nutzen!
-
 int main(int argc, char**argv) {
     if(wiringPiSetup()<0) {
         printf("wiringPiSetup error!!!");
         return -1;
     }
     //XXX X  A2 A1 A0
-    //010 0  1  1  1      0x27       7
-    //010 0  0  1  0      0x22       2
+    //010 0  1  1  1      0x27       7   230Volt Bank
+    //010 0  0  1  0      0x22       2   12Volt Bank
     // 12 Volt
     mcp_begin(2);
     fd = wiringPiI2CSetup(MCP23017_ADDRESS | i2caddr);

@@ -290,7 +290,7 @@ int main(int argc, char**argv) {
    			 sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
    			 system(command);
    		 	 sleep(0.6);
-			 setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1??????)
+			 setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
 	            }
                      else {
                         // Nicht genug Watt verfügbar für neues Gerät
@@ -305,19 +305,18 @@ int main(int argc, char**argv) {
                          sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
                          sleep(0.6);
-                         setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1??????)
+                         setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
 		}
         }
     }
     else if(argc == 4) {
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config) || !checkMainParameter("relaisTime", atoi(argv[3]), &config )) {
             return showHelp(argv, &config);
-        }
-        // Relais Nr., Zustand & Schaltzeit in Minuten übergeben. 
-        sleep(atoi(argv[3]) * 60); 
+        } 
        // wenn gewünschter relaiszustand und config stand gleich sind, nix machen
         if(atoi(argv[2]) != getElkoState(atoi(argv[1]), &config)){ 
-                // wenn eingeschaltet wird
+            sleep(atoi(argv[3]) * 60);
+            // wenn eingeschaltet wird
             if(atoi(argv[2])==1) { 
                     // prüfen ob Spannungswandler genug Watt  für alles liefert
                     if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxOutputPower) {
@@ -327,7 +326,7 @@ int main(int argc, char**argv) {
                          sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
                          sleep(0.6);
-                         setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1??????)
+                         setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
                     }
                      else {
                         // Nicht genug Watt verfügbar für neues Gerät
@@ -342,7 +341,7 @@ int main(int argc, char**argv) {
                          sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
                          sleep(0.6);
-                         setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1??????)
+                         setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
                 }
 	}
     }
