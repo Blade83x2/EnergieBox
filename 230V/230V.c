@@ -8,9 +8,6 @@
 #include <stdbool.h> 
 #include <ctype.h>
 
-// sudo make
-// sudo git add -A && sudo git commit -m "Parameter Versions Kommentar"
-// sudo git push -u origin main
 
 int getBit(int Port);
 void setBit(int Port, int Status);
@@ -286,7 +283,7 @@ int main(int argc, char**argv) {
 
     if(argc == 1) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
-        printf("\n\e[0;30m\e[47m Rel.\tStatus\t> %dW\t Gerätename   \e[0m\n", getCurrentPower(&config));
+        printf("\n\e[0;30m\e[47m 230V\tStatus\t> %dW\t Gerätename   \e[0m\n", getCurrentPower(&config));
         for(int x=1; x<=config.mcp.numberOfRelaisActive; x++) {
 		printf("\e[0;36m %d\t%s %s\t %d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config)==0)?"\e[0;31m":"\e[0;32m"), ((getElkoState(x, &config)==0)?"aus":"an"), (getDevicePower(x, &config)), "W", deviceNames[x-1] );
         }
@@ -426,7 +423,7 @@ bool checkMainParameter(char* paramName, int number, void* config) {
             return false;
     } 
     else if (strcmp(paramName, "relaisTime") == 0) {
-        if ( number < 1 || number > 86400000 )
+        if ( number < 1 || number > 86400 )
             return false;
     } 
     return true;
@@ -441,7 +438,7 @@ int showHelp(char**argv, void* config) {
     printf("  %s 7 0 6\t\t[schaltet Relais 7 aus in 6 Minuten]\n", argv[0]);
     printf("  %s 2 1 15 & disown\t[schaltet Relais 2 im Hintergrund an in 15 Minuten und gibt die Konsole frei]\n\n", argv[0]);
     printf("  In der Konfigurationsdatei können Namen für denn Belegungsplan vergeben werden!\n");
-    printf("  /Energiebox/%s/config.ini\e[0m \n\n", argv[0]);
+    printf("  sudo nano /Energiebox/%s/config.ini\e[0m \n\n", argv[0]);
     return -1;
 }
 
