@@ -1,11 +1,10 @@
 #!/bin/bash
 # @Name:            Kolloid Produktions Software
-# @Version:         1.4
-# @Copyright:       @2022 by Johannes a.d.F. K r ä m e r
-# Git push:         cd /Energiebox && sudo git add -A && sudo git commit -m "changes.." && sudo git push -u origin main
+# @Version:         1.5
+# @Copyright:       @2023 by Johannes a.d.F. K r ä m e r
 
 programmName="Kolloid Station"
-programmVersion="1.4"
+programmVersion="1.5"
 scriptPath=$(cd $(dirname "$0"); pwd);
 libsPath="$scriptPath/libs";
 soundPath="$scriptPath/sounds";
@@ -21,8 +20,8 @@ function ctrl_c() {
 }
 230V $heizplatteRelais 0
 230V $trafoRelais 0
-kolloidElementsArray=(au ag pt cu mg zn)
-kolloidWaterSizeArray=(100 200 1000 2000)
+kolloidElementsArray=(au ag pt pd ir)
+kolloidWaterSizeArray=(100 200 400 1000 2000)
 source "$libsPath/pattern.sh" || exit 1; 
 source "$libsPath/getENV.sh" || exit 1; 
 source "$libsPath/colors.sh" || exit 1; 
@@ -36,18 +35,16 @@ showLogo
 if (( ${size} == 100 )); then
     _endPlatte=480; # geprüft: 480 ok
     if [ $metal == "au" ]; then
-        maxRuntime=600; # 10 Minuten
+        maxRuntime=900; # 15 Minuten
     elif [ $metal == "ag" ]; then
         maxRuntime=300; # 5 Minuten
     elif [ $metal == "pt" ]; then
-        maxRuntime=900;# 15 minuten
-    elif [ $metal == "cu" ]; then
-        maxRuntime=3600; # elektrolyse 
-    elif [ $metal == "zn" ]; then
-        maxRuntime=3600; # elektrolyse
-    elif [ $metal == "mg" ]; then
-        maxRuntime=3600; # elektrolyse
-    fi        
+        maxRuntime=900; # 15 minuten
+    elif [ $metal == "pd" ]; then
+        maxRuntime=1200; # 20 minuten 
+    elif [ $metal == "ir" ]; then
+        maxRuntime=1200; # 20 minuten
+    fi
 elif (( ${size} == 200 )); then
     _endPlatte=550; # geprüft: 550 ok
     if [ $metal == "au" ]; then
@@ -56,27 +53,36 @@ elif (( ${size} == 200 )); then
         maxRuntime=420; # 7 minuten
     elif [ $metal == "pt" ]; then
         maxRuntime=900; # 15 minuten
-    elif [ $metal == "cu" ]; then
-        maxRuntime=3600; # elektrolyse 
-    elif [ $metal == "zn" ]; then
-        maxRuntime=3600; # elektrolyse
-    elif [ $metal == "mg" ]; then
-        maxRuntime=3600; # elektrolyse
+    elif [ $metal == "pd" ]; then
+        maxRuntime=1200; # 20 minuten
+    elif [ $metal == "ir" ]; then
+        maxRuntime=1200; # 20 minuten
+    fi
+elif (( ${size} == 400 )); then
+    _endPlatte=950; # nicht geprüft: ##################
+    if [ $metal == "au" ]; then
+        maxRuntime=900; # 15 minuten ###################
+    elif [ $metal == "ag" ]; then
+        maxRuntime=420; # 7 minuten ###################
+    elif [ $metal == "pt" ]; then
+        maxRuntime=900; # 15 minuten ##################
+    elif [ $metal == "pd" ]; then
+        maxRuntime=1200; # 20 minuten #################
+    elif [ $metal == "ir" ]; then
+        maxRuntime=1200; # 20 minuten ###############
     fi
 elif (( ${size} == 1000 )); then
-    _endPlatte=2; # geprüft: 2070 ok
+    _endPlatte=2070; # geprüft: 2070 ok
     if [ $metal == "au" ]; then
         maxRuntime=1200; # 20 minuten
     elif [ $metal == "ag" ]; then
         maxRuntime=540; # 9 minuten
     elif [ $metal == "pt" ]; then
-        maxRuntime=1200; # 20 minuten
-    elif [ $metal == "cu" ]; then
-        maxRuntime=3600; # elektrolyse
-    elif [ $metal == "zn" ]; then
-        maxRuntime=3600; # elektrolyse
-    elif [ $metal == "mg" ]; then
-        maxRuntime=3600; # elektrolyse
+        maxRuntime=1800; # 30 minuten
+    elif [ $metal == "pd" ]; then
+        maxRuntime=1800; # 30 minuten
+    elif [ $metal == "ir" ]; then
+        maxRuntime=1800; # 30 minuten
     fi
 elif (( ${size} == 2000 )); then
     _endPlatte=5400;  # geprüft:  5400 ok
@@ -85,13 +91,11 @@ elif (( ${size} == 2000 )); then
     elif [ $metal == "ag" ]; then
         maxRuntime=480; # 8 minuten
     elif [ $metal == "pt" ]; then
-        maxRuntime=1200; # 20 minuten
-    elif [ $metal == "cu" ]; then
-        maxRuntime=3600; # elektrolyse
-    elif [ $metal == "zn" ]; then
-        maxRuntime=3600; # elektrolyse
-    elif [ $metal == "mg" ]; then
-        maxRuntime=3600; # elektrolyse
+        maxRuntime=3600; # 60 minuten
+    elif [ $metal == "pd" ]; then
+        maxRuntime=3600; # 60 minuten
+    elif [ $metal == "ir" ]; then
+        maxRuntime=3600; # 60 minuten
     fi
 fi
 # PPM Kalkulieren
@@ -110,13 +114,11 @@ elif [ $metal == "ag" ]; then
         time=$(((($size/10) * 2) * $ppm));
     fi
 elif [ $metal == "pt" ]; then
-    time=$((($size*10)*$ppm)); 
-elif [ $metal == "cu" ]; then
-    time=$((($size/20)*$ppm)); 
-elif [ $metal == "zn" ]; then
-    time=$((($size/16,50)*$ppm));  
-elif [ $metal == "mg" ]; then
-    time=$((($size/10)*$ppm));  
+    time=$(((($size/2) * 23) * $ppm));   # ######################### ZEIT ERMITTELN !!!!! 
+elif [ $metal == "pd" ]; then
+    time=$(((($size/2) * 18) * $ppm)); # #################################### ZEIT ERMITTELN 
+elif [ $metal == "ir" ]; then
+    time=$(((($size/4) * 10) * $ppm)); # #################################### ZEIT ERMITTELN !!!!!!
 fi
 
 echo -e "\n .------------------------------------------------------------------------------.";
@@ -130,12 +132,10 @@ elif [ $metal == "ag" ]; then
     printf "\n > 1) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
 elif [ $metal == "pt" ]; then
     printf "\n > 1) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
-elif [ $metal == "cu" ]; then
-    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand parallel einstellen!";
-elif [ $metal == "zn" ]; then
-    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand parallel einstellen!";
-elif [ $metal == "mg" ]; then
-    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand parallel einstellen!";
+elif [ $metal == "pd" ]; then
+    printf "\n > 1) Baren (${metal}) einspannen & Abstand so nah wie möglich einstellen!";
+elif [ $metal == "ir" ]; then
+    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
 fi
 printf "\n > 2) ${size} ml Borosilikatglas bis zum Rand mit H²O füllen & auf Heizplatte stellen!";
 source "$libsPath/elektrodenPosition.sh" || exit 1; 
