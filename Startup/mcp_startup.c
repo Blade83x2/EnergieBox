@@ -287,7 +287,7 @@ int main(int argc, char**argv) {
              printf("Relais Nr. %d (%s) config.autostart = true\n", f, deviceNames[f]);
              // wenn Relaise aus ist
              if(deviceEltakoState[f][0] == 0){
-                 // Wenn zusätzliche Leistung + aktueller Leistungsverbrauch kleiner oder gleich maximal Abgabe Leistung vom Spannungswandler in Watt
+                 // Wenn zusätzliche Leistung + aktueller Leistungsverbrauch kleiner oder gleich maximal Abgabe Leistung vom DC-DC Konverter in Watt
                  if((pMaxCurrent + devicePMax[f]) <= config.mcp.maxPConverter){
                      printf("Relais Nr. %d (%s) wird eingeschatet!\n", f, deviceNames[f]);
                      // Relais einschalten
@@ -298,8 +298,9 @@ int main(int argc, char**argv) {
                      pMaxCurrent += devicePMax[f];
                      printf("Neuer Verbrauch aller Geräte derzeit: %d Watt\n", pMaxCurrent);
                      sleep(1);
-                     // Wenn 12V mit Eltakos läuft, folgende Zeile entkommentieren
+                     // Wenn 12V mit Eltakos läuft, folgende Zeile entkommentieren ////////////////////////////////////////////////////////////////
                      //mcp_digitalWrite(f, 1); ////////////////////////////////////////////////////////////////////////////////////////////////////
+                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                  }
                  else {
                      // Gerät kann nicht eingeschaltet werden weil nicht genug Leistung vorhanden ist
@@ -307,17 +308,14 @@ int main(int argc, char**argv) {
                  }
              } else {
                  // Relais ist bereits an
-                 printf("Relais %d (%s) ist bereits an!\n", f, deviceNames[f]);
+                 printf("Relais Nr. %d (%s) ist bereits an!\n", f, deviceNames[f]);
              }
         }
     }
-
-
-
-
     ////////////////////
     ///// 230 Volt  ////
     ////////////////////
+    // config Objekt überladen
     if (ini_parse("/Energiebox/230V/config.ini", handler230, &config) < 0) {
         printf("Can't load '/Energiebox/230V/config.ini'\n");
         return 1;
@@ -358,6 +356,7 @@ int main(int argc, char**argv) {
                      delay(639);
                      // impuls beenden
                      mcp_digitalWrite(f, 1);
+                     sleep(1);
                  }
                  else {
                      printf("\e[0;31m%s benötigt %d Watt. Derzeit maximal verfügbar: %d Watt!\n", deviceNames[f], devicePMax[f], config.mcp.maxOutputPower-pMaxCurrent);
