@@ -357,7 +357,7 @@ int main(int argc, char**argv) {
         }
        // wenn gewünschter relaiszustand und config stand gleich sind, nix machen
         if(atoi(argv[2]) != getElkoState(atoi(argv[1]), &config)){ 
-            sleep(atoi(argv[3]) * 60);
+            sleep(atoi(argv[3]));
             // wenn eingeschaltet wird
             if(atoi(argv[2])==1) { 
                     // prüfen ob DC Konverter  genug Leistung hat
