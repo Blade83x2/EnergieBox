@@ -92,7 +92,7 @@ int main(int argc, char* argv[]) {
             // und param2 größer als 0.1 ist
             filterMenge = (float) atof(argv[2]);
             if (filterMenge >= 0.1){
-                printf(" Wasser wird gefiltert:\n\n");
+                printf("\n Wasser wird gefiltert:\n\n");
                 printf(" Filtermenge: %f Liter\n", filterMenge);
                 filterLaufzeit = ((filterMenge / 0.1) * filterZeitFuerNullKommaEinsLiterInSekunden);
                 printf(" Filterlaufzeit: %f Sekunden\n", filterLaufzeit);
