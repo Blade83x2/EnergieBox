@@ -24,20 +24,17 @@ int pumpeRelaisNr = 6;
 // Liter Pro Galone
 float literProGalone = 3.7854f;
 
-// Liter pro Tag (gpd * literProGalone)
+// Liter pro Tag (gpd * literProGalone). wird in main berechnet
 float literProTag = 0.f;
-
-// Relaise Nr. für Pumpe & Boosterpumpe
-//int pumpeRelaisNr = 6;
 
 // Maximale Abwasser Literanzahl bei Reinigung
 //int maxLiterAbwasserBeiReinigung = 5;
 
 // maxLiterAbwasserKanister (Überlaufschutz)
-//int maxLiterAbwasserKanister = 10;
+float maxLiterAbwasserKanister = 10f;
 
 // Aktuell gesameltes Abwasser (wird bei param1 = -r auf Null gesetzt)
-//int aktuellesGesameltesAbwasser = 0;
+float aktuellesGesameltesAbwasser = 0f;   //TODO aus ini lesen !!!!!!!!!!!!!
 
 // Filtermenge (wird von param1 überschrieben)
 float filterMenge = 0.f;
@@ -54,11 +51,11 @@ int main(int argc, char* argv[]) {
     system("12V $pumpeRelaisNr 0"); // Wenn Pumpe an, dann ausschalten
     showLogo();
 
-/*
+
     printf("GPD: %d\n", gpd);
     printf("Liter pro Galone %f\n", literProGalone);
     printf("Liter pro Tag: %f \n\n\n", literProGalone*gpd);
-*/
+
 
 
     if(argc == 1) {
@@ -101,14 +98,14 @@ int main(int argc, char* argv[]) {
             filterMenge = (float) atof(argv[2]);
             if (filterMenge >= 0.1){
                 printf(" Wasser wird gefiltert:\n ");
-	        printf(" Filtermenge  = %f Liter\n", filterMenge);
+                printf(" Filtermenge  = %f Liter\n", filterMenge);
 
 
 
 
 
 
-// TODO filterzeit ermitteln und pumpe für diese zeit anstellen
+                // TODO filterzeit ermitteln und pumpe für diese zeit anstellen
 
 
 
@@ -132,7 +129,7 @@ void clearSystem() {
     printf("\nREINIGUNG\n\n");
     // Hinweisen das Ventil gedreht werden muss
 
-// TODO zuerst eimer leer machen, dann bestätigen, dann reinigen
+    // TODO zuerst eimer leer machen, dann bestätigen, dann reinigen
 
 
 }

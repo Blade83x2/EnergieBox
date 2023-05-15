@@ -353,7 +353,7 @@ int main(int argc, char**argv) {
                      // eltakostatus in config schreiben
                      sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", (f+1), 1);
                      system(command);
-                     delay(639);
+                     // delay(639);
                      // impuls beenden
                      // mcp_digitalWrite(f, 1);
                      sleep(1);
