@@ -13,10 +13,7 @@ int gpd = 50;
 int maxLiterAbwasserBeiReinigung = 5;
 
 // maxLiterAbwasserKanister (Überlaufschutz)
-int maxLiterAbwasserKanister = 10;
-
-// Aktuell gesameltes Abwasser (wird bei param1 = -r auf Null gesetzt)
-int aktuellesGesameltesAbwasser = 0;
+float maxLiterAbwasserKanister = 10.f;
 
 // Relaise Nr. für Pumpe & Boosterpumpe
 int pumpeRelaisNr = 6;  
@@ -26,12 +23,6 @@ float literProGalone = 3.7854f;
 
 // Liter pro Tag (gpd * literProGalone). wird in main berechnet
 float literProTag = 0.f;
-
-// Maximale Abwasser Literanzahl bei Reinigung
-//int maxLiterAbwasserBeiReinigung = 5;
-
-// maxLiterAbwasserKanister (Überlaufschutz)
-float maxLiterAbwasserKanister = 10.f;
 
 // Aktuell gesameltes Abwasser (wird bei param1 = -r auf Null gesetzt)
 float aktuellesGesameltesAbwasser = 0.f;   //TODO aus ini lesen !!!!!!!!!!!!!
