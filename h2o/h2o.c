@@ -79,13 +79,16 @@ int main(int argc, char* argv[]) {
 	// Wenn param1 gleich -c ist, Anlage spülen
         if (strcmp(param1, "-c") == 0) {
             clearSystem();
+            return 0;
         }
         // Wenn param1 gleich -r ist, Literzähler für Abwasserabfang Kanister auf 0 setzen
         else if (strcmp(param1, "-r") == 0) {
             abwasserZaehlerReset();
+            return 0;
         }
         else {
 	    showHelp();
+            return 0;
         }
         return 0;
     }

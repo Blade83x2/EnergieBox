@@ -355,7 +355,7 @@ int main(int argc, char**argv) {
                      system(command);
                      delay(639);
                      // impuls beenden
-                     mcp_digitalWrite(f, 1);
+                     // mcp_digitalWrite(f, 1);
                      sleep(1);
                  }
                  else {
