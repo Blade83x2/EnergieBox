@@ -6,8 +6,17 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-// Galonen pro Tag Filtermenge
+// Filterleistung der Anlage in GPD
 int gpd = 50;
+
+// Dauer für 0,1 Liter Wasser zu filtern
+int filterZeitFuerNullKommaEinsLiterInSekunden = 42;
+
+
+
+  
+
+
 
 // Maximale Abwasser Literanzahl bei Reinigung
 int maxLiterAbwasserBeiReinigung = 5;
@@ -15,9 +24,11 @@ int maxLiterAbwasserBeiReinigung = 5;
 // maxLiterAbwasserKanister (Überlaufschutz)
 float maxLiterAbwasserKanister = 10.f;
 
-// Relaise Nr. für Pumpe & Boosterpumpe
+// Relais Nr. für Pumpe & Boosterpumpe
 int pumpeRelaisNr = 6;  
 
+// AB HIER NICHTS MEHR ÄNDERN!!!!!!
+//
 // Liter Pro Galone
 float literProGalone = 3.7854f;
 
@@ -29,6 +40,9 @@ float aktuellesGesameltesAbwasser = 0.f;   //TODO aus ini lesen !!!!!!!!!!!!!
 
 // Filtermenge (wird von param1 überschrieben)
 float filterMenge = 0.f;
+
+// Filterlaufzeit in Sekunden
+float filterLaufzeit = 0.f;
 
 // Funktionen deklarieren
 void clearSystem();
@@ -75,7 +89,7 @@ int main(int argc, char* argv[]) {
             return 0;
         }
         else {
-	    showHelp();
+            showHelp();
             return 0;
         }
         return 0;
@@ -89,8 +103,9 @@ int main(int argc, char* argv[]) {
             filterMenge = (float) atof(argv[2]);
             if (filterMenge >= 0.1){
                 printf(" Wasser wird gefiltert:\n ");
-                printf(" Filtermenge  = %f Liter\n", filterMenge);
-
+                printf(" Filtermenge: %f Liter\n", filterMenge);
+                filterLaufzeit = ((filterMenge / 0.1) * filterZeitFuerNullKommaEinsLiterInSekunden);
+                printf(" Filterlaufzeit: %f Sekunden\n", filterLaufzeit);
 
 
 
