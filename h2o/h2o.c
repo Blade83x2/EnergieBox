@@ -111,16 +111,11 @@ int main(int argc, char* argv[]) {
 
 
 
-                // TODO filterzeit ermitteln und pumpe für diese zeit anstellen
-
-
-
-
-
-
+                printf("\n");
+                return 0;
 
             } else {
-                printf("Die minimale Wassermenge zum filtern muss mindestens 0.1 Liter betragen!\n\n");
+                printf("\n\e[0;31m Die minimale Wassermenge zum filtern muss mindestens 0.1 Liter betragen!\n\n");
             }
         }
         else {
