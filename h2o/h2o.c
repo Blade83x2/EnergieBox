@@ -55,14 +55,6 @@ int main(int argc, char* argv[]) {
     printf("\033[2J\033[1;1H"); // Bildschirm löschen
     system("12V $pumpeRelaisNr 0"); // Wenn Pumpe an, dann ausschalten
     showLogo();
-
-
-    printf("GPD: %d\n", gpd);
-    printf("Liter pro Galone %f\n", literProGalone);
-    printf("Liter pro Tag: %f \n\n\n", literProGalone*gpd);
-
-
-
     if(argc == 1) {
         // Keine Parameter übergeben,Hilfe anzeigen
         showHelp();
@@ -74,8 +66,6 @@ int main(int argc, char* argv[]) {
         showHelp();
         return 0;
     }
-
-
     // wenn ein parameter übergeben worden ist
     if(argc == 2) {
 	// Wenn param1 gleich -c ist, Anlage spülen
@@ -102,7 +92,7 @@ int main(int argc, char* argv[]) {
             // und param2 größer als 0.1 ist
             filterMenge = (float) atof(argv[2]);
             if (filterMenge >= 0.1){
-                printf(" Wasser wird gefiltert:\n ");
+                printf(" Wasser wird gefiltert:\n\n");
                 printf(" Filtermenge: %f Liter\n", filterMenge);
                 filterLaufzeit = ((filterMenge / 0.1) * filterZeitFuerNullKommaEinsLiterInSekunden);
                 printf(" Filterlaufzeit: %f Sekunden\n", filterLaufzeit);
