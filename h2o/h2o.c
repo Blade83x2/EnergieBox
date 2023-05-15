@@ -6,8 +6,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-
-
 // Relais Nr. für Pumpe & Boosterpumpe
 int pumpeRelaisNr = 6;  
 
@@ -27,7 +25,6 @@ float maxLiterAbwasserBeiReinigung = 5.f;
 // Maximale Litermenge im Abwasser Behälter
 float maxLiterAbwasserKanister = 10.f;
 
-
 ///////////////////////////////////
 // AB HIER NICHTS MEHR ÄNDERN//////
 ///////////////////////////////////
@@ -44,16 +41,13 @@ float filterLaufzeit = 0.f;
 // Filterlaufzeit in Sekunden (int)
 int filterLaufzeit_int;
 
-
 // Abwassermenge für diese Filterung (filtermenge * faktorGefiltertZuAbwasser)
 float abwasserMenge = 0.f;
 
 // Aktuell gesameltes Abwasser (wird bei param1 = -r auf Null gesetzt)
 float aktuellesGesameltesAbwasser = 0.f;   //TODO aus ini lesen !!!!!!!!!!!!!
 
-
 char command[100];
-
 
 // h20 Struktur für INI Datei
 typedef struct { float aktuellesGesameltesAbwasser; } h2o_setup;
@@ -63,7 +57,7 @@ typedef struct { h2o_setup h2o; } configuration;
 static int handler(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
     #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
-    if(MATCH("h2o", "aktuellesGesameltesAbwasser")) { pconfig->h2o.aktuellesGesameltesAbwasser = atoi(value); }
+    if(MATCH("h2o", "aktuellesGesameltesAbwasser")) { pconfig->h2o.aktuellesGesameltesAbwasser = atof(value); }
     else { return 0; }
     return 1;
 }
@@ -82,6 +76,9 @@ int main(int argc, char* argv[]) {
         printf("Can't load '/Energiebox/h2o/config.ini'\n");
         return 1;
     }
+    
+
+    
     // Bildschirm löschen
     printf("\033[2J\033[1;1H");
     // Wenn Pumpe an, dann ausschalten
@@ -119,11 +116,6 @@ int main(int argc, char* argv[]) {
     if(argc == 3) {
         // Filtern, wenn param1 -l ist und param2 eine float Wert ist
         const char * param1 = argv[1];
-        
-        
-        // TODO In argv[2] Komma mit Punkt ersetzen falls vorhanden
-
-        
         // Wenn param1 gleich -l ist
         if (strcmp(param1, "-l") == 0) {
             // und param2 größer als 0.1 ist
@@ -148,8 +140,8 @@ int main(int argc, char* argv[]) {
                 printf(" -> Aktueller Kannisterfüllstand:\t%f Liter\n", aktuellesGesameltesAbwasser);
                 // Maximal mögliches Abwasser ausrechnen und anzeigen
                 printf(" -> Maximal mögliche Abwasser Menge:\t%f Liter\n", (maxLiterAbwasserKanister - aktuellesGesameltesAbwasser));
-                // Prüfen ob Abwasser Menge kleiner oder gleich verfügbaren Platz im Abwasser Kannister ist
-                if(abwasserMenge <= (maxLiterAbwasserKanister - aktuellesGesameltesAbwasser)) {
+                // Prüfen ob Abwasser Menge + Kannisterinhalt nicht mehr als maximale füllmenge ist
+                if( (abwasserMenge + aktuellesGesameltesAbwasser) <= maxLiterAbwasserKanister) {
                     // Neue Gesammelt Abwassermenge in Konfiguration speichern
                     sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f", (aktuellesGesameltesAbwasser+abwasserMenge));
                     system(command);
@@ -182,26 +174,42 @@ int main(int argc, char* argv[]) {
     }
 }
 
+// Anlage Reinigung per Durchspüllung
 void clearSystem() {
     printf("\nREINIGUNG\n\n");
     // Hinweisen das Ventil gedreht werden muss
 
     // TODO zuerst Eimer leer machen, dann bestätigen, dann reinigen
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }
 
 // Abwasser Kanister Literzähler auf 0 setzen
 void abwasserZaehlerReset() {
-    printf("\nAbwasser Reset\n\n");
     // Abfragen ob Eimer gelert worden ist. 
-    
-    
-    
-    
-    // Wenn ja, ini auf 0 setzen
-    sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %d", 0);
-    system(command);
+    char answer;
+    printf("\n\n -> Wurde der Abwasser Kannister entleert? Y/N: \n");
+    scanf("%c", &answer);
+    while (answer == 'Y' || answer == 'y' || answer == 'J' || answer == 'j'){
+        // Wenn ja, ini auf 0 setzen
+        sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %d", 0);
+        system(command);
+        printf("\n\n -> Abwasser Zähler auf 0 gestellt!\n\n");
+        break;
+    }
 }
 
 // Zeigt die Hilfe an
