@@ -31,10 +31,10 @@ float literProTag = 0.f;
 //int maxLiterAbwasserBeiReinigung = 5;
 
 // maxLiterAbwasserKanister (Überlaufschutz)
-float maxLiterAbwasserKanister = 10f;
+float maxLiterAbwasserKanister = 10.f;
 
 // Aktuell gesameltes Abwasser (wird bei param1 = -r auf Null gesetzt)
-float aktuellesGesameltesAbwasser = 0f;   //TODO aus ini lesen !!!!!!!!!!!!!
+float aktuellesGesameltesAbwasser = 0.f;   //TODO aus ini lesen !!!!!!!!!!!!!
 
 // Filtermenge (wird von param1 überschrieben)
 float filterMenge = 0.f;
