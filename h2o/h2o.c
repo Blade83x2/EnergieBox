@@ -1,11 +1,12 @@
 #include <stdio.h>
-#include <unistd.h>
+#include <stdlib.h> // atoi()
+#include <wiringPi.h> // rasperry Pi
+#include <wiringPiI2C.h>
+#include "mymcp23017.h"
+#include <unistd.h> // sleep()
 #include <string.h>
-#include <stdbool.h>
+#include <stdbool.h> 
 #include <ctype.h>
-#include <unistd.h>
-#include <stdlib.h>
-
 
 
 // Relais Nr. für Pumpe & Boosterpumpe
@@ -172,12 +173,12 @@ int main(int argc, char* argv[]) {
     }
 }
 
-
 // Handler für configurationfile
 static int handler(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
     #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
     if(MATCH("h2o", "aktuellesGesameltesAbwasser")) { pconfig->h2o.aktuellesGesameltesAbwasser = atof(value); }
+    
     else { return 0; }
     return 1;
 }
@@ -232,7 +233,7 @@ void showHelp() {
     printf(" h2o -l 0.2 [Produziert 0,2 Liter gefiltertes Wasser]\n");
     printf(" h2o -c [Spült die Anlage durch (Zuerst Ventil öffnen)]\n");
     printf(" h2o -r [Setzt Kanister für Abwasser auf Null]\n\n");
-    printf(" Parameter für Filteranlage werden in /Energiebox/h2o/config.ini eingestellt!\n\n\e[0m"); 
+    printf(" Parameter für Filteranlage werden z.B. mit sudo nano /Energiebox/h2o/config.ini eingestellt!\n\n\e[0m"); 
 }
 
 void showLogo() {
