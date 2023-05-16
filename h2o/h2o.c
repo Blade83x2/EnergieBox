@@ -164,7 +164,7 @@ int main(int argc, char* argv[]) {
                 // Maximal mögliches Abwasser ausrechnen und anzeigen
                 printf(" -> Restliche mögliche Abwasser Menge:\t%5.1f Liter\n", (maxLiterAbwasserKanister - aktuellesGesameltesAbwasser));
                 // Gesamt gefilterte Literzahl der Filterkartusche anzeigen
-                printf(" -> Bisherige Filterleistung:\t\t%5.0f Liter\n", gesamteFilterMengeInLiter);
+                printf(" -> Bislang gefiltertes Wasser:\t\t%5.0f Liter\n", gesamteFilterMengeInLiter);
                 // Empfohlene maximale Nutzungsleistung in Liter
                 printf(" -> Max. Empfohlene Nutzungsmenge:\t%5.0f Liter\n", warnLimitAbFilterMenge);
                 // Prüfen ob WarnMenge für gesamte gefilterte Menge ereicht ist
