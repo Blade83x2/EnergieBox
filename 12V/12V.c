@@ -334,6 +334,7 @@ int main(int argc, char**argv) {
                         // Nicht genug Watt verfügbar für neues Gerät
                         printf("\e[0;31mDas Gerät benötigt %d Watt aber es sind nur %d Watt verfügbar! Andere Geräte ausschalten..!?\n", 
                         getDevicePower(atoi(argv[1]), &config), getRestPower(&config));
+                        return 1;
                     }
               }
                 else {
@@ -375,6 +376,7 @@ int main(int argc, char**argv) {
                         // Nicht genug Watt verfügbar für neues Gerät
                         printf("\e[0;31mDas Gerät benötigt %d Watt aber es sind nur %d Watt verfügbar! Andere Geräte ausschalten..!?\n", 
                         getDevicePower(atoi(argv[1]), &config), getRestPower(&config));
+                        return 1;
                     }
                 }
                 else {
