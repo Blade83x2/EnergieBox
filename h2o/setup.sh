@@ -1,7 +1,9 @@
 #!/bin/bash
-# Richtet alle wichtigen Variablen ein. Anwendung:
+# Richtet alle wichtigen Variablen ein. Manueller Aufruf:
 # sudo sh setup.sh pumpeRelaisNr gpd warnLimitAbFilterMenge filterZeitFuerNullKommaEinsLiterInSekunden faktorGefiltertZuAbwasser maxLiterAbwasserKanister reinigungszeitInSekunden aktuellesGesameltesAbwasser gesamteFilterMengeInLiter
 # sudo sh setup.sh 6 50 5000.f 42 2 10.f 180 0.000000 0
+
+cd /Energiebox/h2o
 
 pumpeRelaisNr=$(echo $1);
 gpd=$(echo $2);
@@ -13,7 +15,6 @@ reinigungszeitInSekunden=$(echo $7);
 aktuellesGesameltesAbwasser=$(echo $8);
 gesamteFilterMengeInLiter=$(echo $9);
 
-cd /Energiebox/h2o
 
 sed -i "s/int pumpeRelaisNr = .*/int pumpeRelaisNr = "$pumpeRelaisNr";/" h2o.c;
 sed -i "s/int gpd = .*/int gpd = "$gpd";/" h2o.c;

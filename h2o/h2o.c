@@ -22,7 +22,7 @@ int pumpeRelaisNr = 6;
 int gpd = 50;
 
 // Warnung ab x Liter Filterleistung (Für Filtertausch Information)
-float warnLimitAbFilterMenge = 2000.f;
+float warnLimitAbFilterMenge = 1500.f;
 
 // Dauer für 0,1 Liter Wasser zu filtern in Sekunden
 int filterZeitFuerNullKommaEinsLiterInSekunden = 42;
@@ -32,7 +32,7 @@ int filterZeitFuerNullKommaEinsLiterInSekunden = 42;
 int faktorGefiltertZuAbwasser = 2;
 
 // Maximale Litermenge im Abwasser Behälter
-float maxLiterAbwasserKanister = 15.f;
+float maxLiterAbwasserKanister = 18.f;
 
 // Spülzeit/Reinigungszeit in Sekunden
 int reinigungszeitInSekunden = 150;
@@ -242,32 +242,32 @@ void setup() {
         printf("Can't load '/Energiebox/h2o/config.ini'\n");
     } 
     char answersetup;
-    printf("\n\n -> Einrichtung starten um neue Filteranlage zu konfigurieren? Y/N: ");
+    printf("\n-> Einrichtung starten um neue Filteranlage zu konfigurieren? Y/N: ");
     scanf("%c", &answersetup);
     if (answersetup == 'Y' || answersetup == 'y' || answersetup == 'J' || answersetup == 'j'){
         // Wenn ja, alle Daten zusammen erfragen und externe Datei aufrufen
         int p1;
-        printf("\n -> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
+        printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
         scanf("%d", &p1);
         int p2;
-        printf("\n -> Wieviel GPD hat die Filteranlage?: ");
+        printf("-> Wieviel GPD hat die Filteranlage?: ");
         scanf("%d", &p2);
         int p3;
-        printf("\n -> Wieviel (fertige) Liter Wasser sollte maximal mit einem Satz Filter gefiltert werden?: ");
+        printf("-> Wieviel (fertige) Liter Wasser sollte maximal mit einem Satz Filter gefiltert werden?: ");
         scanf("%d", &p3);
         int p4;
-        printf("\n -> Wie viele Sekunden braucht die Filteranlage um exakt 0.1 Liter gefiltertes Wasser zu produzieren?: ");
+        printf("-> Wie viele Sekunden braucht die Filteranlage um exakt 0.1 Liter gefiltertes Wasser zu produzieren?: ");
         scanf("%d", &p4);
         int p5;
-        printf("\n -> Wie ist das Verhältnis von gefiltertem Wasser zu Abwasser/Spülwasser? 1 zu: ");
+        printf("-> Wie ist das Verhältnis von gefiltertem Wasser zu Abwasser/Spülwasser? 1 zu: ");
         scanf("%d", &p5);
         int p6;
-        printf("\n -> Wieviel Liter kann der Abwasser/Spülwasser Tank aufnehmen?: ");
+        printf("-> Wieviel Liter kann der Abwasser/Spülwasser Tank aufnehmen?: ");
         scanf("%d", &p6);  
         int p7;
-        printf("\n -> Wieviele Sekunden sollen bei einer Spüllung gespüllt werden?: ");
+        printf("-> Wieviele Sekunden sollen bei einer Spüllung gespüllt werden?: ");
         scanf("%d", &p7);  
-        sprintf(command, "sudo sh setup.sh %d %d %d.f %d %d %d.f %d 0.000000 0", p1, p2, p3, p4, p5, p6, p7);
+        sprintf(command, "sudo sh /Energiebox/h2o/setup.sh %d %d %d.f %d %d %d.f %d 0.000000 0", p1, p2, p3, p4, p5, p6, p7);
         system(command);
     }
 }
