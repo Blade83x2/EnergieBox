@@ -1,0 +1,6 @@
+C£º
+gcc -Wall -o 8segment_digital_tube 8segment_digital_tube.c -lwiringPi
+sudo ./8segment_digital_tube
+
+Python:
+python 8segment_digital_tube.py

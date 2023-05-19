@@ -30,7 +30,6 @@ Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontr
  [UPDATE] Batterie Kapazität auf 14.440 Wattstunden erhöht (10x 120 Ampere LKW Batterien)
  [NEW] 150 Ampere Batterie Sicherung verbaut
  [UPDATE] 16mm² Potentialausgleichs Kabel mit Erdpol angeschlossen
- [NEW] 150 Ampere Shunt für die Anzeige aller Messbare  Werte an der Batterie
  [UPDATE] Neue 3 Pannelen Stringbildung. Gesamte Eingangsleistung der Pannelen: 2.500 Watt
  [NEW] Kontrolle für Gesamt Abnahme Leistung verbaut. Funktioniert als Überlastungsschutz für Spannungswandler
  [NEW] Namensvergabe für Anschlußvergabe in Konfigurationsdatei eingebaut

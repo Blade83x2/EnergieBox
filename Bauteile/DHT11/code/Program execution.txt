@@ -1,0 +1,6 @@
+C£º
+gcc -Wall -o dht11 dht11.c -lwiringPi
+sudo ./dht11
+
+Python:
+python dht11.py
