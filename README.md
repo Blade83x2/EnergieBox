@@ -84,12 +84,7 @@ sudo nano /etc/motd
 
 aufgerufen und alles was in dieser Datei steht wird ersetzt mit:
 
- _____                      _      ____
-| ____|_ __   ___ _ __ __ _(_) ___| __ )  _____  __
-|  _| | '_ \ / _ \ '__/ _` | |/ _ \  _ \ / _ \ \/ /
-| |___| | | |  __/ | | (_| | |  __/ |_) | (_) >  <
-|_____|_| |_|\___|_|  \__, |_|\___|____/ \___/_/\_\
-                      |___/ V 1.0 by Johannes Krämer
+EnergieBox v3.0 by Johannes Krämer
 
 Von Hier aus kann die gesamelte Sonnenenergie über Relais verteilt werden.
 Mit den Programmen 12V und 230V werden diese Relais angesteuert.
