@@ -124,6 +124,7 @@ sudo nano ~/.bashrc
 ein und fügen ganz unten am Ende der Datei folgendes ein:
 
 12V
+
 230V
 
 Auch diese Aktion wird wieder mit Strg + x gespeichert.
@@ -155,6 +156,7 @@ eingegeben und in diese Datei wird folgendes rein kopiert:
 
 exit 0
 
+
 Diese Aktion wird wieder mit Strg + x gespeichert.
 Als nächstes wird der Befehl
 
@@ -180,6 +182,7 @@ RemainAfterExit=yes
 
 WantedBy=multi-user.target
 
+
 Wie immer wird diese Aktion mit Strg + x gespeichert.
 Um diesen Service einzuschalten, muss er noch aktiviert werden.
 Dies geschieht mit folgendem Terminal Befehl:
@@ -202,8 +205,11 @@ am Ende fügen wir die 4 Zeilen hinzu und speichern diese danach
 wieder ab mit Strg + x:
 
 PATH=$PATH:/Energiebox/12V
+
 PATH=$PATH:/Energiebox/230V
+
 PATH=$PATH:/Energiebox/Kolloid
+
 PATH=$PATH:/Energiebox/h2o
 
    
@@ -233,9 +239,13 @@ hat hier ein Beispiel für das Setzen der GPIO Direction (in/out) sowie Wert (nu
 sudo nano /etc/rc.local                  
                    
 sleep 0.1
+
 echo "20" > /sys/class/gpio/export
+
 sleep 0.1
+
 echo "out" > /sys/class/gpio/gpio20/direction
+
 echo "1" > /sys/class/gpio/gpio20/value
   
 
