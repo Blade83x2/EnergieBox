@@ -313,7 +313,7 @@ int main(int argc, char**argv) {
                 system(command);
                 pMaxCurrent += devicePMax[f];
                 printf("Neuer Verbrauch aller Geräte derzeit: %d Watt\n", pMaxCurrent);
-                sleep(0.3);
+                sleep(0.6);
             }
             else {
                 // Gerät kann nicht eingeschaltet werden weil nicht genug Leistung vorhanden ist
@@ -339,7 +339,7 @@ int main(int argc, char**argv) {
     // Alle als OUTPUT definieren und ausschalten
     for(int i = 0; i<config.mcp.numberOfRelaisActive; i++) {
         mcp_pinMode(i, 0);
-        mcp_digitalWrite(i,1);
+        mcp_digitalWrite(i, 1);
     }
     // Autostart Einträge aktivieren für 230V
     for(int f=0; f<config.mcp.numberOfRelaisActive; f++){
@@ -360,7 +360,7 @@ int main(int argc, char**argv) {
                 // eltakostatus in config schreiben
                 sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", (f+1), 1);
                 system(command);
-                sleep(0.3);
+                sleep(0.6);
             }
             else {
                 printf("\e[0;31m%s benötigt %d Watt. Derzeit maximal verfügbar: %d Watt!\n", deviceNames[f], devicePMax[f], config.mcp.maxOutputPower-pMaxCurrent);
