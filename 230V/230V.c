@@ -196,9 +196,8 @@ int getElkoState(int relais, void* config){
 // Gibt verfügbaren Watt Restwert zurück
 int getRestPower(void * config) {
      configuration* pconfig = (configuration*)config;
-     int watt;
-     watt=0;
-     // checken welche geräte an sind, watt addieren
+     int watt=0;
+     // checken welche Geräte an sind, Watt addieren
      if(pconfig->r1.eltakoState==1) watt += pconfig->r1.pMax;
      if(pconfig->r2.eltakoState==1) watt += pconfig->r2.pMax;
      if(pconfig->r3.eltakoState==1) watt += pconfig->r3.pMax;
@@ -221,9 +220,8 @@ int getRestPower(void * config) {
 // Gibt gesamten Watt Verbrauch zurück
 int getCurrentPower(void * config) {
      configuration* pconfig = (configuration*)config;
-     int watt;
-     watt=0;
-     // checken welche geräte an sind, watt addieren
+     int watt=0;
+     // checken welche Geräte an sind, Watt addieren
      if(pconfig->r1.eltakoState==1) watt += pconfig->r1.pMax;
      if(pconfig->r2.eltakoState==1) watt += pconfig->r2.pMax;
      if(pconfig->r3.eltakoState==1) watt += pconfig->r3.pMax;
@@ -243,12 +241,10 @@ int getCurrentPower(void * config) {
      return watt;
 }
 
-
-// Gibt benötigte Watt vom gerät zurück
+// Gibt benötigte Watt vom Gerät zurück
 int getDevicePower(int relais, void * config) {
      configuration* pconfig = (configuration*)config;
-     int watt;
-     watt=0;
+     int watt=0;
      if(relais==1) return pconfig->r1.pMax;
      if(relais==2) return  pconfig->r2.pMax;
      if(relais==3) return  pconfig->r3.pMax;
@@ -269,22 +265,13 @@ int getDevicePower(int relais, void * config) {
 }
 
 
-int main(int argc, char**argv) {    
+int main(int argc, char**argv) {
     configuration config;
-    if (ini_parse("/Energiebox/230V/config.ini", handler, &config) < 0) {
-        printf("Can't load '/Energiebox/230V/config.ini'\n");
-        return 1;
-    }
-    if(wiringPiSetup()<0) {
-        printf("wiringPiSetup error!!!");
-        return -1;
-    }
+    if (ini_parse("/Energiebox/230V/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/230V/config.ini'\n"); return 1; }
+    if(wiringPiSetup()<0) { printf("wiringPiSetup error!!!"); return -1; }
     mcp_begin(config.mcp.address);
     fd = wiringPiI2CSetup(MCP23017_ADDRESS | i2caddr);
-    if(fd <0) {
-        printf("wiringPi I2C Setup error!!!");
-        return -1;
-    }
+    if(fd <0) { printf("wiringPi I2C Setup error!!!"); return -1; }
 
     if(argc == 1) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
