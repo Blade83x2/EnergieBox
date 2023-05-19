@@ -12,7 +12,8 @@ Installationsanweisung:
 3) Startup & Shutdown Service
 4) PATH Variablen setzen
 5) DynDNS Einrichtung für Mobile App Zugriff
-6) GPIO Zustände beim starten
+6) Adresse für Portexpander einstellen
+7) GPIO Zustände beim starten
 
 
 -------------------------------------
@@ -211,7 +212,7 @@ PATH=$PATH:/Energiebox/h2o
 
    
 -------------------------------------
-IP Setup & DynDNS Einrichtungf      |
+IP Setup & DynDNS Einrichtung       |
 -------------------------------------  
                    
 Es ist ratsam, die IP Adresszuweisung durch DHCP auf dem Raspberry zu deaktivieren
@@ -222,6 +223,13 @@ Schritte nicht zu gehen. Ich werde hier jetzt nicht näher darauf eingehen, da
 jede Netzwerkinstallation anders ist und es keine Universal Anleitung dazu gibt.
 Eins sei jedoch noch gesagt, wer mit z.B. der Raspberry Controller App Zugang haben
 möchte, muss den Standart SFTP Port 22 im Gateway frei geben!
+
+
+-------------------------------------
+Adresse für Portexpander einstellen |
+-------------------------------------
+
+
 
 
 -------------------------------------
