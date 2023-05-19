@@ -1,6 +1,0 @@
-C£º
-gcc -Wall -o passiveBuzzer passiveBuzzer.c -lwiringPi
-sudo ./passiveBuzzer
-
-Python:
-python buzzer_passive.py

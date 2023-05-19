@@ -1,6 +1,0 @@
-C£º
-gcc -Wall -o servo servo.c -lwiringPi
-sudo ./servo
-
-Python:
-python servo.py
