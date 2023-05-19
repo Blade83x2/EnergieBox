@@ -306,7 +306,7 @@ int main(int argc, char**argv) {
             return showHelp(argv, &config);
         }
         // wenn eingeschaltet wird
-        if(atoi(argv[2])==1) { 
+        if(atoi(argv[2])==1) {
             // prüfen ob genug power da ist
             if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxOutputPower) {
                 // Relais einschalten
@@ -324,13 +324,12 @@ int main(int argc, char**argv) {
         else {
             // wenn ausgeschaltet wird
             // Relais ausschalten
-            setBit(atoi(argv[1])-1, 1); 
+            setBit(atoi(argv[1])-1, 1);
             //  elkoState in config.ini schreiben
             sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
             system(command);
             sleep(0.6);
         }
-        
     }
     else if(argc == 4) {
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config) || !checkMainParameter("relaisTime", atoi(argv[3]), &config )) {
@@ -338,10 +337,10 @@ int main(int argc, char**argv) {
         } 
         sleep(atoi(argv[3]));
         // wenn eingeschaltet wird
-        if(atoi(argv[2])==1) { 
+        if(atoi(argv[2])==1) {
             // prüfen ob Spannungswandler genug Watt  für alles liefert
             if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxOutputPower) {
-                // Relais einschalten 
+                // Relais einschalten
                 setBit(atoi(argv[1])-1, 0);
                 //  elkoState in config.ini schreiben
                 sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
@@ -355,8 +354,8 @@ int main(int argc, char**argv) {
         }
         else {
             // wenn ausgeschaltet wird
-            // Relais einschalten 
-            setBit(atoi(argv[1])-1, 0); 
+            // Relais ausschalten
+            setBit(atoi(argv[1])-1, 1);
             //  elkoState in config.ini schreiben
             sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
             system(command);
