@@ -176,7 +176,7 @@ do
     if [ $size -lt 1000 ]; then # Kleine Mengen mit vielen Runden
         if [ $(($r % 2)) == 0 ]; then  # jede zweite Runde Köcheln für 4 Minuten
             230V $heizplatteRelais 1
-            230V $heizplatteRelais 0 4 & disown
+            230V $heizplatteRelais 0 240 & disown
         fi
     fi
     [ $time -lt $maxRuntime ] && _endt=$time || _endt=$maxRuntime;

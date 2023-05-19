@@ -280,12 +280,13 @@ int main(int argc, char**argv) {
     }
     // Register Bits
     mcp_initReg();
-    // mcp_writeRegister(0x00, 0x00); // bank a auf output
-    // mcp_writeRegister(0x01, 0x00);  // bank b auf output
     // Alle als Output definieren und auf aus stellen
     for(int i = 0; i<config.mcp.numberOfRelaisActive; i++) {
         mcp_pinMode(i, 0);
         mcp_digitalWrite(i,1);
+        sprintf(command, "sudo sh /Energiebox/12V/setIni.sh %d %d", (i+1), 0);
+        system(command);
+        sleep(0.1);
     }
     // verfügbare Watt ausrechnen
     pMaxCurrent = 0;
@@ -296,6 +297,7 @@ int main(int argc, char**argv) {
         if(getBit(w+1) == 1) {
             pMaxCurrent += devicePMax[w];
         }
+        sleep(0.1);
     }
     printf("Aktueller Verbrauch aller Geräte derzeit: %d Watt\n\n", pMaxCurrent);
     // Jedes Relais durchlaufen
@@ -340,6 +342,9 @@ int main(int argc, char**argv) {
     for(int i = 0; i<config.mcp.numberOfRelaisActive; i++) {
         mcp_pinMode(i, 0);
         mcp_digitalWrite(i, 1);
+        sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", (i+1), 0);
+        system(command);
+        sleep(0.1);
     }
     // Autostart Einträge aktivieren für 230V
     for(int f=0; f<config.mcp.numberOfRelaisActive; f++){
@@ -352,6 +357,7 @@ int main(int argc, char**argv) {
                 if(getBit(w+1) == 1) {
                     pMaxCurrent += devicePMax[w];
                 }
+                sleep(0.1);
             }
             // Wenn zusätzliche Leistung + aktuelle Leistung kleiner oder gleich maximal Abgabe Leistung in Watt
             if((pMaxCurrent + devicePMax[f]) <= config.mcp.maxOutputPower){
