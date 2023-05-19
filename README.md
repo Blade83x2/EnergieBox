@@ -21,7 +21,8 @@ Installation benötigter Pakete      |
 
 Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Installation verschiedener benötigter Pakete:
 
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install manpages-de figlet python-dev python-pip git-core -y\n
+sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install manpages-de figlet python-dev python-pip git-core -y
+
 sudo pip install rpi.gpio && git clone git://git.drogon.net/wiringPi && cd wiringPi && ./build
 
 
