@@ -150,9 +150,9 @@ sudo nano /etc/rc.shutdown
 eingegeben und in diese Datei wird folgendes rein kopiert:
 
 #!/bin/bash
-# rc.shutdown
-# Für das deaktivieren der Relais vom MCP23017
+
 /Energiebox/Shutdown/mcp_shutdown
+
 exit 0
 
 Diese Aktion wird wieder mit Strg + x gespeichert.
@@ -163,15 +163,21 @@ sudo nano /etc/systemd/system/rcshutdown.service
 in der Konsole abgesetzt und in diese Datei wird folgendes eingefügt:
 
 [Unit]
+
 Description=/etc/rc.shutdown
+
 Before=shutdown.target
 
 [Service]
+
 ExecStart=/bin/true
+
 ExecStop=/etc/rc.shutdown
+
 RemainAfterExit=yes
 
 [Install]
+
 WantedBy=multi-user.target
 
 Wie immer wird diese Aktion mit Strg + x gespeichert.
