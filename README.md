@@ -111,6 +111,7 @@ Schaltbeispiel für 230V Relais:
 
                 
 
+                
 Diese Änderung kann ebenfalls wieder mit der Tastenkombination 
 Strg + x gespeichert werden. Nun tippen wir auf der Konsole den Befehl 
 
@@ -121,6 +122,7 @@ ein und fügen ganz unten am Ende der Datei folgendes ein:
 12V
 
 230V
+
 
 Auch diese Aktion wird wieder mit Strg + x gespeichert.
 
