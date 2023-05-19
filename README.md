@@ -49,7 +49,9 @@ sudo nano /boot/config.txt
 vom Terminal aus aufgerufen und in der Datei folgendes auskommentiert:
 
 dtoverlay=w1-gpio
+
 dtoverlay=disable-wifi
+
 dtoverlay=disable-bt
 
 Mit dem drücken der Tastenkombination Strg + x kann die Änderung gespeichert werden.
