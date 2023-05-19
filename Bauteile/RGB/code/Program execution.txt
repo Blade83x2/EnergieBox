@@ -1,6 +1,0 @@
-C£º
-gcc -Wall -o rgb rgb.c -lwiringPi
-sudo ./rgb
-
-Python:
-python rgb.py

@@ -1,1 +1,0 @@
-Remove the insulation on the remote control before using the infrared remote control
