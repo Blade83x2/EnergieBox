@@ -8,13 +8,13 @@
 #include <stdbool.h> 
 #include <ctype.h>
 
-
 int getBit(int Port);
 void setBit(int Port, int Status);
 bool checkMainParameter(char* paramName, int number, void* config);
 int showHelp(char**argv, void* config);
 char command[100];
 int timmerMode = 0;
+
 // MCP Setup
 typedef struct {
     int address;
@@ -131,63 +131,6 @@ static int handler(void* config, const char* section, const char* name, const ch
     return 1;
 }
 
-
-// Gibt gespeicherten Zustandswert von einem Relais zurück
-int getElkoState(int relais, void* config){
-    configuration* pconfig = (configuration*)config;
-    switch (relais) {
-        case 1:
-            return pconfig->r1.eltakoState;
-	    break;
-        case 2:
-            return pconfig->r2.eltakoState;
-            break;
-        case 3:
-            return pconfig->r3.eltakoState;
-            break;
-        case 4:
-            return pconfig->r4.eltakoState;
-            break;
-        case 5:
-            return pconfig->r5.eltakoState;
-            break;
-        case 6:
-            return pconfig->r6.eltakoState;
-            break;
-        case 7:
-            return pconfig->r7.eltakoState;
-            break;
-        case 8:
-            return pconfig->r8.eltakoState;
-            break;
-        case 9:
-            return pconfig->r9.eltakoState;
-            break;
-        case 10:
-            return pconfig->r10.eltakoState;
-            break;
-        case 11:
-            return pconfig->r11.eltakoState;
-            break;
-        case 12:
-            return pconfig->r12.eltakoState;
-            break;
-        case 13:
-            return pconfig->r13.eltakoState;
-            break;
-        case 14:
-            return pconfig->r14.eltakoState;
-            break;
-        case 15:
-            return pconfig->r15.eltakoState;
-            break;
-        case 16:
-            return pconfig->r16.eltakoState;
-            break;
-    }
-    return 0;
-}
-
 // Gibt verfügbaren Watt Restwert zurück
 int getRestPower(void * config) {
      configuration* pconfig = (configuration*)config;
@@ -285,7 +228,7 @@ int main(int argc, char**argv) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
         printf("\n\e[0;30m\e[47m 230V\tStatus\t> %dW\t Gerätename   \e[0m\n", getCurrentPower(&config));
         for(int x=1; x<=config.mcp.numberOfRelaisActive; x++) {
-		printf("\e[0;36m %d\t%s %s\t %d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config)==0)?"\e[0;31m":"\e[0;32m"), ((getElkoState(x, &config)==0)?"aus":"an"), (getDevicePower(x, &config)), "W", deviceNames[x-1] );
+		printf("\e[0;36m %d\t%s %s\t %d%s \t%s  \e[0m\n", x, ((getBit(x)==0)?"\e[0;31m":"\e[0;32m"), ((getBit(x)==0)?"aus":"an"), (getDevicePower(x, &config)), "W", deviceNames[x-1] );
         }
         printf("\n");
     }
@@ -294,49 +237,43 @@ int main(int argc, char**argv) {
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config)) {
             return showHelp(argv, &config);
         }
-        printf("%d\n", getElkoState(atoi(argv[1]), &config)); // Nur Relais Nr. übergeben. config.ini auslesen und int auf console printen
+        printf("%d\n", getBit(atoi(argv[1]))); // Nur Relais Nr. Zustand zurück geben.
     }
     else if(argc == 3) {
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config)) {
             return showHelp(argv, &config);
         }
-        // wenn gewünschter relaiszustand und config stand gleich sind, nix machen
-        if(atoi(argv[2]) != getElkoState(atoi(argv[1]), &config)){ 
-        	// wenn eingeschaltet wird
-            if(atoi(argv[2])==1) { 
-                // prüfen ob genug power da ist
-                if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxOutputPower) {
-                    // impuls für Elko 
-                    setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais einschalten 
-                    //  elkoState in config.ini schreiben
-                    sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
-                    system(command);
-                    sleep(0.6);
-                    setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
-	            }
-                else {
-                    // Nicht genug Watt verfügbar für neues Gerät
-                    printf("\e[0;31mDas Gerät benötigt %d Watt aber es sind nur %d Watt verfügbar! Andere Geräte ausschalten..!?\n", getDevicePower(atoi(argv[1]), &config), getRestPower(&config));
-	            }
-            }
-            else {
-                // wenn ausgeschaltet wird
-                // impuls für Elko 
-                setBit(atoi(argv[1])-1, 0); // Relais einschalten 
-                //  elkoState in config.ini schreiben
+        // wenn eingeschaltet wird
+        if(atoi(argv[2])==1) {
+            // prüfen ob genug power da ist
+            if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxOutputPower) {
+                // Relais einschalten
+                setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais einschalten 
+                // elkoState in config.ini schreiben
                 sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                 system(command);
-                sleep(0.6);
-                // setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
+                sleep(0.3);
             }
+            else {
+                // Nicht genug Watt verfügbar für neues Gerät
+                printf("\e[0;31mDas Gerät benötigt %d Watt aber es sind nur %d Watt verfügbar! Andere Geräte ausschalten..!?\n", getDevicePower(atoi(argv[1]), &config), getRestPower(&config));
+            }
+        }
+        else {
+            // wenn ausgeschaltet wird
+            // Relais ausschalten
+            setBit(atoi(argv[1])-1, 1); // Relais ausschalten 
+            // elkoState in config.ini schreiben
+            sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
+            system(command);
+            sleep(0.3);
         }
     }
     else if(argc == 4) {
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config) || !checkMainParameter("relaisTime", atoi(argv[3]), &config )) {
             return showHelp(argv, &config);
         } 
-        // wenn gewünschter relaiszustand und config stand gleich sind, nix machen
-        if(atoi(argv[2]) != getElkoState(atoi(argv[1]), &config)){ 
+        if(atoi(argv[2]) != getBit(atoi(argv[1]))){ 
             sleep(atoi(argv[3]) * 60);
             // wenn eingeschaltet wird
             if(atoi(argv[2])==1) { 
@@ -347,8 +284,7 @@ int main(int argc, char**argv) {
                     //  elkoState in config.ini schreiben
                     sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                     system(command);
-                    sleep(0.6);
-                    // setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
+                    sleep(0.3);
                 }
                 else {
                     // Nicht genug Watt verfügbar für neues Gerät
@@ -357,13 +293,11 @@ int main(int argc, char**argv) {
             }
             else {
                 // wenn ausgeschaltet wird
-                // impuls für Elko 
-                setBit(atoi(argv[1])-1, 0); // Relais einschalten 
+                setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais ausschalten 
                 //  elkoState in config.ini schreiben
                 sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                 system(command);
-                sleep(0.6);
-                // setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
+                sleep(0.3);
             }
         }
     }

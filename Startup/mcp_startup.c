@@ -237,6 +237,24 @@ static int handler230(void* config, const char* section, const char* name, const
     return 1;
 }
 
+int getBit(int Port) {
+    Port = Port - 1;
+    int Get_Port, PIN;
+    if (Port > -1 && Port < 8) {
+        Get_Port = mcp_readRegister(0x12);
+        PIN = Port;
+    } else {
+        Get_Port = mcp_readRegister(0x13);
+        PIN = Port % 8;
+    }
+    if(Get_Port & (1 << PIN)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
+}
+
 
 int main(int argc, char**argv) {
     configuration config;
@@ -275,7 +293,7 @@ int main(int argc, char**argv) {
     pMaxCurrent += config.mcp.maxPMicroController;
     // derzeitige Leistung aller eingeschalteten Geräte addieren und in pMaxCurrent speichern
     for(int w=0; w<config.mcp.numberOfRelaisActive; w++) {
-        if(deviceEltakoState[w][0] == 1) {
+        if(getBit(w+1) == 1) {
             pMaxCurrent += devicePMax[w];
         }
     }
@@ -284,32 +302,23 @@ int main(int argc, char**argv) {
     for(int f=0; f<config.mcp.numberOfRelaisActive; f++){
         // wenn autostart aktiviert ist, 
         if( strcmp(deviceActiveOnStart[f],"true") == 0){
-             printf("Relais Nr. %d (%s) config.autostart = true\n", f, deviceNames[f]);
-             // wenn Relaise aus ist
-             if(deviceEltakoState[f][0] == 0){
-                 // Wenn zusätzliche Leistung + aktueller Leistungsverbrauch kleiner oder gleich maximal Abgabe Leistung vom DC-DC Konverter in Watt
-                 if((pMaxCurrent + devicePMax[f]) <= config.mcp.maxPConverter){
-                     printf("Relais Nr. %d (%s) wird eingeschatet!\n", f, deviceNames[f]);
-                     // Relais einschalten
-                     mcp_digitalWrite(f, 0);
-                     // eltakostatus in config schreiben
-                     sprintf(command, "sudo sh /Energiebox/12V/setIni.sh %d %d", (f+1), 1);
-                     system(command);
-                     pMaxCurrent += devicePMax[f];
-                     printf("Neuer Verbrauch aller Geräte derzeit: %d Watt\n", pMaxCurrent);
-                     sleep(1);
-                     // Wenn 12V mit Eltakos läuft, folgende Zeile entkommentieren ////////////////////////////////////////////////////////////////
-                     //mcp_digitalWrite(f, 1); ////////////////////////////////////////////////////////////////////////////////////////////////////
-                     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                 }
-                 else {
-                     // Gerät kann nicht eingeschaltet werden weil nicht genug Leistung vorhanden ist
-                     printf("\e[0;31m%s benötigt %d Watt. Derzeit ist nicht genügend Leistung verfügbar!\n", deviceNames[f], devicePMax[f]);
-                 }
-             } else {
-                 // Relais ist bereits an
-                 printf("Relais Nr. %d (%s) ist bereits an!\n", f, deviceNames[f]);
-             }
+            printf("Relais Nr. %d (%s) config.autostart = true\n", f, deviceNames[f]);
+            // Wenn zusätzliche Leistung + aktueller Leistungsverbrauch kleiner oder gleich maximal Abgabe Leistung vom DC-DC Konverter in Watt
+            if((pMaxCurrent + devicePMax[f]) <= config.mcp.maxPConverter){
+                printf("Relais Nr. %d (%s) wird eingeschatet!\n", f, deviceNames[f]);
+                // Relais einschalten
+                mcp_digitalWrite(f, 0);
+                // eltakostatus in config schreiben
+                sprintf(command, "sudo sh /Energiebox/12V/setIni.sh %d %d", (f+1), 1);
+                system(command);
+                pMaxCurrent += devicePMax[f];
+                printf("Neuer Verbrauch aller Geräte derzeit: %d Watt\n", pMaxCurrent);
+                sleep(0.3);
+            }
+            else {
+                // Gerät kann nicht eingeschaltet werden weil nicht genug Leistung vorhanden ist
+                printf("\e[0;31m%s benötigt %d Watt. Derzeit ist nicht genügend Leistung verfügbar!\n", deviceNames[f], devicePMax[f]);
+            }
         }
     }
     ////////////////////
@@ -336,32 +345,26 @@ int main(int argc, char**argv) {
     for(int f=0; f<config.mcp.numberOfRelaisActive; f++){
         // wenn autostart aktiviert ist, 
         if( strcmp(deviceActiveOnStart[f],"true") == 0){
-             // prüfen ob Relais aus ist
-             if(deviceEltakoState[f][0] == 0){
-                 // verfügbare Watt ausrechnen
-                 pMaxCurrent = 0;
-                 // derzeitige Leistung aller eingeschalteten Geräte addieren und in pMaxCurrent speichern
-                 for(int w=0; w<config.mcp.numberOfRelaisActive; w++) {
-                     if(deviceEltakoState[w][0] == 1) {
-                         pMaxCurrent += devicePMax[w];
-                     }
-                 }
-                 // Wenn zusätzliche Leistung + aktuelle Leistung kleiner oder gleich maximal Abgabe Leistung in Watt
-                 if((pMaxCurrent + devicePMax[f]) <= config.mcp.maxOutputPower){
-                     // impuls an Schaltrelais senden
-                     mcp_digitalWrite(f, 0);
-                     // eltakostatus in config schreiben
-                     sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", (f+1), 1);
-                     system(command);
-                     // delay(639);
-                     // impuls beenden
-                     // mcp_digitalWrite(f, 1);
-                     sleep(1);
-                 }
-                 else {
-                     printf("\e[0;31m%s benötigt %d Watt. Derzeit maximal verfügbar: %d Watt!\n", deviceNames[f], devicePMax[f], config.mcp.maxOutputPower-pMaxCurrent);
-                 }
-             }
+            // verfügbare Watt ausrechnen
+            pMaxCurrent = 0;
+            // derzeitige Leistung aller eingeschalteten Geräte addieren und in pMaxCurrent speichern
+            for(int w=0; w<config.mcp.numberOfRelaisActive; w++) {
+                if(getBit(w+1) == 1) {
+                    pMaxCurrent += devicePMax[w];
+                }
+            }
+            // Wenn zusätzliche Leistung + aktuelle Leistung kleiner oder gleich maximal Abgabe Leistung in Watt
+            if((pMaxCurrent + devicePMax[f]) <= config.mcp.maxOutputPower){
+                // Relais einschalten
+                mcp_digitalWrite(f, 0);
+                // eltakostatus in config schreiben
+                sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", (f+1), 1);
+                system(command);
+                sleep(0.3);
+            }
+            else {
+                printf("\e[0;31m%s benötigt %d Watt. Derzeit maximal verfügbar: %d Watt!\n", deviceNames[f], devicePMax[f], config.mcp.maxOutputPower-pMaxCurrent);
+            }
         }
     }
     return 0;
