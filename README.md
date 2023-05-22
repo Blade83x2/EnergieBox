@@ -3,10 +3,9 @@ ERSTINSTALLATION DER ENERGIEBOX SOFTWARE
 
 Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS läuft und
 2 MCP23017 (WAVESHARE, Artikelnummer BO-MCP23017) auf den Adressen 0x22 und 0x27
-eingerichtet sind. 
+sowie ein 7" Touchdisplay angeschlossen und eingerichtet sind. 
+
 Raspberry Pi Imager Download: https://www.raspberrypi.com/software/
-
-
 
 Installationsanweisung:
 
@@ -204,7 +203,7 @@ sudo nano /etc/bash.bashrc
 
 am Ende fügen wir die 4 Zeilen hinzu und speichern diese danach
 wieder ab mit Strg + x:
-
+ + OLED Display mit 4 Tasten (Hoch, Runter, Auswählen, Zurück) - Für das an/aus- schalten der Relais ohne App oder PC
 PATH=$PATH:/Energiebox/12V
 
 PATH=$PATH:/Energiebox/230V
@@ -232,7 +231,10 @@ möchte, muss den Standart SFTP Port 22 im Gateway frei geben!
 Firewall einstellen                 |
 -------------------------------------
 
+Den Port 22 geben wir mit der UFW Firewall frei während wir alles andere sperren.
+Hierzu muss auf der Konsole der Befehl abgesetzt werden:
 
+sudo ufw allow ssh/tcp && ufw limit ssh/tcp && sudo ufw logging on && sudo ufw enable
 
 
 -------------------------------------
