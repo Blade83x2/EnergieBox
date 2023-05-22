@@ -9,26 +9,22 @@ für den Dauerbetrieb geeignet. Dieser Planungsfehler wurde mit Stromstoß Eltak
 Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontroller wurde gegen das neueste und schnellste Model Raspberry Pi4 mit 8GB Arbeitsspeicher ausgetauscht.
  
  
- 
+ [UPDATE] Vollständiger Anschluß aller verfügbaren Geräte
+ [UPDATE] 7" Touchdisplay verbaut
+ [UPDATE] Raspberry Pi4 8GB verbaut
  [NEW] h2o Einrichtungsasistent erstellt. Alle wichtigen Parameter betreffend der Filteranlage werden beim Einrichten abgefragt
  [NEW] h2o Zeitgenaue Steuerung der Laufzeiten. Wassermengen können in 100ml Schritten angegeben werden. Keine nicht geplannten Putz- Sessions mehr 
  [NEW] h2o Filterinformationen implementiert für Qualitätsüberwachung
  [NEW] h2o Selbst- Reinigungsfunktion sowie Filterwechsel können nun von der Konsole aufgerufen werden
  [NEW] Design und Logo wurden nochmals neu erstellt
- [UPDATE] Raspberry Pi4 8GB verbaut
  [NEW] Aktueller Watt Verbrauch in Listenansicht für 12V und 230V hinzugefügt
  [UPDATE] Autostart für Eltakoschaltungen und Leistungsschutz geändert
- [NEW] Konfigurationsdatei für 230V: Eltako Position wird gespeichert -> Keine Unterbrechung mehr bei Neustart
  [NEW] Auto Git Push->  sudo sh /Energiebox/git.sh "Vesions Kommentar...." pusht alles zu GitHub hoch
- [BUGFIX] 230 Volt Schaltkreise sind jetzt auch bei Mikrocontroller Neustart aktiv geschaltet
  [BUGFIX] Eltakos für 230 Volt Schaltkreise verbaut
  [BUGFIX] Neues 16 fach Relais für 230 Volt Anschluß als Steuereinheit für Eltakos verbaut
- [UPDATE] Stromverbrauch für Mikrocontroller stark optimiert (Dauerspannung für Relais entfallen)
  [NEW] EPVER 100 Ampere MPPT Laderegler verbaut
  [NEW] 2 neue Busbars installiert
- [NEW] Not aus Schalter für Batterie
  [UPDATE] Batterie Kapazität auf 14.440 Wattstunden erhöht (10x 120 Ampere LKW Batterien)
- [NEW] 150 Ampere Batterie Sicherung verbaut
  [UPDATE] 16mm² Potentialausgleichs Kabel mit Erdpol angeschlossen
  [UPDATE] Neue 3 Pannelen Stringbildung. Gesamte Eingangsleistung der Pannelen: 2.500 Watt
  [NEW] Kontrolle für Gesamt Abnahme Leistung verbaut. Funktioniert als Überlastungsschutz für Spannungswandler
@@ -69,14 +65,10 @@ ________________________________________________________________________________
 
 PLANUNG für Version 4
 
- + OLED Display mit 4 Tasten (Hoch, Runter, Auswählen, Zurück) - Für das an/aus- schalten der Relais ohne App oder PC
  + Schickes abgeschirmtes Gehäuse 
- + Vollständiger Anschluß aller verfügbaren Geräte
  + Wizzard für Namensvergabe der zu Steuernden Geräte
  + Shunt verbinden mit Mikrocontroller
 
 PLANUNG für Version 5
  
- + Grafische Oberfläche für Schaltkreis Steuerung auf Display
- + Optimierte Automatische Energie Steuerung
- - DONT TOUCH A RUNNING SYSTEM!!!
+ + Grafische Oberfläche für Schaltkreis Steuerung auf Touch Display
