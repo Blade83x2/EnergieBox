@@ -37,7 +37,7 @@ void mcp_writeRegister(uint8_t addr, uint8_t value);
 void mcp_updateRegisterBit(uint8_t p, uint8_t pValue, uint8_t portAaddr, uint8_t portBaddr);
 
 
-#define MCP23017_ADDRESS 0x20
+#define MCP23017_ADDRESS 0x22
 
 // registers
 #define MCP23017_IODIRA 0x00

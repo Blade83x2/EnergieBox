@@ -1,9 +1,12 @@
 ERSTINSTALLATION DER ENERGIEBOX SOFTWARE
 @Copyright by Johannes a.d.F. K r ä m e r
 
-Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS läuft.
-Andernfalls kann eine SD Karte mit dem Programm Raspberry Pi Imager erstellt werden!
-Download: https://www.raspberrypi.com/software/
+Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS läuft und
+2 MCP23017 (WAVESHARE, Artikelnummer BO-MCP23017) auf den Adressen 0x22 und 0x27
+eingerichtet sind. 
+Raspberry Pi Imager Download: https://www.raspberrypi.com/software/
+
+
 
 Installationsanweisung:
 

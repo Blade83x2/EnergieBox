@@ -321,14 +321,12 @@ int main(int argc, char**argv) {
             if(atoi(argv[2])==1) { 
                     // prüfen ob DC Konverter genug Leistung hat
                     if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxPConverter) {
-                         // impuls für Elko 
+                         // Relais schalten 
                          setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais einschalten 
                         //  elkoState in config.ini schreiben
                          sprintf(command, "sudo sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
                          sleep(0.6);
-                         // Kommentar ausklammern wenn eltakos für 12V verfügbar sind
-                         //setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
                     }
                      else {
                         // Nicht genug Watt verfügbar für neues Gerät
@@ -339,16 +337,12 @@ int main(int argc, char**argv) {
               }
                 else {
                         // wenn ausgeschaltet wird
-                         // impuls für Elko 
-                         // Kommentar ausklammern wenn 12V mit Elkos laufen
-                         //setBit(atoi(argv[1])-1, 0); // Relais einschalten 
+                         // Relais ausschalten
+                         setBit(atoi(argv[1])-1, 1); // Relais ausschalten 
                          //  elkoState in config.ini schreiben
                          sprintf(command, "sudo sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
                          sleep(0.6);
-                         // Kommentar ausklammern wenn 12V mit Elkos laufen
-                         //setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
-                         setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais ausschalten
               }
         }
     }
@@ -369,9 +363,7 @@ int main(int argc, char**argv) {
                          sprintf(command, "sudo sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
                          sleep(0.6);
-                         // Wenn 12V mit Eltakos läuft, folgenden Kommentar entfernen
-                         //setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
-                    }
+                     }
                      else {
                         // Nicht genug Watt verfügbar für neues Gerät
                         printf("\e[0;31mDas Gerät benötigt %d Watt aber es sind nur %d Watt verfügbar! Andere Geräte ausschalten..!?\n", 
@@ -380,10 +372,7 @@ int main(int argc, char**argv) {
                     }
                 }
                 else {
-                        // wenn ausgeschaltet wird
-                         // impuls für Elko
-                         // Wenn 12V mit Eltakos läuft, folgende Zeile wieder einbinden 
-                         //setBit(atoi(argv[1])-1, 0); // Relais einschalten 
+                        // wenn ausgeschaltet wird 
                          //  elkoState in config.ini schreiben
                          sprintf(command, "sudo sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
@@ -460,8 +449,8 @@ int showHelp(char**argv, void* config) {
     printf("  %s\t\t\t[zeigt denn aktuellen Belegungsplan an]\n", argv[0]);
     printf("  %s 5\t\t\t[gibt denn aktuellen Schaltzustand von Relais 5 zurück. Relais verfügbar: 1 bis %d)]\n", argv[0], pconfig->mcp.numberOfRelaisActive);
     printf("  %s 5 1\t\t[schaltet Relais 5 auf 1 (an)]\n", argv[0]);
-    printf("  %s 7 0 10\t\t[schaltet Relais 7 aus in 10 Minuten]\n", argv[0]);
-    printf("  %s 10 1 5 & disown\t[schaltet Relais 10 im Hintergrund an in 5 Minuten und gibt die Konsole frei]\n\n", argv[0]);
+    printf("  %s 7 0 10\t\t[schaltet Relais 7 aus in 10 Sekunden]\n", argv[0]);
+    printf("  %s 10 1 300 & disown\t[schaltet Relais 10 im Hintergrund an in 5 Minuten und gibt die Konsole frei]\n\n", argv[0]);
     printf("  In der Konfigurationsdatei können Namen, Verbrauch & Autostart für angeschlossene Geräte vergeben werden!\n");
     printf("  sudo nano /Energiebox/%s/config.ini\e[0m \n\n", argv[0]);
     return -1;

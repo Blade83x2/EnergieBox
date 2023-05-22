@@ -22,7 +22,7 @@ int pumpeRelaisNr = 6;
 int gpd = 50;
 
 // Warnung ab x Liter Filterleistung (Für Filtertausch Information)
-float warnLimitAbFilterMenge = 1500.f;
+float warnLimitAbFilterMenge = 1000.f;
 
 // Dauer für 0,1 Liter Wasser zu filtern in Sekunden
 int filterZeitFuerNullKommaEinsLiterInSekunden = 42;
