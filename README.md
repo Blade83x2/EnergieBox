@@ -15,7 +15,7 @@ Installationsanweisung:
 3) Startup & Shutdown Service
 4) PATH Variablen setzen
 5) DynDNS Einrichtung für Mobile App Zugriff
-6) Adresse für Portexpander einstellen
+6) Firewall einstellen
 7) GPIO Zustände beim starten
 
 
@@ -25,7 +25,7 @@ Installation benötigter Pakete      |
 
 Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Installation verschiedener benötigter Pakete:
 
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install manpages-de figlet python-dev python-pip git-core -y
+sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install manpages-de figlet python-dev python-pip git-core ufw -y
 
 sudo pip install rpi.gpio && git clone git://git.drogon.net/wiringPi && cd wiringPi && ./build
 
@@ -68,10 +68,10 @@ Anschliessend gehen wir wieder in Interfacing Options rein und aktivieren noch d
 die Gleiche Weise. Nun gehen wir in das Menu Network Options unter Hostname und vergeben dort den
 Namen EnergieBox.
 
-Danach gehen wir in Boot Options rein, um in das Menü Desktop / CLI zu gelangen. Hier wird Console gewählt.
+Danach gehen wir in Boot Options rein, um in das Menü Desktop / CLI zu gelangen. Hier wird Desktop gewählt.
 
 Nun wählen wir das Menü Advanced Options aus um in das Menü Memory Split zu gelangen. Hier tippen wir den
-Wert 64 ein und bestätigen dies mit einem Klick auf OK. Da wir nun fertig sind wählen wir als letztes Finish
+Wert 256 ein und bestätigen dies mit einem Klick auf OK. Da wir nun fertig sind wählen wir als letztes Finish
 und starten den Raspberry neu um die Einstellungen zu übernehmen.
 
 Nach dem Neustart öffnen wir wieder ein Terminal und setzen den Befehl
@@ -168,7 +168,7 @@ in der Konsole abgesetzt und in diese Datei wird folgendes eingefügt:
 [Unit]
 
 Description=/etc/rc.shutdown
-
+Adresse für Portexpander
 Before=shutdown.target
 
 [Service]
@@ -229,7 +229,7 @@ möchte, muss den Standart SFTP Port 22 im Gateway frei geben!
 
 
 -------------------------------------
-Adresse für Portexpander einstellen |
+Firewall einstellen                 |
 -------------------------------------
 
 
