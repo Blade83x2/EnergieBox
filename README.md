@@ -38,6 +38,13 @@ mit den Rechten 755 oder Sie installieren es bequem mit git clone direkt an die 
  
  sudo git clone https://github.com/Blade83x2/EnergieBox.git /Energiebox && sudo chmod -R 755 /Energiebox
  cd /Energiebox/230V && sudo make && cd /Energiebox/12V && sudo make
+ 
+ 
+ 
+ 
+ ... andere auch kompilieren
+ 
+ 
 
 
 -------------------------------------
