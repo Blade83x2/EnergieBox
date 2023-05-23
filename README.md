@@ -131,6 +131,12 @@ ein und fügen ganz unten am Ende der Datei folgendes ein:
 
 Auch diese Aktion wird wieder mit Strg + x gespeichert.
 
+Nun prüfen wir noch kurz, ob die beiden Port Expander angezeigt werden unter dem Befehl:
+
+i2cdetect -y 1
+
+Sollte das der Fall sein, sind die MCP's richtig angeschlossen
+
 
 -------------------------------------
 Startup & Shutdown Service          |
