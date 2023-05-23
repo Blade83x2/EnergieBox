@@ -36,17 +36,11 @@ Installation Energiebox             |
 Die Energiebox können Sie per ZIP Download herunterladen und sollte unbedingt nach /Energiebox kopieren werden
 mit den Rechten 755 oder Sie installieren es bequem mit git clone direkt an die richtige Stelle:
  
- sudo git clone https://github.com/Blade83x2/EnergieBox.git /Energiebox && sudo chmod -R 755 /Energiebox
- cd /Energiebox/230V && sudo make && cd /Energiebox/12V && sudo make
+sudo git clone https://github.com/Blade83x2/EnergieBox.git /Energiebox && sudo chmod -R 755 /Energiebox
+cd /Energiebox/230V && sudo make && cd /Energiebox/12V && sudo make
+cd /Energiebox/h2o && sudo make && cd /Energiebox/Shutdown && sudo make && cd /Energiebox/Startup && sudo make
  
  
- 
- 
- ... andere auch kompilieren
- 
- 
-
-
 -------------------------------------
 Raspi Konfiguration                 |
 -------------------------------------
