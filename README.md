@@ -26,7 +26,7 @@ Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Inst
 
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install manpages-de python-dev python3-pip git-core ufw -y
 
-sudo pip install rpi.gpio && git clone git://git.drogon.net/wiringPi && cd wiringPi && ./build
+sudo pip install rpi.gpio && cd ~ && sudo git clone https://github.com/WiringPi/WiringPi.git && cd WiringPi && sudo ./build
 
 
 -------------------------------------
