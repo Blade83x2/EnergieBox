@@ -24,7 +24,7 @@ Installation benötigter Pakete      |
 
 Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Installation verschiedener benötigter Pakete:
 
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install manpages-de figlet python-dev python-pip git-core ufw -y
+sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install manpages-de python-dev python3-pip git-core ufw -y
 
 sudo pip install rpi.gpio && git clone git://git.drogon.net/wiringPi && cd wiringPi && ./build
 
@@ -203,7 +203,7 @@ sudo nano /etc/bash.bashrc
 
 am Ende fügen wir die 4 Zeilen hinzu und speichern diese danach
 wieder ab mit Strg + x:
- + OLED Display mit 4 Tasten (Hoch, Runter, Auswählen, Zurück) - Für das an/aus- schalten der Relais ohne App oder PC
+
 PATH=$PATH:/Energiebox/12V
 
 PATH=$PATH:/Energiebox/230V
