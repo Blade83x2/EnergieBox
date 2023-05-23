@@ -26,7 +26,7 @@ Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Inst
 
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install manpages-de python-dev python3-pip git-core ufw -y
 
-sudo pip install rpi.gpio && cd ~ && sudo git clone https://github.com/WiringPi/WiringPi.git && cd WiringPi && sudo ./build
+sudo pip install rpi.gpio
 
 
 -------------------------------------
@@ -37,7 +37,9 @@ Die Energiebox können Sie per ZIP Download herunterladen und sollte unbedingt n
 mit den Rechten 755 oder Sie installieren es bequem mit git clone direkt an die richtige Stelle:
  
 sudo git clone https://github.com/Blade83x2/EnergieBox.git /Energiebox && sudo chmod -R 755 /Energiebox
-cd /Energiebox/230V && sudo make && cd /Energiebox/12V && sudo make
+
+cd /Energiebox/WiringPi && sudo ./build && cd /Energiebox/230V && sudo make && cd /Energiebox/12V && sudo make
+
 cd /Energiebox/h2o && sudo make && cd /Energiebox/Shutdown && sudo make && cd /Energiebox/Startup && sudo make
  
  
