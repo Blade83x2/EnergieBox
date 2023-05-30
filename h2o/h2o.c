@@ -8,7 +8,7 @@
 #include <stdlib.h> // atoi()
 #include <wiringPi.h> // rasperry Pi
 #include <wiringPiI2C.h>  // rasperry Pi
-#include "mymcp23017.h"
+#include "mymcp23017.h" // PortExpander
 #include <unistd.h> // sleep()
 #include <string.h>
 #include <stdbool.h> 
@@ -37,10 +37,6 @@ float maxLiterAbwasserKanister = 18.f;
 // Spülzeit/Reinigungszeit in Sekunden
 int reinigungszeitInSekunden = 150;
 
-///////////////////////////////////
-// AB HIER NICHTS MEHR ÄNDERN//////
-///////////////////////////////////
-
 // Liter Pro Galone
 float literProGalone = 3.7854f;
 
@@ -66,7 +62,10 @@ float gesamteFilterMengeInLiter = 0.f;
 char command[100];
 
 // h20 Struktur für INI Datei
-typedef struct { float aktuellesGesameltesAbwasser; float gesamteFilterMengeInLiter; } h2o_setup;
+typedef struct { 
+    float aktuellesGesameltesAbwasser; float gesamteFilterMengeInLiter; int pumpeRelaisNr; int gpd; float warnLimitAbFilterMenge; 
+    int filterZeitFuerNullKommaEinsLiterInSekunden; int faktorGefiltertZuAbwasser; float maxLiterAbwasserKanister; int reinigungszeitInSekunden;
+} h2o_setup;
 typedef struct { h2o_setup h2o; } configuration;
 
 // Funktionen deklarieren
@@ -77,6 +76,7 @@ void changeFilter();
 void showHelp();
 void showLogo();
 void abwasserZaehlerReset();
+void printStatistik();
 
 // Programmstart mit oder ohne Parameter
 int main(int argc, char* argv[]) { 
@@ -86,10 +86,32 @@ int main(int argc, char* argv[]) {
         printf("Can't load '/Energiebox/h2o/config.ini'\n");
         return 1;
     }
+    // Programm Variablen aus config.ini laden
+    // Bereits verbrauchte Filtermenge in Liter
+    gesamteFilterMengeInLiter = config.h2o.gesamteFilterMengeInLiter;
+    // Aktuellen Abwasser Tankfüllstand auslesen
+    aktuellesGesameltesAbwasser = config.h2o.aktuellesGesameltesAbwasser;
+    // 12V Relais Nr. für Pumpe & Boosterpumpe
+    pumpeRelaisNr = config.h2o.pumpeRelaisNr;
+    // Filterleistung der Anlage in GPD
+    gpd = config.h2o.gpd;
+    // Warnung ab x Liter Filterleistung (Für Filtertausch Information)
+    warnLimitAbFilterMenge = config.h2o.warnLimitAbFilterMenge;
+    // Dauer für 0,1 Liter Wasser zu filtern in Sekunden
+    filterZeitFuerNullKommaEinsLiterInSekunden = config.h2o.filterZeitFuerNullKommaEinsLiterInSekunden;
+    // Faktor Abwassermenge zu Filtermenge. Beispiel: 
+    // Bei 1:2 (1 Liter gefiltertes Wasser und 2 Liter Abwasserproduktion) hier eine 2 eintragen
+    faktorGefiltertZuAbwasser = config.h2o.faktorGefiltertZuAbwasser;
+    // Maximale Litermenge im Abwasser Behälter
+    maxLiterAbwasserKanister = config.h2o.maxLiterAbwasserKanister;
+    // Spülzeit/Reinigungszeit in Sekunden
+    reinigungszeitInSekunden = config.h2o.reinigungszeitInSekunden;
+    
     // Bildschirm löschen
     printf("\033[2J\033[1;1H");
     // Wenn Pumpe an, dann ausschalten
-    system("12V $pumpeRelaisNr 0");
+
+
     showLogo();
     if(argc == 1) {
         // Keine Parameter übergeben, Hilfe anzeigen und beenden
@@ -98,7 +120,7 @@ int main(int argc, char* argv[]) {
     }
     // prüfen ob argv[1] -clean oder -empty oder -change oder -setup oder -l enthält, wenn nicht, Hilfe anzeigen
     const char * param1 = argv[1];
-    if ( (strcmp(param1, "-clean") == 1) || (strcmp(param1, "-setup") == 1) || (strcmp(param1, "-empty") == 1) || (strcmp(param1, "-change") == 1) || (strcmp(param1, "-l") == 1)) {
+    if ( (strcmp(param1, "-clean") == 1) || (strcmp(param1, "-setup") == 1) || (strcmp(param1, "-empty") == 1) || (strcmp(param1, "-change") == 1) || (strcmp(param1, "-stats") == 1) || (strcmp(param1, "-l") == 1)) {
         showHelp();
         return 0;
     }
@@ -124,11 +146,14 @@ int main(int argc, char* argv[]) {
             setup();
             return 0;
         }
+        else if (strcmp(param1, "-stats") == 0) {
+            printStatistik();
+            return 0;
+        }        
         else {
             showHelp();
             return 0;
         }
-        return 0;
     }
     if(argc == 3) {
         // Filtern, wenn param1 -l ist und param2 eine float Wert ist
@@ -157,9 +182,6 @@ int main(int argc, char* argv[]) {
                 printf(" -> Berechnete Abwasser Menge:\t\t%5.1f Liter\n", abwasserMenge);
                 // Kannistergröße anzeigen
                 printf(" -> Größe des Abwasser Tanks:\t\t%5.1f Liter\n", maxLiterAbwasserKanister);
-                // Aktuellen Abwasser Tankfüllstand auslesen
-                aktuellesGesameltesAbwasser = config.h2o.aktuellesGesameltesAbwasser;
-                gesamteFilterMengeInLiter = config.h2o.gesamteFilterMengeInLiter;
                 printf(" -> Aktueller Abwasser Tankfüllstand:\t%5.1f Liter\n", aktuellesGesameltesAbwasser);
                 // Maximal mögliches Abwasser ausrechnen und anzeigen
                 printf(" -> Restliche mögliche Abwasser Menge:\t%5.1f Liter\n", (maxLiterAbwasserKanister - aktuellesGesameltesAbwasser));
@@ -174,11 +196,12 @@ int main(int argc, char* argv[]) {
                 // Prüfen ob Abwasser Menge + Kannisterinhalt nicht mehr als maximale füllmenge ist
                 if( (abwasserMenge + aktuellesGesameltesAbwasser) <= maxLiterAbwasserKanister) {
                     // Neue Gesammelt Abwassermenge in Konfiguration speichern
-                    sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f", (aktuellesGesameltesAbwasser+abwasserMenge), (gesamteFilterMengeInLiter+filterMenge));
+                    sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", (aktuellesGesameltesAbwasser+abwasserMenge), (gesamteFilterMengeInLiter+filterMenge), pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);
                     system(command);
-                    // filter einschalten
-                    sprintf(command, "12V %d 1", pumpeRelaisNr);
+                    // filter nach einer Sekunde einschalten
+                    sprintf(command, "12V %d 1 1", pumpeRelaisNr);
                     system(command);
+                    sleep(1.3);
                     printf(" -> Benötigte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);      
                     printf(" -> WASSER WIRD GEFILTERT! BITTE WARTEN...\n");
                     // filter nach x ausschalten                    
@@ -188,7 +211,7 @@ int main(int argc, char* argv[]) {
                 }
                 else {
                     // Abwasser Kannister hat nicht genug freies Volumen für geplante Filterung. Programm beenden
-                    printf("\e[0;31m -> Die verfügbare Abwasser Menge ist zuviel.\n    Zuerst Abwasser Tank entleeren mit ./h2o -empty!\n\n\e[0m");
+                    printf("\e[0;31m -> Die verfügbare Abwasser Menge ist zuviel.\n    Zuerst Abwasser Tank entleeren mit h2o -empty!\n\n\e[0m");
                     return 0;
                 }
                 printf("\n");
@@ -212,12 +235,20 @@ static int handler(void* config, const char* section, const char* name, const ch
     #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
     if(MATCH("h2o", "aktuellesGesameltesAbwasser")) { pconfig->h2o.aktuellesGesameltesAbwasser = atof(value); }
     if(MATCH("h2o", "gesamteFilterMengeInLiter")) { pconfig->h2o.gesamteFilterMengeInLiter = atof(value); }    
+    if(MATCH("h2o", "pumpeRelaisNr")) { pconfig->h2o.pumpeRelaisNr = atoi(value); }    
+    if(MATCH("h2o", "gpd")) { pconfig->h2o.gpd = atoi(value); }    
+    if(MATCH("h2o", "warnLimitAbFilterMenge")) { pconfig->h2o.warnLimitAbFilterMenge = atof(value); }    
+    if(MATCH("h2o", "filterZeitFuerNullKommaEinsLiterInSekunden")) { pconfig->h2o.filterZeitFuerNullKommaEinsLiterInSekunden = atoi(value); }    
+    if(MATCH("h2o", "faktorGefiltertZuAbwasser")) { pconfig->h2o.faktorGefiltertZuAbwasser = atoi(value); }    
+    if(MATCH("h2o", "maxLiterAbwasserKanister")) { pconfig->h2o.maxLiterAbwasserKanister = atof(value); }    
+    if(MATCH("h2o", "reinigungszeitInSekunden")) { pconfig->h2o.reinigungszeitInSekunden = atoi(value); }    
     else { return 0; }
     return 1;
 }
 
 // Setzt Zähler von gesamt gefiltertem Wasser in der aktuellen Filterkartusche auf 0
 void changeFilter() {
+    
     // Konfiguration laden
     configuration config;
     // Konfiguration von h2o in config laden
@@ -229,12 +260,12 @@ void changeFilter() {
     printf("\n\n -> Wurde der Sedimentfilter & Aktivkohlefilter sowie die Membrane gewechselt? Y/N: ");
     scanf("%c", &answerchange);
     if (answerchange == 'Y' || answerchange == 'y' || answerchange == 'J' || answerchange == 'j'){
-        sprintf(command, "sudo sh /Energiebox/h2o/gesamteFilterMengeInLiter.sh %f", aktuellesGesameltesAbwasser);
+        sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", aktuellesGesameltesAbwasser, 0.f, pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);        
         system(command);
     }
 }
 
-// Programm Setup aufrufen und Filtereigenschaften auswählen
+// Programm Setup aufrufen und Filtereigenschaften abfragen
 void setup() {
     configuration config;
     // Konfiguration von h2o in config laden
@@ -267,36 +298,72 @@ void setup() {
         int p7;
         printf("-> Wieviele Sekunden sollen bei einer Spüllung gespüllt werden?: ");
         scanf("%d", &p7);  
-        sprintf(command, "sudo sh /Energiebox/h2o/setup.sh %d %d %d.f %d %d %d.f %d 0.000000 0", p1, p2, p3, p4, p5, p6, p7);
+        sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", 0.f, 0.f, p1, p2, (float)p3, p4, p5, (float)p6, p7);        
         system(command);
     }
+}
+
+// Statistik ausgeben
+void printStatistik() {
+  printf("\n +----------------------------------------------+\n");
+    printf(" |                   STATISTIK                  |\n");
+    printf(" +----------------------------------------------+\n");
+    printf(" | Filter                                       |\n");
+    printf(" |  Leistung:\t\t\t\t %d GP\t|\n", gpd);
+    printf(" |  Faktor (Filtermenge/Abwasser):\t 1/%d \t|\n", faktorGefiltertZuAbwasser);
+    printf(" |  Bisherige Filtermenge:\t\t %04.f L\t|\n", gesamteFilterMengeInLiter);
+    printf(" |  Filterlimit für Filtertausch:\t %04.f L\t|\n", warnLimitAbFilterMenge);
+    printf(" |  Restmenge bis Filtertausch:\t\t %04.f L\t|\n", warnLimitAbFilterMenge-gesamteFilterMengeInLiter);
+    printf(" |  Spülzeit in Sekunden:\t\t %d\t|\n", reinigungszeitInSekunden);
+    printf(" +----------------------------------------------+\n");
+    printf(" | Tank                                         |\n");
+    printf(" |  Fassungsvermögen:\t\t\t %04.f L\t|\n", maxLiterAbwasserKanister);    
+    printf(" |  Aktueller Füllstand:\t\t %04.f L\t|\n", aktuellesGesameltesAbwasser);    
+    printf(" |  Relais Numer von Pumpe:\t\t %d\t|\n", pumpeRelaisNr);    
+    printf(" +----------------------------------------------+\n\n");    
 }
 
 // Anlage Reinigen per Durchspüllung (Parameter -clean)
 void clearSystem() {
     configuration config;
-    // Konfiguration von h2o in config laden
-    if (ini_parse("/Energiebox/h2o/config.ini", handler, &config) < 0) {
-        printf("Can't load '/Energiebox/h2o/config.ini'\n");
-    } 
-    // Zuerst Abwasser Tanks prüfen ob leer
-    if(config.h2o.aktuellesGesameltesAbwasser == 0){
-        // Hinweisen das Ventil gedreht werden muss
+    // Konfiguration von config.ini in config laden
+    if (ini_parse("/Energiebox/h2o/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/h2o/config.ini'\n"); }
+    // Menge Abwasser + bereits gesameltes Abwasser berechnen und prüfen ob es weniger als maximaler Tankinhalt ist  
+    float ltr = ((float)reinigungszeitInSekunden / (float)filterZeitFuerNullKommaEinsLiterInSekunden);
+    abwasserMenge = (ltr * 0.1) * faktorGefiltertZuAbwasser;
+    // Prüfen ob generierte Abwassermenge + Tankinhalt nicht mehr als maximale füllmenge vom Tank ist
+    if( (abwasserMenge + aktuellesGesameltesAbwasser) <= maxLiterAbwasserKanister) {
+        // Fragen ob das Ventil gedreht wurde
         char answerclear;
-        printf("\n\n -> Wurde das Ventil auf Spülung gestellt? Y/N: ");
+        printf("\n\n -> Wurde das Ventil auf Spülung gestellt? J/N: ");
         scanf("%c", &answerclear);
         if (answerclear == 'Y' || answerclear == 'y' || answerclear == 'J' || answerclear == 'j'){
             // Wenn ja, Spülen
+            // Reinigungszeit berechnen
+            int s = reinigungszeitInSekunden;
+            int stunden = s / 3600;
+            s = s % 3600;
+            int minuten =  s / 60;
+            s = s % 60;
+            int sekunden = s;   
+            printf(" -> REINIGUNG WIRD GESTARTET!\n");
+            printf(" -> Benötigte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);      
             // filter einschalten
-            sprintf(command, "12V %d 1", pumpeRelaisNr);
+            sprintf(command, "12V %d 1 1", pumpeRelaisNr);
             system(command);
-            sprintf(command, "12V %d 0 %d", pumpeRelaisNr, reinigungszeitInSekunden);
+            sprintf(command, "12V %d 0 %d", pumpeRelaisNr, reinigungszeitInSekunden+1);
             system(command);
             printf(" -> REINIGUNG BEENDET!\n\n");
+            // Neue Gesammelt Abwassermenge in Konfiguration speichern
+            sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", (abwasserMenge + aktuellesGesameltesAbwasser), (gesamteFilterMengeInLiter), pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);
+            system(command);
+            printf(" -> Ventil wieder auf normal Betrieb stellen!!\n\n");
+
         }
     }
     else {
-        printf("\n\e[0;31m Bitte vor dem Spülen zuerst den Abwasser Tank leeren mit h2o -empty\n\n\e[0m");
+        // Abwasser Kannister hat nicht genug freies Volumen für geplante Filterung. Programm beenden
+        printf("\e[0;31m -> Wassertank ist zu voll. Spülung wird abgebrochen!\n    Zuerst Abwasser Tank entleeren mit h2o -empty!\n\n\e[0m");
     }
 }
 
@@ -314,8 +381,8 @@ void abwasserZaehlerReset() {
             printf("Can't load '/Energiebox/h2o/config.ini'\n");
         }
         gesamteFilterMengeInLiter = config.h2o.gesamteFilterMengeInLiter;
-        // Wenn ja, ini auf 0 setzen
-        sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %d %f", 0, gesamteFilterMengeInLiter);
+        // Wenn ja, ini auf 0 setzen       
+        sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", 0.f, gesamteFilterMengeInLiter,    pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);        
         system(command);
         printf(" -> Abwasser Tank auf 0 Liter eingestellt!\n\n");
     }
@@ -324,11 +391,12 @@ void abwasserZaehlerReset() {
 // Zeigt die Hilfe an
 void showHelp() {
     printf("\n\e[0;31m Tool für automatische Filtersteuerung. Anwendungsbeispiel:\n\n");
-    printf("  ./h2o -l 0.2  [Produziert 0,2 Liter gefiltertes Wasser]\n");
-    printf("  ./h2o -clean  [Spült die Anlage durch]\n");
-    printf("  ./h2o -change [Filter austauschen und Zähler auf 0 setzen]\n");
-    printf("  ./h2o -empty  [Setzt Tank für Abwasser auf 0 Liter]\n");
-    printf("  ./h2o -setup  [Filter konfigurieren]\n\n");
+    printf("  h2o -l 0.2  [Produziert 0,2 Liter gefiltertes Wasser]\n");
+    printf("  h2o -clean  [Spült die Anlage durch]\n");
+    printf("  h2o -change [Filter austauschen und Zähler auf 0 setzen]\n");
+    printf("  h2o -empty  [Setzt Tank für Abwasser auf 0 Liter]\n");
+    printf("  h2o -stats  [Zeigt Statistik über Filter und Tank]\n");    
+    printf("  h2o -setup  [Filter konfigurieren]\n\n");
 }
 
 void showLogo() {

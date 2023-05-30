@@ -8,10 +8,11 @@ Bei dieser Version ist die gesamte Anlage schon 5 Monate am Stück gelaufen. Die
 für den Dauerbetrieb geeignet. Dieser Planungsfehler wurde mit Stromstoß Eltakos behoben! Die Sicherung wurde deutlich erhöht. 
 Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontroller wurde gegen das neueste und schnellste Model Raspberry Pi4 mit 8GB Arbeitsspeicher ausgetauscht.
  
- 
+ [NEW] h2o -stats Statistik Anzeige über Filtereigenschaften, Verbrauch und Wassertank
+ [UPDATE] h2o -clean Verfügbare Tankgröße wird berechnet. Aufruf h2o -empty entfernt.
  [UPDATE] Vollständiger Anschluß aller verfügbaren Geräte
- [UPDATE] 7" Touchdisplay verbaut
- [UPDATE] Raspberry Pi4 8GB verbaut
+ [BUGFIX] h2o Konfiguration vollständig in config.ini verlegt 
+ [UPDATE] Raspberry Pi4 8GB mit 7" Touchdisplay eingerichtet für Hardware Update
  [NEW] h2o Einrichtungsasistent erstellt. Alle wichtigen Parameter betreffend der Filteranlage werden beim Einrichten abgefragt
  [NEW] h2o Zeitgenaue Steuerung der Laufzeiten. Wassermengen können in 100ml Schritten angegeben werden. Keine nicht geplannten Putz- Sessions mehr 
  [NEW] h2o Filterinformationen implementiert für Qualitätsüberwachung
