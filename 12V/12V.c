@@ -7,25 +7,43 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
-
 #include <signal.h>
 
 void sigfunc(int sig)
 {
-    if(sig == SIGINT){
+    if(sig == SIGINT){ //Dies Signal wird an alle Prozesse geschickt wenn die Tasten-Kombination STRG-C gedrückt wurde.
         printf("\nalles aus machen : SIGINT");
         exit (0);
     }
-    
-    if(sig==SIGABRT){
+    if(sig==SIGABRT){ // Dieses Signal signalisiert das das Programm abnormal beendet wurde (abort()).
         printf("\nalles aus machen : SIGABRT");
         exit (0);
     }
-   
-    
-    
-    
-    
+    if(sig==SIGFPE){ // Diese Signal wird angezeigt z.B. bei einer Division durch 0 oder einem Überlauf einer Zahl.
+        printf("\nalles aus machen : SIGFPE");
+        exit (0);
+    }
+    if(sig==SIGILL){ // Dies wird angezeigt wenn ein illegaler Hardware-Befehl ausgeführt wird.
+        printf("\nalles aus machen : SIGILL");
+        exit (0);
+    }
+    if(sig==SIGSEGV){ // Wird dies Angezeigt wurde versucht auf eine unerlaubte Speicherstelle zu schreiben oder zu lesen.
+        printf("\nalles aus machen : SIGSEGV");
+        exit (0);
+    } 
+    if(sig==SIGTERM){ // Voreingestelltes Signal, das das kill-Kommando an einen Prozess schickt, das beendet werden soll.
+        printf("\nalles aus machen : SIGTERM");
+        exit (0);
+    } 
+    if(sig==SIGBUS){ // Hardware-Fehler
+        printf("\nalles aus machen : SIGBUS");
+        exit (0);
+    }
+    if(sig==SIGEMT){ // Hardware-Fehler
+        printf("\nalles aus machen : SIGEMT");
+        exit (0);
+    }
+    return;
 }
 
 
@@ -248,17 +266,16 @@ int getRestPower(void * config) {
 int main(int argc, char**argv) { 
     
 
-    if( signal(SIGINT,sigfunc) == SIG_ERR) { fprintf(stderr, "signal Fehler!\n"); }
+    if(signal(SIGINT,sigfunc) == SIG_ERR
+       || signal(SIGABRT,sigfunc) == SIG_ERR
+       || signal(SIGFPE,sigfunc) == SIG_ERR
+       || signal(SIGILL,sigfunc) == SIG_ERR
+       || signal(SIGSEGV,sigfunc) == SIG_ERR
+       || signal(SIGTERM,sigfunc) == SIG_ERR
+       || signal(SIGBUS,sigfunc) == SIG_ERR
+       || signal(SIGEMT,sigfunc) == SIG_ERR
+    ) { fprintf(stderr, "Signal Fehler!\n"); }
     
-    
-
-    signal(SIGABRT,sigfunc);
-    //abort();
-
-
-
- 
- 
     
     configuration config;
     if (ini_parse("/Energiebox/12V/config.ini", handler, &config) < 0) { fprintf(stderr, "Can't load '/Energiebox/12V/config.ini\n"); return 1; }
