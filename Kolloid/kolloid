@@ -13,13 +13,13 @@ heizplatteRelais=7;
 trafoRelais=8;
 trap ctrl_c INT  # CTRL + C abfangen & Relais ausschalten #### FUNKTIONIERT NICHT IMMER ??!?!?!
 function ctrl_c() {
-    230V $heizplatteRelais 0
-    230V $trafoRelais 0
+    230V $heizplatteRelais 0 1
+    230V $trafoRelais 0 1
     printf "\n\e[1;31m > !BYEBYE!\e[0m \n\n";
     exit 1;
 }
-230V $heizplatteRelais 0
-230V $trafoRelais 0
+230V $heizplatteRelais 0 1
+230V $trafoRelais 0 1
 kolloidElementsArray=(au ag pt pd ir)
 kolloidWaterSizeArray=(100 200 400 1000 2000)
 source "$libsPath/pattern.sh" || exit 1; 
@@ -153,13 +153,13 @@ do
 done
 IFS=$OIFS;
 unset OIFS;
-230V $heizplatteRelais 1
+230V $heizplatteRelais 1 1
 for number in $(seq 0 ${_endPlatte}) # Progress Bar anzeigen
 do
     sleep 1;
     ProgressBar ${number} ${_endPlatte} "$(date -d@$_endPlatte -u +%H:%M:%S) Aufheizen";
 done
-230V $heizplatteRelais 0
+230V $heizplatteRelais 0 1
 rounds=$(($time/$maxRuntime));
 [ $(($time % $maxRuntime)) -gt 0 ] && rounds=$(($rounds + 1));
 [ $rounds -lt 1 ] && rounds=1;
@@ -171,11 +171,11 @@ for (( r=1; r<=$rounds; r++ ))
 do 
     printf "\e[1;31m > TRAFO WIRD GLEICH EINGESCHALTET !!!ACHTUNG LEBENSGEFAHR!!! \e[0m \n";
     $soundPath/enableTrafo
-    230V $trafoRelais 1
+    230V $trafoRelais 1 1
     [ $size -gt 200 ] && 230V $heizplatteRelais 1; # Wenn Menge >= 200 dann immer Köcheln
     if [ $size -lt 1000 ]; then # Kleine Mengen mit vielen Runden
         if [ $(($r % 2)) == 0 ]; then  # jede zweite Runde Köcheln für 4 Minuten
-            230V $heizplatteRelais 1
+            230V $heizplatteRelais 1 1
             230V $heizplatteRelais 0 240 & disown
         fi
     fi

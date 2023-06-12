@@ -321,6 +321,16 @@ Testen: Wenn falsche Daten bei einer SSH Verbindung eingegeben worden sind, zeig
 nicht mehr "Permission denied" sondern "Connection refused" an!
 
 
+Den User pi bei Systembefehlen zum Passwort zwingen
+
+sudo nano /etc/sudoers.d/010_pi-nopasswd
+
+Nun änderst du pi ALL=(ALL) NOPASSWD: ALL zu pi ALL=(ALL) PASSWD: ALL
+
+
+
+
+
 
 -------------------------------------
 GPIO Zustände                       |
