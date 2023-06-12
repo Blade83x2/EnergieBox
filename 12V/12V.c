@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include <signal.h>
-
+volatile sig_atomic_t gSignalStatus;
 void sigfunc(int sig)
 {
     if(sig == SIGINT){ //Dies Signal wird an alle Prozesse geschickt wenn die Tasten-Kombination STRG-C gedrückt wurde.
@@ -271,7 +271,7 @@ int main(int argc, char**argv) {
        || signal(SIGBUS,sigfunc) == SIG_ERR
 
     ) { fprintf(stderr, "Signal Fehler!\n"); }
-    
+     printf("SignalValue: %d\n", gSignalStatus);
     
     printf("Sending signal: %d\n", SIGTERM);
     if (raise(SIGTERM) != 0)
