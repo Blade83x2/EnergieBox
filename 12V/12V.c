@@ -273,7 +273,7 @@ int main(int argc, char**argv) {
        || signal(SIGSEGV,sigfunc) == SIG_ERR
        || signal(SIGTERM,sigfunc) == SIG_ERR
        || signal(SIGBUS,sigfunc) == SIG_ERR
-       || signal(SIGEMT,sigfunc) == SIG_ERR
+
     ) { fprintf(stderr, "Signal Fehler!\n"); }
     
     
