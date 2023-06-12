@@ -248,8 +248,9 @@ int getRestPower(void * config) {
 int main(int argc, char**argv) { 
     
 
-
-    signal(SIGINT,sigfunc);
+    if( signal(SIGINT,sigfunc) == SIG_ERR) { fprintf(stderr, "signal Fehler!\n"); }
+    
+    
 
     signal(SIGABRT,sigfunc);
     abort();
