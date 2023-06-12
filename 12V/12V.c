@@ -253,8 +253,8 @@ int main(int argc, char**argv) {
        // exit(3); 
         
     }
-    for(;;) /* forever */ 
-    puts("Abbruch mit Strg-C!\n");
+   // for(;;) /* forever */ 
+    //puts("Abbruch mit Strg-C!\n");
 
 
     
