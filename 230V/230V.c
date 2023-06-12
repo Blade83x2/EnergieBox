@@ -38,22 +38,14 @@ typedef struct {
 
 typedef struct {
     mcp_setup mcp;
-    relais_config r1;
-    relais_config r2;
-    relais_config r3;
-    relais_config r4;
-    relais_config r5;
-    relais_config r6;
-    relais_config r7;
-    relais_config r8;
-    relais_config r9;
-    relais_config r10;
-    relais_config r11;
-    relais_config r12;
-    relais_config r13;
-    relais_config r14;
-    relais_config r15;
-    relais_config r16;
+    relais_config r1; relais_config r2;
+    relais_config r3; relais_config r4;
+    relais_config r5; relais_config r6;
+    relais_config r7; relais_config r8;
+    relais_config r9; relais_config r10;
+    relais_config r11; relais_config r12;
+    relais_config r13; relais_config r14;
+    relais_config r15; relais_config r16;
 } configuration;
 
 char deviceNames[16][40];
@@ -136,59 +128,26 @@ static int handler(void* config, const char* section, const char* name, const ch
     return 1;
 }
 
-
 // Gibt gespeicherten Zustandswert von einem Relais zurück
 int getElkoState(int relais, void* config){
     configuration* pconfig = (configuration*)config;
     switch (relais) {
-        case 1:
-            return pconfig->r1.eltakoState;
-	    break;
-        case 2:
-            return pconfig->r2.eltakoState;
-            break;
-        case 3:
-            return pconfig->r3.eltakoState;
-            break;
-        case 4:
-            return pconfig->r4.eltakoState;
-            break;
-        case 5:
-            return pconfig->r5.eltakoState;
-            break;
-        case 6:
-            return pconfig->r6.eltakoState;
-            break;
-        case 7:
-            return pconfig->r7.eltakoState;
-            break;
-        case 8:
-            return pconfig->r8.eltakoState;
-            break;
-        case 9:
-            return pconfig->r9.eltakoState;
-            break;
-        case 10:
-            return pconfig->r10.eltakoState;
-            break;
-        case 11:
-            return pconfig->r11.eltakoState;
-            break;
-        case 12:
-            return pconfig->r12.eltakoState;
-            break;
-        case 13:
-            return pconfig->r13.eltakoState;
-            break;
-        case 14:
-            return pconfig->r14.eltakoState;
-            break;
-        case 15:
-            return pconfig->r15.eltakoState;
-            break;
-        case 16:
-            return pconfig->r16.eltakoState;
-            break;
+        case 1: return pconfig->r1.eltakoState; break;
+        case 2: return pconfig->r2.eltakoState; break;
+        case 3: return pconfig->r3.eltakoState; break;
+        case 4: return pconfig->r4.eltakoState; break;
+        case 5: return pconfig->r5.eltakoState; break;
+        case 6: return pconfig->r6.eltakoState; break;
+        case 7: return pconfig->r7.eltakoState; break;
+        case 8: return pconfig->r8.eltakoState; break;
+        case 9: return pconfig->r9.eltakoState; break;
+        case 10: return pconfig->r10.eltakoState; break;
+        case 11: return pconfig->r11.eltakoState; break;
+        case 12: return pconfig->r12.eltakoState; break;
+        case 13: return pconfig->r13.eltakoState; break;
+        case 14: return pconfig->r14.eltakoState; break;
+        case 15: return pconfig->r15.eltakoState; break;
+        case 16: return pconfig->r16.eltakoState; break;
     }
     return 0;
 }
@@ -264,7 +223,7 @@ int getDevicePower(int relais, void * config) {
      return watt;
 }
 
-
+// Programmstart
 int main(int argc, char**argv) {
     configuration config;
     if (ini_parse("/Energiebox/230V/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/230V/config.ini'\n"); return 1; }
@@ -272,7 +231,6 @@ int main(int argc, char**argv) {
     mcp_begin(config.mcp.address);
     fd = wiringPiI2CSetup(MCP23017_ADDRESS | i2caddr);
     if(fd <0) { printf("wiringPi I2C Setup error!!!"); return -1; }
-
     if(argc == 1) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
         printf("\n\e[0;30m\e[47m 230V\tStatus\t> %dW\t Gerätename   \e[0m\n", getCurrentPower(&config));
@@ -286,7 +244,7 @@ int main(int argc, char**argv) {
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config)) {
             return showHelp(argv, &config);
         }
-        printf("%d\n", getElkoState(atoi(argv[1]), &config)); // Nur Relais Nr. übergeben. config.ini auslesen und int auf console printen
+        printf("%d", getElkoState(atoi(argv[1]), &config)); // Nur Relais Nr. übergeben. config.ini auslesen und int auf console printen
     }
     else if(argc == 3) {
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config)) {
@@ -302,6 +260,7 @@ int main(int argc, char**argv) {
                 sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
                 system(command);
                 sleep(0.6);
+                system("clear && 230V");
             }
             else {
                 // Nicht genug Watt verfügbar für neues Gerät
@@ -316,6 +275,7 @@ int main(int argc, char**argv) {
             sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
             system(command);
             sleep(0.6);
+            system("clear && 230V");
         }
     }
     else if(argc == 4) {
@@ -355,6 +315,7 @@ int main(int argc, char**argv) {
     return 0;
 }
 
+// Schreibt Bit für Relaiszustand
 void setBit(int Port, int Status) {
     int Get_Port, PIN;
     if (Port > -1 && Port < 8) { // Erstes register bearbeiten
@@ -376,6 +337,7 @@ void setBit(int Port, int Status) {
     }
 }
 
+// Liesst Bit von Relais Zustand aus
 int getBit(int Port) {
     Port = Port - 1;
     int Get_Port, PIN;
@@ -394,6 +356,7 @@ int getBit(int Port) {
     }
 }
 
+// Prüft ob Parameter richtige Syntax hat
 bool checkMainParameter(char* paramName, int number, void* config) {
     configuration* pconfig = (configuration*)config;
     if (strcmp(paramName, "relaisNumber") == 0)  {
@@ -411,6 +374,7 @@ bool checkMainParameter(char* paramName, int number, void* config) {
     return true;
 }
 
+// Zeigt Hilfe auf Console an
 int showHelp(char**argv, void* config) {
     configuration* pconfig = (configuration*)config;
     printf("\n\e[0;31m Falsche Parameter! Beispiel:\n\n");

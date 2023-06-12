@@ -56,82 +56,66 @@ static int handler(void* config, const char* section, const char* name, const ch
     else if(MATCH("mcp", "numberOfRelaisActive")) { pconfig->mcp.numberOfRelaisActive = atoi(value); }
     else if(MATCH("mcp", "maxPConverter")) { pconfig->mcp.maxPConverter = atoi(value); }
     else if(MATCH("mcp", "maxPMicroController")) { pconfig->mcp.maxPMicroController = atoi(value); }
-
     else if(MATCH("Relais 1", "name")) { strcpy(deviceNames[0], strdup(value)); }
     else if(MATCH("Relais 1", "activateOnStart")) { strcpy(deviceActiveOnStart[0], value); }
     else if(MATCH("Relais 1", "eltakoState")) { pconfig->r1.eltakoState = atoi(value); }
     else if(MATCH("Relais 1", "pMax")) { pconfig->r1.pMax = atoi(value); }
-
     else if(MATCH("Relais 2", "name")) { strcpy(deviceNames[1], strdup(value)); }
     else if(MATCH("Relais 2", "activateOnStart")) { strcpy(deviceActiveOnStart[1], value); }
     else if(MATCH("Relais 2", "eltakoState")) { pconfig->r2.eltakoState = atoi(value); }
     else if(MATCH("Relais 2", "pMax")) { pconfig->r2.pMax = atoi(value); }
-
     else if(MATCH("Relais 3", "name")) { strcpy(deviceNames[2], strdup(value)); }
     else if(MATCH("Relais 3", "activateOnStart")) { strcpy(deviceActiveOnStart[2], value); }
     else if(MATCH("Relais 3", "eltakoState")) { pconfig->r3.eltakoState = atoi(value); }
     else if(MATCH("Relais 3", "pMax")) { pconfig->r3.pMax = atoi(value); }
-
     else if(MATCH("Relais 4", "name")) { strcpy(deviceNames[3], strdup(value)); } 
     else if(MATCH("Relais 4", "activateOnStart")) {  strcpy(deviceActiveOnStart[3], value);  } 
     else if(MATCH("Relais 4", "eltakoState")) { pconfig->r4.eltakoState = atoi(value); }
     else if(MATCH("Relais 4", "pMax")) { pconfig->r4.pMax = atoi(value); }
-
     else if(MATCH("Relais 5", "name")) { strcpy(deviceNames[4], strdup(value)); } 
     else if(MATCH("Relais 5", "activateOnStart")) { strcpy(deviceActiveOnStart[4], value);  } 
     else if(MATCH("Relais 5", "eltakoState")) { pconfig->r5.eltakoState = atoi(value); }
     else if(MATCH("Relais 5", "pMax")) { pconfig->r5.pMax = atoi(value); }
-
     else if(MATCH("Relais 6", "name")) { strcpy(deviceNames[5], strdup(value)); } 
     else if(MATCH("Relais 6", "activateOnStart")) { strcpy(deviceActiveOnStart[5], value);  } 
     else if(MATCH("Relais 6", "eltakoState")) { pconfig->r6.eltakoState = atoi(value); }
     else if(MATCH("Relais 6", "pMax")) { pconfig->r6.pMax = atoi(value); }
-
     else if(MATCH("Relais 7", "name")) { strcpy(deviceNames[6], strdup(value)); } 
     else if(MATCH("Relais 7", "activateOnStart")) { strcpy(deviceActiveOnStart[6], value); } 
     else if(MATCH("Relais 7", "eltakoState")) { pconfig->r7.eltakoState = atoi(value); }
     else if(MATCH("Relais 7", "pMax")) { pconfig->r7.pMax = atoi(value); }
-
     else if(MATCH("Relais 8", "name")) { strcpy(deviceNames[7], strdup(value)); } 
     else if(MATCH("Relais 8", "activateOnStart")) { strcpy(deviceActiveOnStart[7], value);  } 
     else if(MATCH("Relais 8", "eltakoState")) { pconfig->r8.eltakoState = atoi(value); }
     else if(MATCH("Relais 8", "pMax")) { pconfig->r8.pMax = atoi(value); }
-
     else if(MATCH("Relais 9", "name")) { strcpy(deviceNames[8], strdup(value)); } 
     else if(MATCH("Relais 9", "activateOnStart")) { strcpy(deviceActiveOnStart[8], value);  } 
     else if(MATCH("Relais 9", "eltakoState")) { pconfig->r9.eltakoState = atoi(value); }
     else if(MATCH("Relais 9", "pMax")) { pconfig->r9.pMax = atoi(value); }
-
     else if(MATCH("Relais 10", "name")) { strcpy(deviceNames[9], strdup(value)); } 
     else if(MATCH("Relais 10", "activateOnStart")) {  strcpy(deviceActiveOnStart[9], value);  } 
     else if(MATCH("Relais 10", "eltakoState")) { pconfig->r10.eltakoState = atoi(value); }
     else if(MATCH("Relais 10", "pMax")) { pconfig->r10.pMax = atoi(value); }
-
     else if(MATCH("Relais 11", "name")) { strcpy(deviceNames[10], strdup(value)); } 
     else if(MATCH("Relais 11", "activateOnStart")) {  strcpy(deviceActiveOnStart[10], value);  } 
     else if(MATCH("Relais 11", "eltakoState")) { pconfig->r11.eltakoState = atoi(value); }
     else if(MATCH("Relais 11", "pMax")) { pconfig->r11.pMax = atoi(value); }
-
     else if(MATCH("Relais 12", "name")) { strcpy(deviceNames[11], strdup(value)); } 
     else if(MATCH("Relais 12", "activateOnStart")) {  strcpy(deviceActiveOnStart[11], value);  } 
     else if(MATCH("Relais 12", "eltakoState")) { pconfig->r12.eltakoState = atoi(value); }
     else if(MATCH("Relais 12", "pMax")) { pconfig->r12.pMax = atoi(value); }
-
     else if(MATCH("Relais 13", "name")) { strcpy(deviceNames[12], strdup(value)); } 
     else if(MATCH("Relais 13", "activateOnStart")) {  strcpy(deviceActiveOnStart[12], value);  } 
     else if(MATCH("Relais 13", "eltakoState")) { pconfig->r13.eltakoState = atoi(value); }
     else if(MATCH("Relais 13", "pMax")) { pconfig->r13.pMax = atoi(value); }
-
     else if(MATCH("Relais 14", "name")) { strcpy(deviceNames[13], strdup(value)); } 
     else if(MATCH("Relais 14", "activateOnStart")) {  strcpy(deviceActiveOnStart[13], value);  } 
     else if(MATCH("Relais 14", "eltakoState")) { pconfig->r14.eltakoState = atoi(value); }
     else if(MATCH("Relais 14", "pMax")) { pconfig->r14.pMax = atoi(value); }
-
     else if(MATCH("Relais 15", "name")) { strcpy(deviceNames[14], strdup(value)); } 
     else if(MATCH("Relais 15", "activateOnStart")) {  strcpy(deviceActiveOnStart[14], value);  } 
     else if(MATCH("Relais 15", "eltakoState")) { pconfig->r15.eltakoState = atoi(value); }
     else if(MATCH("Relais 15", "pMax")) { pconfig->r15.pMax = atoi(value); }
-
     else if(MATCH("Relais 16", "name")) { strcpy(deviceNames[15], strdup(value)); } 
     else if(MATCH("Relais 16", "activateOnStart")) {  strcpy(deviceActiveOnStart[15], value);  } 
     else if(MATCH("Relais 16", "eltakoState")) { pconfig->r16.eltakoState = atoi(value); }
@@ -144,54 +128,22 @@ static int handler(void* config, const char* section, const char* name, const ch
 int getElkoState(int relais, void* config){
     configuration* pconfig = (configuration*)config;
     switch (relais) {
-        case 1:
-            return pconfig->r1.eltakoState;
-            break;
-        case 2:
-            return pconfig->r2.eltakoState;
-            break;
-        case 3:
-            return pconfig->r3.eltakoState;
-            break;
-        case 4:
-            return pconfig->r4.eltakoState;
-            break;
-        case 5:
-            return pconfig->r5.eltakoState;
-            break;
-        case 6:
-            return pconfig->r6.eltakoState;
-            break;
-        case 7:
-            return pconfig->r7.eltakoState;
-            break;
-        case 8:
-            return pconfig->r8.eltakoState;
-            break;
-        case 9:
-            return pconfig->r9.eltakoState;
-            break;
-        case 10:
-            return pconfig->r10.eltakoState;
-            break;
-        case 11:
-            return pconfig->r11.eltakoState;
-            break;
-        case 12:
-            return pconfig->r12.eltakoState;
-            break;
-        case 13:
-            return pconfig->r13.eltakoState;
-            break;
-        case 14:
-            return pconfig->r14.eltakoState;
-            break;
-        case 15:
-            return pconfig->r15.eltakoState;
-            break;
-        case 16:
-            return pconfig->r16.eltakoState;
-            break;
+        case 1: return pconfig->r1.eltakoState; break;
+        case 2: return pconfig->r2.eltakoState; break;
+        case 3: return pconfig->r3.eltakoState; break;
+        case 4: return pconfig->r4.eltakoState; break;
+        case 5: return pconfig->r5.eltakoState; break;
+        case 6: return pconfig->r6.eltakoState; break;
+        case 7: return pconfig->r7.eltakoState; break;
+        case 8: return pconfig->r8.eltakoState; break;
+        case 9: return pconfig->r9.eltakoState; break;
+        case 10: return pconfig->r10.eltakoState; break;
+        case 11: return pconfig->r11.eltakoState; break;
+        case 12: return pconfig->r12.eltakoState; break;
+        case 13: return pconfig->r13.eltakoState; break;
+        case 14: return pconfig->r14.eltakoState; break;
+        case 15: return pconfig->r15.eltakoState; break;
+        case 16: return pconfig->r16.eltakoState; break;
     }
     return 0;
 }
@@ -269,7 +221,7 @@ int getRestPower(void * config) {
      return pconfig->mcp.maxPConverter - watt;
 }
 
-
+// Programmstart
 int main(int argc, char**argv) { 
     configuration config;
     if (ini_parse("/Energiebox/12V/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/12V/config.ini'\n"); return 1; }

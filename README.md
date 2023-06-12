@@ -24,7 +24,7 @@ Installation benötigter Pakete      |
 
 Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Installation verschiedener benötigter Pakete:
 
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install manpages-de python-dev python3-pip git-core ufw -y
+sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install uwf manpages-de python-dev python3-pip git-core ufw -y
 
 sudo pip install rpi.gpio
 
@@ -38,7 +38,7 @@ mit den Rechten 755 oder Sie installieren es bequem mit git clone direkt an die 
  
 sudo git clone https://github.com/Blade83x2/EnergieBox.git /Energiebox && sudo chmod -R 755 /Energiebox
 
-cd /Energiebox/WiringPi && sudo ./build && cd .. && sudo rm -rf WiringPi && cd /Energiebox/230V && sudo make && cd /Energiebox/12V && sudo make
+cd /Energiebox/WiringPi && sudo ./build && cd .. && cd /Energiebox/230V && sudo make && cd /Energiebox/12V && sudo make
 
 cd /Energiebox/h2o && sudo make && cd /Energiebox/Shutdown && sudo make && cd /Energiebox/Startup && sudo make
  
@@ -46,6 +46,7 @@ cd /Energiebox/h2o && sudo make && cd /Energiebox/Shutdown && sudo make && cd /E
 -------------------------------------
 Raspi Konfiguration                 |
 -------------------------------------
+
 
 Als nächstes wird der Raspberry konfiguriert damit die Hardware entsprechend zusammen Arbeiten kann.
 WLAN sowie Bluetooth werden ausgeschaltet und das System bekommt einen festen Kabelanschluss für die
@@ -85,38 +86,47 @@ ab. In dieser Datei stellen wir sicher das folgender Eintrag gesetzt ist:
 
 PrintLastLog no
 
+Dann suchen wir:
+
+PermitRootLogin without-password
+
+und ersetzen es mit: 
+
+PermitRootLogin yes
+
+
 Speichern können wir wieder mit der Tastenkombination Strg + x. Danach wird der Befehl
+
+Der Benutzer root hat bislang kein Passwort. Dieses setzen wir mit
+
+sudo passwd root
+
+
+Nun Verändern wir das was gesehen wird nach dem SSH Login:
 
 sudo nano /etc/motd
 
 aufgerufen und alles was in dieser Datei steht wird ersetzt mit:
+
 
 EnergieBox v3.0 by Johannes Krämer
 
 Von Hier aus kann die gesamelte Sonnenenergie über Relais verteilt werden.
 Mit den Programmen 12V und 230V werden diese Relais angesteuert.
 
-Schaltbeispiel für 12V Relais:
 
-        Timer in Sek (Optional)__ 
-                                 |
-      Schaltzustand 1 oder 0__   |
-                              |  |
-       Relais Nr. 1 bis 16__  |  |
-                            | |  |
-                   $~/  12V 1 1 90
 
-Schaltbeispiel für 230V Relais:
-
-        Timer in Sek (Optional)__
-                                 |
-      Schaltzustand 1 oder 0__   |
-                              |  |
-       Relais Nr. 1 bis 16__  |  |
-                            | |  |
-                   $~/ 230V 1 1 90
-
-                
+       Schaltbeispiel für 12V:           Schaltbeispiel für 230V:
+        
+        Timer in Sek (Optional)__        Timer in Sek (Optional)__
+                                 |                                |
+                                 |                                |
+      Schaltzustand 1 oder 0__   |     Schaltzustand 1 oder 0__   |
+                              |  |                             |  |
+       Relais Nr. 1 bis 16__  |  |      Relais Nr. 1 bis 16__  |  |
+                            | |  |                           | |  |
+                   $~/  12V 1 1 90                  $~/ 230V 1 1 90       
+                   
 
                 
 Diese Änderung kann ebenfalls wieder mit der Tastenkombination 
@@ -133,9 +143,9 @@ ein und fügen ganz unten am Ende der Datei folgendes ein:
 
 Auch diese Aktion wird wieder mit Strg + x gespeichert.
 
-Nun prüfen wir noch kurz, ob die beiden Port Expander angezeigt werden unter dem Befehl:
+Nun prüfen wir noch kurz, ob die beiden Port Expander (0x22 und 0x27) angezeigt werden unter dem Befehl:
 
-i2cdetect -y 1
+sudo i2cdetect -y 1
 
 Sollte das der Fall sein, sind die MCP's richtig angeschlossen
 
@@ -222,19 +232,51 @@ PATH=$PATH:/Energiebox/Kolloid
 
 PATH=$PATH:/Energiebox/h2o
 
-   
+
 -------------------------------------
 IP Setup & DynDNS Einrichtung       |
 -------------------------------------  
-                   
-Es ist ratsam, die IP Adresszuweisung durch DHCP auf dem Raspberry zu deaktivieren
-und anstelle dessen eine Statische IP Adresse zu vergeben. Weiterhin ist es für
-diejenigen die Ihre Geräte per Smartphone von unterwegs steuern wollen notwendig,
-einen DynDNS Dienst zu wählen. Diejenigen die das nicht möchten, brauchen diese
-Schritte nicht zu gehen. Ich werde hier jetzt nicht näher darauf eingehen, da
-jede Netzwerkinstallation anders ist und es keine Universal Anleitung dazu gibt.
-Eins sei jedoch noch gesagt, wer mit z.B. der Raspberry Controller App Zugang haben
-möchte, muss den Standart SFTP Port 22 im Gateway frei geben!
+
+IP Einstellungen aufrufen mit:
+
+sudo nano /etc/dhcpcd.conf
+
+und dort folgendes eintragen(vorher abändern)
+
+interface eth0
+static ip_address=10.0.0.2/24
+static ip6_address=29c5:ef1d:3023:5c04::ff/64
+static routers=10.0.0.1
+static domain_name_servers=10.0.0.1 8.8.8.8 29c5:ef1d:3023:5c04::1
+
+
+und mit Strg + x abspeichern. Nun sollte der Rechner Neugestartet werden mit
+
+sudo reboot
+
+
+Im Router/Gateway wurde der Port 2222 freigegeben und intern auf Port 22 des Raspbbery umgeleitet
+
+
+
+
+
+
+Nun erstellen wir noch ein SSH Key auf dem Rechner der eine Verbindung zum Raspberry Pi4 aufbaut:
+
+ssh-keygen -t rsa
+
+Als Eingabe lassen wir alles leer und drücken einfach nur Enter.
+
+Die erzeugten Keys können jetzt angezeigt werden mit:
+
+ls -l .ssh/
+
+Um diesen Key mit dem Raspberry zu Verbinden folgendes Ausführen:
+
+ssh-copy-id -p 2222 pi@home.cplusplus-development.de
+
+
 
 
 -------------------------------------
