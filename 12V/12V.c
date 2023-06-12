@@ -9,16 +9,25 @@
 #include <ctype.h>
 
 #include <signal.h>
+void sig_handler(int sig);
 
-void(*signal(int signr, void(*sighandler)(int)))(int);  
 
-typedef void signalfunktion(int);  
-signalfunktion *signal(int signr,signalfunktion *sighandler);  
+void sig_handler(int sig)
+  {
+  char c;
+  if (sig != SIGINT) exit(1);
+  signal(SIGINT,SIG_IGN);
+  fputs("\nProgramm beenden(j/n)?",stderr);
+  while((c = toupper(getchar())) != 'J' && c != 'N');
+  if(c == 'J') exit(0);
+  signal(SIGINT,sig_handler);
+  }
+
 
 
 
 // Help: https://netzmafia.ee.hm.edu/skripten/programmieren/anh3.html
-//void sig_handler(int sig);
+
 int getBit(int Port);
 void setBit(int Port, int Status);
 bool checkMainParameter(char* paramName, int number, void* config);
@@ -59,39 +68,6 @@ int devicePMax[16];
 int pMaxCurrent;
 int devicePowerMax[16][4];
 char command[100];
-
-
-
-void sig_handler(int sig)
-{
-    char c;
-    if (sig != SIGINT) 
-        exit(1);
-    signal(SIGINT,SIG_IGN);
-    fputs("\nProgramm beenden(j/n)?",stderr);
-    while((c = toupper(getchar())) != 'J' && c != 'N');
-    if(c == 'J') 
-        exit(0);
-    signal(SIGINT,sig_handler);
-}
-
-void sigfunc(int sig)
-{
-
- char c;
-
- if(sig != SIGINT)
-   return;
- else
-  {
-
-    printf("\nWollen sie das Programm beenden (j/n) : ");
-    while((c=getchar()) != 'n')
-        return;
-    exit (0);
-   }
-}
-
 
 static int handler(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
@@ -268,26 +244,14 @@ int getRestPower(void * config) {
 // Programmstart
 int main(int argc, char**argv) { 
     
-int i;
+    
+      if (signal(SIGINT,sig_handler) == SIGERR)
+    { perror("Signal-Funktion"); exit(3); }
+  for(;;) /* forever */ 
+    puts("Abbruch mit Strg-C!\n");
+  
 
- signal(SIGINT,sigfunc);
-
- while(1)
-  {
-
-   printf("Die Endlosschleife koennen sie mit STRG-C beenden");
-   for(i=0;i<=48;i++)
-       printf("\b");
-   }
-   // if (signal(SIGINT,sig_handler) == 1)
-   // { 
-       // perror("Signal-Funktion"); 
-       // exit(3); 
-        
-   // }
-   // for(;;) /* forever */ 
-    //puts("Abbruch mit Strg-C!\n");
-
+    
     
     configuration config;
     if (ini_parse("/Energiebox/12V/config.ini", handler, &config) < 0) { fprintf(stderr, "Can't load '/Energiebox/12V/config.ini\n"); return 1; }
