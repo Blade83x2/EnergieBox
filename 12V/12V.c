@@ -69,7 +69,19 @@ void sig_handler(int sig)
     signal(SIGINT,sig_handler);
 }
 
-
+void sigfunc(int sig)
+{
+    char c;
+    if(sig != SIGINT)
+        return;
+    else
+    {
+        printf("\nWollen sie das Programm beenden (j/n) : ");
+        while((c=getchar()) != 'n')
+            return;
+        exit (0);
+    }
+}
 
 
 static int handler(void* config, const char* section, const char* name, const char* value) {
@@ -247,18 +259,17 @@ int getRestPower(void * config) {
 // Programmstart
 int main(int argc, char**argv) { 
     
-    printf("%d", signal(SIGINT,sig_handler));
-    
-   // if (signal(SIGINT,sig_handler) == 1)
-   // { 
-       // perror("Signal-Funktion"); 
-       // exit(3); 
-        
-   // }
-   // for(;;) /* forever */ 
-    //puts("Abbruch mit Strg-C!\n");
-//CALL ERRDEV ( 'GET', DEVICE );
+    int i;
 
+    signal(SIGINT,sigfunc);
+
+    while(1)
+    {
+
+        printf("Die Endlosschleife koennen sie mit STRG-C beenden");
+        for(i=0;i<=48;i++)
+            printf("\b");
+    }
     
     configuration config;
     if (ini_parse("/Energiebox/12V/config.ini", handler, &config) < 0) { fprintf(stderr, "Can't load '/Energiebox/12V/config.ini\n"); return 1; }
