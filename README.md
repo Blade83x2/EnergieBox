@@ -53,6 +53,12 @@ Raspi Konfiguration                 |
 -------------------------------------
 
 
+Zuerst wählen wir einen anderen Benutzernamen um die Sicherheit zu erhöhen. Hierfür geben wird
+
+sudo rename-user
+
+ein und starten den Raspberry dann neu. Nach dem Hochfahren kommt eine Grafische Oberfläche wo der
+Benutzer geändert werden kann.
 Als nächstes wird der Raspberry konfiguriert damit die Hardware entsprechend zusammen Arbeiten kann.
 WLAN sowie Bluetooth werden ausgeschaltet und das System bekommt einen festen Kabelanschluss für die
 Internet Verbindung damit Sie die Eltakos über das Internet steuern können. Hierzu wird der Befehl
@@ -73,15 +79,15 @@ Danach wird die Raspberry Konfiguration aufgerufen mit dem Befehl
 sudo raspi-config
 
 Zuerst gehen wir in Interfacing Options rein und aktivieren dort den Service SSH und bestätigen das.
-Anschliessend gehen wir wieder in Interfacing Options rein und aktivieren noch den Service I2C auf
+Anschliessend gehen wir wieder in Interfacing Options rein und aktivieren noch den Service I2C sowie SPI auf
 die Gleiche Weise. Nun gehen wir in das Menu Network Options unter Hostname und vergeben dort den
 Namen EnergieBox.
 
-Danach gehen wir in Boot Options rein, um in das Menü Desktop / CLI zu gelangen. Hier wird Desktop gewählt.
+Danach gehen wir in System Options -> Boot / Autologin rein und wählen dort Desktop Autologin aus.
 
-Nun wählen wir das Menü Advanced Options aus um in das Menü Memory Split zu gelangen. Hier tippen wir den
-Wert 256 ein und bestätigen dies mit einem Klick auf OK. Da wir nun fertig sind wählen wir als letztes Finish
-und starten den Raspberry neu um die Einstellungen zu übernehmen.
+Nun wählen wir das Menü Performance -> GPU Memory aus. Hier tippen wir den Wert 256 ein und bestätigen
+dies mit einem Klick auf OK. Da wir nun fertig sind wählen wir als letztes Finish
+und starten den Raspberry mit sudo reboot neu um die Einstellungen zu übernehmen.
 
 Nach dem Neustart öffnen wir wieder ein Terminal und setzen den Befehl
 
@@ -100,7 +106,7 @@ und ersetzen es mit:
 PermitRootLogin yes
 
 
-Speichern können wir wieder mit der Tastenkombination Strg + x. Danach wird der Befehl
+Speichern können wir wieder mit der Tastenkombination Strg + x.
 
 Der Benutzer root hat bislang kein Passwort. Dieses setzen wir mit
 
@@ -192,7 +198,7 @@ in der Konsole abgesetzt und in diese Datei wird folgendes eingefügt:
 [Unit]
 
 Description=/etc/rc.shutdown
-Adresse für Portexpander
+
 Before=shutdown.target
 
 [Service]
@@ -265,8 +271,6 @@ Im Router/Gateway wurde der Port 2222 freigegeben und intern auf Port 22 des Ras
 
 
 
-
-
 Nun erstellen wir noch ein SSH Key auf dem Rechner der eine Verbindung zum Raspberry Pi4 aufbaut:
 
 ssh-keygen -t rsa
@@ -278,6 +282,7 @@ Die erzeugten Keys können jetzt angezeigt werden mit:
 ls -l .ssh/
 
 Um diesen Key mit dem Raspberry zu Verbinden folgendes Ausführen:
+(Port, Username & DynDNS entsprechend anpassen!)
 
 ssh-copy-id -p 2222 pi@home.cplusplus-development.de
 
@@ -291,7 +296,23 @@ Firewall einstellen                 |
 Den Port 22 geben wir mit der UFW Firewall frei während wir alles andere sperren.
 Hierzu muss auf der Konsole der Befehl abgesetzt werden:
 
-sudo ufw allow ssh/tcp && ufw limit ssh/tcp && sudo ufw logging on && sudo ufw enable
+sudo ufw allow ssh/tcp && sudo ufw limit ssh/tcp && sudo ufw logging on && sudo ufw enable
+
+Zusätzlich installieren wir noch fail2ban
+
+sudo apt-get install fail2ban && cd /etc/fail2ban
+
+Zum Konfigurieren kopieren wir eine Vorgegebene Datei und verändern die kopieren
+
+sudo cp jail.conf jail.local && sudo nano jail.local
+
+
+
+sudo systemctl enable fail2ban && sudo systemctl start fail2ban
+
+Testen: Wenn falsche Daten bei einer SSH Verbindung eingegeben worden sind, zeigt fail2ban
+nicht mehr "Permission denied" an sondern "Connection refused"
+
 
 
 -------------------------------------
