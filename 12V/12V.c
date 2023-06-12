@@ -12,16 +12,20 @@
 
 void sigfunc(int sig)
 {
-    char c;
-    if(sig != SIGINT)
-        return;
-    else
-    {
-        printf("\nWollen sie das Programm beenden (j/n) : ");
-        while((c=getchar()) != 'j')
-            return;
-        signal(SIGINT,SIG_DFL);
+    if(sig == SIGINT){
+        printf("\nalles aus machen : SIGINT");
+        exit (0);
     }
+    
+    if(sig==SIGABRT){
+        printf("\nalles aus machen : SIGABRT");
+        exit (0);
+    }
+   
+    
+    
+    
+    
 }
 
 
@@ -243,17 +247,17 @@ int getRestPower(void * config) {
 // Programmstart
 int main(int argc, char**argv) { 
     
-int i;
 
- signal(SIGINT,sigfunc);
 
- while(1)
-  {
-   printf("Die Endlosschleife koennen sie mit STRG-C beenden");
-   for(i=0;i<=48;i++)
-       printf("\b");
-   }
-    
+    signal(SIGINT,sigfunc);
+
+    signal(SIGABRT,sigfunc);
+    abort();
+
+
+
+ 
+ 
     
     configuration config;
     if (ini_parse("/Energiebox/12V/config.ini", handler, &config) < 0) { fprintf(stderr, "Can't load '/Energiebox/12V/config.ini\n"); return 1; }
