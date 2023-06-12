@@ -10,21 +10,19 @@
 
 #include <signal.h>
 
-
-
-void sig_handler(int sig)
+void sigfunc(int sig)
 {
-    
-    if (sig != SIGINT) exit(1);
-    //signal(SIGINT,SIG_IGN);
-    //fputs("\nProgramm beenden(j/n)?",stderr);
-    //while((c = toupper(getchar())) != 'J' && c != 'N');
-    fputs("\nProgramm beendet",stderr);
-     
-    
+    char c;
+    if(sig != SIGINT)
+        return;
+    else
+    {
+        printf("\nWollen sie das Programm beenden (j/n) : ");
+        while((c=getchar()) != 'n')
+            return;
+        exit (0);
+    }
 }
-
-
 
 
 // Help: https://netzmafia.ee.hm.edu/skripten/programmieren/anh3.html
@@ -245,10 +243,16 @@ int getRestPower(void * config) {
 // Programmstart
 int main(int argc, char**argv) { 
     
-    
-      signal(SIGINT,sig_handler);
-    
+int i;
 
+ signal(SIGINT,sigfunc);
+
+ while(1)
+  {
+   printf("Die Endlosschleife koennen sie mit STRG-C beenden");
+   for(i=0;i<=48;i++)
+       printf("\b");
+   }
     
     
     configuration config;
