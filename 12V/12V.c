@@ -247,12 +247,14 @@ int getRestPower(void * config) {
 // Programmstart
 int main(int argc, char**argv) { 
     
-    if (signal(SIGINT,sig_handler) == 1)
-    { 
+    printf("%d", signal(SIGINT,sig_handler));
+    
+   // if (signal(SIGINT,sig_handler) == 1)
+   // { 
        // perror("Signal-Funktion"); 
        // exit(3); 
         
-    }
+   // }
    // for(;;) /* forever */ 
     //puts("Abbruch mit Strg-C!\n");
 //CALL ERRDEV ( 'GET', DEVICE );
