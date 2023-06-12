@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
+// Help: https://netzmafia.ee.hm.edu/skripten/programmieren/anh3.html
 
 int getBit(int Port);
 void setBit(int Port, int Status);
@@ -224,16 +225,11 @@ int getRestPower(void * config) {
 // Programmstart
 int main(int argc, char**argv) { 
     configuration config;
-    
-    
-    fprintf(stderr, "can't open\n");
-    
-    
-    if (ini_parse("/Energiebox/12V/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/12V/config.ini'\n"); return 1; }
-    if(wiringPiSetup()<0) { printf("wiringPiSetup error!!!"); return -1; }
+    if (ini_parse("/Energiebox/12V/config.ini", handler, &config) < 0) { fprintf(stderr, "Can't load '/Energiebox/12V/config.ini\n"); return 1; }
+    if(wiringPiSetup()<0) { fprintf(stderr, "wiringPiSetup error!!!\n"); return -1; }
     mcp_begin(config.mcp.address);
     fd = wiringPiI2CSetup(MCP23017_ADDRESS | i2caddr);
-    if(fd <0) { printf("wiringPi I2C Setup error!!!"); return -1; }
+    if(fd <0) { fprintf(stderr, "wiringPi I2C Setup error!!!"); return -1; }
     if(argc == 1) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
         printf("\n\e[0;30m\e[47m 12V\tStatus\t> %dW\t Gerätename   \e[0m\n", getCurrentPower(&config));
