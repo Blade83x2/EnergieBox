@@ -224,6 +224,11 @@ int getRestPower(void * config) {
 // Programmstart
 int main(int argc, char**argv) { 
     configuration config;
+    
+    
+    fprintf(stderr, "can't open\n");
+    
+    
     if (ini_parse("/Energiebox/12V/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/12V/config.ini'\n"); return 1; }
     if(wiringPiSetup()<0) { printf("wiringPiSetup error!!!"); return -1; }
     mcp_begin(config.mcp.address);
