@@ -10,6 +10,10 @@ Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS läuft
 2 MCP23017 (WAVESHARE, Artikelnummer BO-MCP23017) auf den Adressen 0x22 und 0x27
 sowie ein 7" Touchdisplay angeschlossen und eingerichtet sind. 
 
+
+https://www.instructables.com/Raspberry-PI-Multiple-I2c-Devices/
+
+
 Raspberry Pi Imager Download: https://www.raspberrypi.com/software/
 
 Installationsanweisung:
@@ -65,7 +69,7 @@ Internet Verbindung damit Sie die Eltakos über das Internet steuern können. Hi
 
 sudo nano /boot/config.txt
 
-vom Terminal aus aufgerufen und in der Datei folgendes auskommentiert:
+vom Terminal aus aufgerufen und in der Datei folgendes auskommentieren:
 
 dtoverlay=w1-gpio
 
@@ -117,7 +121,7 @@ Nun Verändern wir das was gesehen wird nach dem SSH Login:
 
 sudo nano /etc/motd
 
-aufgerufen und alles was in dieser Datei steht wird ersetzt mit:
+aufrufen und alles was in dieser Datei steht wird ersetzt mit:
 
                  _____                      _      ____
                 | ____|_ __   ___ _ __ __ _(_) ___| __ )  _____  __
@@ -129,7 +133,7 @@ aufgerufen und alles was in dieser Datei steht wird ersetzt mit:
 
 Von Hier aus kann die gesamelte Sonnenenergie über Relais verteilt werden.
 Mit den Programmen 12V und 230V werden diese Relais angesteuert.
-
+Das Programm h2o filtert Wasser, kolloid stellt Kolloidale Dispersionen her!
 
 
        Schaltbeispiel für 12V:           Schaltbeispiel für 230V:
@@ -328,7 +332,11 @@ sudo nano /etc/sudoers.d/010_pi-nopasswd
 Nun änderst du pi ALL=(ALL) NOPASSWD: ALL zu pi ALL=(ALL) PASSWD: ALL
 
 
+Automatische Sicherheitsupdates installieren
 
+sudo dpkg-reconfigure --priority=low unattended-upgrades
+
+Im neuen Fenster Ja wählen
 
 
 
