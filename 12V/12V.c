@@ -247,7 +247,7 @@ int getRestPower(void * config) {
 // Programmstart
 int main(int argc, char**argv) { 
     
-    if (signal(SIGINT,sig_handler) == 1)
+    if (signal(SIGINT,sig_handler) == -1)
     { 
        // perror("Signal-Funktion"); 
        // exit(3); 
