@@ -9,10 +9,16 @@
 #include <ctype.h>
 
 #include <signal.h>
-#include <errno.h>
+
+void(*signal(int signr, void(*sighandler)(int)))(int);  
+
+typedef void signalfunktion(int);  
+signalfunktion *signal(int signr,signalfunktion *sighandler);  
+
+
 
 // Help: https://netzmafia.ee.hm.edu/skripten/programmieren/anh3.html
-void sig_handler(int sig);
+//void sig_handler(int sig);
 int getBit(int Port);
 void setBit(int Port, int Status);
 bool checkMainParameter(char* paramName, int number, void* config);
@@ -69,7 +75,22 @@ void sig_handler(int sig)
     signal(SIGINT,sig_handler);
 }
 
+void sigfunc(int sig)
+{
 
+ char c;
+
+ if(sig != SIGINT)
+   return;
+ else
+  {
+
+    printf("\nWollen sie das Programm beenden (j/n) : ");
+    while((c=getchar()) != 'n')
+        return;
+    exit (0);
+   }
+}
 
 
 static int handler(void* config, const char* section, const char* name, const char* value) {
@@ -247,8 +268,17 @@ int getRestPower(void * config) {
 // Programmstart
 int main(int argc, char**argv) { 
     
-    signal(SIGINT, sig_handler);
-    
+int i;
+
+ signal(SIGINT,sigfunc);
+
+ while(1)
+  {
+
+   printf("Die Endlosschleife koennen sie mit STRG-C beenden");
+   for(i=0;i<=48;i++)
+       printf("\b");
+   }
    // if (signal(SIGINT,sig_handler) == 1)
    // { 
        // perror("Signal-Funktion"); 
@@ -257,7 +287,6 @@ int main(int argc, char**argv) {
    // }
    // for(;;) /* forever */ 
     //puts("Abbruch mit Strg-C!\n");
-//CALL ERRDEV ( 'GET', DEVICE );
 
     
     configuration config;
