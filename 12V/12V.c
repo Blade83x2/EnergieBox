@@ -255,7 +255,7 @@ int main(int argc, char**argv) {
     }
    // for(;;) /* forever */ 
     //puts("Abbruch mit Strg-C!\n");
-CALL ERRDEV ( 'GET', DEVICE );
+//CALL ERRDEV ( 'GET', DEVICE );
 
     
     configuration config;
