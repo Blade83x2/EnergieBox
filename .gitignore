@@ -1,24 +1,3 @@
-
 Bauteile/
-12V/12V.o
-12V/mymcp23017.o
-12V/12V
-
-230V/230V.o
-230V/mymcp23017.o
-230V/230V
-
-Shutdown/mcp_shutdown
-Shutdown/mcp_shutdown.o
-Shutdown/mymcp23017.o
-
-Startup/mcp_startup
-Startup/mcp_startup.o
-Startup/mymcp23017.o
-
-h2o/h2o
-h2o/h2o.o
-h2o/mymcp23017.o
-
 
 

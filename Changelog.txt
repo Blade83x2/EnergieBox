@@ -9,24 +9,19 @@ TODOś
                                             Steckdose Herd tauschen
 MPPT Statistik über rs485 auslesen
                                             
-                                            
-                                            
-                                            
-                                            
-
-
+                                        
 
 
 Kaufen
 
 3x DC -> DC Konverter kaufen
 1x Batteriebalancer kaufen          -ok-  25€
-1x 16 fach Relais für 12Volt        -ok-          -> 16,90
+1x 16 fach Relais für 12Volt        -ok-  16,90
 16x Eltakos für 12Volt
 1x Digitaler Stromzähler
-1x Überspannungsschutz              -ok-
-2x MCP23017                         -ok- 30€
-1x Kühlkörper Raspberry             -ok-
+1x Überspannungsschutz              -ok-  17€
+2x MCP23017                         -ok-  30€
+1x Kühlkörper Raspberry             -ok-  4€
 1x EP Ever MPPT 100A
 1x PAL-ADP-50AN + Kabel
 1x Temperatur Sensor Batterie EPEVER
