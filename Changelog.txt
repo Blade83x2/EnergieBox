@@ -9,7 +9,7 @@ TODOś
                                             Steckdose Herd tauschen
 MPPT Statistik über rs485 auslesen
                                             
-                                        
+                            
 
 
 Kaufen
