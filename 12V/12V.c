@@ -20,7 +20,7 @@ void sigfunc(int sig)
         printf("\nWollen sie das Programm beenden (j/n) : ");
         while((c=getchar()) != 'j')
             return;
-        exit (0);
+        signal(SIGINT,SIG_DFL);
     }
 }
 
