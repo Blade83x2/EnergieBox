@@ -277,6 +277,15 @@ int main(int argc, char**argv) {
     ) { fprintf(stderr, "Signal Fehler!\n"); }
     
     
+    printf("Sending signal: %d\n", SIGTERM);
+    if (raise(SIGTERM) != 0)
+    {
+        printf("Error while raising the SIGTERM signal.\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    
+    
     configuration config;
     if (ini_parse("/Energiebox/12V/config.ini", handler, &config) < 0) { fprintf(stderr, "Can't load '/Energiebox/12V/config.ini\n"); return 1; }
     if(wiringPiSetup()<0) { fprintf(stderr, "wiringPiSetup error!!!\n"); return -1; }
