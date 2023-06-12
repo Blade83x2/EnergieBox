@@ -302,16 +302,18 @@ Zusätzlich installieren wir noch fail2ban
 
 sudo apt-get install fail2ban && cd /etc/fail2ban
 
-Zum Konfigurieren kopieren wir eine Vorgegebene Datei und verändern die kopieren
+Zum Konfigurieren kopieren wir eine Vorgegebene Datei und verändern die Kopie
 
 sudo cp jail.conf jail.local && sudo nano jail.local
 
+[sshd] suchen und darunter enabled = true einfügen
 
+Danach speichern.
 
 sudo systemctl enable fail2ban && sudo systemctl start fail2ban
 
 Testen: Wenn falsche Daten bei einer SSH Verbindung eingegeben worden sind, zeigt fail2ban
-nicht mehr "Permission denied" an sondern "Connection refused"
+nicht mehr "Permission denied" sondern "Connection refused" an!
 
 
 
