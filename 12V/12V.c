@@ -260,8 +260,7 @@ int getRestPower(void * config) {
 
 // Programmstart
 int main(int argc, char**argv) { 
-    
-
+    // Signale abfangen
     if(signal(SIGINT,sigfunc) == SIG_ERR
        || signal(SIGABRT,sigfunc) == SIG_ERR
        || signal(SIGFPE,sigfunc) == SIG_ERR
@@ -269,17 +268,14 @@ int main(int argc, char**argv) {
        || signal(SIGSEGV,sigfunc) == SIG_ERR
        || signal(SIGTERM,sigfunc) == SIG_ERR
        || signal(SIGBUS,sigfunc) == SIG_ERR
-
     ) { fprintf(stderr, "Signal Fehler!\n"); }
-     printf("SignalValue: %d\n", gSignalStatus);
-    
-    printf("Sending signal: %d\n", SIGTERM);
-    if (raise(SIGTERM) != 0)
+    // Test Signal senden
+    if (raise(SIGBUS) != 0)
     {
         printf("Error while raising the SIGTERM signal.\n");
         exit(EXIT_FAILURE);
     }
-    printf("SignalValue: %d\n", gSignalStatus);
+
     
     
     configuration config;
