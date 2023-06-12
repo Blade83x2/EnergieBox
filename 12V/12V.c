@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include <signal.h>
-volatile sig_atomic_t gSignalStatus;
+
 void sigfunc(int sig)
 {
     // https://wiki.ubuntuusers.de/Signale/
