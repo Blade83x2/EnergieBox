@@ -18,7 +18,7 @@ void sigfunc(int sig)
     else
     {
         printf("\nWollen sie das Programm beenden (j/n) : ");
-        while((c=getchar()) != 'n')
+        while((c=getchar()) != 'j')
             return;
         exit (0);
     }
