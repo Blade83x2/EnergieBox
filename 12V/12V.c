@@ -253,7 +253,7 @@ int main(int argc, char**argv) {
     
 
     signal(SIGABRT,sigfunc);
-    abort();
+    //abort();
 
 
 
