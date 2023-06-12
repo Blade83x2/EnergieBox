@@ -9,19 +9,20 @@
 #include <ctype.h>
 
 #include <signal.h>
-void sig_handler(int sig);
+
 
 
 void sig_handler(int sig)
-  {
-  char c;
-  if (sig != SIGINT) exit(1);
-  signal(SIGINT,SIG_IGN);
-  fputs("\nProgramm beenden(j/n)?",stderr);
-  while((c = toupper(getchar())) != 'J' && c != 'N');
-  if(c == 'J') exit(0);
-  signal(SIGINT,sig_handler);
-  }
+{
+    char c;
+    if (sig != SIGINT) exit(1);
+    //signal(SIGINT,SIG_IGN);
+    //fputs("\nProgramm beenden(j/n)?",stderr);
+    //while((c = toupper(getchar())) != 'J' && c != 'N');
+    fputs("\nProgramm beendet",stderr);
+     
+    
+}
 
 
 
@@ -245,11 +246,8 @@ int getRestPower(void * config) {
 int main(int argc, char**argv) { 
     
     
-      if (signal(SIGINT,sig_handler) != 0)
-    { perror("Signal-Funktion"); exit(3); }
-  for(;;) /* forever */ 
-    puts("Abbruch mit Strg-C!\n");
-  
+      signal(SIGINT,sig_handler);
+    
 
     
     
