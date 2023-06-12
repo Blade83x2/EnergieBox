@@ -7,8 +7,12 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
-// Help: https://netzmafia.ee.hm.edu/skripten/programmieren/anh3.html
 
+#include <signal.h>
+
+
+// Help: https://netzmafia.ee.hm.edu/skripten/programmieren/anh3.html
+void sig_handler(int sig);
 int getBit(int Port);
 void setBit(int Port, int Status);
 bool checkMainParameter(char* paramName, int number, void* config);
@@ -49,6 +53,24 @@ int devicePMax[16];
 int pMaxCurrent;
 int devicePowerMax[16][4];
 char command[100];
+
+
+
+void sig_handler(int sig)
+{
+    char c;
+    if (sig != SIGINT) 
+        exit(1);
+    signal(SIGINT,SIG_IGN);
+    fputs("\nProgramm beenden(j/n)?",stderr);
+    while((c = toupper(getchar())) != 'J' && c != 'N');
+    if(c == 'J') 
+        exit(0);
+    signal(SIGINT,sig_handler);
+}
+
+
+
 
 static int handler(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
@@ -224,6 +246,18 @@ int getRestPower(void * config) {
 
 // Programmstart
 int main(int argc, char**argv) { 
+    
+    if (signal(SIGINT,sig_handler) == SIGERR)
+    { 
+        perror("Signal-Funktion"); 
+        exit(3); 
+        
+    }
+    for(;;) /* forever */ 
+    puts("Abbruch mit Strg-C!\n");
+
+
+    
     configuration config;
     if (ini_parse("/Energiebox/12V/config.ini", handler, &config) < 0) { fprintf(stderr, "Can't load '/Energiebox/12V/config.ini\n"); return 1; }
     if(wiringPiSetup()<0) { fprintf(stderr, "wiringPiSetup error!!!\n"); return -1; }
