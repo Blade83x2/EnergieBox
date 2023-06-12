@@ -39,10 +39,6 @@ void sigfunc(int sig)
         printf("\nalles aus machen : SIGBUS");
         exit (0);
     }
-    if(sig==SIGEMT){ // Hardware-Fehler
-        printf("\nalles aus machen : SIGEMT");
-        exit (0);
-    }
     return;
 }
 
