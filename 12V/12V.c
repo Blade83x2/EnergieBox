@@ -14,7 +14,7 @@
 
 void sig_handler(int sig)
 {
-    char c;
+    
     if (sig != SIGINT) exit(1);
     //signal(SIGINT,SIG_IGN);
     //fputs("\nProgramm beenden(j/n)?",stderr);
