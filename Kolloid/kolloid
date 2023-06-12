@@ -185,8 +185,8 @@ do
         sleep 1;
         ProgressBar ${numbera} ${_endt} "Runde $r/$rounds";
     done
-    230V $trafoRelais 0
-    230V $heizplatteRelais 0
+    230V $trafoRelais 0 1
+    230V $heizplatteRelais 0 1
     time=$(($time - $_endt))
     if [ "$rounds" == "$r" ]; then
         printf "\n\e[1;33m > Produktion fertig! \e[0m \n\n";
