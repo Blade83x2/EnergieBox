@@ -1,3 +1,8 @@
+
+<p align="center"> 
+    <img src="https://github.com/SJTU-LIT/ceval/blob/main/resources/logo.png?raw=true" style="width: 85%;" id="title-icon">
+</p>
+
 ERSTINSTALLATION DER ENERGIEBOX SOFTWARE
 @Copyright by Johannes a.d.F. K r ä m e r
 
