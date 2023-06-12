@@ -279,7 +279,7 @@ int main(int argc, char**argv) {
         printf("Error while raising the SIGTERM signal.\n");
         exit(EXIT_FAILURE);
     }
-    
+    printf("SignalValue: %d\n", gSignalStatus);
     
     
     configuration config;
