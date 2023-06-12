@@ -270,11 +270,7 @@ int main(int argc, char**argv) {
        || signal(SIGBUS,sigfunc) == SIG_ERR
     ) { fprintf(stderr, "Signal Fehler!\n"); }
     // Test Signal senden
-    if (raise(SIGBUS) != 0)
-    {
-        printf("Error while raising the SIGTERM signal.\n");
-        exit(EXIT_FAILURE);
-    }
+    //if (raise(SIGBUS) != 0) { printf("Error while raising the SIGTERM signal.\n"); exit(EXIT_FAILURE); }
 
     
     
