@@ -245,7 +245,7 @@ int getRestPower(void * config) {
 int main(int argc, char**argv) { 
     
     
-      if (signal(SIGINT,sig_handler) == SIGERR)
+      if (signal(SIGINT,sig_handler) != 0)
     { perror("Signal-Funktion"); exit(3); }
   for(;;) /* forever */ 
     puts("Abbruch mit Strg-C!\n");
