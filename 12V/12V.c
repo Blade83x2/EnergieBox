@@ -9,7 +9,7 @@
 #include <ctype.h>
 
 #include <signal.h>
-
+#include <errno.h>
 
 // Help: https://netzmafia.ee.hm.edu/skripten/programmieren/anh3.html
 void sig_handler(int sig);
