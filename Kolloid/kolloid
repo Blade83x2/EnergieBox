@@ -172,7 +172,7 @@ do
     printf "\e[1;31m > TRAFO WIRD GLEICH EINGESCHALTET !!!ACHTUNG LEBENSGEFAHR!!! \e[0m \n";
     $soundPath/enableTrafo
     230V $trafoRelais 1 1
-    [ $size -gt 200 ] && 230V $heizplatteRelais 1; # Wenn Menge >= 200 dann immer Köcheln
+    [ $size -gt 200 ] && 230V $heizplatteRelais 1 1; # Wenn Menge >= 200 dann immer Köcheln
     if [ $size -lt 1000 ]; then # Kleine Mengen mit vielen Runden
         if [ $(($r % 2)) == 0 ]; then  # jede zweite Runde Köcheln für 4 Minuten
             230V $heizplatteRelais 1 1
