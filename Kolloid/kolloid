@@ -4,7 +4,7 @@
 # @Copyright:       @2023 by Johannes a.d.F. K r ä m e r
 
 programmName="Kolloid Station"
-programmVersion="1.5"
+programmVersion="1.6"
 scriptPath=$(cd $(dirname "$0"); pwd);
 libsPath="$scriptPath/libs";
 soundPath="$scriptPath/sounds";
