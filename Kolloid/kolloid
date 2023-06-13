@@ -1,27 +1,27 @@
 #!/bin/bash
 # @Name:            Kolloid Produktions Software
-# @Version:         1.5
+# @Version:         1.6
 # @Copyright:       @2023 by Johannes a.d.F. K r ä m e r
 
-programmName="Kolloid Station"
-programmVersion="1.6"
+programmName="Kolloid Station";
+programmVersion="1.6";
 scriptPath=$(cd $(dirname "$0"); pwd);
 libsPath="$scriptPath/libs";
 soundPath="$scriptPath/sounds";
-invoiceDir="/home/$(whoami)/KolloidProduktion/$(date +"%Y")"
+invoiceDir="/home/$(whoami)/KolloidProduktion/$(date +"%Y")";
 heizplatteRelais=7;
 trafoRelais=8;
-trap ctrl_c INT  # CTRL + C abfangen & Relais ausschalten #### FUNKTIONIERT NICHT IMMER ??!?!?!
+trap ctrl_c INT;  # CTRL + C abfangen & Relais ausschalten #### FUNKTIONIERT NICHT IMMER ??!?!?!
 function ctrl_c() {
-    230V $heizplatteRelais 0 1
-    230V $trafoRelais 0 1
+    230V $heizplatteRelais 0 1;
+    230V $trafoRelais 0 1;
     printf "\n\e[1;31m > !BYEBYE!\e[0m \n\n";
     exit 1;
 }
-230V $heizplatteRelais 0 1
-230V $trafoRelais 0 1
-kolloidElementsArray=(au ag pt pd ir)
-kolloidWaterSizeArray=(100 200 400 1000 2000)
+230V $heizplatteRelais 0 1;
+230V $trafoRelais 0 1;
+kolloidElementsArray=(au ag pt pd ir);
+kolloidWaterSizeArray=(100 200 400 1000 2000);
 source "$libsPath/pattern.sh" || exit 1; 
 source "$libsPath/getENV.sh" || exit 1; 
 source "$libsPath/colors.sh" || exit 1; 
@@ -30,7 +30,7 @@ source "$libsPath/startup.sh" || exit 1;
 source "$libsPath/getops.sh" || exit 1; 
 
 clear;
-showLogo
+showLogo;
 # Heizplatten Zeiten & Zeit fürs Nachjustieren definieren
 if (( ${size} == 100 )); then
     _endPlatte=480; # geprüft: 480 ok
@@ -114,7 +114,7 @@ elif [ $metal == "ag" ]; then
         time=$(((($size/10) * 2) * $ppm));
     fi
 elif [ $metal == "pt" ]; then
-    time=$(((($size/2) * 23) * $ppm));   # ######################### ZEIT ERMITTELN !!!!! 
+    time=$(((($size/2) * 23) * $ppm)); # #################################### ZEIT ERMITTELN !!!!! 
 elif [ $metal == "pd" ]; then
     time=$(((($size/2) * 18) * $ppm)); # #################################### ZEIT ERMITTELN 
 elif [ $metal == "ir" ]; then
@@ -139,27 +139,27 @@ elif [ $metal == "ir" ]; then
 fi
 printf "\n > 2) ${size} ml Borosilikatglas bis zum Rand mit H²O füllen & auf Heizplatte stellen!";
 source "$libsPath/elektrodenPosition.sh" || exit 1; 
-printf "\n > Taste drücken um fortzufahren oder beenden mit ctrl+c!"
-read -n 1 -s -r -p ""
+printf "\n > Taste drücken um fortzufahren oder beenden mit ctrl+c!";
+read -n 1 -s -r -p "";
 printf "\n\n";
-clear
+clear;
 OIFS=$IFS;
 IFS=','; # Delimeter auf , setzen
 for kunde in $kunde
 do
     kundeTrim="$(echo -e "${kunde}" | sed -e 's/^[[:space:]]*//')";
-    [ ! -d "$invoiceDir" ] && mkdir -p "$invoiceDir"
-    echo "$(date +"%d.%m.%Y")|${size}ml|${metal^^}|(${ppm}PPM)|${kundeTrim^}" >> "$invoiceDir/$(date +"%m").txt"
+    [ ! -d "$invoiceDir" ] && mkdir -p "$invoiceDir";
+    echo "$(date +"%d.%m.%Y")|${size}ml|${metal^^}|(${ppm}PPM)|${kundeTrim^}" >> "$invoiceDir/$(date +"%m").txt";
 done
 IFS=$OIFS;
 unset OIFS;
-230V $heizplatteRelais 1 1
+230V $heizplatteRelais 1 1;
 for number in $(seq 0 ${_endPlatte}) # Progress Bar anzeigen
 do
     sleep 1;
     ProgressBar ${number} ${_endPlatte} "$(date -d@$_endPlatte -u +%H:%M:%S) Aufheizen";
 done
-230V $heizplatteRelais 0 1
+230V $heizplatteRelais 0 1;
 rounds=$(($time/$maxRuntime));
 [ $(($time % $maxRuntime)) -gt 0 ] && rounds=$(($rounds + 1));
 [ $rounds -lt 1 ] && rounds=1;
@@ -170,13 +170,13 @@ fi
 for (( r=1; r<=$rounds; r++ ))
 do 
     printf "\e[1;31m > TRAFO WIRD GLEICH EINGESCHALTET !!!ACHTUNG LEBENSGEFAHR!!! \e[0m \n";
-    $soundPath/enableTrafo
-    230V $trafoRelais 1 1
+    $soundPath/enableTrafo;
+    230V $trafoRelais 1 1;
     [ $size -gt 200 ] && 230V $heizplatteRelais 1 1; # Wenn Menge >= 200 dann immer Köcheln
     if [ $size -lt 1000 ]; then # Kleine Mengen mit vielen Runden
         if [ $(($r % 2)) == 0 ]; then  # jede zweite Runde Köcheln für 4 Minuten
-            230V $heizplatteRelais 1 1
-            230V $heizplatteRelais 0 240 & disown
+            230V $heizplatteRelais 1 1;
+            230V $heizplatteRelais 0 240 & disown;
         fi
     fi
     [ $time -lt $maxRuntime ] && _endt=$time || _endt=$maxRuntime;
@@ -185,16 +185,16 @@ do
         sleep 1;
         ProgressBar ${numbera} ${_endt} "Runde $r/$rounds";
     done
-    230V $trafoRelais 0 1
-    230V $heizplatteRelais 0 1
-    time=$(($time - $_endt))
+    230V $trafoRelais 0 1;
+    230V $heizplatteRelais 0 1;
+    time=$(($time - $_endt));
     if [ "$rounds" == "$r" ]; then
         printf "\n\e[1;33m > Produktion fertig! \e[0m \n\n";
-        $soundPath/finishedTrafo & disown
+        $soundPath/finishedTrafo & disown;
         exit 0;
     else
-        $soundPath/disableTrafo & disown
-        printf "\n\e[1;31m > Elektroden neu positionieren und Taste drücken um fortzufahren oder beenden mit ctrl+c! \e[0m\n"
-        read -n 1 -s -r -p ""
+        $soundPath/disableTrafo & disown;
+        printf "\n\e[1;31m > Elektroden neu positionieren und Taste drücken um fortzufahren oder beenden mit ctrl+c! \e[0m\n";
+        read -n 1 -s -r -p "";
     fi
 done
