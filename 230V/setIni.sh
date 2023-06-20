@@ -134,7 +134,7 @@ fi
 if [ "$relais" -eq "13" ]; then
  if [ "$state" -eq "1" ]; then
    #echo "Relais $relais wird eingeschaltet";
-   sudo sed -i '/^\[Relais132]$/,/^\[/ s/^eltakoState = 0/eltakoState = 1/' /Energiebox/230V/config.ini
+   sudo sed -i '/^\[Relais 13]$/,/^\[/ s/^eltakoState = 0/eltakoState = 1/' /Energiebox/230V/config.ini
  else
    #echo "Relais $relais wird ausgeschaltet";
    sudo sed -i '/^\[Relais 13]$/,/^\[/ s/^eltakoState = 1/eltakoState = 0/' /Energiebox/230V/config.ini
