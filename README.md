@@ -1,5 +1,5 @@
-
 ERSTINSTALLATION DER ENERGIEBOX SOFTWARE auf einem Raspberry PI
+
 @Copyright by Johannes a.d.F. K r ä m e r
 
 <p align="center"> 
