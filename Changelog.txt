@@ -5,12 +5,12 @@ Energiebox Ver.3 #
 BUGs
 
     230V MCP Kontakte sind locker
-
+    
                                             
                         
 Anschaffungen
 
-    4x DC -> DC Konverter
+    4x DC 24V -> DC 12V Konverter
     16x Eltakos für 12Volt
     1x Digitaler Stromzähler
     1x MCP23017
@@ -24,6 +24,8 @@ Anschaffungen
     1x Waschmaschine
     1x Trockner
     1x Teufel Audiosystem
+    1x Induktionsfeld mit 2 Platten
+    16x Sicherungen für 12V Anschlüsse mit diversen Sicherungen verschiedener Größen
 
     
     
