@@ -357,11 +357,11 @@ void clearSystem() {
             system(command);
             int laufzeitSekunden=0;            
             while(true) {
-                print_progress("Status", laufzeitSekunden, reinigungszeitInSekunden);
+                print_progress(char "Status", laufzeitSekunden, reinigungszeitInSekunden);
                 sleep(1);
                 laufzeitSekunden++;
                 if (laufzeitSekunden == reinigungszeitInSekunden) {
-                    print_progress("Status", reinigungszeitInSekunden, reinigungszeitInSekunden);
+                    print_progress(char "Status", reinigungszeitInSekunden, reinigungszeitInSekunden);
                     break;
                 }
             }
