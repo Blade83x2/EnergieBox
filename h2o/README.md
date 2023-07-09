@@ -11,9 +11,13 @@ Die Hilfe wird angezeigt wenn einfach nur h2o ohne Parameter aufgerufen wird.
     <img src="img/start.png" style="width: 85%;" alt="h2o Hilfe" >
 </p>
 
+Um eine Ordnungsgemäße Funktion zu Garantieren, muss das Programm zuerst auf den verwendeten Filter eingestellt werden. Zur Einrichtung wird das Programm
+mit folgendem Parameter aufgerufen:
 
+h2o -setup
 
+<p align="center"> 
+    <img src="img/setup.png" style="width: 85%;" alt="h2o Einrichtung" >
+</p>
 
-
-
-
+Nun werden bestimmte Filtereigenschaften abgefragt. Diese werden benötigt damit das Programm richtig funktionieren kann.
