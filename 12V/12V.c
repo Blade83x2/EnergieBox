@@ -496,7 +496,6 @@ void getDataForConfigFile(int relais, void* config) {
         stractivateOnStart="false";
     } 
     else {
-       // printf(" -> Verbrauch in Watt (Max. %d Watt): ", pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController);
         printf(" -> Verbrauch in Watt: ");
         strpMax = readStdinLine();
         // Maximal verfügbare Watt = - alte Eigeneinstellung
