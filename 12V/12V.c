@@ -455,15 +455,19 @@ bool checkMainParameter(char* paramName, int number, void* config) {
 }
 
 
-char *trim(char *s) {
-    char *ptr;
-    if (!s)
-        return NULL;   // handle NULL string
-    if (!*s)
-        return s;      // handle empty string
-    for (ptr = s + strlen(s) - 1; (ptr >= s) && isspace(*ptr); --ptr);
-    ptr[1] = '\0';
-    return s;
+char* readStdinLine()
+{
+        char*  buffer  = NULL;
+        size_t bufsize = 0;
+        ssize_t characters = getline(&buffer, &bufsize, stdin);
+        if (characters == -1) {
+            free(buffer);
+            buffer = NULL;
+        }
+        else if (buffer[characters-1] == '\n') {
+            buffer[characters-1] = '\0';
+        }
+        return buffer;
 }
 
 
@@ -478,17 +482,20 @@ void getDataForConfigFile(int relais, void* config) {
         
     printf(" -> Neue Bezeichnung eingeben (Max. 40 Zeichen): ");
     char strname[40];
-    scanf("%[^\n]s",strname);
+    
+    strname = readStdinLine();
+    
+    
     
   
-    // leer, alles auf N/A, false, 0    
+    // leer, alles auf N/A, false, 0   
+    /*
     if (strcmp(strname, "") == 0)  { 
         strname[0]="N/A";
         stractivateOnStart="false";
         strpMax="0";
     } 
     else {
-        // weiter abfragen
         
         printf(" -> Maximaler Verbrauch in Watt: ");
         char strpMax[4];
@@ -500,11 +507,11 @@ void getDataForConfigFile(int relais, void* config) {
         char stractivateOnStart[5];
         scanf("%[^\n]s",stractivateOnStart);
     }
-
+*/
 
     printf("name: %s\n",strname);
-    printf("activateOnStart: %s\n",stractivateOnStart);
-    printf("strpMax: %s\n",strpMax);
+  //  printf("activateOnStart: %s\n",stractivateOnStart);
+   // printf("strpMax: %s\n",strpMax);
         
         
 
