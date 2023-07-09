@@ -112,7 +112,7 @@ int main(int argc, char* argv[]) {
     printf("filterZeitFuerNullKommaEinsLiterInSekunden: %d", filterZeitFuerNullKommaEinsLiterInSekunden);
     
     
-    
+    sleep(4);
     
     
     // Faktor Abwassermenge zu Filtermenge. Beispiel: 
@@ -196,7 +196,7 @@ int main(int argc, char* argv[]) {
             printf(" -> Berechnete Abwasser Menge:\t\t%5.0f Liter\n", abwasserMenge);
             
             
-            printf(" -> Berechnete Filter Zeit:\t\t%5.1f Liter\n", filtermengeProSekunde);
+            printf(" -> Berechnete Sekunden Filter Zeit:\t\t%5.1f\n", filterLaufzeit);
             
             
             
