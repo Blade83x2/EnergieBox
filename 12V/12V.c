@@ -511,8 +511,7 @@ int showHelp(char**argv, void* config) {
     printf("  %s 5\t\t\t[gibt denn aktuellen Schaltzustand von Relais 5 zurück. Relais verfügbar: 1 bis %d)]\n", argv[0], pconfig->mcp.numberOfRelaisActive);
     printf("  %s 5 1\t\t[schaltet Relais 5 auf 1 (an)]\n", argv[0]);
     printf("  %s 7 0 10\t\t[schaltet Relais 7 aus in 10 Sekunden]\n", argv[0]);
-    printf("  %s 10 1 300 & disown\t[schaltet Relais 10 im Hintergrund an in 5 Minuten und gibt die Konsole frei]\n\n", argv[0]);
-    printf("  Die Relais Einstellungen können auch über die Konsole eingestellt werden mit:\n");
+    printf("  %s 10 1 300 & disown\t[schaltet Relais 10 im Hintergrund an in 5 Minuten und gibt die Konsole frei]\n", argv[0]);
     printf("  %s -set 5\t\t[Ruft das Einstellungsmenü für Relais 5 auf]\e[0m \n\n", argv[0]);
     return -1;
 }
