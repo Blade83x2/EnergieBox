@@ -530,7 +530,8 @@ void getDataForConfigFile(int relais, void* config) {
         stractivateOnStart="false";
     } 
     else {
-        printf(" -> Verbrauch in Watt (Max. 40 %dWatt): ", pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController);
+       // printf(" -> Verbrauch in Watt (Max. %d Watt): ", pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController);
+        printf(" -> Verbrauch in Watt: ");
         strpMax = readStdinLine();
         // prüfen ob > 1 und kleiner als gesamtleistung 12V
         
