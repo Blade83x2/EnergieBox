@@ -501,7 +501,7 @@ void getDataForConfigFile(int relais, void* config) {
         strpMax = readStdinLine();
         // Maximal verfügbare Watt = - alte Eigeneinstellung
         int maxRest;
-        maxRest = pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController
+        maxRest = pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController;
         
         printf(" -> getRestPower: %d", maxRest);
 
