@@ -164,7 +164,7 @@ int main(int argc, char* argv[]) {
             // Filtermenge anzeigen
             printf("\n\n -> Filtermenge:\t\t\t%5.1f Liter\n", filterMenge);  
             // Filterleistung anzeigen
-            printf("\n\n -> Filterleistung:\t\t\t%d GPD\n", gpd);  
+            printf(" -> Filterleistung:\t\t\t\t%d GPD\n", gpd);  
             // Filterlaufzeit berechnen
             filterLaufzeit = ((filterMenge / 0.1) * filterZeitFuerNullKommaEinsLiterInSekunden);
             // Typecast in Integer
