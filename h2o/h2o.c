@@ -270,7 +270,7 @@ void setup() {
     scanf("%c", &answersetup);
     if (answersetup == 'Y' || answersetup == 'y' || answersetup == 'J' || answersetup == 'j'){
         // Wenn ja, alle Daten zusammen erfragen und externe Datei aufrufen
-        int p1;
+        int p1=6;
         printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
         scanf("%d", &p1);
        
@@ -278,7 +278,7 @@ void setup() {
         
 
         
-        int p2;
+        int p2=50;
         printf("-> Wieviel GPD hat die Filteranlage?: ");
         scanf("%d", &p2);
         
