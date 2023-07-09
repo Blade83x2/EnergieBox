@@ -7,12 +7,14 @@ function usage() {
     cat << EOF
     
     
-    # @Name:            Automatische Kolloid Produktions Software
+    # @Name:            $programmName
     # @Description:     Programm für die automatische Herstellung von Kolloidalen Metalen
-    # @Version:         1.0
+    # @Version:         $programmVersion
     # @Copyright:       Johannes a.d.F. K r ä m e r
+    # @Trafo            $trafoRelais
+    # @Heizplatte       $heizplatteRelais
         
-    Scriptaufruf: $0 [Options]
+    Scriptaufruf: $ kolloid [Options]
     
     Parameter           Beschreibung
     -----------------------------------------------------------------------------

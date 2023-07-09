@@ -1,16 +1,15 @@
 #!/bin/bash
-# @Name:            Kolloid Produktions Software
-# @Version:         1.6
+# @Name:            Kolloid Station
 # @Copyright:       @2023 by Johannes a.d.F. K r ä m e r
 
 programmName="Kolloid Station";
 programmVersion="1.6";
+heizplatteRelais=7;
+trafoRelais=8;
 scriptPath=$(cd $(dirname "$0"); pwd);
 libsPath="$scriptPath/libs";
 soundPath="$scriptPath/sounds";
 invoiceDir="/home/$(whoami)/KolloidProduktion/$(date +"%Y")";
-heizplatteRelais=7;
-trafoRelais=8;
 trap ctrl_c INT;  # CTRL + C abfangen & Relais ausschalten #### FUNKTIONIERT NICHT IMMER ??!?!?!
 function ctrl_c() {
     230V $heizplatteRelais 0 1;
