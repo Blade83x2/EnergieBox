@@ -16,12 +16,6 @@ Ein 7" Touchdisplay sollte ebenfalls angeschlossen und eingerichtet sein.
 
 ## Installationsanweisung:
 
-
-- [x] #739
-- [ ] https://github.com/octo-org/octo-repo/issues/740
-- [ ] Add delight to the experience when all tasks are
-
-
 1) Installation benötigter Pakete & Energiebox
 2) Raspi Konfiguration
 3) Startup & Shutdown Service
@@ -47,11 +41,7 @@ Installation Energiebox             |
 Die Energiebox können Sie per ZIP Download herunterladen und sollte unbedingt nach /Energiebox kopieren werden
 mit den Rechten 755 oder Sie installieren es bequem mit git clone direkt an die richtige Stelle:
  
-sudo git clone https://github.com/Blade83x2/EnergieBox.git /Energiebox && sudo chmod -R 755 /Energiebox
-
-cd /Energiebox/WiringPi && sudo ./build && cd .. && cd /Energiebox/230V && sudo make && cd /Energiebox/12V && sudo make
-
-cd /Energiebox/h2o && sudo make && cd /Energiebox/Shutdown && sudo make && cd /Energiebox/Startup && sudo make
+`sudo git clone https://github.com/Blade83x2/EnergieBox.git /Energiebox && sudo chmod -R 755 /Energiebox && cd /Energiebox/WiringPi && sudo ./build && cd .. && cd /Energiebox/230V && sudo make && cd /Energiebox/12V && sudo make && cd /Energiebox/h2o && sudo make && cd /Energiebox/Shutdown && sudo make && cd /Energiebox/Startup && sudo make`
  
  
 -------------------------------------
@@ -61,7 +51,7 @@ Raspi Konfiguration                 |
 
 Zuerst wählen wir einen anderen Benutzernamen um die Sicherheit zu erhöhen. Hierfür geben wird
 
-sudo rename-user
+`sudo rename-user`
 
 ein und starten den Raspberry dann neu. Nach dem Hochfahren kommt eine Grafische Oberfläche wo der
 Benutzer geändert werden kann.
@@ -69,7 +59,7 @@ Als nächstes wird der Raspberry konfiguriert damit die Hardware entsprechend zu
 WLAN sowie Bluetooth werden ausgeschaltet und das System bekommt einen festen Kabelanschluss für die
 Internet Verbindung damit Sie die Eltakos über das Internet steuern können. Hierzu wird der Befehl
 
-sudo nano /boot/config.txt
+`sudo nano /boot/config.txt`
 
 vom Terminal aus aufgerufen und in der Datei folgendes auskommentieren:
 
