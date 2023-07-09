@@ -86,7 +86,7 @@ void showLogo();
 void abwasserZaehlerReset();
 void printStatistik();
 void replace_char (char *s, char find, char replace);
-void print_progress(char text, size_t count, size_t max);
+void print_progress(size_t count, size_t max);
 
 
 // Programmstart mit oder ohne Parameter
@@ -357,11 +357,11 @@ void clearSystem() {
             system(command);
             int laufzeitSekunden=0;            
             while(true) {
-                print_progress(char "Status", laufzeitSekunden, reinigungszeitInSekunden);
+                print_progress(laufzeitSekunden, reinigungszeitInSekunden);
                 sleep(1);
                 laufzeitSekunden++;
                 if (laufzeitSekunden == reinigungszeitInSekunden) {
-                    print_progress(char "Status", reinigungszeitInSekunden, reinigungszeitInSekunden);
+                    print_progress( reinigungszeitInSekunden, reinigungszeitInSekunden);
                     break;
                 }
             }
@@ -382,12 +382,13 @@ void clearSystem() {
     }
 }
 
+
 // Progress Bar
-void print_progress(char text, size_t count, size_t max) {
+void print_progress(size_t count, size_t max) {
     const int bar_width = 50;
     float progress = (float) count / max;
     int bar_length = progress * bar_width;
-    printf("\r%s [", text);
+    printf("\r [");
     for (int i = 0; i < bar_length; ++i) {
         printf("#");
     }
