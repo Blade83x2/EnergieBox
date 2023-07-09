@@ -196,7 +196,7 @@ int main(int argc, char* argv[]) {
             printf(" -> Berechnete Abwasser Menge:\t\t%5.0f Liter\n", abwasserMenge);
             
             
-            printf(" -> Berechnete Sekunden Filter Zeit:\t\t%5.1f\n", filterLaufzeit);
+            printf(" -> Berechnete Filter Zeit:\t\t%d Sek.\n", filterLaufzeit);
             
             
             
