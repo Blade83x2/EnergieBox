@@ -1,7 +1,7 @@
 #!/bin/bash
 relais=$(echo $1);
 name=$(echo $2); 
-[ -z "$name" ] && $name="N/A";
+[ -z "$name" ] && name="N/A";
 
 
 
