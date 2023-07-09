@@ -311,6 +311,7 @@ void setup() {
 
             printf("%Lf L / Stunde \n", literProTag/24);
             printf("%Lf L / Minute \n", (literProTag/24)/60);
+            printf("%Lf L / Sekunde \n", ((literProTag/24)/60)/60);
             
             
             
