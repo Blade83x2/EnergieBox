@@ -10,10 +10,10 @@ BUGs
                         
 Anschaffungen
 
-    4x DC -> DC Konverter kaufen
+    4x DC -> DC Konverter
     16x Eltakos für 12Volt
     1x Digitaler Stromzähler
-    1x MCP23017             - patrick
+    1x MCP23017
     1x EP Ever MPPT 100A
     1x PAL-ADP-50AN + Kabel
     1x Temperatur Sensor Batterie EPEVER
@@ -30,7 +30,14 @@ Anschaffungen
 Todoś
 
     Handy Anschluss prüfen / reparieren
-
+    Stromversorgung Filtersystem fertig stellen
+    Notaus für Kolloidstation verbauen
+    BlueRay Player gegen King Box austauschen
+    Überwachungssystem Festplatte tauschen
+    Schalttaffel für 12V neu bauen mit neuen Bauteilen
+    Cam 3 neu positionieren
+    Anschlusskabel 230V Pannel erneuern
+    Planne unter PV Module legen wegen Unkraut
  
  
 _______________________________________________________________________________________________________________________________________
