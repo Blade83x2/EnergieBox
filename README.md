@@ -368,23 +368,17 @@ GPIO Zustände                       |
 
 Da wir in der Energiebox 32 Kanäle und somit 32 Stromkreise schalten, haben wir
 uns natürlich für PortExpander entschieden die über I2C verbunden sind.
-Falls es jedoch mal notwendig sein sollte, einen einzelnen GPIO Kanal zu schalten
-hat hier ein Beispiel für das Setzen der GPIO Direction (in/out) sowie Wert (nur bei out):
+Falls es jedoch mal notwendig sein sollte, einen einzelnen GPIO Kanal zu schalten, der 
+hat hier ein Beispiel für das Setzen der GPIO Direction (in/out) sowie für den Wert (nur bei out):
 
-sudo nano /etc/rc.local                  
+`sudo nano /etc/rc.local`
                    
-sleep 0.1
+`sleep 0.1`
 
-echo "20" > /sys/class/gpio/export
+`echo "20" > /sys/class/gpio/export`
 
-sleep 0.1
+`sleep 0.1`
 
-echo "out" > /sys/class/gpio/gpio20/direction
+`echo "out" > /sys/class/gpio/gpio20/direction`
 
-echo "1" > /sys/class/gpio/gpio20/value
-  
-
-
-
-
-
+`echo "1" > /sys/class/gpio/gpio20/value`
