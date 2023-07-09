@@ -483,36 +483,28 @@ char *Trim(char *s)
 }
 
 
+// Liesst Zeileneingabe aus und trimt string direkt
 char* readStdinLine()
 {
-        char*  buffer  = NULL;
-        size_t bufsize = 0;
-        ssize_t characters = getline(&buffer, &bufsize, stdin);
-        if (characters == -1) {
-            free(buffer);
-            buffer = NULL;
-        }
-        else if (buffer[characters-1] == '\n') {
-            buffer[characters-1] = '\0';
-        }
-        
-            
-        char *cp1;                              // for parsing the whole s
-        char *cp2;                              // for shifting & padding
-
-        // skip leading spaces, shift remaining chars
-        for (cp1=buffer; isspace(*cp1); cp1++ )      // skip leading spaces, via cp1
-            ;
-        for (cp2=buffer; *cp1; cp1++, cp2++)         // shift left remaining chars, via cp2
-            *cp2 = *cp1;
-        *cp2-- = 0;                             // mark new end of string for s
-
-        // replace trailing spaces with '\0'
-        while ( cp2 > buffer && isspace(*cp2) )
-            *cp2-- = 0;                         // pad with '\0's
-
-            
-        return buffer;
+    char*  buffer  = NULL;
+    size_t bufsize = 0;
+    ssize_t characters = getline(&buffer, &bufsize, stdin);
+    if (characters == -1) {
+        free(buffer);
+        buffer = NULL;
+    }
+    else if (buffer[characters-1] == '\n') {
+        buffer[characters-1] = '\0';
+    }
+    char *cp1;
+    char *cp2;
+    for (cp1=buffer; isspace(*cp1); cp1++ );
+    for (cp2=buffer; *cp1; cp1++, cp2++)
+        *cp2 = *cp1;
+    *cp2-- = 0;
+    while ( cp2 > buffer && isspace(*cp2) )
+        *cp2-- = 0;
+    return buffer;
 }
 
 
@@ -527,7 +519,15 @@ void getDataForConfigFile(int relais, void* config) {
     char* strname;
     strname = readStdinLine();
     
-    
+    if (strcmp(strname, "") == 0)  {
+            printf("N/A");
+            
+            
+            
+            
+
+    } 
+
   
     // leer, alles auf N/A, false, 0   
     /*
