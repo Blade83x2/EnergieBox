@@ -31,9 +31,7 @@ Installation benötigter Pakete      |
 
 Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Installation verschiedener benötigter Pakete:
 
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install uwf manpages-de python-dev python3-pip git-core ufw kate krusader -y
-
-sudo pip install rpi.gpio
+`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install uwf manpages-de python-dev python3-pip git-core ufw kate krusader -y && sudo pip install rpi.gpio`
 
 
 -------------------------------------
