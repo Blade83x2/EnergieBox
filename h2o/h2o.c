@@ -324,7 +324,7 @@ void setup() {
         
         
         
-        printf("zeit 100ml $f",p4);
+        printf("zeit 100ml %f",p4);
         
         
         
