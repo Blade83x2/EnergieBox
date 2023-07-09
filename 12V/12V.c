@@ -487,14 +487,9 @@ void replace_char (char *s, char find, char replace)
 
 // Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
 void getDataForConfigFile(int relais, void* config) {
-    configuration* pconfig = (configuration*)config;
+    //configuration* pconfig = (configuration*)config;
     system("clear");   
     printf("Neue Konfiguration für Relais Nr. -> %d erstellen:\n\n", relais);
-    
-    char var=15;
-    printf(" -> Aktueller Name: %d\n", pconfig->r${var}.eltakoState);
-
-    
     printf(" -> Neue Bezeichnung eingeben (leer lassen für deaktivieren): ");
     char* strname;
     char* strpMax;
