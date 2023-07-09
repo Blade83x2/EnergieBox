@@ -51,6 +51,7 @@ int showHelp(char**argv, void* config);
 int getRestPower(void * config);
 void getDataForConfigFile(int relais, void* config);
 char* readStdinLine();
+void replace_char (char *s, char find, char replace);
 
 // MCP Setup
 typedef struct {
@@ -508,14 +509,8 @@ void getDataForConfigFile(int relais, void* config) {
         stractivateOnStart = readStdinLine();
         // prüfen ob true oder false, wenn keins von beiden, dann false
         if (strcmp(stractivateOnStart, "true") != 0 && strcmp(stractivateOnStart, "false") != 0 )  { stractivateOnStart="false"; }
-        
-        
-        
+        // Leerzeichen Bug
         replace_char (strname, ' ' , '-');
-
-
-        
-        
     }
     sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
     system(command);
