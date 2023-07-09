@@ -483,7 +483,7 @@ void getDataForConfigFile(int relais, void* config) {
   
     // leer, alles auf N/A, false, 0    
     if (strcmp(strname, "") == 0)  { 
-        strname="N/A";
+        strname[]="N/A";
         stractivateOnStart="false";
         strpMax="0";
     } 
