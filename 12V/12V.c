@@ -443,32 +443,7 @@ bool checkMainParameter(char* paramName, int number, void* config) {
     return true;
 }
 
-// Liesst Zeileneingabe aus und trimt string direkt
-/*
-char* readStdinLine()
-{
-    char*  buffer  = NULL;
-    size_t bufsize = 0;
-    ssize_t characters = getline(&buffer, &bufsize, stdin);
-    if (characters == -1) {
-        free(buffer);
-        buffer = NULL;
-    }
-    else if (buffer[characters-1] == '\n') {
-        buffer[characters-1] = '\0';
-    }
-    char *cp1;
-    char *cp2;
-    for (cp1=buffer; isspace(*cp1); cp1++ );
-    for (cp2=buffer; *cp1; cp1++, cp2++)
-        *cp2 = *cp1;
-    *cp2-- = 0;
-    while ( cp2 > buffer && isspace(*cp2) )
-        *cp2-- = 0;
-    return buffer;
-}
-*/
-
+// Liesst Zeileneingabe aus
 char* readStdinLine()
 {
         char*  buffer  = NULL;
@@ -496,9 +471,9 @@ void getDataForConfigFile(int relais, void* config) {
     system("clear");   
     printf("Neue Konfiguration für Relais Nr. -> %d erstellen:\n\n", relais);
     printf(" -> Neue Bezeichnung eingeben (leer lassen für deaktivieren): ");
-    char* strname="";
-    char* strpMax="0";
-    char* stractivateOnStart="false";
+    char* strname;
+    char* strpMax;
+    char* stractivateOnStart;
     strname = readStdinLine();
     printf("-%s-", strname);
 
