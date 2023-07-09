@@ -35,7 +35,11 @@ if [ "$relais" -eq "4" ]; then
     if [ "$name" = "NULL" ]; then
         sudo sed -i -E "/^\[Relais 4]$/,/^\[/ s/^name = .*/name = N\/A/" /Energiebox/12V/config.ini
     else
-        sudo sed -i "/^\[Relais 4]$/,/^\[/ s/^name = .*/name = $name/" /Energiebox/12V/config.ini
+    
+    
+    
+    
+        sudo sed -i "/^\[Relais 4]$/,/^\[/ s/^name = .*/name = ${name//-/ }/" /Energiebox/12V/config.ini
     fi
     sudo sed -i "/^\[Relais 4]$/,/^\[/ s/^activateOnStart = .*/activateOnStart = $activateOnStart/" /Energiebox/12V/config.ini
     sudo sed -i "/^\[Relais 4]$/,/^\[/ s/^pMax = .*/pMax = $pMax/" /Energiebox/12V/config.ini
