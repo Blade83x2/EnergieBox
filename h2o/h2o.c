@@ -275,13 +275,24 @@ void setup() {
         //scanf("%d", &p1);
        
         
+        
+        
+        
+        while (1) {
+            
+            printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
 
-    int character;
-    character = getchar();
-    while (character != EOF) {
-        putchar(character);
-        character = getchar();
-    }
+            int character;
+            character = getchar();
+            while (character != EOF) {
+                putchar(character);
+                character = getchar();
+            }   
+            
+            break;
+        }
+
+
 
 
         
