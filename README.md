@@ -49,7 +49,20 @@ Raspi Konfiguration                 |
 -------------------------------------
 
 
-Zuerst wählen wir einen anderen Benutzernamen um die Sicherheit zu erhöhen. Hierfür geben wird
+Den User pi bei Systembefehlen zum Passwort zwingen
+
+`sudo nano /etc/sudoers.d/010_pi-nopasswd`
+
+Nun ändern wir:
+
+`pi ALL=(ALL) NOPASSWD: ALL`
+
+zu 
+
+`pi ALL=(ALL) PASSWD: ALL`
+
+
+Danach wählen wir einen anderen Benutzernamen um die Sicherheit zu erhöhen. Hierfür geben wird
 
 `sudo rename-user`
 
@@ -157,9 +170,9 @@ Strg + x gespeichert werden. Nun tippen wir auf der Konsole den Befehl
 
 ein und fügen ganz unten am Ende der Datei folgendes ein:
 
-`12V
+`12V`
 
-230V`
+`230V`
 
 
 Auch diese Aktion wird wieder mit Strg + x gespeichert.
@@ -197,11 +210,11 @@ Danach wird der Befehl
 
 eingegeben und in diese Datei wird folgendes rein kopiert:
 
-`#!/bin/bash
+`#!/bin/bash`
 
-/Energiebox/Shutdown/mcp_shutdown
+`/Energiebox/Shutdown/mcp_shutdown`
 
-exit 0`
+`exit 0`
 
 
 Diese Aktion wird wieder mit Strg + x gespeichert.
@@ -211,23 +224,23 @@ Als nächstes wird der Befehl
 
 in der Konsole abgesetzt und in diese Datei wird folgendes eingefügt:
 
-`[Unit]
+`[Unit]`
 
-Description=/etc/rc.shutdown
+`Description=/etc/rc.shutdown`
 
-Before=shutdown.target
+`Before=shutdown.target`
 
-[Service]
+`[Service]`
 
-ExecStart=/bin/true
+`ExecStart=/bin/true`
 
-ExecStop=/etc/rc.shutdown
+`ExecStop=/etc/rc.shutdown`
 
-RemainAfterExit=yes
+`RemainAfterExit=yes`
 
-[Install]
+`[Install]`
 
-WantedBy=multi-user.target`
+`WantedBy=multi-user.target`
 
 
 Wie immer wird diese Aktion mit Strg + x gespeichert.
@@ -251,13 +264,13 @@ und tippen den folgenden Befehl ein:
 am Ende fügen wir die 4 Zeilen hinzu und speichern diese danach
 wieder ab mit Strg + x:
 
-`PATH=$PATH:/Energiebox/12V
+`PATH=$PATH:/Energiebox/12V`
 
-PATH=$PATH:/Energiebox/230V
+`PATH=$PATH:/Energiebox/230V`
 
-PATH=$PATH:/Energiebox/Kolloid
+`PATH=$PATH:/Energiebox/Kolloid`
 
-PATH=$PATH:/Energiebox/h2o`
+`PATH=$PATH:/Energiebox/h2o`
 
 
 -------------------------------------
@@ -270,11 +283,11 @@ IP Einstellungen aufrufen mit:
 
 und dort folgendes eintragen(vorher abändern)
 
-`interface eth0
-static ip_address=10.0.0.2/24
-static ip6_address=29c5:ef1d:3023:5c04::ff/64
-static routers=10.0.0.1
-static domain_name_servers=10.0.0.1 8.8.8.8 29c5:ef1d:3023:5c04::1`
+`interface eth0`
+`static ip_address=10.0.0.2/24`
+`static ip6_address=29c5:ef1d:3023:5c04::ff/64`
+`static routers=10.0.0.1`
+`static domain_name_servers=10.0.0.1 8.8.8.8 29c5:ef1d:3023:5c04::1`
 
 
 und mit Strg + x abspeichern. Nun sollte der Rechner Neugestartet werden mit
@@ -333,18 +346,6 @@ einfügen. Danach speichern.
 Testen: Wenn falsche Daten bei einer SSH Verbindung eingegeben worden sind, zeigt fail2ban
 nicht mehr "Permission denied" sondern "Connection refused" an!
 
-
-Den User pi bei Systembefehlen zum Passwort zwingen
-
-`sudo nano /etc/sudoers.d/010_pi-nopasswd`
-
-Nun ändern wir:
-
-`pi ALL=(ALL) NOPASSWD: ALL `
-
-zu 
-
-`pi ALL=(ALL) PASSWD: ALL`
 
 
 Automatische Sicherheitsupdates installieren
