@@ -86,27 +86,7 @@ void showLogo();
 void abwasserZaehlerReset();
 void printStatistik();
 void replace_char (char *s, char find, char replace);
-
-
-
-// Progress Bar
-void print_progress(size_t count, size_t max) {
-    const int bar_width = 50;
-    float progress = (float) count / max;
-    int bar_length = progress * bar_width;
-    printf("\rProgress: [");
-    for (int i = 0; i < bar_length; ++i) {
-        printf("#");
-    }
-    for (int i = bar_length; i < bar_width; ++i) {
-        printf(" ");
-    }
-    printf("] %.2f%%", progress * 100);
-    fflush(stdout);
-}
-
-
-
+void print_progress(char text, size_t count, size_t max);
 
 
 // Programmstart mit oder ohne Parameter
@@ -400,6 +380,22 @@ void clearSystem() {
         // Abwasser Kannister hat nicht genug freies Volumen für geplante Filterung. Programm beenden
         printf("\e[0;31m -> Wassertank ist zu voll. Spülung wird abgebrochen!\n    Zuerst Abwasser Tank entleeren mit h2o -empty!\n\n\e[0m");
     }
+}
+
+// Progress Bar
+void print_progress(char text, size_t count, size_t max) {
+    const int bar_width = 50;
+    float progress = (float) count / max;
+    int bar_length = progress * bar_width;
+    printf("\r%s [", text);
+    for (int i = 0; i < bar_length; ++i) {
+        printf("#");
+    }
+    for (int i = bar_length; i < bar_width; ++i) {
+        printf(" ");
+    }
+    printf("] %.2f%%", progress * 100);
+    fflush(stdout);
 }
 
 // Abwasser Kanister Literzähler auf 0 setzen (Parameter -empty)
