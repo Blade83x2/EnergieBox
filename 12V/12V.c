@@ -487,14 +487,14 @@ void getDataForConfigFile(int relais, void* config) {
         strpMax = readStdinLine();
         int maxRest;
         maxRest = pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController;
+        if( strpMax -gt maxRest){
+            printf("\n\e[0;31m Dieses Gerät hat einen zu hohen Watt Verbrauch. Es wird nie eingeschaltet werden können!\e[0m");
+        }
+        if( strpMax -lt 1){
+            printf("\n\e[0;31m Dieses Gerät hat eine falsche Watt Angabe!\e[0m");
+        }
         
 
-        
-        // prüfen ob neuer Verbrauch größer als 1 ist und kleiner als gesamtleistung - dieses Relais
-        
-        
-        
-        
         
         printf(" -> Beim starten aktivieren?: (true/false) ");
         stractivateOnStart = readStdinLine();
