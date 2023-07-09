@@ -75,7 +75,7 @@ Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontr
 
 
 
-
+ [UPDATE] h2o -clean Fortschrittsanzige implementiert
  [UPDATE] Bei dem Filterparameter sind jetzt Koma und Punkte erlaubt
  [UPDATE] Filterlaufzeit für 100ml wird nun automatisch berechnet aus GPD
  [UPDATE] -l Parameter wurde entfernt bei h2o

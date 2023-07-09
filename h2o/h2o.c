@@ -367,11 +367,11 @@ void clearSystem() {
             }
             sprintf(command, "12V %d 0 %d", pumpeRelaisNr, 1);
             system(command);
-            printf("\n -> REINIGUNG BEENDET!\n");
+            printf("\n -> Reinigung beendet!\n");
             // Neue Gesammelt Abwassermenge in Konfiguration speichern
             sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", (abwasserMenge + aktuellesGesameltesAbwasser), (gesamteFilterMengeInLiter), pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);
             system(command);
-            printf(" -> Ventil wieder auf normal Betrieb stellen!!\n\n");
+            printf(" -> Ventil auf normal Betrieb umstellen!\n\n");
         }
     }
     else {
