@@ -351,7 +351,7 @@ void clearSystem() {
             int minuten =  s / 60;
             s = s % 60;
             int sekunden = s;   
-            printf(" -> Die Reinigung wird jetzt gestartet. Geschätzte benötigte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);                
+            printf(" -> Die Reinigung wird jetzt gestartet. Geschätzte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);                
             // filter einschalten
             sprintf(command, "12V %d 1 1", pumpeRelaisNr);
             system(command);
@@ -385,7 +385,7 @@ void clearSystem() {
 
 // Progress Bar
 void print_progress(size_t count, size_t max) {
-    const int bar_width = 58;
+    const int bar_width = 52;
     float progress = (float) count / max;
     int bar_length = progress * bar_width;
     printf("\r -> [");
