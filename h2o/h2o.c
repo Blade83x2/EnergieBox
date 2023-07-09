@@ -170,7 +170,7 @@ int main(int argc, char* argv[]) {
             // Aktueller Abwassertank Füllstand
             printf(" -> Aktueller Abwasser Tankfüllstand:\t%5.1f Liter\n", aktuellesGesameltesAbwasser);
             // Kannistergröße anzeigen
-            printf(" -> Gesamtgröße des Abwasser Tanks:\t\t%5.1f Liter\n", maxLiterAbwasserKanister);
+            printf(" -> Gesamtgröße des Abwasser Tanks:\t%5.1f Liter\n", maxLiterAbwasserKanister);
             // Gesamt gefilterte Literzahl der Filterkartusche anzeigen
             printf(" -> Bislang gefiltertes Wasser:\t\t%5.1f Liter\n", gesamteFilterMengeInLiter);
             // Empfohlene maximale Nutzungsleistung in Liter
