@@ -198,7 +198,7 @@ int main(int argc, char* argv[]) {
                 int sekunden = s;     
                 // Abwassermenge berechnen
                 // und anzeigen
-                abwasserMenge = filterMenge * 2;
+                abwasserMenge = filterMenge * faktorGefiltertZuAbwasser;
                 printf(" -> Berechnete Abwasser Menge:\t\t%5.1f Liter\n", abwasserMenge);
                 // Kannistergröße anzeigen
                 printf(" -> Größe des Abwasser Tanks:\t\t%5.1f Liter\n", maxLiterAbwasserKanister);
