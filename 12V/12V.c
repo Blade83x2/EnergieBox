@@ -518,7 +518,7 @@ void getDataForConfigFile(int relais, void* config) {
     printf(" -> Neue Bezeichnung eingeben (Max. 40 Zeichen): ");
     char* strname;
     char* strpMax;
-    char* strstractivateOnStart;
+    char* stractivateOnStart;
 
     strname = readStdinLine();
     
