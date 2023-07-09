@@ -46,7 +46,7 @@ float literProGalone = 3.7854f;
 
 
 // Filtermenge unformatiert
-char filterMengeUnformated;
+char *filterMengeUnformated;
 
 
 
@@ -174,7 +174,7 @@ int main(int argc, char* argv[]) {
             // und param2 größer als 0.1 ist
             
             filterMengeUnformated = argv[2];
-            replace_char (filterMengeUnformated*, ',', '.');
+            replace_char (filterMengeUnformated, ',', '.');
 
             
             
