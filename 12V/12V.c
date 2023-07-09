@@ -454,6 +454,41 @@ bool checkMainParameter(char* paramName, int number, void* config) {
     return true;
 }
 
+bool isSpace(char c) {
+    switch (c) {
+        case ' ':
+        case '\n':
+        case '\t':
+        case '\f':
+        case '\r':
+            return true;
+            break;
+        default:
+            return false;
+            break;
+    }
+}
+
+
+char* trim(char* input) {
+    char* start = input;
+    while (isSpace(*start)) { //trim left
+        start++;
+    }
+
+    char* ptr = start;
+    char* end = start;
+    while (*ptr++ != '\0') { //trim right
+        if (!isSpace(*ptr)) { //only move end pointer if char isn't a space
+            end = ptr;
+        }
+    }
+
+    *end = '\0'; //terminate the trimmed string with a null
+    return start;
+}
+
+
 
 char* readStdinLine()
 {
