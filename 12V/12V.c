@@ -492,7 +492,7 @@ void getDataForConfigFile(int relais, void* config) {
     printf("Neue Konfiguration für Relais Nr. -> %d erstellen:\n\n", relais);
     
     
-    printf(" -> Aktueller Name: %d", pconfig->mcp.numberOfRelaisActive);
+    printf(" -> Aktueller Name: %s\n", pconfig->r1.name);
 
     
     printf(" -> Neue Bezeichnung eingeben (leer lassen für deaktivieren): ");
