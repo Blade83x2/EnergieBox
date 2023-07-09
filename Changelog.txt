@@ -74,8 +74,8 @@ für den Dauerbetrieb geeignet. Dieser Planungsfehler wurde mit Stromstoß Eltak
 Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontroller wurde gegen das neueste und schnellste Model Raspberry Pi4 mit 8GB Arbeitsspeicher ausgetauscht. Ein LCD Touchdsplay wurde verbaut.
 
 
-
- [UPDATE] h2o -clean Fortschrittsanzige implementiert
+ [UPDATE] h2o Fortschrittsanzeige bei Filterung implementiert
+ [UPDATE] h2o -clean Fortschrittsanzeige implementiert
  [UPDATE] Bei dem Filterparameter sind jetzt Koma und Punkte erlaubt
  [UPDATE] Filterlaufzeit für 100ml wird nun automatisch berechnet aus GPD
  [UPDATE] -l Parameter wurde entfernt bei h2o

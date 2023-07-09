@@ -63,11 +63,11 @@ Nun kommen wir zum eigentlichen Filtervorgang. Die Filterung kann in 100ml Schri
 wird der Befehl 
 
 
-<b>h2o -l 0.1</b>
+<b>h2o 0.1</b>
 
 genutzt. Wenn man dagegen 3 Liter filtern möchte, verwendet man:
 
-<b>h2o -l 3</b>
+<b>h2o 3</b>
 
 
 
