@@ -491,8 +491,8 @@ void getDataForConfigFile(int relais, void* config) {
     system("clear");   
     printf("Neue Konfiguration für Relais Nr. -> %d erstellen:\n\n", relais);
     
-    
-    printf(" -> Aktueller Name: %d\n", pconfig->r15.eltakoState);
+    char var=15;
+    printf(" -> Aktueller Name: %d\n", pconfig->r${var}.eltakoState);
 
     
     printf(" -> Neue Bezeichnung eingeben (leer lassen für deaktivieren): ");
