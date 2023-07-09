@@ -456,21 +456,24 @@ bool checkMainParameter(char* paramName, int number, void* config) {
     return true;
 }
 
-
-
-
-
+// Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
 void getDataForConfigFile(int relais, void* config) {
     
-        printf("abfrage für %d: \n\n", relais);
+        printf("Neue KOnfiguration für Relais Nr.%d:\n\n", relais);
+        
+        
+        
+        //name = Gateway (FritzBox) 
+        //activateOnStart = true
+        //pMax = 12
+        
+        
+        
        // sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %d", atoi(argv[1]), atoi(argv[2]));
        // system(command);
-        sleep(2.6);
+        sleep(1.1);
         system("clear && 12V");
 }
-
-
-
 
 // Zeigt Hilfe auf Console an
 int showHelp(char**argv, void* config) {
