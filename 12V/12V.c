@@ -518,10 +518,6 @@ void getDataForConfigFile(int relais, void* config) {
             printf("\e[0;31m -> Dieses Gerät hat eine falsche Watt Angabe!\e[0m\n");
         }
         if (strcmp(strpMax, "") == 0)  { strpMax="0"; }
-
-        
-        
-        
         printf(" -> Beim starten aktivieren? (true/false): ");
         stractivateOnStart = readStdinLine();
         // prüfen ob true oder false, wenn keins von beiden, dann false
@@ -536,7 +532,7 @@ void getDataForConfigFile(int relais, void* config) {
 
     
     
-    printf("sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
+    echo -e "  sudo sh /Energiebox/12V/setConfig.sh $relais $strname $stractivateOnStart $strpMax";;
     
     
     
