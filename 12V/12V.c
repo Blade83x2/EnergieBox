@@ -454,40 +454,33 @@ bool checkMainParameter(char* paramName, int number, void* config) {
     return true;
 }
 
-bool isSpace(char c) {
-    switch (c) {
-        case ' ':
-        case '\n':
-        case '\t':
-        case '\f':
-        case '\r':
-            return true;
-            break;
-        default:
-            return false;
-            break;
-    }
+// ----------------------------------------------------------------------------
+// trim leading & trailing spaces from string s (return modified string s)
+// alg:
+// - skip leading spaces, via cp1
+// - shift remaining *cp1's to the left, via cp2
+// - mark a new end of string
+// - replace trailing spaces with '\0', via cp2
+// - return the trimmed s
+//
+char *Trim(char *s)
+{
+    char *cp1;                              // for parsing the whole s
+    char *cp2;                              // for shifting & padding
+
+    // skip leading spaces, shift remaining chars
+    for (cp1=s; isspace(*cp1); cp1++ )      // skip leading spaces, via cp1
+        ;
+    for (cp2=s; *cp1; cp1++, cp2++)         // shift left remaining chars, via cp2
+        *cp2 = *cp1;
+    *cp2-- = 0;                             // mark new end of string for s
+
+    // replace trailing spaces with '\0'
+    while ( cp2 > s && isspace(*cp2) )
+        *cp2-- = 0;                         // pad with '\0's
+
+    return s;
 }
-
-
-char* trim(char* input) {
-    char* start = input;
-    while (isSpace(*start)) { //trim left
-        start++;
-    }
-
-    char* ptr = start;
-    char* end = start;
-  //  while (*ptr++ != '\0') { //trim right
-        if (!isSpace(*ptr)) { //only move end pointer if char isn't a space
-            end = ptr;
-        }
-  //  }
-
-    *end = '\0'; //terminate the trimmed string with a null
-    return start;
-}
-
 
 
 char* readStdinLine()
@@ -516,7 +509,7 @@ void getDataForConfigFile(int relais, void* config) {
     printf(" -> Neue Bezeichnung eingeben (Max. 40 Zeichen): ");
     char* strname;
     strname = readStdinLine();
-    strname = trim(strname);
+    strname = Trim(strname);
     
     
   
