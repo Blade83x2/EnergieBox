@@ -476,7 +476,7 @@ char* readStdinLine()
             buffer = "N/A";
         }
         else if (buffer[characters-1] == '\n') {
-            buffer[characters-1] = '';//'\0';
+            buffer[characters-1] = ''; // '\0';
         }
         return buffer;
 }
