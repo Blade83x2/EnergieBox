@@ -44,15 +44,11 @@ void sigfunc(int sig)
 }
 
 
-// Help: https://netzmafia.ee.hm.edu/skripten/programmieren/anh3.html
-
 int getBit(int Port);
 void setBit(int Port, int Status);
 bool checkMainParameter(char* paramName, int number, void* config);
 int showHelp(char**argv, void* config);
-
 void getDataForConfigFile(int relais, void* config);
-
 
 // MCP Setup
 typedef struct {
@@ -460,6 +456,15 @@ bool checkMainParameter(char* paramName, int number, void* config) {
 void getDataForConfigFile(int relais, void* config) {
     
         printf("Neue KOnfiguration für Relais Nr.%d:\n\n", relais);
+        
+        
+        
+        
+        char str[100];
+        scanf("%[^\n]s",str);
+        printf("-%s-",str);
+        
+        
         
         
         

@@ -1,14 +1,22 @@
 #!/bin/bash
 relais=$(echo $1);
-state=$(echo $2);
+name=$(echo $2); 
+activateOnStart=$(echo $3);
+pMax=$(echo $4);
+
+
+
 
 if [ "$relais" -eq "1" ]; then
- if [ "$state" -eq "1" ]; then
    sudo sed -i '/^\[Relais 1]$/,/^\[/ s/^eltakoState = 0/eltakoState = 1/' /Energiebox/12V/config.ini
- else
-   sudo sed -i '/^\[Relais 1]$/,/^\[/ s/^eltakoState = 1/eltakoState = 0/' /Energiebox/12V/config.ini
- fi
 fi
+
+
+
+
+
+
+
 if [ "$relais" -eq "2" ]; then
  if [ "$state" -eq "1" ]; then
    sudo sed -i '/^\[Relais 2]$/,/^\[/ s/^eltakoState = 0/eltakoState = 1/' /Energiebox/12V/config.ini
