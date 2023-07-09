@@ -40,15 +40,8 @@ int reinigungszeitInSekunden = 150;
 // Liter Pro Galone
 float literProGalone = 3.7854f;
 
-
-
-
-
-
-// Filtermenge unformatiert
+// Filtermenge unformatiert (Koma und Punkt annehmen)
 char *filterMengeUnformated;
-
-
 
 // Filtermenge (wird von param1 überschrieben)
 float filterMenge = 0.f;
@@ -93,10 +86,7 @@ void replace_char (char *s, char find, char replace);
 int main(int argc, char* argv[]) { 
     configuration config;
     // Konfiguration von h2o in config laden
-    if (ini_parse("/Energiebox/h2o/config.ini", handler, &config) < 0) {
-        printf("Can't load '/Energiebox/h2o/config.ini'\n");
-        return 1;
-    }
+    if (ini_parse("/Energiebox/h2o/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/h2o/config.ini'\n"); return 1; }
     // Programm Variablen aus config.ini laden
     // Bereits verbrauchte Filtermenge in Liter
     gesamteFilterMengeInLiter = config.h2o.gesamteFilterMengeInLiter;
@@ -121,6 +111,15 @@ int main(int argc, char* argv[]) {
     // Bildschirm löschen
     printf("\033[2J\033[1;1H");
     // Wenn Pumpe an, dann ausschalten
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
     showLogo();
@@ -170,7 +169,7 @@ int main(int argc, char* argv[]) {
         // Filtern, wenn param1 -l ist und param2 eine float Wert ist
         const char * param1 = argv[1];
         // Wenn param1 gleich -l ist
-        if (strcmp(param1, "-l") == 0) {
+        if (strcmp(param1, "-l") == 0 || strcmp(param1, "-L") == 0) {
             // und param2 größer als 0.1 ist
             
             filterMengeUnformated = argv[2];
@@ -271,13 +270,10 @@ static int handler(void* config, const char* section, const char* name, const ch
 
 // Setzt Zähler von gesamt gefiltertem Wasser in der aktuellen Filterkartusche auf 0
 void changeFilter() {
-    
     // Konfiguration laden
     configuration config;
     // Konfiguration von h2o in config laden
-    if (ini_parse("/Energiebox/h2o/config.ini", handler, &config) < 0) {
-        printf("Can't load '/Energiebox/h2o/config.ini'\n");
-    }
+    if (ini_parse("/Energiebox/h2o/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/h2o/config.ini'\n"); }
     aktuellesGesameltesAbwasser = config.h2o.aktuellesGesameltesAbwasser;
     char answerchange;
     printf("\n\n -> Wurde der Sedimentfilter & Aktivkohlefilter sowie die Membrane gewechselt? Y/N: ");
@@ -304,9 +300,7 @@ void replace_char (char *s, char find, char replace)
 void setup() {
     configuration config;
     // Konfiguration von h2o in config laden
-    if (ini_parse("/Energiebox/h2o/config.ini", handler, &config) < 0) {
-        printf("Can't load '/Energiebox/h2o/config.ini'\n");
-    } 
+    if (ini_parse("/Energiebox/h2o/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/h2o/config.ini'\n"); } 
     char answersetup;
     printf("\n-> Einrichtung starten um neue Filteranlage zu konfigurieren? Y/N: ");
     scanf("%c", &answersetup);
