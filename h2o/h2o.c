@@ -181,16 +181,18 @@ int main(int argc, char* argv[]) {
             printf(" -> Berechnete Abwasser Menge:\t\t%5.1f Liter\n", abwasserMenge);
             // Benötigte Sekundenanzahl
             printf(" -> Berechnete Filter Zeit:\t\t%5.0f Sek.\n", filterLaufzeit);
+            // Gesamt gefilterte Literzahl der Filterkartusche anzeigen
+            printf(" -> Bislang gefiltertes Wasser:\t\t%5.1f Liter\n", gesamteFilterMengeInLiter);
+            // Empfohlene maximale Nutzungsleistung in Liter
+            printf(" -> Max. Empfohlene Filtermenge:\t%5.0f Liter\n", warnLimitAbFilterMenge);
+
+            
             // Maximal mögliches Abwasser ausrechnen und anzeigen
             printf(" -> Restliche mögliche Abwasser Menge:\t%5.1f Liter\n", (maxLiterAbwasserKanister - aktuellesGesameltesAbwasser));            
             // Aktueller Abwassertank Füllstand
             printf(" -> Aktueller Abwasser Tankfüllstand:\t%5.1f Liter\n", aktuellesGesameltesAbwasser);
             // Kannistergröße anzeigen
             printf(" -> Gesamtgröße des Abwasser Tanks:\t%5.1f Liter\n", maxLiterAbwasserKanister);
-            // Gesamt gefilterte Literzahl der Filterkartusche anzeigen
-            printf(" -> Bislang gefiltertes Wasser:\t\t%5.1f Liter\n", gesamteFilterMengeInLiter);
-            // Empfohlene maximale Nutzungsleistung in Liter
-            printf(" -> Max. Empfohlene Filtermenge:\t%5.0f Liter\n", warnLimitAbFilterMenge);
             // Prüfen ob WarnMenge für gesamte gefilterte Menge ereicht ist
             if(gesamteFilterMengeInLiter >= warnLimitAbFilterMenge) {
                 printf("\e[0;31m -> Die maximal empfohlene Nutzungsmenge des Filters\n    von %f Litern ist erreicht / überschritten.\n    Der Filter sollte gewechselt werden!\e[0m", gesamteFilterMengeInLiter);
