@@ -42,10 +42,10 @@ float literProGalone = 3.7854f;
 
 
 // Liter Pro Tag  = literProGalone * gpd
-float literProTag = 0.f;
+long double literProTag = 0.f;
 
 // Liter pro Sekunde = (literProTag / 86400) / 1000
-float MilliliterProSekunde = 0.f;
+long double  MilliliterProSekunde = 0.f;
 
 
 
