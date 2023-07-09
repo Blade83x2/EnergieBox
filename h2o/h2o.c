@@ -378,9 +378,9 @@ void clearSystem() {
             int laufzeitSekunden=0;            
             while(true) {
                 print_progress(laufzeitSekunden, reinigungszeitInSekunden);
-                sleep(0.1);
+                sleep(1);
                 laufzeitSekunden++;
-                if ((laufzeitSekunden/10) == reinigungszeitInSekunden) {
+                if (laufzeitSekunden == reinigungszeitInSekunden) {
                     print_progress( reinigungszeitInSekunden, reinigungszeitInSekunden);
                     break;
                 }
