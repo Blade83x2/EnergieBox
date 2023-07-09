@@ -309,7 +309,7 @@ void setup() {
         
         
         
-         printf(" literProSekunde  %04.f L",literProSekunde);
+         printf(" literProSekunde  %015.f L",literProSekunde);
         
         
         
