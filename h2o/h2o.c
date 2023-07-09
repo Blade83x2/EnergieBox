@@ -270,7 +270,7 @@ void setup() {
     scanf("%c", &answersetup);
     if (answersetup == 'Y' || answersetup == 'y' || answersetup == 'J' || answersetup == 'j'){
         // Wenn ja, alle Daten zusammen erfragen und externe Datei aufrufen
-        int p1;
+        char p1;
         //printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
         //scanf("%d", &p1);
         
@@ -280,9 +280,11 @@ void setup() {
         
         while ( run==1) {
             printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen? ");
-            scanf("%d", &p1);
+            scanf("%c", &p1);
             
-            printf("-> %d ",p1);
+            printf("-> %c ",p1);
+            
+            break;
 
             
             
@@ -332,7 +334,7 @@ void setup() {
         int p7;
         printf("-> Wieviele Sekunden sollen bei einer Spüllung gespüllt werden?: ");
         scanf("%d", &p7);  
-        sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", 0.f, 0.f, p1, p2, (float)p3, p4, p5, (float)p6, p7);        
+        sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", 0.f, 0.f, p2, p2, (float)p3, p4, p5, (float)p6, p7);        
         system(command);
     }
 }
