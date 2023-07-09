@@ -270,15 +270,18 @@ void setup() {
     scanf("%c", &answersetup);
     if (answersetup == 'Y' || answersetup == 'y' || answersetup == 'J' || answersetup == 'j'){
         // Wenn ja, alle Daten zusammen erfragen und externe Datei aufrufen
-        int p1;
+       // int p1;
         //printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
         //scanf("%d", &p1);
         
         
         while(1) {   
+            int p1;
             printf("An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
             scanf("%d", &p1);
-            if(p1 == 0) break;    
+            if(p1 > 0 && p1 < 17) 
+                break; 
+            
         }
 
         
