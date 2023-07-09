@@ -2,7 +2,7 @@
 relais=$(echo $1);
 name=$(echo $2); 
 
-VAR=$($name(;
+VAR=$(echo $2); 
 
 if [ -z "${VAR}" ]; then
     echo "VAR is unset or set to the empty string"
@@ -24,7 +24,7 @@ if [ -n "${VAR-unset}" ]; then
 fi
 
 
-sleep 3;
+sleep 30;
 
 activateOnStart=$(echo $3);
 pMax=$(echo $4);

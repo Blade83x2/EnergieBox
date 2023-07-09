@@ -501,7 +501,6 @@ void getDataForConfigFile(int relais, void* config) {
     char* stractivateOnStart="false";
     strname = readStdinLine();
     printf("-%s-", strname);
-        sleep(5);
 
     
     if (strcmp(strname, "") == 0)  {
