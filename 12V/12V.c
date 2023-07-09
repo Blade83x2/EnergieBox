@@ -496,7 +496,7 @@ void getDataForConfigFile(int relais, void* config) {
     system("clear");   
     printf("Neue Konfiguration für Relais Nr. -> %d erstellen:\n\n", relais);
     printf(" -> Neue Bezeichnung eingeben (leer lassen für deaktivieren): ");
-    char* strname="N/A";
+    char* strname="";
     char* strpMax="0";
     char* stractivateOnStart="false";
     strname = readStdinLine();

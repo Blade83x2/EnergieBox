@@ -2,29 +2,6 @@
 relais=$(echo $1);
 name=$(echo $2); 
 
-VAR=$(echo $2); 
-
-if [ -z "${VAR}" ]; then
-    echo "VAR is unset or set to the empty string"
-fi
-if [ -z "${VAR+set}" ]; then
-    echo "VAR is unset"
-fi
-if [ -z "${VAR-unset}" ]; then
-    echo "VAR is set to the empty string"
-fi
-if [ -n "${VAR}" ]; then
-    echo "VAR is set to a non-empty string"
-fi
-if [ -n "${VAR+set}" ]; then
-    echo "VAR is set, possibly to the empty string"
-fi
-if [ -n "${VAR-unset}" ]; then
-    echo "VAR is either unset or set to a non-empty string"
-fi
-
-
-sleep 30;
 
 activateOnStart=$(echo $3);
 pMax=$(echo $4);
