@@ -44,8 +44,8 @@ float literProGalone = 3.7854f;
 // Liter Pro Tag  = literProGalone * gpd
 float literProTag = 0.f;
 
-// Liter pro Sekunde = literProTag / 86400
-float literProSekunde = 0.f;
+// Liter pro Sekunde = (literProTag / 86400) / 1000
+float MilliliterProSekunde = 0.f;
 
 
 
@@ -305,11 +305,11 @@ void setup() {
         // liter am tag '= literProGalone * GPD
         
         literProTag = literProGalone * gpd;
-        literProSekunde = literProTag / 86400;
+        MilliliterProSekunde = (literProTag / 86400) / 1000;
         
         
         
-         printf(" literProSekunde  %015.f L",literProSekunde);
+         printf(" literProSekunde  %06.f L",MilliliterProSekunde);
         
         
         
