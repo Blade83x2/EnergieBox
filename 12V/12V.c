@@ -498,8 +498,6 @@ void getDataForConfigFile(int relais, void* config) {
     char* stractivateOnStart;
     strname = readStdinLine();
     strname = Trim(strname);
-
-    
     if (strcmp(strname, "") == 0)  {
         strname="N/A";
         strpMax="0";
@@ -508,6 +506,7 @@ void getDataForConfigFile(int relais, void* config) {
     else {
         printf(" -> Verbrauch in Watt: ");
         strpMax = readStdinLine();
+        /*
         int maxRest;
         maxRest = pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController;
         
@@ -518,32 +517,16 @@ void getDataForConfigFile(int relais, void* config) {
             printf("\e[0;31m -> Dieses Gerät hat eine falsche Watt Angabe!\e[0m\n");
         }
         if (strcmp(strpMax, "") == 0)  { strpMax="0"; }
+        */
         printf(" -> Beim starten aktivieren? (true/false): ");
         stractivateOnStart = readStdinLine();
         // prüfen ob true oder false, wenn keins von beiden, dann false
         if (strcmp(stractivateOnStart, "true") != 0 && strcmp(stractivateOnStart, "false") != 0 )  { stractivateOnStart="false"; }
     }
     
-    
-    printf("relais -%d-\n", relais);
-    printf("strname -%s-\n", strname);
-    printf("stractivateOnStart -%s-\n", stractivateOnStart);
-    printf("strpMax -%s-\n", strpMax);
-
-    
-    
-    echo "sudo sh /Energiebox/12V/setConfig.sh $relais $strname $stractivateOnStart $strpMax";
-    
-    
-    
-    
-    
-
-    sleep(5);
-    
     sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
     system(command);
-    sleep(5);
+    sleep(0.5);
     system("clear && 12V");
 }
 
