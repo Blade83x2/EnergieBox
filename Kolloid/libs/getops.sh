@@ -30,7 +30,7 @@ function usage() {
     -----------------------------------------------------------------------------
     
     Beispiel Aufruf für 100ml Gold mit 8PPM:
-    $0 -m au -s 100 -p 8
+    kolloid -m au -s 100 -p 8 -k "Johannes Krämer"
     
 EOF
     exit 0;
