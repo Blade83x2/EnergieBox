@@ -385,10 +385,10 @@ void clearSystem() {
 
 // Progress Bar
 void print_progress(size_t count, size_t max) {
-    const int bar_width = 50;
+    const int bar_width = 58;
     float progress = (float) count / max;
     int bar_length = progress * bar_width;
-    printf("\r [");
+    printf("\r -> [");
     for (int i = 0; i < bar_length; ++i) {
         printf("#");
     }
