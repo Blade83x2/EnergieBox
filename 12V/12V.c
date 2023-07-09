@@ -51,6 +51,9 @@ void setBit(int Port, int Status);
 bool checkMainParameter(char* paramName, int number, void* config);
 int showHelp(char**argv, void* config);
 
+void getDataForConfigFile(void* config);
+
+
 // MCP Setup
 typedef struct {
     int address;
@@ -301,15 +304,18 @@ int main(int argc, char**argv) {
         
         
         
-        // Wenn Konfiguration aufgerufen wird. Z.B.  12V -set 3
+        
+        
+        
+        
+        
+        
+        // Wenn Konfiguration aufgerufen wird z.B. mit 12V -set 3
         if (strcmp(argv[1], "-set") == 0)  {
             if ( atoi(argv[2]) < 1 || atoi(argv[2]) > config.mcp.numberOfRelaisActive ) 
                 return false;
-            printf("configuration starten");
-            sleep(6);
-            // Dann Abfrage Funktion aufrufen die in config.ini speichert
+            getDataForConfigFile(&config);
 
-          //  system("clear && 12V");
         }
         
         
@@ -447,6 +453,19 @@ bool checkMainParameter(char* paramName, int number, void* config) {
     else if (strcmp(paramName, "relaisTime") == 0) { if ( number < 1 || number > 84600 ) return false; } 
     return true;
 }
+
+
+
+
+void getDataForConfigFile(void* config) {
+    
+        printf("abfrage: \n\n");
+       // sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %d", atoi(argv[1]), atoi(argv[2]));
+       // system(command);
+        sleep(2.6);
+        system("clear && 12V");
+}
+
 
 
 
