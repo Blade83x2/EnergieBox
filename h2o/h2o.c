@@ -158,8 +158,22 @@ int main(int argc, char* argv[]) {
         if (filterMenge >= 0.1){
             // Filtermenge anzeigen
             printf("\n\n -> Filtermenge:\t\t\t%5.1f Liter\n", filterMenge);
+            
+            
+            
+            literProTag = literProGalone * gpd;
+            float filtermengeProSekunde = 0.1f /  (((literProTag/24)/60)/60);
+            
+            
+            
+            
+            
             // Filterlaufzeit berechnen
             filterLaufzeit = ((filterMenge / 0.1) * filterZeitFuerNullKommaEinsLiterInSekunden);
+            
+            
+            
+            
             // Typecast in Integer
             filterLaufzeit_int = (int)filterLaufzeit; 
             // und anzeigen
@@ -171,7 +185,13 @@ int main(int argc, char* argv[]) {
             int sekunden = s;     
             // Abwassermenge berechnen
             abwasserMenge = filterMenge * faktorGefiltertZuAbwasser;
-            printf(" -> Berechnete Abwasser Menge:\t\t%5.1f Liter\n", abwasserMenge);
+            printf(" -> Berechnete Abwasser Menge:\t\t%5.0f Liter\n", abwasserMenge);
+            
+            
+            printf(" -> Berechnete Filter Zeit:\t\t%5.1f Liter\n", filtermengeProSekunde);
+            
+            
+            
             // Maximal mögliches Abwasser ausrechnen und anzeigen
             printf(" -> Restliche mögliche Abwasser Menge:\t%5.1f Liter\n", (maxLiterAbwasserKanister - aktuellesGesameltesAbwasser));            
             // Aktueller Abwassertank Füllstand
@@ -194,9 +214,26 @@ int main(int argc, char* argv[]) {
                 // filter nach einer Sekunde einschalten
                 sprintf(command, "12V %d 1 1", pumpeRelaisNr);
                 system(command);
+                
+                
+                
+                
+                
+                
+                
+                
                 sleep(1.3);
                 printf("\n -> Benötigte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);      
                 printf(" -> WASSER WIRD GEFILTERT! BITTE WARTEN...\n");
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 // filter nach x ausschalten                    
                 sprintf(command, "12V %d 0 %d", pumpeRelaisNr, filterLaufzeit_int);
                 system(command);
@@ -259,12 +296,6 @@ void replace_char (char *s, char find, char replace)
     }
     // Usage: replace_char (strname, ' ' , '-');
 }
-
-
-
-
-
-
 
 // Programm Setup aufrufen und Filtereigenschaften abfragen
 void setup() {
