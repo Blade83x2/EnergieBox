@@ -1,9 +1,6 @@
-Energiebox Ver.3
-
-CHANGELOG 
-
-
-
+##################
+Energiebox Ver.3 #
+##################
 
 BUGs
 
@@ -28,11 +25,14 @@ Anschaffungen
     1x Trockner
     1x Teufel Audiosystem
 
+    
+    
 Todoś
 
     Handy Anschluss prüfen / reparieren
 
-    
+ 
+ 
 _______________________________________________________________________________________________________________________________________
 
 PLANUNG für Version 5
