@@ -222,7 +222,7 @@ int main(int argc, char* argv[]) {
                     sprintf(command, "12V %d 1 1", pumpeRelaisNr);
                     system(command);
                     sleep(1.3);
-                    printf(" -> Benötigte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);      
+                    printf("\n -> Benötigte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);      
                     printf(" -> WASSER WIRD GEFILTERT! BITTE WARTEN...\n");
                     // filter nach x ausschalten                    
                     sprintf(command, "12V %d 0 %d", pumpeRelaisNr, filterLaufzeit_int);
