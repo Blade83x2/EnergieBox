@@ -167,7 +167,7 @@ sudo i2cdetect -y 1
 Sollte das der Fall sein, sollte die Ausgabe so aussehen:
 
 <p align="center"> 
-    <img src="img/i2cdetect.png" style="width: 85%;" alt="EnergieBox" >
+    <img src="img/i2cdetect.png" style="width: 85%;" alt="ic2detect Ausgabe EnergieBox" >
 </p>
 
 
