@@ -1,39 +1,76 @@
-CHANGELOG Energiebox 
+Energiebox Ver.3
+
+CHANGELOG 
 
 
-TODOś
 
 
-230V MCP Kontakte sind locker
-                                            Shunt Garantiefall melden
+BUGs
 
-MPPT Statistik über rs485 auslesen
+    230V MCP Kontakte sind locker
+
                                             
-                            
-unset IFS prüfen
+                        
+Anschaffungen
 
-Kaufen
+    4x DC -> DC Konverter kaufen
+    16x Eltakos für 12Volt
+    1x Digitaler Stromzähler
+    1x MCP23017             - patrick
+    1x EP Ever MPPT 100A
+    1x PAL-ADP-50AN + Kabel
+    1x Temperatur Sensor Batterie EPEVER
+    12x 200W Pannelen
+    1x 200 Liter Wassertank
+    3x 500W Tauchsieder
+    1x Leinwand für Beamer + neue Lampe
+    1x Waschmaschine
+    1x Trockner
+    1x Teufel Audiosystem
 
-3x DC -> DC Konverter kaufen
-16x Eltakos für 12Volt
-1x Digitaler Stromzähler
-1x MCP23017                               15
-1x EP Ever MPPT 100A
-1x PAL-ADP-50AN + Kabel
-1x Temperatur Sensor Batterie EPEVER
-12x 200W Pannelen
+Todoś
+
+    Handy Anschluss prüfen / reparieren
+
+    
+_______________________________________________________________________________________________________________________________________
+
+PLANUNG für Version 5
+ 
+ + Grafische Oberfläche für Schaltkreis Steuerung sowie Setup auf 7" Touch Display
+ + Schickes abgeschirmtes Gehäuse 
+
+_______________________________________________________________________________________________________________________________________
 
 
+PLANUNG für Version 4
+
+ + 12V Relais für Lastenschaltung verfügbar machen
+ + Digitaler Stromzähler für 230V
+ + Wizzard für Namensvergabe der zu Steuernden Geräte
+ + Shunt verbinden mit Mikrocontroller
+ + PV auf 5KW erweitern
+ + Zweiten Laderegler im Verbund anschliessen
+ + Lithium Batteriepack 2x 24V 200A
+ + Beheizbarer Wassertank
+ + 12V Strom auf 100A erhöhen und jeden Abgang extra absichern
+
+_______________________________________________________________________________________________________________________________________
 
 
 NEUERUNGEN in Version 3
 
 Bei dieser Version ist die gesamte Anlage schon 5 Monate am Stück gelaufen und hat somit den Dauerbetriebs Test bestanden. Die Schaltkontakte der Relais sind bei größeren Verbrauchern abgenutzt und waren nicht
 für den Dauerbetrieb geeignet. Dieser Planungsfehler wurde mit Stromstoß Eltakos behoben! Die Sicherung wurde deutlich erhöht. 
-Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontroller wurde gegen das neueste und schnellste Model Raspberry Pi4 mit 8GB Arbeitsspeicher ausgetauscht.
+Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontroller wurde gegen das neueste und schnellste Model Raspberry Pi4 mit 8GB Arbeitsspeicher ausgetauscht. Ein LCD Touchdsplay wurde verbaut.
 
+ {NEW] Hinter dem PC Anschluss wurde eine USV installiert damit beim EnergieBox Neustart nicht ständig alles abstürzt
+ [UPDATE] README.MD für Programm h2o erstellt in Text und Bild
+ [UPDATE] README.MD für Programm kolloid erstellt in Text und Bild
  [UPDATE] Laderegler -> Batterie neue 70mm² Leitungen mit Quetsch Hühlsen
  [UPDATE] Router angeschlossen
+ [UPDATE] Belüftung angeschlossen
+ [UPDATE] Gitarre angeschlossen
  [UPDATE] 4K Beamer + BeamerCast angeschlossen
  [NEW] 150A Sicherung am Batteriepack
  [NEW] 150A Batterie Switch (An aus Schalter)
@@ -43,7 +80,6 @@ Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontr
  [NEW] Batteriepack - Batterien beschriftet
  [NEW] h2o -stats Statistik Anzeige über Filtereigenschaften, Verbrauch und Wassertank
  [UPDATE] h2o -clean Verfügbare Tankgröße wird berechnet. Aufruf h2o -empty entfernt.
- [UPDATE] Vollständiger Anschluß aller verfügbaren Geräte
  [BUGFIX] h2o Konfiguration vollständig in config.ini verlegt 
  [UPDATE] Raspberry Pi4 8GB mit 7" Touchdisplay eingerichtet für Hardware Update
  [NEW] h2o Einrichtungsasistent erstellt. Alle wichtigen Parameter betreffend der Filteranlage werden beim Einrichten abgefragt
@@ -57,7 +93,7 @@ Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontr
  [BUGFIX] Eltakos für 230 Volt Schaltkreise verbaut
  [BUGFIX] Neues 16 fach Relais für 230 Volt Anschluß als Steuereinheit für Eltakos verbaut
  [NEW] EPVER 100 Ampere MPPT Laderegler verbaut
- [NEW] 2 neue Busbars installiert
+ [NEW] 2 neue Busbars am Batteriepack installiert
  [UPDATE] Batterie Kapazität auf 14.440 Wattstunden erhöht (10x 120 Ampere LKW Batterien)
  [UPDATE] 16mm² Potentialausgleichs Kabel mit Erdpol angeschlossen
  [UPDATE] Neue 3 Pannelen Stringbildung. Gesamte Eingangsleistung der Pannelen: 2.460 Watt
@@ -95,14 +131,3 @@ Es wurde eine Photovoltaik Anlage bestehend aus Solar Pannelen, einem Akkupack, 
 Der integrierte Mikrocontroller Raspberry 3B+ ist an 2 Port Expander (MCP) angeschlossen und steuert 32 Relais Schaltkreise (12Volt & 230Volt)
 
 
-_______________________________________________________________________________________________________________________________________
-
-PLANUNG für Version 4
-
- + Schickes abgeschirmtes Gehäuse 
- + Wizzard für Namensvergabe der zu Steuernden Geräte
- + Shunt verbinden mit Mikrocontroller
-
-PLANUNG für Version 5
- 
- + Grafische Oberfläche für Schaltkreis Steuerung auf Touch Display
