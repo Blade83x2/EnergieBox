@@ -211,7 +211,7 @@ int main(int argc, char* argv[]) {
                 // filter nach x ausschalten                    
                 sprintf(command, "12V %d 0 %d", pumpeRelaisNr, 1);
                 system(command);
-                printf(" -> FERTIG!\n");
+                printf("\n -> FERTIG!\n");
             }
             else {
                 // Abwasser Kannister hat nicht genug freies Volumen für geplante Filterung. Programm beenden
