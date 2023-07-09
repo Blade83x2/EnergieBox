@@ -40,6 +40,16 @@ int reinigungszeitInSekunden = 150;
 // Liter Pro Galone
 float literProGalone = 3.7854f;
 
+
+// Liter Pro Tag  = literProGalone * gpd
+float literProTag = 0.f;
+
+// Liter pro Sekunde = literProTag / 86400
+float literProSekunde = 0.f;
+
+
+
+
 // Filtermenge unformatiert (Koma und Punkt annehmen)
 char *filterMengeUnformated;
 
@@ -292,6 +302,14 @@ void setup() {
         scanf("%d", &p3);
         
         
+        // liter am tag '= literProGalone * GPD
+        
+        literProTag = literProGalone * gpd;
+        literProSekunde = literProTag / 86400;
+        
+        
+        
+         printf(" literProSekunde  %04.f L",literProSekunde);
         
         
         
