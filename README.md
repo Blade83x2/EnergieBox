@@ -1,20 +1,17 @@
 
+ERSTINSTALLATION DER ENERGIEBOX SOFTWARE auf einem Raspberry PI
+@Copyright by Johannes a.d.F. K r ä m e r
+
 <p align="center"> 
-    <img src="img/sshEnergiebox.png" style="width: 85%;" id="title-icon">
+    <img src="img/sshEnergiebox.png" style="width: 85%;" alt="EnergieBox" >
 </p>
 
-ERSTINSTALLATION DER ENERGIEBOX SOFTWARE
-@Copyright by Johannes a.d.F. K r ä m e r
 
 Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS läuft und
 2 MCP23017 (WAVESHARE, Artikelnummer BO-MCP23017) auf den Adressen 0x22 und 0x27
 sowie ein 7" Touchdisplay angeschlossen und eingerichtet sind. 
 
 
-https://www.instructables.com/Raspberry-PI-Multiple-I2c-Devices/
-
-
-Raspberry Pi Imager Download: https://www.raspberrypi.com/software/
 
 Installationsanweisung:
 
@@ -167,7 +164,13 @@ Nun prüfen wir noch kurz, ob die beiden Port Expander (0x22 und 0x27) angezeigt
 
 sudo i2cdetect -y 1
 
-Sollte das der Fall sein, sind die MCP's richtig angeschlossen
+Sollte das der Fall sein, sollte die Ausgabe so aussehen:
+
+<p align="center"> 
+    <img src="img/i2cdetect.png" style="width: 85%;" alt="EnergieBox" >
+</p>
+
+
 
 
 -------------------------------------
