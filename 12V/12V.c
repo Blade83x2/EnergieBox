@@ -473,19 +473,17 @@ char* readStdinLine()
     return buffer;
 }
 
-
+// Ersetzt Zeichen mit anderem in einem String
 void replace_char (char *s, char find, char replace)
 {
-  while (*s != 0)
-  {
-    if (*s == find)
-      *s = replace;
-    s++;
-  }
+    while (*s != 0)
+    {
+        if (*s == find)
+            *s = replace;
+        s++;
+    }
+    // Usage: replace_char (strname, ' ' , '-');
 }
-
-
-
 
 // Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
 void getDataForConfigFile(int relais, void* config) {

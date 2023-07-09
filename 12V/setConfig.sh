@@ -4,7 +4,6 @@ name=$(echo $2);
 activateOnStart=$(echo $3);
 pMax=$(echo $4);
 
-
 if [ "$relais" -eq "1" ]; then
     if [ "$name" = "NULL" ]; then
         sudo sed -i -E "/^\[Relais 1]$/,/^\[/ s/^name = .*/name = N\/A/" /Energiebox/12V/config.ini

@@ -78,6 +78,29 @@ void showLogo();
 void abwasserZaehlerReset();
 void printStatistik();
 
+
+
+
+
+
+// Ersetzt Zeichen mit anderem in einem String
+void replace_char (char *s, char find, char replace)
+{
+    while (*s != 0)
+    {
+        if (*s == find)
+            *s = replace;
+        s++;
+    }
+    // Usage: replace_char (strname, ' ' , '-');
+}
+
+
+
+
+
+
+
 // Programmstart mit oder ohne Parameter
 int main(int argc, char* argv[]) { 
     configuration config;
@@ -161,6 +184,10 @@ int main(int argc, char* argv[]) {
         // Wenn param1 gleich -l ist
         if (strcmp(param1, "-l") == 0) {
             // und param2 größer als 0.1 ist
+            
+            
+// . mit , ersetzen     
+            
             filterMenge = (float) atof(argv[2]);
             if (filterMenge >= 0.1){
                 // Filtermenge anzeigen
