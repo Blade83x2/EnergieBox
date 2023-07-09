@@ -313,7 +313,6 @@ int main(int argc, char**argv) {
                 // Abfrage starten und Programm beenden
                 getDataForConfigFile(atoi(argv[2]), &config);
                 
-                                         sleep(3);
 
                 //return 0;
             }
