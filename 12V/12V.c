@@ -543,11 +543,11 @@ void getDataForConfigFile(int relais, void* config) {
     
     
     
-    sprintf("sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
+    sprintf("sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", &relais, strname, stractivateOnStart, strpMax);
 
     sleep(5);
     
-    sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
+    sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", &relais, strname, stractivateOnStart, strpMax);
     system(command);
     sleep(5);
     system("clear && 12V");
