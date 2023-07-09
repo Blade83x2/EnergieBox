@@ -1,6 +1,11 @@
 #!/bin/bash
 relais=$(echo $1);
 name=$(echo $2); 
+[ -z "$name" ] && $name="N/A";
+
+
+
+
 activateOnStart=$(echo $3);
 pMax=$(echo $4);
 
