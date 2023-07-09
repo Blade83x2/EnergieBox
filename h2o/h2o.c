@@ -275,39 +275,13 @@ void setup() {
         //scanf("%d", &p1);
        
         
-        
-        
-        int t,m; 
- printf("enter the two int value\n"); 
- while(scanf("%d %d" ,&t,&m)==1) 
- printf("the scanf read only one value "); 
- while(scanf("%d %d" ,&t,&m)==2) 
- printf("scanf read two values\n"); 
-        
-        
-        
-         
-    int number;
-    int extra;
-    char ch;
-    printf("Please enter a number:\n");
-    scanf("%d", &number);
-    extra=0;
-    while ((ch = getchar()) != '\n' && ch != EOF) /* flushing the input buffer */
-    {
-        extra++;
+
+    int character;
+    character = getchar();
+    while (character != EOF) {
+        putchar(character);
+        character = getchar();
     }
-    if(extra!=0)
-    {
-        printf("Invalid input\n");
-    }
-    else
-    {
-        printf("You have entered %d\n",number);
-    }
-            
-            
-        
 
 
         
