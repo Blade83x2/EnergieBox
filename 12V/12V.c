@@ -455,7 +455,7 @@ bool checkMainParameter(char* paramName, int number, void* config) {
 }
 
 
-char *trim(char *s) {
+char trim(char *s) {
     char *ptr;
     if (!s)
         return "N/A";   // handle NULL string
