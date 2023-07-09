@@ -519,7 +519,7 @@ void getDataForConfigFile(int relais, void* config) {
         printf(" -> Beim starten aktivieren? (true/false): ");
         stractivateOnStart = readStdinLine();
         // prüfen ob true oder false, wenn keins von beiden, dann false
-        if (strcmp(stractivateOnStart, "true") == 0)  { stractivateOnStart="false"; }
+        if (strcmp(stractivateOnStart, "true") == -1)  { stractivateOnStart="false"; }
         
         
         
