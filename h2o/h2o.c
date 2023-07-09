@@ -275,22 +275,24 @@ void setup() {
         //scanf("%d", &p1);
         
          
-        int run=1;
-        
-        sleep(1);
-        while ( run==1) {
-            printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen? ");
-            scanf("%c", &p1);
-            
-            printf("-> %c ",p1);
-            
-            break;
-
-            
-            
-            
-        }
-        
+    int number;
+    int extra;
+    char ch;
+    printf("Please enter a number:\n");
+    scanf("%d", &number);
+    extra=0;
+    while ((ch = getchar()) != '\n' && ch != EOF) /* flushing the input buffer */
+    {
+        extra++;
+    }
+    if(extra!=0)
+    {
+        printf("Invalid input\n");
+    }
+    else
+    {
+        printf("You have entered %d\n",number);
+    }
             
             
         
