@@ -163,23 +163,24 @@ int main(int argc, char* argv[]) {
             s = s % 60;
             int sekunden = s;     
             // Abwassermenge berechnen
-            // und anzeigen
             abwasserMenge = filterMenge * faktorGefiltertZuAbwasser;
             printf(" -> Berechnete Abwasser Menge:\t\t%5.1f Liter\n", abwasserMenge);
-            // Kannistergröße anzeigen
-            printf(" -> Größe des Abwasser Tanks:\t\t%5.1f Liter\n", maxLiterAbwasserKanister);
-            printf(" -> Aktueller Abwasser Tankfüllstand:\t%5.1f Liter\n", aktuellesGesameltesAbwasser);
             // Maximal mögliches Abwasser ausrechnen und anzeigen
-            printf(" -> Restliche mögliche Abwasser Menge:\t%5.1f Liter\n", (maxLiterAbwasserKanister - aktuellesGesameltesAbwasser));
+            printf(" -> Restliche mögliche Abwasser Menge:\t%5.1f Liter\n", (maxLiterAbwasserKanister - aktuellesGesameltesAbwasser));            
+            // Aktueller Abwassertank Füllstand
+            printf(" -> Aktueller Abwasser Tankfüllstand:\t%5.1f Liter\n", aktuellesGesameltesAbwasser);
+            // Kannistergröße anzeigen
+            printf(" -> Gesamtgröße des Abwasser Tanks:\t\t%5.1f Liter\n", maxLiterAbwasserKanister);
             // Gesamt gefilterte Literzahl der Filterkartusche anzeigen
             printf(" -> Bislang gefiltertes Wasser:\t\t%5.1f Liter\n", gesamteFilterMengeInLiter);
             // Empfohlene maximale Nutzungsleistung in Liter
             printf(" -> Max. Empfohlene Filtermenge:\t%5.0f Liter\n", warnLimitAbFilterMenge);
+            
             // Prüfen ob WarnMenge für gesamte gefilterte Menge ereicht ist
             if(gesamteFilterMengeInLiter >= warnLimitAbFilterMenge) {
                 printf("\e[0;31m -> Die maximal empfohlene Nutzungsmenge des Filters\n    von %f Litern ist erreicht / überschritten.\n    Der Filter sollte gewechselt werden!\e[0m", gesamteFilterMengeInLiter);
             }
-            // Prüfen ob Abwasser Menge + Kannisterinhalt nicht mehr als maximale füllmenge ist
+            // Prüfen ob Abwasser Menge + Kannisterinhalt nicht mehr als maximale Füllmenge ist
             if( (abwasserMenge + aktuellesGesameltesAbwasser) <= maxLiterAbwasserKanister) {
                 // Neue Gesammelt Abwassermenge in Konfiguration speichern
                 sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", (aktuellesGesameltesAbwasser+abwasserMenge), (gesamteFilterMengeInLiter+filterMenge), pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);
