@@ -482,7 +482,7 @@ char* readStdinLine()
 
 // Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
 void getDataForConfigFile(int relais, void* config) {
-    configuration* pconfig = (configuration*)config;
+    //configuration* pconfig = (configuration*)config;
     system("clear");   
     printf("Neue Konfiguration für Relais Nr. -> %d erstellen:\n\n", relais);
     printf(" -> Neue Bezeichnung eingeben (leer lassen für deaktivieren): ");
@@ -505,7 +505,7 @@ void getDataForConfigFile(int relais, void* config) {
         printf(" -> getDevicePower: %d", getDevicePower(relais, config));
 
         
-        maxRest = getRestPower(&config, 1);
+        maxRest = getRestPower(config, 1);
         
         printf(" -> getRestPower: %d", maxRest);
 
