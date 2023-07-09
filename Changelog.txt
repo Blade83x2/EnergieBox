@@ -40,6 +40,7 @@ Todoś
     Cam 3 neu positionieren
     Anschlusskabel 230V Pannel erneuern
     Planne unter PV Module legen wegen Unkraut
+    h2o Filterdauer für 100ml automatisch berechnen durch GPD angabe
  
  
 _______________________________________________________________________________________________________________________________________
