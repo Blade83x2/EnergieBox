@@ -519,7 +519,7 @@ void getDataForConfigFile(int relais, void* config) {
         }
         
         
-        if (strcmp(strpMax, "") == 0 || (int)strpMax < 2 )  { strpMax="0"; }
+        if (strcmp(strpMax, "") == 0 || (int)strpMax < (int)2 )  { strpMax="0"; }
 
         
         
