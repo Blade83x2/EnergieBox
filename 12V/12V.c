@@ -509,7 +509,6 @@ void getDataForConfigFile(int relais, void* config) {
         // prüfen ob neuer Verbrauch größer als 1 ist und kleiner als gesamtleistung - dieses Relais
         
         
-        pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController
         
         
         
