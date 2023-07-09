@@ -24,7 +24,7 @@ Anschaffungen
     1x Waschmaschine
     1x Trockner
     1x Teufel Audiosystem
-    1x Induktionsfeld mit 2 Platten
+    1x Saug / Wischrobot
     16x Sicherungen für 12V Anschlüsse mit diversen Sicherungen verschiedener Größen
 
     
@@ -34,13 +34,16 @@ Todoś
     Handy Anschluss prüfen / reparieren
     Stromversorgung Filtersystem fertig stellen
     Notaus für Kolloidstation verbauen
-    BlueRay Player gegen King Box austauschen
     Überwachungssystem Festplatte tauschen
     Schalttaffel für 12V neu bauen mit neuen Bauteilen
     Cam 3 neu positionieren
     Anschlusskabel 230V Pannel erneuern
     Planne unter PV Module legen wegen Unkraut
-    h2o Filterdauer für 100ml automatisch berechnen durch GPD angabe
+    
+    
+    
+    
+    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   h2o Filterdauer für 100ml automatisch berechnen durch GPD angabe
 
     
  

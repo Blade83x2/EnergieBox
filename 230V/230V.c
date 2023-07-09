@@ -251,9 +251,6 @@ int main(int argc, char**argv) {
         printf("%d", getElkoState(atoi(argv[1]), &config)); // Nur Relais Nr. übergeben. config.ini auslesen und int auf console printen
     }
     else if(argc == 3) {
-        
-        
-        
         // Wenn Konfiguration aufgerufen wird z.B. mit 230V -set 3
         if (strcmp(argv[1], "-set") == 0)  {
             if (   atoi(argv[2]) > 0    && atoi(argv[2]) <= config.mcp.numberOfRelaisActive) 
@@ -263,11 +260,6 @@ int main(int argc, char**argv) {
                 return 0;
             }
         }
-        
-        
-        
-        
-        
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config)) {
             return showHelp(argv, &config);
         }
@@ -395,9 +387,6 @@ bool checkMainParameter(char* paramName, int number, void* config) {
     return true;
 }
 
-
-
-
 // Entfernt Leerzeichen vorne und hinten
 char *Trim(char *s)
 {
@@ -470,16 +459,6 @@ void getDataForConfigFile(int relais, void* config) {
     sleep(0.5);
     system("clear && 230V");
 }
-
-
-
-
-
-
-
-
-
-
 
 // Zeigt Hilfe auf Console an
 int showHelp(char**argv, void* config) {
