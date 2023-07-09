@@ -43,11 +43,12 @@ void sigfunc(int sig)
     return;
 }
 
-
+// Funktionen vordeklarieren
 int getBit(int Port);
 void setBit(int Port, int Status);
 bool checkMainParameter(char* paramName, int number, void* config);
 int showHelp(char**argv, void* config);
+int getRestPower(void * config, int excludeWatt);
 void getDataForConfigFile(int relais, void* config);
 char* readStdinLine();
 
@@ -235,7 +236,7 @@ int getDevicePower(int relais, void * config) {
 }
 
 // Gibt verfügbaren Watt Restwert zurück
-int getRestPower(void * config) {
+int getRestPower(void * config, int excludeWatt) {
      configuration* pconfig = (configuration*)config;
      int watt=0;
      watt += pconfig->mcp.maxPMicroController;
@@ -256,6 +257,19 @@ int getRestPower(void * config) {
      if(pconfig->r14.eltakoState==1) watt += pconfig->r14.pMax;
      if(pconfig->r15.eltakoState==1) watt += pconfig->r15.pMax;
      if(pconfig->r16.eltakoState==1) watt += pconfig->r16.pMax;
+     
+     
+     
+     if(excludeWatt > 0) {
+         watt = watt - excludeWatt;
+     }
+     
+     
+     
+     
+     
+     
+     
      return pconfig->mcp.maxPConverter - watt;
 }
 
@@ -298,6 +312,12 @@ int main(int argc, char**argv) {
         printf("%d",  getElkoState(atoi(argv[1]), &config));
     }
     else if(argc == 3) {
+        
+        
+        
+        
+        
+        
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Wenn Konfiguration aufgerufen wird z.B. mit 12V -set 3
         if (strcmp(argv[1], "-set") == 0)  {
@@ -319,7 +339,7 @@ int main(int argc, char**argv) {
             // wenn eingeschaltet wird
             if(atoi(argv[2])==1) { 
                     // prüfen ob DC Konverter genug Leistung hat
-                    if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxPConverter) {
+                    if(getRestPower(&config, 0) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxPConverter) {
                          // Relais schalten 
                          setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais einschalten 
                         //  elkoState in config.ini schreiben
@@ -356,7 +376,7 @@ int main(int argc, char**argv) {
             // wenn eingeschaltet wird
             if(atoi(argv[2])==1) { 
                     // prüfen ob DC Konverter  genug Leistung hat
-                    if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxPConverter) {
+                    if(getRestPower(&config, 0) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxPConverter) {
                          // impuls für Elko 
                          setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais einschalten 
                          //  elkoState in config.ini schreiben
@@ -366,7 +386,7 @@ int main(int argc, char**argv) {
                      }
                      else {
                         // Nicht genug Watt verfügbar für neues Gerät
-                        printf("\e[0;31mDas Gerät benötigt %d Watt aber es sind nur %d Watt verfügbar! Andere Geräte ausschalten..!?\n", getDevicePower(atoi(argv[1]), &config), getRestPower(&config));
+                        printf("\e[0;31mDas Gerät benötigt %d Watt aber es sind nur %d Watt verfügbar! Andere Geräte ausschalten..!?\n", getDevicePower(atoi(argv[1]), &config), getRestPower(&config, 0));
                         return 1;
                     }
                 }
@@ -462,7 +482,7 @@ char* readStdinLine()
 
 // Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
 void getDataForConfigFile(int relais, void* config) {
-    configuration* pconfig = (configuration*)config;
+    //configuration* pconfig = (configuration*)config;
     system("clear");   
     printf("Neue Konfiguration für Relais Nr. -> %d erstellen:\n\n", relais);
     printf(" -> Neue Bezeichnung eingeben (leer lassen für deaktivieren): ");
@@ -479,6 +499,13 @@ void getDataForConfigFile(int relais, void* config) {
        // printf(" -> Verbrauch in Watt (Max. %d Watt): ", pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController);
         printf(" -> Verbrauch in Watt: ");
         strpMax = readStdinLine();
+        // Maximal verfügbare Watt - alte Eigeneinstellung
+        int maxRest;
+        maxRest = getRestPower(&config, getDevicePower(atoi(relais), &config));
+        
+        printf(" -> rest watt: %d", maxRest);
+
+        
         // prüfen ob neuer Verbrauch größer als 1 ist und kleiner als gesamtleistung - dieses Relais
         
         
