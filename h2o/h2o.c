@@ -14,7 +14,6 @@
 #include <stdbool.h> 
 #include <ctype.h>
 
-
 // 12V Relais Nr. für Pumpe & Boosterpumpe
 int pumpeRelaisNr = 6;
 
@@ -40,15 +39,11 @@ int reinigungszeitInSekunden = 150;
 // Liter Pro Galone
 float literProGalone = 3.7854f;
 
-
 // Liter Pro Tag  = literProGalone * gpd
 long double literProTag = 0.f;
 
 // Liter pro Sekunde = (literProTag / 86400) / 1000
 long double  MilliliterProSekunde = 0.f;
-
-
-
 
 // Filtermenge unformatiert (Koma und Punkt annehmen)
 char *filterMengeUnformated;
@@ -93,8 +88,40 @@ void printStatistik();
 void replace_char (char *s, char find, char replace);
 
 
+
+
+void print_progress(size_t count, size_t max) {
+    const int bar_width = 50;
+
+    float progress = (float) count / max;
+    int bar_length = progress * bar_width;
+
+    printf("\rProgress: [");
+    for (int i = 0; i < bar_length; ++i) {
+        printf("#");
+    }
+    for (int i = bar_length; i < bar_width; ++i) {
+        printf(" ");
+    }
+    printf("] %.2f%%", progress * 100);
+
+    fflush(stdout);
+}
+
+
+
+
+
 // Programmstart mit oder ohne Parameter
 int main(int argc, char* argv[]) { 
+    
+    
+    print_progress(size_t 50, size_t 100);
+    
+    
+    
+    
+    
     configuration config;
     // Konfiguration von h2o in config laden
     if (ini_parse("/Energiebox/h2o/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/h2o/config.ini'\n"); return 1; }
@@ -284,34 +311,17 @@ void setup() {
         printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
         scanf("%d", &p1);
        
-        
-        
-
-        
         int p2;
-        printf("-> Wieviel GPD hat die Filteranlage?: ");
+        printf("-> Wieviel GPD hat die Filteranlage? (etc. 50, 75, 100): ");
         scanf("%d", &p2);
-        
-        
-        
-        
-        
         
         int p3;
         printf("-> Wieviel (fertige) Liter Wasser sollte maximal mit einem Satz Filter gefiltert werden?: ");
         scanf("%d", &p3);
         
-        
-        
         literProTag = literProGalone * gpd;
         int p4 = 0.1f /  (((literProTag/24)/60)/60);
         printf("%d  / Sekunden für 100ml  \n", p4);
-            
-
-
-        
-        
-        
         
         int p5;
         printf("-> Wie ist das Verhältnis von gefiltertem Wasser zu Abwasser/Spülwasser? 1 zu: ");
@@ -349,6 +359,12 @@ void printStatistik() {
     printf(" +----------------------------------------------+\n\n");    
 }
 
+
+
+
+
+
+
 // Anlage Reinigen per Durchspüllung (Parameter -clean)
 void clearSystem() {
     configuration config;
@@ -378,8 +394,7 @@ void clearSystem() {
             
             
             
-            
-            
+          
             
             
             
