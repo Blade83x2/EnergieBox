@@ -2,12 +2,6 @@
 relais=$(echo $1);
 state=$(echo $2);
 
-for ((z=2004;z<=2014;z++))
-do
-     echo $z;
-done
-
-
 if [ "$relais" -eq "1" ]; then
  if [ "$state" -eq "1" ]; then
    sudo sed -i '/^\[Relais 1]$/,/^\[/ s/^eltakoState = 0/eltakoState = 1/' /Energiebox/12V/config.ini
