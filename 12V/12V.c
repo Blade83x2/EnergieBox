@@ -502,10 +502,10 @@ void getDataForConfigFile(int relais, void* config) {
         // Maximal verfügbare Watt - alte Eigeneinstellung
         int maxRest;
         
-                printf(" -> getDevicePower: %d", getDevicePower(relais, &config));
+        printf(" -> getDevicePower: %d", getDevicePower(relais, config));
 
         
-        maxRest = getRestPower(&config, 0);
+        maxRest = getRestPower(&config, 1);
         
         printf(" -> getRestPower: %d", maxRest);
 
