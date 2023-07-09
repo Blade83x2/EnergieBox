@@ -42,8 +42,8 @@ Todoś
     
     
     
-    h2o -l 0,44   komma und punkt zulassen
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   h2o Filterdauer für 100ml automatisch berechnen durch GPD angabe
+    h2o -l Parameter entfernen
 
     
  
@@ -78,9 +78,13 @@ Bei dieser Version ist die gesamte Anlage schon 5 Monate am Stück gelaufen und 
 für den Dauerbetrieb geeignet. Dieser Planungsfehler wurde mit Stromstoß Eltakos behoben! Die Sicherung wurde deutlich erhöht. 
 Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontroller wurde gegen das neueste und schnellste Model Raspberry Pi4 mit 8GB Arbeitsspeicher ausgetauscht. Ein LCD Touchdsplay wurde verbaut.
 
+
+
+
+ [UPDATE] Bei dem Filterparameter sind jetzt Koma und Punkte erlaubt
  [UPDATE] README.me für GitHub formatiert
- {NEW] Parameter in 230V eingebaut mit dem die Konfiguration der Relais über die Konsole eingestellt werden kann. Beispiel: 230V -set 5  würde die Einstellungen für das 230 Volt Relais setzen. 
- {NEW] Parameter in 12V eingebaut mit dem die Konfiguration der Relais über die Konsole eingestellt werden kann. Beispiel: 12V -set 5  würde die Einstellungen für das 12 Volt Relais setzen. 
+ {NEW] Parameter in 230V eingebaut mit dem die Konfiguration der Relais über die Konsole eingestellt werden kann. Beispiel: 230V -set 5 würde die Einstellungen für das 230 Volt Relais 5 setzen. 
+ {NEW] Parameter in 12V eingebaut mit dem die Konfiguration der Relais über die Konsole eingestellt werden kann. Beispiel: 12V -set 8 würde die Einstellungen für das 12 Volt Relais 8 setzen. 
  {NEW] Hinter dem PC Anschluss wurde eine USV installiert damit beim EnergieBox Neustart nicht ständig alles abstürzt
  {NEW] FI Schutzschaltung mit Potentialausgleich in die Erde verbaut. Umschalten auf Hausstrom nicht mehr möglich
  [UPDATE] README.MD für Programm h2o erstellt in Text und Bild

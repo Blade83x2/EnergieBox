@@ -164,23 +164,21 @@ int main(int argc, char* argv[]) {
             showHelp();
             return 0;
         }
-    }
-    if(argc == 3) {
+    //}
+    //if(argc == 3) {
         // Filtern, wenn param1 -l ist und param2 eine float Wert ist
-        const char * param1 = argv[1];
+        //const char * param1 = argv[1];
         // Wenn param1 gleich -l ist
-        if (strcmp(param1, "-l") == 0 || strcmp(param1, "-L") == 0) {
+        //if (strcmp(param1, "-l") == 0 || strcmp(param1, "-L") == 0) {
             // und param2 größer als 0.1 ist
             
-            filterMengeUnformated = argv[2];
+            filterMengeUnformated = argv[1];
             replace_char (filterMengeUnformated, ',', '.');
 
             
             
             
-// . mit , ersetzen     
             
-         //   filterMenge = (float) atof(argv[2]);
             filterMenge = (float) atof(filterMengeUnformated);
             
             
@@ -242,12 +240,12 @@ int main(int argc, char* argv[]) {
             } else {
                 printf("\n\e[0;31m Die minimale Wassermenge zum filtern muss mindestens 0.1 Liter betragen!\n\n\e[0m");
             }
-        }
-        else {
+        //}
+        //else {
             // Bei 2 Parametern kan param1 nur -l sein, wenn nicht, Hilfe anzeigen
-            showHelp();
-            return 0;
-        }
+        //    showHelp();
+        //    return 0;
+        //}
     }
 }
 
