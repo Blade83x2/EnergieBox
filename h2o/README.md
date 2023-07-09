@@ -49,3 +49,29 @@ Falls alle Filter ausgetauscht werden, wird dem Programm das mit folgendem Befeh
 <p align="center"> 
     <img src="img/change.png" style="width: 85%;" alt="h2o Filter tauschen">
 </p>
+
+Wenn die gesamte Anlage durchgespült werden soll, kann das mit dem folgenden Befehl realisiert werden:
+
+<b>h2o -clean</b>
+
+
+<p align="center"> 
+    <img src="img/clean.png" style="width: 85%;" alt="h2o Anlage durchspülen">
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
