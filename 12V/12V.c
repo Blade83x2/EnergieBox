@@ -498,7 +498,6 @@ void getDataForConfigFile(int relais, void* config) {
     char* stractivateOnStart;
     strname = readStdinLine();
     strname = Trim(strname);
-    printf("-%s-", strname);
 
     
     if (strcmp(strname, "") == 0)  {
@@ -536,12 +535,19 @@ void getDataForConfigFile(int relais, void* config) {
     }
     
     
-        system("sudo sh /Energiebox/12V/setConfig.sh 5 \"N/A\" \"aha\" 12");
+    printf("strname -%s-\n", strname);
 
     
-  //  sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
-    //system(command);
-    sleep(2.5);
+    
+    
+    
+    printf("sudo sh /Energiebox/12V/setConfig.sh 5 \"N/A\" \"true\" 12");
+
+    sleep(5);
+    
+    sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
+    system(command);
+    sleep(5);
     system("clear && 12V");
 }
 
