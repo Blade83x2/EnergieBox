@@ -119,7 +119,7 @@ int main(int argc, char* argv[]) {
     print_progress( 50,  100);
     
     
-    
+    sleep(20);
     
     
     configuration config;
