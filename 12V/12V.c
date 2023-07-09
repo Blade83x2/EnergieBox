@@ -517,10 +517,17 @@ void getDataForConfigFile(int relais, void* config) {
         if((int)strpMax < (int)1){
             printf("\e[0;31m -> Dieses Gerät hat eine falsche Watt Angabe!\e[0m\n");
         }
+        
+        
+        if (strcmp(strpMax, "") == 0 )  { strpMax="33"; }
+
+        
+        
+        
         printf(" -> Beim starten aktivieren? (true/false): ");
         stractivateOnStart = readStdinLine();
         // prüfen ob true oder false, wenn keins von beiden, dann false
-        if (strcmp(stractivateOnStart, "true") != 0 && strcmp(stractivateOnStart, "false") != 0    )  { stractivateOnStart="false"; }
+        if (strcmp(stractivateOnStart, "true") != 0 && strcmp(stractivateOnStart, "false") != 0 )  { stractivateOnStart="false"; }
     }
     
     
