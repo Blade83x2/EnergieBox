@@ -1,6 +1,6 @@
 ERSTINSTALLATION DER ENERGIEBOX SOFTWARE auf einem Raspberry PI
 
-@Copyright by Johannes a.d.F. K r ä m e r
+@Copyright 2023 by Johannes a.d.F. K r ä m e r
 
 <p align="center"> 
     <img src="img/sshEnergiebox.png" style="width: 85%;" alt="EnergieBox" >
@@ -8,8 +8,9 @@ ERSTINSTALLATION DER ENERGIEBOX SOFTWARE auf einem Raspberry PI
 
 
 Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS läuft und
-2 MCP23017 (WAVESHARE, Artikelnummer BO-MCP23017) mit Eltakos auf den Adressen 0x22 und 0x27
-sowie ein 7" Touchdisplay angeschlossen und eingerichtet sind. 
+2 MCP23017 (WAVESHARE, Artikelnummer BO-MCP23017) auf den Adressen 0x22 und 0x27 mit 
+16 fach Relaisplatinen verbunden sind und an Eltakos für Lastenschaltkriese installiert sind. 
+Ein 7" Touchdisplay sollte ebenfalls angeschlossen und eingerichtet sein. 
 
 
 
