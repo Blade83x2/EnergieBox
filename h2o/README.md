@@ -9,7 +9,7 @@ des Filters überwacht. Bei dem Programmaufruf wird eine genaue Literanzahl übe
 Die Hilfe wird angezeigt wenn einfach nur <b>h2o</b> ohne Parameter aufgerufen wird.
 
 <p align="center"> 
-    <img src="img/start.png" style="width: 85%;" alt="h2o Hilfe" >
+    <img src="img/start.png" style="width: 85%;" alt="h2o Hilfe">
 </p>
 
 Um eine Ordnungsgemäße Funktion zu garantieren, muss das Programm zuerst auf den verwendeten Filter konfiguriert werden. Zur Einrichtung wird das Programm
@@ -17,8 +17,9 @@ mit folgendem Parameter aufgerufen:
 
 <b>h2o -setup</b>
 
+
 <p align="center"> 
-    <img src="img/setup.png" style="width: 85%;" alt="h2o Einrichtung" >
+    <img src="img/setup.png" style="width: 85%;" alt="h2o Einrichtung">
 </p>
 
 Nun werden bestimmte Filtereigenschaften abgefragt. Diese werden benötigt damit das Programm die Berechnungen korrekt durchführen kann. Eine Statistik der vergangenen Nutzung kann
@@ -26,15 +27,25 @@ mit dem folgendem Befehl angezeigt werden:
 
 <b>h2o -stats</b>
 
+
 <p align="center"> 
-    <img src="img/stats.png" style="width: 85%;" alt="h2o Statistik" >
+    <img src="img/stats.png" style="width: 85%;" alt="h2o Statistik">
 </p>
 
 Wenn der Abwasser Tank geleert wird, muss das dem Programm mitgeteilt werden. Dies geschieht mit dem Befehl:
 
 <b>h2o -empty</b>
 
+
 <p align="center"> 
-    <img src="img/empty.png" style="width: 85%;" alt="h2o Abwasser Tank leeren" >
+    <img src="img/empty.png" style="width: 85%;" alt="h2o Abwasser Tank leeren">
 </p>
 
+Falls alle Filter ausgetauscht werden, wird dem Programm das mit folgendem Befehl mitgeteilt:
+
+<b>h2o -change</b>
+
+
+<p align="center"> 
+    <img src="img/change.png" style="width: 85%;" alt="h2o Filter tauschen">
+</p>
