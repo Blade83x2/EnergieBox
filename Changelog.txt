@@ -41,6 +41,7 @@ Todoś
     Anschlusskabel 230V Pannel erneuern
     Planne unter PV Module legen wegen Unkraut
     h2o Filterdauer für 100ml automatisch berechnen durch GPD angabe
+    12V & 230V Parameter für Konfiguration einzustellen hinzufügen
  
  
 _______________________________________________________________________________________________________________________________________
