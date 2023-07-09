@@ -40,12 +40,7 @@ Todoś
     Anschlusskabel 230V Pannel erneuern
     Planne unter PV Module legen wegen Unkraut
     
-    
-    
-    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   h2o Filterdauer für 100ml automatisch berechnen durch GPD angabe
-    h2o -l Parameter entfernen
 
-    
  
 _______________________________________________________________________________________________________________________________________
 
@@ -82,6 +77,8 @@ Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontr
 
 
  [UPDATE] Bei dem Filterparameter sind jetzt Koma und Punkte erlaubt
+ [UPDATE] Filterlaufzeit für 100ml wird nun automatisch berechnet aus GPD
+ [UPDATE] -l Parameter wurde entfernt bei h2o
  [UPDATE] README.me für GitHub formatiert
  {NEW] Parameter in 230V eingebaut mit dem die Konfiguration der Relais über die Konsole eingestellt werden kann. Beispiel: 230V -set 5 würde die Einstellungen für das 230 Volt Relais 5 setzen. 
  {NEW] Parameter in 12V eingebaut mit dem die Konfiguration der Relais über die Konsole eingestellt werden kann. Beispiel: 12V -set 8 würde die Einstellungen für das 12 Volt Relais 8 setzen. 

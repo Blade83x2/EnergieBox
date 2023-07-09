@@ -305,7 +305,6 @@ void setup() {
         
         literProTag = literProGalone * gpd;
         int p4 = 0.1f /  (((literProTag/24)/60)/60);
-            
         printf("%d  / Sekunden für 100ml  \n", p4);
             
 
