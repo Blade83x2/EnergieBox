@@ -142,7 +142,14 @@ Das Programm h2o filtert Wasser, kolloid stellt Kolloidale Dispersionen her!
 
 
                    
-                   
+    
+    
+    
+    
+    
+    
+    
+    
 Diese Änderung kann ebenfalls wieder mit der Tastenkombination 
 Strg + x gespeichert werden. Nun tippen wir auf der Konsole den Befehl 
 
