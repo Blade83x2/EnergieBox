@@ -271,31 +271,12 @@ void setup() {
     if (answersetup == 'Y' || answersetup == 'y' || answersetup == 'J' || answersetup == 'j'){
         // Wenn ja, alle Daten zusammen erfragen und externe Datei aufrufen
         char p1;
-        //printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
-        //scanf("%d", &p1);
+        printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
+        scanf("%d", &p1);
        
         
         
-        
-        
-        while (1) {
-            
-            printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
 
-            int character;
-            character = getchar();
-            while (character != EOF) {
-                putchar(character);
-                //character = getchar();
-            }   
-            
-            break;
-        }
-
-
-
-
-        
         
         int p2;
         printf("-> Wieviel GPD hat die Filteranlage?: ");
