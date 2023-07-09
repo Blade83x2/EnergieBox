@@ -444,6 +444,7 @@ bool checkMainParameter(char* paramName, int number, void* config) {
 }
 
 // Liesst Zeileneingabe aus und trimt string direkt
+/*
 char* readStdinLine()
 {
     char*  buffer  = NULL;
@@ -466,6 +467,28 @@ char* readStdinLine()
         *cp2-- = 0;
     return buffer;
 }
+*/
+
+char* readStdinLine()
+{
+        char*  buffer  = NULL;
+        size_t bufsize = 0;
+        ssize_t characters = getline(&buffer, &bufsize, stdin);
+        if (characters == -1) {
+            free(buffer);
+            buffer = "N/A";
+        }
+        else if (buffer[characters-1] == '\n') {
+            buffer[characters-1] = '\0';
+        }
+        return buffer;
+}
+
+
+
+
+
+
 
 // Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
 void getDataForConfigFile(int relais, void* config) {
