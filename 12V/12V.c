@@ -487,7 +487,7 @@ void getDataForConfigFile(int relais, void* config) {
         strpMax = readStdinLine();
         int maxRest;
         maxRest = pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController;
-        if( strpMax > maxRest){
+        if( (int)strpMax > (int)maxRest){
             printf("\n\e[0;31m Dieses Gerät hat einen zu hohen Watt Verbrauch. Es wird nie eingeschaltet werden können!\e[0m");
         }
         if( strpMax < 1){
