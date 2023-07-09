@@ -403,7 +403,7 @@ void print_progress(size_t count, size_t max) {
 
 // Progress Bar Filterung
 void print_progress2(size_t count, size_t max) {
-    const int bar_width = 42;
+    const int bar_width = 38;
     float progress = (float) count / max;
     int bar_length = progress * bar_width;
     printf("\r -> [");
