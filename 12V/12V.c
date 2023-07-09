@@ -464,8 +464,8 @@ char* readStdinLine()
 void getDataForConfigFile(int relais, void* config) {
     configuration* pconfig = (configuration*)config;
     system("clear");   
-    printf("Neue Konfiguration für Relais Nr.%d:\n\n", relais);
-    printf(" -> Neue Bezeichnung eingeben (leer für deaktivieren): ");
+    printf("Neue Konfiguration für Relais Nr. -> %d erstellen:\n\n", relais);
+    printf(" -> Neue Bezeichnung eingeben (leer lassen für deaktivieren): ");
     char* strname;
     char* strpMax;
     char* stractivateOnStart;
@@ -479,7 +479,7 @@ void getDataForConfigFile(int relais, void* config) {
        // printf(" -> Verbrauch in Watt (Max. %d Watt): ", pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController);
         printf(" -> Verbrauch in Watt: ");
         strpMax = readStdinLine();
-        // prüfen ob > 1 und kleiner als gesamtleistung 12V
+        // prüfen ob neuer Verbrauch größer als 1 ist und kleiner als gesamtleistung - dieses Relais
         
         
         
@@ -489,25 +489,19 @@ void getDataForConfigFile(int relais, void* config) {
         printf(" -> Beim starten aktivieren?: (true/false) ");
         stractivateOnStart = readStdinLine();
         // prüfen ob true oder false, wenn keins von beiden, dann false
+        
+        
+        
+        
+        
+        
+        
 
-        
-        
-        
     }
-
-
-    printf("name: '%s'\n",strname);
-    printf("activateOnStart: %s\n",stractivateOnStart);
-    printf("strpMax: %s\n",strpMax);
-        
-        
-
-
-
-    // sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %d", relais, strname, stractivateOnStart, strpMax);
-    // system(command);
-    sleep(6.1);
-    //system("clear && 12V");
+    sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
+    system(command);
+    sleep(1.1);
+    system("clear && 12V");
 }
 
 // Zeigt Hilfe auf Console an
