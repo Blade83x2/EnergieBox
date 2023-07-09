@@ -3,10 +3,10 @@ CHANGELOG Energiebox
 
 TODOś
 
-                                            Batteriespannungen prüfen und ausrichten
+
 230V MCP Kontakte sind locker
                                             Shunt Garantiefall melden
-                                            Steckdose Herd tauschen
+
 MPPT Statistik über rs485 auslesen
                                             
                             
@@ -15,13 +15,9 @@ MPPT Statistik über rs485 auslesen
 Kaufen
 
 3x DC -> DC Konverter kaufen
-1x Batteriebalancer kaufen          -ok-  25€
-1x 16 fach Relais für 12Volt        -ok-  16,90
 16x Eltakos für 12Volt
 1x Digitaler Stromzähler
-1x Überspannungsschutz              -ok-  17€
-2x MCP23017                         -ok-  30€
-1x Kühlkörper Raspberry             -ok-  4€
+1x MCP23017                               15
 1x EP Ever MPPT 100A
 1x PAL-ADP-50AN + Kabel
 1x Temperatur Sensor Batterie EPEVER
@@ -32,13 +28,19 @@ Kaufen
 
 NEUERUNGEN in Version 3
 
-Bei dieser Version ist die gesamte Anlage schon 5 Monate am Stück gelaufen. Die Schaltkontakte der Relais sind bei größeren Verbrauchern abgenutzt und waren nicht
+Bei dieser Version ist die gesamte Anlage schon 5 Monate am Stück gelaufen und hat somit den Dauerbetriebs Test bestanden. Die Schaltkontakte der Relais sind bei größeren Verbrauchern abgenutzt und waren nicht
 für den Dauerbetrieb geeignet. Dieser Planungsfehler wurde mit Stromstoß Eltakos behoben! Die Sicherung wurde deutlich erhöht. 
 Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontroller wurde gegen das neueste und schnellste Model Raspberry Pi4 mit 8GB Arbeitsspeicher ausgetauscht.
 
+ [UPDATE] Laderegler -> Batterie neue 70mm² Leitungen mit Quetsch Hühlsen
+ [UPDATE] Router angeschlossen
+ [UPDATE] 4K Beamer + BeamerCast angeschlossen
+ [NEW] 150A Sicherung am Batteriepack
+ [NEW] 150A Batterie Switch (An aus Schalter)
+ [BUGFIX] Balancer ausgetauscht und Zentraliliesiert.
+ [NEW] DC 1000 Volt Überspannungsschutz für PV verbaut
  [NEW] h2o Pumpengestell vollständig gebaut. Boosterpumpe noch nicht bereit wegen Spannungsabfall
  [NEW] Batteriepack - Batterien beschriftet
- [UPDATE] 12V - Neue Stromversorgung für 24 Port Gigabit Switch gelegt 
  [NEW] h2o -stats Statistik Anzeige über Filtereigenschaften, Verbrauch und Wassertank
  [UPDATE] h2o -clean Verfügbare Tankgröße wird berechnet. Aufruf h2o -empty entfernt.
  [UPDATE] Vollständiger Anschluß aller verfügbaren Geräte
