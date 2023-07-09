@@ -489,7 +489,7 @@ char* readStdinLine()
 
 // Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
 void getDataForConfigFile(int relais, void* config) {
-    configuration* pconfig = (configuration*)config;
+   // configuration* pconfig = (configuration*)config;
     system("clear");   
     printf("Neue Konfiguration für Relais Nr. -> %d erstellen:\n\n", relais);
     printf(" -> Neue Bezeichnung eingeben (leer lassen für deaktivieren): ");
