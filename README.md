@@ -2,6 +2,11 @@
 
 ### @Copyright 2023 by Johannes a.d.F. K r ä m e r
 
+> Diese Software ist konzipiert für einen Raspberry Pi 3/4 der verbunden ist mit 2 Portexpandern die
+an 32 Relais angeschlossen sind. Diese sollten dann starke Eltako Lastenstromstoßrelais steuern.
+Als Spannungsquelle ist eine Photovoltaik Anlage mit einem 15 KW Speicher angeschlossen. Die 
+Software beinhaltet ausserdem noch ein Programm zur Wasserfilterung sowie ein Programm zur Kolloid Herstellung.
+
 <p align="center"> 
     <img src="img/sshEnergiebox.png" style="width: 85%;" alt="EnergieBox" >
 </p>
