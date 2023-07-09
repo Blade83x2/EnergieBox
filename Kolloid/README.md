@@ -51,6 +51,8 @@ kolloid -h
     <img src="img/help.png" style="width: 85%;" alt="kolloid Hilfe" >
 </p>
 
+Falls bei der Ausführung des Programms ein Kundenname vergeben worden ist, wird dieser gelistet im Verzeichnis /home/$USER/KolloidProduktion/!
+
 
 
 
