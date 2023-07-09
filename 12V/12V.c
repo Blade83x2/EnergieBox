@@ -536,12 +536,14 @@ void getDataForConfigFile(int relais, void* config) {
     
     
     printf("strname -%s-\n", strname);
+    printf("stractivateOnStart -%s-\n", stractivateOnStart);
+    printf("strpMax -%s-\n", strpMax);
 
     
     
     
     
-    printf("sudo sh /Energiebox/12V/setConfig.sh 5 \"N/A\" \"true\" 12");
+    sprintf("sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
 
     sleep(5);
     
