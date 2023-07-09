@@ -49,6 +49,7 @@ void setBit(int Port, int Status);
 bool checkMainParameter(char* paramName, int number, void* config);
 int showHelp(char**argv, void* config);
 void getDataForConfigFile(int relais, void* config);
+char* readStdinLine();
 
 // MCP Setup
 typedef struct {
@@ -297,35 +298,16 @@ int main(int argc, char**argv) {
         printf("%d",  getElkoState(atoi(argv[1]), &config));
     }
     else if(argc == 3) {
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Wenn Konfiguration aufgerufen wird z.B. mit 12V -set 3
         if (strcmp(argv[1], "-set") == 0)  {
             if (   atoi(argv[2]) > 0    && atoi(argv[2]) <= config.mcp.numberOfRelaisActive) 
             {
                 // Abfrage starten und Programm beenden
                 getDataForConfigFile(atoi(argv[2]), &config);
-                
-
-                //return 0;
+                return 0;
             }
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         
@@ -454,35 +436,6 @@ bool checkMainParameter(char* paramName, int number, void* config) {
     return true;
 }
 
-// ----------------------------------------------------------------------------
-// trim leading & trailing spaces from string s (return modified string s)
-// alg:
-// - skip leading spaces, via cp1
-// - shift remaining *cp1's to the left, via cp2
-// - mark a new end of string
-// - replace trailing spaces with '\0', via cp2
-// - return the trimmed s
-//
-char *Trim(char *s)
-{
-    char *cp1;                              // for parsing the whole s
-    char *cp2;                              // for shifting & padding
-
-    // skip leading spaces, shift remaining chars
-    for (cp1=s; isspace(*cp1); cp1++ )      // skip leading spaces, via cp1
-        ;
-    for (cp2=s; *cp1; cp1++, cp2++)         // shift left remaining chars, via cp2
-        *cp2 = *cp1;
-    *cp2-- = 0;                             // mark new end of string for s
-
-    // replace trailing spaces with '\0'
-    while ( cp2 > s && isspace(*cp2) )
-        *cp2-- = 0;                         // pad with '\0's
-
-    return s;
-}
-
-
 // Liesst Zeileneingabe aus und trimt string direkt
 char* readStdinLine()
 {
@@ -507,23 +460,16 @@ char* readStdinLine()
     return buffer;
 }
 
-
-
-
 // Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
 void getDataForConfigFile(int relais, void* config) {
     configuration* pconfig = (configuration*)config;
-
     system("clear");   
     printf("Neue Konfiguration für Relais Nr.%d:\n\n", relais);
-        
-    printf(" -> Neue Bezeichnung eingeben (Max. 40 Zeichen): ");
+    printf(" -> Neue Bezeichnung eingeben (leer für deaktivieren): ");
     char* strname;
     char* strpMax;
     char* stractivateOnStart;
-
     strname = readStdinLine();
-    
     if (strcmp(strname, "") == 0)  {
         strname="N/A";
         strpMax="0";
@@ -540,8 +486,9 @@ void getDataForConfigFile(int relais, void* config) {
         
         
         
-        // prüfen ob true oder false
+        printf(" -> Beim starten aktivieren?: (true/false) ");
         stractivateOnStart = readStdinLine();
+        // prüfen ob true oder false, wenn keins von beiden, dann false
 
         
         
@@ -556,16 +503,10 @@ void getDataForConfigFile(int relais, void* config) {
         
 
 
-    //name = Gateway (FritzBox) 
-    //activateOnStart = true
-    //pMax = 12
-
-    
-
 
     // sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %d", relais, strname, stractivateOnStart, strpMax);
     // system(command);
-    //sleep(6.1);
+    sleep(6.1);
     //system("clear && 12V");
 }
 
