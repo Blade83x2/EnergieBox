@@ -82,6 +82,7 @@ void abwasserZaehlerReset();
 void printStatistik();
 void replace_char (char *s, char find, char replace);
 
+
 // Programmstart mit oder ohne Parameter
 int main(int argc, char* argv[]) { 
     configuration config;
@@ -175,7 +176,6 @@ int main(int argc, char* argv[]) {
             printf(" -> Bislang gefiltertes Wasser:\t\t%5.1f Liter\n", gesamteFilterMengeInLiter);
             // Empfohlene maximale Nutzungsleistung in Liter
             printf(" -> Max. Empfohlene Filtermenge:\t%5.0f Liter\n", warnLimitAbFilterMenge);
-            
             // Prüfen ob WarnMenge für gesamte gefilterte Menge ereicht ist
             if(gesamteFilterMengeInLiter >= warnLimitAbFilterMenge) {
                 printf("\e[0;31m -> Die maximal empfohlene Nutzungsmenge des Filters\n    von %f Litern ist erreicht / überschritten.\n    Der Filter sollte gewechselt werden!\e[0m", gesamteFilterMengeInLiter);
@@ -254,6 +254,48 @@ void replace_char (char *s, char find, char replace)
     // Usage: replace_char (strname, ' ' , '-');
 }
 
+
+int line2Int(char* line, int* x)
+{
+    int negative = 0;
+    int ret=0;
+    int temp = 0;
+
+    if (*line && *line == '-') 
+    {
+        line++;
+        negative = 1;
+    }
+    else if (*line && *line == '+')  // If a + is to be accepted
+        line++;                      // If a + is to be accepted
+
+    while (*line && *line != '\n')
+    {
+        if (!isdigit(*line)) return 0; // Illegal char found
+        ret = 1;
+
+            // Update the number
+        temp = 10 * temp;
+        temp = temp + (*line - '0');
+
+        ++line;
+    }
+
+    if (ret)
+    {
+        if (negative) temp = -temp;
+        *x = temp;
+    }
+    return ret;
+}
+
+
+
+
+
+
+
+
 // Programm Setup aufrufen und Filtereigenschaften abfragen
 void setup() {
     configuration config;
@@ -267,6 +309,38 @@ void setup() {
         int p1;
         printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
         scanf("%d", &p1);
+        
+        
+        
+            
+        char line[20];
+        int i;
+
+        int x , y=0;
+        while (true)
+        {
+            printf("Please Insert X value\n");
+            if (fgets(line, sizeof(line), stdin)) 
+            {
+                if (line2Int(line, &x)) break;  // Legal number - break out
+
+                printf("Illegal input %s", line);
+            }
+            y++;
+        }
+
+        if (y<5)
+            printf("x=%d\n", x);
+        else
+            printf("no more retries\n");
+
+
+        
+        
+        
+        
+        
+        
         int p2;
         printf("-> Wieviel GPD hat die Filteranlage?: ");
         scanf("%d", &p2);
