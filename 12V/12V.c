@@ -493,7 +493,7 @@ void getDataForConfigFile(int relais, void* config) {
     
     
     
-    sprintf(command, "print("%s") ",  pconfig->r1.name  );
+    sprintf(command, "print(\"%s\") ",  pconfig->r1.name  );
     system(command);
     
     printf(" -> Neue Bezeichnung eingeben (leer lassen für deaktivieren): ");
