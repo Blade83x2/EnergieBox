@@ -116,7 +116,7 @@ void print_progress(size_t count, size_t max) {
 int main(int argc, char* argv[]) { 
     
     
-    print_progress( 50.9,  100);
+    print_progress( 50,9,  100);
     
     
     sleep(20);
