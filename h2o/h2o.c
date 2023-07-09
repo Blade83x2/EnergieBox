@@ -160,10 +160,10 @@ int main(int argc, char* argv[]) {
             printStatistik();
             return 0;
         }        
-        else {
-            showHelp();
-            return 0;
-        }
+        //else {
+        //    showHelp();
+        //    return 0;
+        //}
     //}
     //if(argc == 3) {
         // Filtern, wenn param1 -l ist und param2 eine float Wert ist
