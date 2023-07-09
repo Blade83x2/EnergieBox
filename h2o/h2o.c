@@ -374,17 +374,18 @@ void clearSystem() {
             printf(" -> REINIGUNG WIRD GESTARTET!\n");
             printf(" -> Benötigte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);    
             
+            int laufzeitSekunden=0;
             
             
-            
-            print_progress( 504,  1000);
-sleep(2);
-            print_progress( 508,  1000);
+            while(true) {
+                print_progress( laufzeitSekunden, reinigungszeitInSekunden);
+                sleep(1);
+                laufzeitSekunden++;
+                if ( laufzeitSekunden == reinigungszeitInSekunden) break;
+            }
 
             
-            
-            
-            
+
             
             
             // filter einschalten
