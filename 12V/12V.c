@@ -312,7 +312,7 @@ int main(int argc, char**argv) {
         
         // Wenn Konfiguration aufgerufen wird z.B. mit 12V -set 3
         if (strcmp(argv[1], "-set") == 0)  {
-            if (atoi(argv[2]) > 0 && atoi(argv[2]) =< config.mcp.numberOfRelaisActive) 
+            if (   atoi(argv[2]) > 0    && atoi(argv[2]) <= config.mcp.numberOfRelaisActive) 
             {
                 // Abfrage starten und Programm beenden
                 getDataForConfigFile(atoi(argv[2]), &config);
