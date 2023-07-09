@@ -114,7 +114,7 @@ Nun Verändern wir das was gesehen wird nach dem SSH Login:
 `sudo nano /etc/motd`
 
 aufrufen und alles was in dieser Datei steht wird ersetzt mit:
-`
+
                  _____                      _      ____
                 | ____|_ __   ___ _ __ __ _(_) ___| __ )  _____  __
                 |  _| | '_ \ / _ \ '__/ _` | |/ _ \  _ \ / _ \ \/ /
@@ -140,7 +140,7 @@ Das Programm h2o filtert Wasser, kolloid stellt Kolloidale Dispersionen her!
                    $~/  12V 1 1 90                  $~/ 230V 1 1 90       
                    
 
-`
+
                    
                    
 Diese Änderung kann ebenfalls wieder mit der Tastenkombination 
