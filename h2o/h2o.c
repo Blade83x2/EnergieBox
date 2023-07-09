@@ -130,10 +130,10 @@ int main(int argc, char* argv[]) {
     }
     // prüfen ob argv[1] -clean oder -empty oder -change oder -setup oder -l enthält, wenn nicht, Hilfe anzeigen
     const char * param1 = argv[1];
-    if ( (strcmp(param1, "-clean") == 1) || (strcmp(param1, "-setup") == 1) || (strcmp(param1, "-empty") == 1) || (strcmp(param1, "-change") == 1) || (strcmp(param1, "-stats") == 1) || (strcmp(param1, "-l") == 1)) {
-        showHelp();
-        return 0;
-    }
+    //if ( (strcmp(param1, "-clean") == 1) || (strcmp(param1, "-setup") == 1) || (strcmp(param1, "-empty") == 1) || (strcmp(param1, "-change") == 1) || (strcmp(param1, "-stats") == 1) || (strcmp(param1, "-l") == 1)) {
+    //    showHelp();
+    //    return 0;
+    //}
     // wenn ein Parameter übergeben worden ist
     if(argc == 2) {
 	// Wenn param1 gleich -clean ist, Anlage spülen
