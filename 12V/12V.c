@@ -495,6 +495,23 @@ char* readStdinLine()
         else if (buffer[characters-1] == '\n') {
             buffer[characters-1] = '\0';
         }
+        
+            
+        char *cp1;                              // for parsing the whole s
+        char *cp2;                              // for shifting & padding
+
+        // skip leading spaces, shift remaining chars
+        for (cp1=buffer; isspace(*cp1); cp1++ )      // skip leading spaces, via cp1
+            ;
+        for (cp2=buffer; *cp1; cp1++, cp2++)         // shift left remaining chars, via cp2
+            *cp2 = *cp1;
+        *cp2-- = 0;                             // mark new end of string for s
+
+        // replace trailing spaces with '\0'
+        while ( cp2 > buffer && isspace(*cp2) )
+            *cp2-- = 0;                         // pad with '\0's
+
+            
         return buffer;
 }
 
@@ -509,7 +526,6 @@ void getDataForConfigFile(int relais, void* config) {
     printf(" -> Neue Bezeichnung eingeben (Max. 40 Zeichen): ");
     char* strname;
     strname = readStdinLine();
-    strname = Trim(strname);
     
     
   
