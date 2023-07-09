@@ -302,15 +302,20 @@ void setup() {
         scanf("%d", &p3);
         
         
-        // liter am tag '= literProGalone * GPD
         
         literProTag = literProGalone * gpd;
         
         
         
-            printf("%Lf can be written %Le\n", literProTag, literProTag);
+            printf("%Lf L / Tag \n", literProTag);
 
-        
+            printf("%Lf L / Stunde \n", literProTag/24);
+            printf("%Lf L / Minute \n", (literProTag/24)/60);
+            
+            
+            
+            
+
         
         int p4;
         printf("-> Wie viele Sekunden braucht die Filteranlage um exakt 0.1 Liter gefiltertes Wasser zu produzieren?: ");
