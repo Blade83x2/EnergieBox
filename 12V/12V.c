@@ -455,12 +455,12 @@ bool checkMainParameter(char* paramName, int number, void* config) {
 }
 
 
-char trim(char *s) {
+char *trim(char *s) {
     char *ptr;
     if (!s)
-        return "N/A";   // handle NULL string
+        return NULL;   // handle NULL string
     if (!*s)
-        return "N/A";      // handle empty string
+        return s;      // handle empty string
     for (ptr = s + strlen(s) - 1; (ptr >= s) && isspace(*ptr); --ptr);
     ptr[1] = '\0';
     return s;
@@ -480,9 +480,8 @@ void getDataForConfigFile(int relais, void* config) {
     char strname[40];
     scanf("%[^\n]s",strname);
     
+    
     strname=trim(strname);
-    
-    
     
     
     
