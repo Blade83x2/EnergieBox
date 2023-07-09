@@ -107,14 +107,6 @@ int main(int argc, char* argv[]) {
     warnLimitAbFilterMenge = config.h2o.warnLimitAbFilterMenge;
     // Dauer für 0,1 Liter Wasser zu filtern in Sekunden
     filterZeitFuerNullKommaEinsLiterInSekunden = config.h2o.filterZeitFuerNullKommaEinsLiterInSekunden;
-    
-    
-    //printf("filterZeitFuerNullKommaEinsLiterInSekunden: %d", filterZeitFuerNullKommaEinsLiterInSekunden);
-    
-    
-   // sleep(4);
-    
-    
     // Faktor Abwassermenge zu Filtermenge. Beispiel: 
     // Bei 1:2 (1 Liter gefiltertes Wasser und 2 Liter Abwasserproduktion) hier eine 2 eintragen
     faktorGefiltertZuAbwasser = config.h2o.faktorGefiltertZuAbwasser;
@@ -165,23 +157,9 @@ int main(int argc, char* argv[]) {
         filterMenge = (float) atof(filterMengeUnformated);
         if (filterMenge >= 0.1){
             // Filtermenge anzeigen
-            printf("\n\n -> Filtermenge:\t\t\t%5.1f Liter\n", filterMenge);
-            
-            
-            
-         //   literProTag = literProGalone * gpd;
-         //   float filtermengeProSekunde = 0.1f / (((literProTag/24)/60)/60);
-            
-            
-            
-            
-            
+            printf("\n\n -> Filtermenge:\t\t\t%5.1f Liter\n", filterMenge);         
             // Filterlaufzeit berechnen
             filterLaufzeit = ((filterMenge / 0.1) * filterZeitFuerNullKommaEinsLiterInSekunden);
-            
-            
-            
-            
             // Typecast in Integer
             filterLaufzeit_int = (int)filterLaufzeit; 
             // und anzeigen
@@ -194,12 +172,8 @@ int main(int argc, char* argv[]) {
             // Abwassermenge berechnen
             abwasserMenge = filterMenge * faktorGefiltertZuAbwasser;
             printf(" -> Berechnete Abwasser Menge:\t\t%5.0f Liter\n", abwasserMenge);
-            
-            
+            // Benötigte Sekundenanzahl
             printf(" -> Berechnete Filter Zeit:\t\t%5.0f Sek.\n", filterLaufzeit);
-            
-            
-            
             // Maximal mögliches Abwasser ausrechnen und anzeigen
             printf(" -> Restliche mögliche Abwasser Menge:\t%5.1f Liter\n", (maxLiterAbwasserKanister - aktuellesGesameltesAbwasser));            
             // Aktueller Abwassertank Füllstand
@@ -222,28 +196,19 @@ int main(int argc, char* argv[]) {
                 // filter nach einer Sekunde einschalten
                 sprintf(command, "12V %d 1 1", pumpeRelaisNr);
                 system(command);
-                
-                
-                
-                
-                
-                
-                
-                
-                sleep(1.3);
-                printf("\n -> Benötigte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);      
-                printf(" -> WASSER WIRD GEFILTERT! BITTE WARTEN...\n");
-                
-                
-                
-                
-                
-                
-                
-                
-                
+                printf("\n -> Wasser wird gefiltert. Benötigte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);      
+                int laufzeitSekunden=0;            
+                while(true) {
+                    print_progress(laufzeitSekunden, filterLaufzeit_int);
+                    sleep(1);
+                    laufzeitSekunden++;
+                    if (laufzeitSekunden == filterLaufzeit_int) {
+                        print_progress( filterLaufzeit_int, filterLaufzeit_int);
+                        break;
+                    }
+                }
                 // filter nach x ausschalten                    
-                sprintf(command, "12V %d 0 %d", pumpeRelaisNr, filterLaufzeit_int);
+                sprintf(command, "12V %d 0 %d", pumpeRelaisNr, 1);
                 system(command);
                 printf(" -> FERTIG!\n");
             }
@@ -329,15 +294,6 @@ void setup() {
         
         literProTag = literProGalone * gpd;
         int p4 = 0.1f /  (((literProTag/24)/60)/60);
-        
-        
-        
-        printf("zeit 100ml %d",p4);
-        
-        
-        
-        
-        
         
         int p5;
         printf("-> Wie ist das Verhältnis von gefiltertem Wasser zu Abwasser/Spülwasser? 1 zu: ");
