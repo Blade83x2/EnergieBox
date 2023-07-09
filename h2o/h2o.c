@@ -290,7 +290,6 @@ void setup() {
         
         literProTag = literProGalone * gpd;
         int p4 = 0.1f /  (((literProTag/24)/60)/60);
-        printf("%d  / Sekunden für 100ml  \n", p4);
         
         int p5;
         printf("-> Wie ist das Verhältnis von gefiltertem Wasser zu Abwasser/Spülwasser? 1 zu: ");
