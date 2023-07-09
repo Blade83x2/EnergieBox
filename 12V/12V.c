@@ -512,6 +512,8 @@ char* readStdinLine()
 
 // Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
 void getDataForConfigFile(int relais, void* config) {
+    configuration* pconfig = (configuration*)config;
+
     system("clear");   
     printf("Neue Konfiguration für Relais Nr.%d:\n\n", relais);
         
@@ -528,10 +530,13 @@ void getDataForConfigFile(int relais, void* config) {
         stractivateOnStart="false";
     } 
     else {
-        
-        
-        // prüfen ob > 1 und kleiner als gesamtleistung 12V
+        printf(" -> Verbrauch in Watt (Max. 40 %dWatt): ", pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController);
         strpMax = readStdinLine();
+        // prüfen ob > 1 und kleiner als gesamtleistung 12V
+        
+        
+        
+        
         
         
         // prüfen ob true oder false
