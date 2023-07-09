@@ -532,7 +532,7 @@ void getDataForConfigFile(int relais, void* config) {
 
     
     
-    printf ("sudo sh /Energiebox/12V/setConfig.sh $relais $strname $stractivateOnStart $strpMax");
+    echo "sudo sh /Energiebox/12V/setConfig.sh $relais $strname $stractivateOnStart $strpMax";
     
     
     
