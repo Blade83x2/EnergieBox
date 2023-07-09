@@ -10,7 +10,7 @@ TODOś
 MPPT Statistik über rs485 auslesen
                                             
                             
-
+unset IFS prüfen
 
 Kaufen
 

@@ -1,6 +1,6 @@
 
 <p align="center"> 
-    <img src="https://github.com/SJTU-LIT/ceval/blob/main/resources/logo.png?raw=true" style="width: 85%;" id="title-icon">
+    <img src="img/sshEnergiebox.png" style="width: 85%;" id="title-icon">
 </p>
 
 ERSTINSTALLATION DER ENERGIEBOX SOFTWARE
