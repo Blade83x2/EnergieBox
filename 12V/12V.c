@@ -298,6 +298,31 @@ int main(int argc, char**argv) {
         printf("%d",  getElkoState(atoi(argv[1]), &config));
     }
     else if(argc == 3) {
+        
+        
+        
+        // Wenn Konfiguration aufgerufen wird. Z.B.  12V -set 3
+        if (strcmp(argv[1], "-set") == 0)  {
+            if ( atoi(argv[1]) < 1 || atoi(argv[1]) > config.mcp.numberOfRelaisActive ) 
+                return false;
+            printf("configuration starten");
+            sleep(6);
+            // Dann Abfrage Funktion aufrufen die in config.ini speichert
+
+          //  system("clear && 12V");
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config)) {
             return showHelp(argv, &config);
         }
@@ -422,6 +447,8 @@ bool checkMainParameter(char* paramName, int number, void* config) {
     else if (strcmp(paramName, "relaisTime") == 0) { if ( number < 1 || number > 84600 ) return false; } 
     return true;
 }
+
+
 
 // Zeigt Hilfe auf Console an
 int showHelp(char**argv, void* config) {
