@@ -477,7 +477,10 @@ char* readStdinLine()
 
 
 
-char * str_replace(char * text,char * rep, char * repw){//text -> to replace in it | rep -> replace | repw -> replace with
+char * str_replace(char * text){//text -> to replace in it | rep -> replace | repw -> replace with
+    
+    char * rep=" ", char * repw="-";
+    
     int replen = strlen(rep),repwlen = strlen(repw),count;//some constant variables
     for(int i=0;i<strlen(text);i++){//search for the first character from rep in text
         if(text[i] == rep[0]){//if it found it
@@ -559,7 +562,7 @@ void getDataForConfigFile(int relais, void* config) {
     }
     
     
-    strname = str_replace(strname, ' ', '-');
+    strname = str_replace(strname);
     
     
     sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
