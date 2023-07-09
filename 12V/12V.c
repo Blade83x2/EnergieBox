@@ -460,17 +460,17 @@ char *Trim(char *s)
 // Liesst Zeileneingabe aus
 char* readStdinLine()
 {
-        char*  buffer  = NULL;
-        size_t bufsize = 0;
-        ssize_t characters = getline(&buffer, &bufsize, stdin);
-        if (characters == -1) {
-            free(buffer);
-            buffer = "N/A";
-        }
-        else if (buffer[characters-1] == '\n') {
-            buffer[characters-1] = '\0';
-        }
-        return buffer;
+    char*  buffer  = NULL;
+    size_t bufsize = 0;
+    ssize_t characters = getline(&buffer, &bufsize, stdin);
+    if (characters == -1) {
+        free(buffer);
+        buffer = "NULL";
+    }
+    else if (buffer[characters-1] == '\n') {
+        buffer[characters-1] = '\0';
+    }
+    return buffer;
 }
 
 // Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
@@ -485,7 +485,7 @@ void getDataForConfigFile(int relais, void* config) {
     strname = readStdinLine();
     strname = Trim(strname);
     if (strcmp(strname, "") == 0)  {
-        strname="N/A";
+        strname="NULL";
         strpMax="0";
         stractivateOnStart="false";
     } 
