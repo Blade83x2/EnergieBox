@@ -443,27 +443,19 @@ bool checkMainParameter(char* paramName, int number, void* config) {
     return true;
 }
 
-
-
+// Entfernt Leerzeichen vorne und hinten
 char *Trim(char *s)
 {
-    char *cp1;                              // for parsing the whole s
-    char *cp2;                              // for shifting & padding
-
-    // skip leading spaces, shift remaining chars
-    for (cp1=s; isspace(*cp1); cp1++ )      // skip leading spaces, via cp1
-        ;
-    for (cp2=s; *cp1; cp1++, cp2++)         // shift left remaining chars, via cp2
+    char *cp1;
+    char *cp2;
+    for (cp1=s; isspace(*cp1); cp1++ );
+    for (cp2=s; *cp1; cp1++, cp2++)
         *cp2 = *cp1;
-    *cp2-- = 0;                             // mark new end of string for s
-
-    // replace trailing spaces with '\0'
+    *cp2-- = 0;
     while ( cp2 > s && isspace(*cp2) )
-        *cp2-- = 0;                         // pad with '\0's
-
+        *cp2-- = 0;
     return s;
 }
-
 
 // Liesst Zeileneingabe aus
 char* readStdinLine()
@@ -475,17 +467,11 @@ char* readStdinLine()
             free(buffer);
             buffer = "N/A";
         }
-        else if (buffer[characters-1] == '\t') {
+        else if (buffer[characters-1] == '\n') {
             buffer[characters-1] = '\0';
         }
         return buffer;
 }
-
-
-
-
-
-
 
 // Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
 void getDataForConfigFile(int relais, void* config) {
