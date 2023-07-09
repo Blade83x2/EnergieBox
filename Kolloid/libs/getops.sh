@@ -11,8 +11,8 @@ function usage() {
     # @Description:     Programm für die automatische Herstellung von Kolloidalen Metalen
     # @Version:         $programmVersion
     # @Copyright:       Johannes a.d.F. K r ä m e r
-    # @Trafo            $trafoRelais
-    # @Heizplatte       $heizplatteRelais
+    # @Trafo            Relais Nr. $trafoRelais
+    # @Heizplatte       Relais Nr. $heizplatteRelais
         
     Scriptaufruf: $ kolloid [Options]
     
