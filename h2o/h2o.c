@@ -320,7 +320,7 @@ void printStatistik() {
     printf(" |                   STATISTIK                  |\n");
     printf(" +----------------------------------------------+\n");
     printf(" | Filter                                       |\n");
-    printf(" |  Leistung:\t\t\t\t %d GP\t|\n", gpd);
+    printf(" |  Leistung:\t\t\t\t %d GPD\t|\n", gpd);
     printf(" |  Faktor (Filtermenge/Abwasser):\t 1/%d \t|\n", faktorGefiltertZuAbwasser);
     printf(" |  Bisherige Filtermenge:\t\t %04.f L\t|\n", gesamteFilterMengeInLiter);
     printf(" |  Filterlimit für Filtertausch:\t %04.f L\t|\n", warnLimitAbFilterMenge);
@@ -329,7 +329,8 @@ void printStatistik() {
     printf(" +----------------------------------------------+\n");
     printf(" | Tank                                         |\n");
     printf(" |  Fassungsvermögen:\t\t\t %04.f L\t|\n", maxLiterAbwasserKanister);    
-    printf(" |  Aktueller Füllstand:\t\t %04.f L\t|\n", aktuellesGesameltesAbwasser);    
+    printf(" |  Aktueller Füllstand:\t\t %04.f L\t|\n", aktuellesGesameltesAbwasser);   
+    printf(" |  Frei in Litern:\t\t %04.f L\t|\n", (maxLiterAbwasserKanister-aktuellesGesameltesAbwasser));   
     printf(" +----------------------------------------------+\n");
     printf(" | Pumpe                                        |\n");
     printf(" |  Relais Numer von Pumpe:\t\t %d\t|\n", pumpeRelaisNr);    
