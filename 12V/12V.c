@@ -483,7 +483,7 @@ void getDataForConfigFile(int relais, void* config) {
     printf(" -> Neue Bezeichnung eingeben (Max. 40 Zeichen): ");
     char strname[40];
     
-    strname = readStdinLine();
+    strname[] = readStdinLine();
     
     
     
