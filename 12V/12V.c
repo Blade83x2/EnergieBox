@@ -470,6 +470,7 @@ void getDataForConfigFile(int relais, void* config) {
         
         
         
+        
        // sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %d", atoi(argv[1]), atoi(argv[2]));
        // system(command);
         sleep(1.1);
