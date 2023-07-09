@@ -59,8 +59,21 @@ Wenn die gesamte Anlage durchgespült werden soll, kann das mit dem folgenden Be
     <img src="img/clean.png" style="width: 85%;" alt="h2o Anlage durchspülen">
 </p>
 
+Nun kommen wir zum eigentlichen Filtervorgang. Die Filterung kann in 100ml Schritten eingestellt werden. Für Kommastellen immer Punkte (kein , ) benutzen. Um 100ml zu filtern,
+wird der Befehl 
 
 
+<b>h2o -l 0.1</b>
+
+genutzt. Wenn man dagegen 3 Liter filtern möchte, verwendet man:
+
+<b>h2o -l 3</b>
+
+
+
+<p align="center"> 
+    <img src="img/filter.png" style="width: 85%;" alt="h2o Wasser filtern">
+</p>
 
 
 
