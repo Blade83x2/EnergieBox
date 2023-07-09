@@ -473,6 +473,54 @@ char* readStdinLine()
         return buffer;
 }
 
+
+
+
+
+char * str_replace(char * text,char * rep, char * repw){//text -> to replace in it | rep -> replace | repw -> replace with
+    int replen = strlen(rep),repwlen = strlen(repw),count;//some constant variables
+    for(int i=0;i<strlen(text);i++){//search for the first character from rep in text
+        if(text[i] == rep[0]){//if it found it
+            count = 1;//start searching from the next character to avoid repetition
+            for(int j=1;j<replen;j++){
+                if(text[i+j] == rep[j]){//see if the next character in text is the same as the next in the rep if not break
+                    count++;
+                }else{
+                    break;
+                }
+            }
+            if(count == replen){//if count equals to the lenght of the rep then we found the word that we want to replace in the text
+                if(replen < repwlen){
+                    for(int l = strlen(text);l>i;l--){//cuz repwlen greater than replen we need to shift characters to the right to make space for the replacement to fit
+                        text[l+repwlen-replen] = text[l];//shift by repwlen-replen
+                    }
+                }
+                if(replen > repwlen){
+                    for(int l=i+replen-repwlen;l<strlen(text);l++){//cuz replen greater than repwlen we need to shift the characters to the left
+                        text[l-(replen-repwlen)] = text[l];//shift by replen-repwlen
+                    }
+                    text[strlen(text)-(replen-repwlen)] = '\0';//get rid of the last unwanted characters
+                }
+                for(int l=0;l<repwlen;l++){//replace rep with repwlen
+                    text[i+l] = repw[l];
+                }
+                if(replen != repwlen){
+                    i+=repwlen-1;//pass to the next character | try text "y" ,rep "y",repw "yy" without this line to understand
+                }
+            }
+        }
+    }
+    return text;
+}
+
+
+
+
+
+
+
+
+
 // Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
 void getDataForConfigFile(int relais, void* config) {
    // configuration* pconfig = (configuration*)config;
@@ -509,6 +557,10 @@ void getDataForConfigFile(int relais, void* config) {
         // prüfen ob true oder false, wenn keins von beiden, dann false
         if (strcmp(stractivateOnStart, "true") != 0 && strcmp(stractivateOnStart, "false") != 0 )  { stractivateOnStart="false"; }
     }
+    
+    
+    strname = str_replace(strname, ' ', '-');
+    
     
     sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
     system(command);
