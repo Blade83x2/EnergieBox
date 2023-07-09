@@ -303,7 +303,7 @@ int main(int argc, char**argv) {
         
         // Wenn Konfiguration aufgerufen wird. Z.B.  12V -set 3
         if (strcmp(argv[1], "-set") == 0)  {
-            if ( atoi(argv[1]) < 1 || atoi(argv[1]) > config.mcp.numberOfRelaisActive ) 
+            if ( atoi(argv[2]) < 1 || atoi(argv[2]) > config.mcp.numberOfRelaisActive ) 
                 return false;
             printf("configuration starten");
             sleep(6);
