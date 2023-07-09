@@ -520,7 +520,7 @@ void getDataForConfigFile(int relais, void* config) {
     strname = readStdinLine();
     
     if (strcmp(strname, "") == 0)  {
-            printf("N/A");
+            strname="N/A";
             
             
             
