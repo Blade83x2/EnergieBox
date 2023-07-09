@@ -492,31 +492,11 @@ void getDataForConfigFile(int relais, void* config) {
     else {
         printf(" -> Verbrauch in Watt: ");
         strpMax = readStdinLine();
-        /*
-        int maxRest;
-        maxRest = pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController;
-        
-        if((int)strpMax < (int)maxRest){
-            printf("\e[0;31m -> Dieses Gerät hat einen zu hohen Watt Verbrauch. Es wird nie eingeschaltet werden können!\e[0m\n");
-        }
-        if((int)strpMax < (int)1){
-            printf("\e[0;31m -> Dieses Gerät hat eine falsche Watt Angabe!\e[0m\n");
-        }
-        if (strcmp(strpMax, "") == 0)  { strpMax="0"; }
-        */
         printf(" -> Beim starten aktivieren? (true/false): ");
         stractivateOnStart = readStdinLine();
         // prüfen ob true oder false, wenn keins von beiden, dann false
         if (strcmp(stractivateOnStart, "true") != 0 && strcmp(stractivateOnStart, "false") != 0 )  { stractivateOnStart="false"; }
     }
-    
-    
-    
-    
-    
-    
-    
-    
     sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
     system(command);
     sleep(0.5);
@@ -532,6 +512,13 @@ int showHelp(char**argv, void* config) {
     printf("  %s 5 1\t\t[schaltet Relais 5 auf 1 (an)]\n", argv[0]);
     printf("  %s 7 0 10\t\t[schaltet Relais 7 aus in 10 Sekunden]\n", argv[0]);
     printf("  %s 10 1 300 & disown\t[schaltet Relais 10 im Hintergrund an in 5 Minuten und gibt die Konsole frei]\n\n", argv[0]);
+    
+    
+    
+    
+    
+    
+    
     printf("  In der Konfigurationsdatei können Namen, Verbrauch & Autostart für angeschlossene Geräte vergeben werden!\n");
     printf("  sudo nano /Energiebox/%s/config.ini\e[0m \n\n", argv[0]);
     return -1;
