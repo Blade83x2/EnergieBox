@@ -169,8 +169,8 @@ int main(int argc, char* argv[]) {
             
             
             
-            literProTag = literProGalone * gpd;
-            float filtermengeProSekunde = 0.1f / (((literProTag/24)/60)/60);
+         //   literProTag = literProGalone * gpd;
+         //   float filtermengeProSekunde = 0.1f / (((literProTag/24)/60)/60);
             
             
             
@@ -196,7 +196,7 @@ int main(int argc, char* argv[]) {
             printf(" -> Berechnete Abwasser Menge:\t\t%5.0f Liter\n", abwasserMenge);
             
             
-            printf(" -> Berechnete Filter Zeit:\t\t%d Sek.\n", filterLaufzeit);
+            printf(" -> Berechnete Filter Zeit:\t\t%5.0f Sek.\n", filterLaufzeit);
             
             
             
