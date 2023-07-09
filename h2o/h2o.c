@@ -330,7 +330,7 @@ void printStatistik() {
     printf(" | Tank                                         |\n");
     printf(" |  Fassungsvermögen:\t\t\t %04.f L\t|\n", maxLiterAbwasserKanister);    
     printf(" |  Aktueller Füllstand:\t\t %04.f L\t|\n", aktuellesGesameltesAbwasser);   
-    printf(" |  Frei in Litern:\t\t\t\t %04.f L\t|\n", (maxLiterAbwasserKanister-aktuellesGesameltesAbwasser));   
+    printf(" |  Frei in Litern:\t\t\t %04.f L\t|\n", (maxLiterAbwasserKanister-aktuellesGesameltesAbwasser));   
     printf(" +----------------------------------------------+\n");
     printf(" | Pumpe                                        |\n");
     printf(" |  Relais Numer von Pumpe:\t\t %d\t|\n", pumpeRelaisNr);    
