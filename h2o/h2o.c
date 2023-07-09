@@ -254,6 +254,12 @@ void replace_char (char *s, char find, char replace)
     // Usage: replace_char (strname, ' ' , '-');
 }
 
+
+
+
+
+
+
 // Programm Setup aufrufen und Filtereigenschaften abfragen
 void setup() {
     configuration config;
@@ -308,7 +314,7 @@ void setup() {
         int p7;
         printf("-> Wieviele Sekunden sollen bei einer Spüllung gespüllt werden?: ");
         scanf("%d", &p7);  
-        sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", 0.f, 0.f, p1 p2, (float)p3, p4, p5, (float)p6, p7);        
+        sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", 0.f, 0.f, p2, p2, (float)p3, p4, p5, (float)p6, p7);        
         system(command);
     }
 }
