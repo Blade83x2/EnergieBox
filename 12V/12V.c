@@ -478,11 +478,11 @@ char* trim(char* input) {
 
     char* ptr = start;
     char* end = start;
-    while (*ptr++ != '\0') { //trim right
+  //  while (*ptr++ != '\0') { //trim right
         if (!isSpace(*ptr)) { //only move end pointer if char isn't a space
             end = ptr;
         }
-    }
+  //  }
 
     *end = '\0'; //terminate the trimmed string with a null
     return start;
