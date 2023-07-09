@@ -517,42 +517,35 @@ void getDataForConfigFile(int relais, void* config) {
         
     printf(" -> Neue Bezeichnung eingeben (Max. 40 Zeichen): ");
     char* strname;
+    char* strpMax;
+    char* strstractivateOnStart;
+
     strname = readStdinLine();
     
     if (strcmp(strname, "") == 0)  {
-            strname="N/A";
-            
-            
-            
-            
-
-    } 
-
-  
-    // leer, alles auf N/A, false, 0   
-    /*
-    if (strcmp(strname, "") == 0)  { 
-        strname[0]="N/A";
-        stractivateOnStart="false";
+        strname="N/A";
         strpMax="0";
+        stractivateOnStart="false";
     } 
     else {
         
-        printf(" -> Maximaler Verbrauch in Watt: ");
-        char strpMax[4];
-        scanf("%[^\n]s",strpMax);
-            
-                  
-            
-        printf(" -> Beim Starten aktivieren? (true/false): ");
-        char stractivateOnStart[5];
-        scanf("%[^\n]s",stractivateOnStart);
+        
+        // prüfen ob > 1 und kleiner als gesamtleistung 12V
+        strpMax = readStdinLine();
+        
+        
+        // prüfen ob true oder false
+        stractivateOnStart = readStdinLine();
+
+        
+        
+        
     }
-*/
+
 
     printf("name: '%s'\n",strname);
-  //  printf("activateOnStart: %s\n",stractivateOnStart);
-   // printf("strpMax: %s\n",strpMax);
+    printf("activateOnStart: %s\n",stractivateOnStart);
+    printf("strpMax: %s\n",strpMax);
         
         
 
