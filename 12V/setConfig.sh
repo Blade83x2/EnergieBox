@@ -26,12 +26,9 @@ if [ "$relais" -eq "4" ]; then
     sudo sed -i "/^\[Relais 4]$/,/^\[/ s/^pMax = .*/pMax = $pMax/" /Energiebox/12V/config.ini
 fi
 if [ "$relais" -eq "5" ]; then
-
-
-
-   sudo sed -i "/^\[Relais 5]$/,/^\[/ s/^name = .*/name = ${$name}/" /Energiebox/12V/config.ini
-    sudo sed -i "/^\[Relais 5]$/,/^\[/ s/^activateOnStart = .*/activateOnStart = ${$activateOnStart}/" /Energiebox/12V/config.ini
-    sudo sed -i "/^\[Relais 5]$/,/^\[/ s/^pMax = .*/pMax = ${$pMax}/" /Energiebox/12V/config.ini
+    sudo sed -i -E "/^\[Relais 5]$/,/^\[/ s/^name = .*/name = $name/" /Energiebox/12V/config.ini
+    sudo sed -i -E "/^\[Relais 5]$/,/^\[/ s/^activateOnStart = .*/activateOnStart = $activateOnStart/" /Energiebox/12V/config.ini
+    sudo sed -i -E "/^\[Relais 5]$/,/^\[/ s/^pMax = .*/pMax = $pMax/" /Energiebox/12V/config.ini
 fi
 if [ "$relais" -eq "6" ]; then
     sudo sed -i "/^\[Relais 6]$/,/^\[/ s/^name = .*/name = $name/" /Energiebox/12V/config.ini
@@ -88,4 +85,3 @@ if [ "$relais" -eq "16" ]; then
     sudo sed -i "/^\[Relais 16]$/,/^\[/ s/^activateOnStart = .*/activateOnStart = $activateOnStart/" /Energiebox/12V/config.ini
     sudo sed -i "/^\[Relais 16]$/,/^\[/ s/^pMax = .*/pMax = $pMax/" /Energiebox/12V/config.ini
 fi
-sleep 10;
