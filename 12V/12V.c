@@ -513,11 +513,8 @@ void getDataForConfigFile(int relais, void* config) {
     system("clear");   
     printf("Neue Konfiguration für Relais Nr.%d:\n\n", relais);
         
-        
-        
     printf(" -> Neue Bezeichnung eingeben (Max. 40 Zeichen): ");
     char* strname;
-    
     strname = readStdinLine();
     
     
@@ -544,7 +541,7 @@ void getDataForConfigFile(int relais, void* config) {
     }
 */
 
-    printf("name: %s\n",strname);
+    printf("name: '%s'\n",strname);
   //  printf("activateOnStart: %s\n",stractivateOnStart);
    // printf("strpMax: %s\n",strpMax);
         
