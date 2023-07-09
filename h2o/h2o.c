@@ -286,7 +286,7 @@ void setup() {
             character = getchar();
             while (character != EOF) {
                 putchar(character);
-                character = getchar();
+                //character = getchar();
             }   
             
             break;
