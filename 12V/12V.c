@@ -498,7 +498,7 @@ void getDataForConfigFile(int relais, void* config) {
         stractivateOnStart = readStdinLine();
         // prüfen ob true oder false, wenn keins von beiden, dann false
         if (strcmp(stractivateOnStart, "true") != 0 && strcmp(stractivateOnStart, "false") != 0 )  { stractivateOnStart="false"; }
-        // Leerzeichen Bug
+        // Leerzeichen Bug, Aus " " müssen "-" gemacht werden sonst wird nicht richtig gespeichert.
         replace_char (strname, ' ' , '-');
     }
     sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
