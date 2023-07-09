@@ -89,13 +89,11 @@ void replace_char (char *s, char find, char replace);
 
 
 
-
+// Progress Bar
 void print_progress(size_t count, size_t max) {
     const int bar_width = 50;
-
     float progress = (float) count / max;
     int bar_length = progress * bar_width;
-
     printf("\rProgress: [");
     for (int i = 0; i < bar_length; ++i) {
         printf("#");
@@ -104,7 +102,6 @@ void print_progress(size_t count, size_t max) {
         printf(" ");
     }
     printf("] %.2f%%", progress * 100);
-
     fflush(stdout);
 }
 
@@ -114,14 +111,6 @@ void print_progress(size_t count, size_t max) {
 
 // Programmstart mit oder ohne Parameter
 int main(int argc, char* argv[]) { 
-    
-    
-    print_progress( 504,  1000);
-    
-    
-    sleep(20);
-    
-    
     configuration config;
     // Konfiguration von h2o in config laden
     if (ini_parse("/Energiebox/h2o/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/h2o/config.ini'\n"); return 1; }
@@ -359,12 +348,6 @@ void printStatistik() {
     printf(" +----------------------------------------------+\n\n");    
 }
 
-
-
-
-
-
-
 // Anlage Reinigen per Durchspüllung (Parameter -clean)
 void clearSystem() {
     configuration config;
@@ -394,7 +377,10 @@ void clearSystem() {
             
             
             
-          
+            print_progress( 504,  1000);
+sleep(2);
+            print_progress( 508,  1000);
+
             
             
             
