@@ -8,16 +8,17 @@ Heizplatte sowie ein Hochspannungstrafo an der EnergieBox angeschlossen ist.
 
 Weitere Informationen zu Kolloidalen Metallen auf <a href="https://kolloidalesgoldkaufen.de" target="_blank">kolloidalesgoldkaufen.de</a>
 
-<p align="center"> 
-    <img src="img/kolloid.png" style="width: 85%;" alt="kolloid Startseite" >
-</p>
-
 
 Nachdem das Programm mit dem Befehl kolloid auf der Kommandozeile aufgerufen wird,
 werden spezifische Daten abgefragt. Zuerst wird gewählt um welches Metall es sich handelt.
 Danach wird die Produktionsmenge ausgewählt und danach die Konzentration des Metalls in der Dispersion.
 Der vierte Abfragewert ist optional und es kann ein Name für einen Kunden eingegeben werden. Dies dient
 zur Statistikerstellung.
+
+<p align="center"> 
+    <img src="img/kolloid.png" style="width: 85%;" alt="kolloid Startseite" >
+</p>
+
 
 Nachdem diese Daten eingegeben worden sind, werden die Produktionsdaten nochmal zur Kontrolle angezeigt.
 Das Programm zeigt ebenfalls die Elektrodeneinstellung an.
