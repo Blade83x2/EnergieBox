@@ -539,7 +539,7 @@ void getDataForConfigFile(int relais, void* config) {
     }
     sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
     system(command);
-    sleep(0.5);
+    sleep(2.5);
     system("clear && 12V");
 }
 
