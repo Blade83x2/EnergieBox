@@ -305,12 +305,11 @@ void setup() {
         // liter am tag '= literProGalone * GPD
         
         literProTag = literProGalone * gpd;
-        MilliliterProSekunde = (literProTag / 86400) / 1000;
         
         
         
-         printf(" literProSekunde  %06.f L",MilliliterProSekunde);
-        
+            printf("%Lf can be written %Le\n", literProTag, literProTag);
+
         
         
         int p4;
