@@ -511,10 +511,6 @@ void getDataForConfigFile(int relais, void* config) {
         int maxRest;
         maxRest = pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController;
         
-        
-        
-        
-        
         if((int)strpMax < (int)maxRest){
             printf("\e[0;31m -> Dieses Gerät hat einen zu hohen Watt Verbrauch. Es wird nie eingeschaltet werden können!\e[0m\n");
         }
@@ -525,25 +521,22 @@ void getDataForConfigFile(int relais, void* config) {
         stractivateOnStart = readStdinLine();
         // prüfen ob true oder false, wenn keins von beiden, dann false
         if (strcmp(stractivateOnStart, "true") != 0 && strcmp(stractivateOnStart, "false") != 0    )  { stractivateOnStart="false"; }
-        
-        
-        
-        
-        
-        
-
     }
     
     
+    printf("relais -%d-\n", relais);
     printf("strname -%s-\n", strname);
     printf("stractivateOnStart -%s-\n", stractivateOnStart);
     printf("strpMax -%s-\n", strpMax);
 
     
     
-    
-    
     printf("sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
+    
+    
+    
+    
+    
 
     sleep(5);
     
