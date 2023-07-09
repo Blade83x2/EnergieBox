@@ -454,15 +454,15 @@ bool checkMainParameter(char* paramName, int number, void* config) {
 
 // Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
 void getDataForConfigFile(int relais, void* config) {
-    
-        printf("Neue KOnfiguration für Relais Nr.%d:\n\n", relais);
+    system("clear");   
+    printf("Neue Konfiguration für Relais Nr.%d:\n\n", relais);
         
         
         
-        
-        char str[100];
-        scanf("%[^\n]s",str);
-        printf("-%s-",str);
+    printf("Name:");
+    char strname[40];
+    scanf("%[^\n]s",strname);
+    printf("Neuer Name: %s",strname);
         
         
         
