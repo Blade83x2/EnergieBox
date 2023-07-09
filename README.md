@@ -7,7 +7,7 @@
 </p>
 
 
-Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS läuft und
+> Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS läuft und
 2 MCP23017 (WAVESHARE, Artikelnummer BO-MCP23017) auf den Adressen 0x22 und 0x27 mit 
 16 fach Relaisplatinen verbunden sind und an Eltakos für Lastenschaltkriese installiert sind. 
 Ein 7" Touchdisplay sollte ebenfalls angeschlossen und eingerichtet sein. 
