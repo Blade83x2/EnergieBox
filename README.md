@@ -1,6 +1,6 @@
-ERSTINSTALLATION DER ENERGIEBOX SOFTWARE auf einem Raspberry PI
+#ENERGIEBOX SOFTWARE auf einem Raspberry PI
 
-@Copyright 2023 by Johannes a.d.F. K r ä m e r
+###@Copyright 2023 by Johannes a.d.F. K r ä m e r
 
 <p align="center"> 
     <img src="img/sshEnergiebox.png" style="width: 85%;" alt="EnergieBox" >
@@ -14,7 +14,7 @@ Ein 7" Touchdisplay sollte ebenfalls angeschlossen und eingerichtet sein.
 
 
 
-Installationsanweisung:
+##Installationsanweisung:
 
 1) Installation benötigter Pakete & Energiebox
 2) Raspi Konfiguration
