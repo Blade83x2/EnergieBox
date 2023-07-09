@@ -459,27 +459,39 @@ void getDataForConfigFile(int relais, void* config) {
         
         
         
-    printf("Name:");
+    printf("Neue Bezeichnung (Max. 40 Zeichen): ");
     char strname[40];
     scanf("%[^\n]s",strname);
-    printf("Neuer Name: %s",strname);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // Wenn Name leer, dann auf N/A, 0 und false
+
+    
+    printf("Neuer Name: [%s]",strname);
         
         
         
-        
-        
-        //name = Gateway (FritzBox) 
-        //activateOnStart = true
-        //pMax = 12
-        
-        
-        
-        
-        
-       // sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %d", atoi(argv[1]), atoi(argv[2]));
-       // system(command);
-        sleep(1.1);
-        system("clear && 12V");
+
+
+    //name = Gateway (FritzBox) 
+    //activateOnStart = true
+    //pMax = 12
+
+    
+
+
+    // sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %d", relais, strname         );
+    // system(command);
+    sleep(6.1);
+    system("clear && 12V");
 }
 
 // Zeigt Hilfe auf Console an
