@@ -41,5 +41,18 @@ Dadurch wird das gewählte Metall brachial abgesprengt und in nanometer kleinen 
     <img src="img/running.png" style="width: 85%;" alt="kolloid Prozess gestartet" >
 </p>
 
+Je nach gewählten Parametern wird der Benutzer aufgefordert, die Elektroden neu zu justieren.
+Bei dem Programmaufruf können die gewünschten Einstellungen auch direkt per Kommandozeilenparameter übergeben werden.
+Hierzu einfach mal die Hilfe aufrufen mit:
+
+kolloid -h
+
+<p align="center"> 
+    <img src="img/help.png" style="width: 85%;" alt="kolloid Hilfe" >
+</p>
+
+
+
+
 
 
