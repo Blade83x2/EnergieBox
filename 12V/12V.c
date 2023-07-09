@@ -455,6 +455,17 @@ bool checkMainParameter(char* paramName, int number, void* config) {
 }
 
 
+char *trim(char *s) {
+    char *ptr;
+    if (!s)
+        return NULL;   // handle NULL string
+    if (!*s)
+        return s;      // handle empty string
+    for (ptr = s + strlen(s) - 1; (ptr >= s) && isspace(*ptr); --ptr);
+    ptr[1] = '\0';
+    return s;
+}
+
 
 
 
@@ -465,23 +476,35 @@ void getDataForConfigFile(int relais, void* config) {
         
         
         
-    printf("Neue Bezeichnung (Max. 40 Zeichen): ");
+    printf(" -> Neue Bezeichnung eingeben (Max. 40 Zeichen): ");
     char strname[40];
     scanf("%[^\n]s",strname);
     
-    
-    
-    
-    
-    
-    
-    
-    
-    // Wenn Name leer, dann auf N/A, 0 und false
-
-    
-    printf("Neuer Name: '%s'",strname);
+  
+    // leer, alles auf N/A, false, 0    
+    if (strcmp(strname, "") == 0)  { 
+        strname="N/A";
+        stractivateOnStart="false";
+        strpMax="0";
+    } 
+    else {
+        // weiter abfragen
         
+        printf(" -> Maximaler Verbrauch in Watt: ");
+        char strpMax[4];
+        scanf("%[^\n]s",strpMax);
+            
+                  
+            
+        printf(" -> Beim Starten aktivieren? (true/false): ");
+        char stractivateOnStart[5];
+        scanf("%[^\n]s",stractivateOnStart);
+    }
+
+
+    printf("name: %s\n",strname);
+    printf("activateOnStart: %s\n",stractivateOnStart);
+    printf("strpMax: %s\n",strpMax);
         
         
 
@@ -493,7 +516,7 @@ void getDataForConfigFile(int relais, void* config) {
     
 
 
-    // sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %d", relais, strname         );
+    // sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %d", relais, strname, stractivateOnStart, strpMax);
     // system(command);
     //sleep(6.1);
     //system("clear && 12V");
