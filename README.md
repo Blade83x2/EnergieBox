@@ -64,13 +64,15 @@ Internet Verbindung damit Sie die Eltakos über das Internet steuern können. Hi
 vom Terminal aus aufgerufen und in der Datei folgendes auskommentieren:
 
 `dtoverlay=w1-gpio
+
 dtoverlay=disable-wifi
+
 dtoverlay=disable-bt`
 
 Mit dem drücken der Tastenkombination Strg + x kann die Änderung gespeichert werden.
 Danach wird die Raspberry Konfiguration aufgerufen mit dem Befehl
 
-sudo raspi-config
+`sudo raspi-config`
 
 Zuerst gehen wir in Interfacing Options rein und aktivieren dort den Service SSH und bestätigen das.
 Anschliessend gehen wir wieder in Interfacing Options rein und aktivieren noch den Service I2C sowie SPI auf
@@ -85,31 +87,31 @@ und starten den Raspberry mit sudo reboot neu um die Einstellungen zu übernehme
 
 Nach dem Neustart öffnen wir wieder ein Terminal und setzen den Befehl
 
-sudo nano /etc/ssh/sshd_config
+`sudo nano /etc/ssh/sshd_config`
 
 ab. In dieser Datei stellen wir sicher das folgender Eintrag gesetzt ist:
 
-PrintLastLog no
+`PrintLastLog no`
 
 Dann suchen wir:
 
-PermitRootLogin without-password
+`PermitRootLogin without-password`
 
 und ersetzen es mit: 
 
-PermitRootLogin yes
+`PermitRootLogin yes`
 
 
 Speichern können wir wieder mit der Tastenkombination Strg + x.
 
 Der Benutzer root hat bislang kein Passwort. Dieses setzen wir mit
 
-sudo passwd root
+`sudo passwd root`
 
 
 Nun Verändern wir das was gesehen wird nach dem SSH Login:
 
-sudo nano /etc/motd
+`sudo nano /etc/motd`
 
 aufrufen und alles was in dieser Datei steht wird ersetzt mit:
 
@@ -138,24 +140,26 @@ Das Programm h2o filtert Wasser, kolloid stellt Kolloidale Dispersionen her!
                    $~/  12V 1 1 90                  $~/ 230V 1 1 90       
                    
 
-                
+
+                   
+                   
 Diese Änderung kann ebenfalls wieder mit der Tastenkombination 
 Strg + x gespeichert werden. Nun tippen wir auf der Konsole den Befehl 
 
-sudo nano ~/.bashrc
+`sudo nano ~/.bashrc`
 
 ein und fügen ganz unten am Ende der Datei folgendes ein:
 
-12V
+`12V
 
-230V
+230V`
 
 
 Auch diese Aktion wird wieder mit Strg + x gespeichert.
 
 Nun prüfen wir noch kurz, ob die beiden Port Expander (0x22 und 0x27) angezeigt werden unter dem Befehl:
 
-sudo i2cdetect -y 1
+`sudo i2cdetect -y 1`
 
 Sollte das der Fall sein, sollte die Ausgabe so aussehen:
 
@@ -173,34 +177,34 @@ Startup & Shutdown Service          |
 Zwecks des Automatischen Einschalten von Stromkreisen (in config.ini einstellbar)
 geben wir im Terminal den Befehl
 
-sudo nano /etc/rc.local
+`sudo nano /etc/rc.local`
 
 ein und fügen ganz unten über exit 0 folgende Zeile ein:
 
-/Energiebox/Startup/mcp_startup
+`/Energiebox/Startup/mcp_startup`
 
 Auch diese Aktion wird wieder mit Strg + x gespeichert.
 Danach wird der Befehl
 
-sudo nano /etc/rc.shutdown
+`sudo nano /etc/rc.shutdown`
 
 eingegeben und in diese Datei wird folgendes rein kopiert:
 
-#!/bin/bash
+`#!/bin/bash
 
 /Energiebox/Shutdown/mcp_shutdown
 
-exit 0
+exit 0`
 
 
 Diese Aktion wird wieder mit Strg + x gespeichert.
 Als nächstes wird der Befehl
 
-sudo nano /etc/systemd/system/rcshutdown.service
+`sudo nano /etc/systemd/system/rcshutdown.service`
 
 in der Konsole abgesetzt und in diese Datei wird folgendes eingefügt:
 
-[Unit]
+`[Unit]
 
 Description=/etc/rc.shutdown
 
@@ -216,14 +220,14 @@ RemainAfterExit=yes
 
 [Install]
 
-WantedBy=multi-user.target
+WantedBy=multi-user.target`
 
 
 Wie immer wird diese Aktion mit Strg + x gespeichert.
 Um diesen Service einzuschalten, muss er noch aktiviert werden.
 Dies geschieht mit folgendem Terminal Befehl:
 
-sudo systemctl enable rcshutdown.service
+`sudo systemctl enable rcshutdown.service`
 
 
 -------------------------------------
@@ -235,18 +239,18 @@ das alle Programme die im Ordner /Energiebox/* gespeichert sind
 von überall zugänglich sind. Dazu öffnen wir wieder ein Terminal
 und tippen den folgenden Befehl ein:
 
-sudo nano /etc/bash.bashrc
+`sudo nano /etc/bash.bashrc`
 
 am Ende fügen wir die 4 Zeilen hinzu und speichern diese danach
 wieder ab mit Strg + x:
 
-PATH=$PATH:/Energiebox/12V
+`PATH=$PATH:/Energiebox/12V
 
 PATH=$PATH:/Energiebox/230V
 
 PATH=$PATH:/Energiebox/Kolloid
 
-PATH=$PATH:/Energiebox/h2o
+PATH=$PATH:/Energiebox/h2o`
 
 
 -------------------------------------
@@ -255,20 +259,20 @@ IP Setup & DynDNS Einrichtung       |
 
 IP Einstellungen aufrufen mit:
 
-sudo nano /etc/dhcpcd.conf
+`sudo nano /etc/dhcpcd.conf`
 
 und dort folgendes eintragen(vorher abändern)
 
-interface eth0
+`interface eth0
 static ip_address=10.0.0.2/24
 static ip6_address=29c5:ef1d:3023:5c04::ff/64
 static routers=10.0.0.1
-static domain_name_servers=10.0.0.1 8.8.8.8 29c5:ef1d:3023:5c04::1
+static domain_name_servers=10.0.0.1 8.8.8.8 29c5:ef1d:3023:5c04::1`
 
 
 und mit Strg + x abspeichern. Nun sollte der Rechner Neugestartet werden mit
 
-sudo reboot
+`sudo reboot`
 
 
 Im Router/Gateway wurde der Port 2222 freigegeben und intern auf Port 22 des Raspbbery umgeleitet
@@ -278,18 +282,18 @@ Im Router/Gateway wurde der Port 2222 freigegeben und intern auf Port 22 des Ras
 
 Nun erstellen wir noch ein SSH Key auf dem Rechner der eine Verbindung zum Raspberry Pi4 aufbaut:
 
-ssh-keygen -t rsa
+`ssh-keygen -t rsa`
 
 Als Eingabe lassen wir alles leer und drücken einfach nur Enter.
 
 Die erzeugten Keys können jetzt angezeigt werden mit:
 
-ls -l .ssh/
+`ls -l .ssh/`
 
 Um diesen Key mit dem Raspberry zu Verbinden folgendes Ausführen:
 (Port, Username & DynDNS entsprechend anpassen!)
 
-ssh-copy-id -p 2222 pi@home.cplusplus-development.de
+`ssh-copy-id -p 2222 pi@home.cplusplus-development.de`
 
 
 
@@ -301,21 +305,23 @@ Firewall einstellen                 |
 Den Port 22 geben wir mit der UFW Firewall frei während wir alles andere sperren.
 Hierzu muss auf der Konsole der Befehl abgesetzt werden:
 
-sudo ufw allow ssh/tcp && sudo ufw limit ssh/tcp && sudo ufw logging on && sudo ufw enable
+`sudo ufw allow ssh/tcp && sudo ufw limit ssh/tcp && sudo ufw logging on && sudo ufw enable`
 
 Zusätzlich installieren wir noch fail2ban
 
-sudo apt-get install fail2ban && cd /etc/fail2ban
+`sudo apt-get install fail2ban && cd /etc/fail2ban`
 
 Zum Konfigurieren kopieren wir eine Vorgegebene Datei und verändern die Kopie
 
-sudo cp jail.conf jail.local && sudo nano jail.local
+`sudo cp jail.conf jail.local && sudo nano jail.local`
 
-[sshd] suchen und darunter enabled = true einfügen
+[sshd] suchen und darunter 
 
-Danach speichern.
+`enabled = true`
 
-sudo systemctl enable fail2ban && sudo systemctl start fail2ban
+einfügen. Danach speichern.
+
+`sudo systemctl enable fail2ban && sudo systemctl start fail2ban`
 
 Testen: Wenn falsche Daten bei einer SSH Verbindung eingegeben worden sind, zeigt fail2ban
 nicht mehr "Permission denied" sondern "Connection refused" an!
@@ -323,20 +329,20 @@ nicht mehr "Permission denied" sondern "Connection refused" an!
 
 Den User pi bei Systembefehlen zum Passwort zwingen
 
-sudo nano /etc/sudoers.d/010_pi-nopasswd
+`sudo nano /etc/sudoers.d/010_pi-nopasswd`
 
 Nun ändern wir:
 
-pi ALL=(ALL) NOPASSWD: ALL 
+`pi ALL=(ALL) NOPASSWD: ALL `
 
 zu 
 
-pi ALL=(ALL) PASSWD: ALL
+`pi ALL=(ALL) PASSWD: ALL`
 
 
 Automatische Sicherheitsupdates installieren
 
-sudo dpkg-reconfigure --priority=low unattended-upgrades
+`sudo dpkg-reconfigure --priority=low unattended-upgrades`
 
 Im neuen Fenster Ja wählen
 
