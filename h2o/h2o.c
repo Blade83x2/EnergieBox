@@ -315,12 +315,14 @@ void setup() {
             
         char line[20];
         do {
+            
             printf("An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?:\n");
             if (fgets(line, sizeof(line), stdin)) {
                 if (line2Int(line, &p1)) break;  // Legal number - break out
                 printf("Ungültige Eingabe %s!", line);
             }
-        } while(true);
+            
+        } while(p1 <  1 || p1 > 16);
         
         
 
