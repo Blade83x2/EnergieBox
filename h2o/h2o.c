@@ -313,7 +313,9 @@ void setup() {
         
         
             
-        char line;
+        char line[20];
+
+    
         while (true) {
             printf("An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?:\n");
             if (fgets(line, sizeof(line), stdin)) {
