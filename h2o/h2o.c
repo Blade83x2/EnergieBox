@@ -273,6 +273,18 @@ void setup() {
         char p1;
         //printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
         //scanf("%d", &p1);
+       
+        
+        
+        
+        int t,m; 
+ printf("enter the two int value\n"); 
+ while(scanf("%d %d" ,&t,&m)==1) 
+ printf("the scanf read only one value "); 
+ while(scanf("%d %d" ,&t,&m)==2) 
+ printf("scanf read two values\n"); 
+        
+        
         
          
     int number;
