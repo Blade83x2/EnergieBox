@@ -340,7 +340,7 @@ void clearSystem() {
     if( (abwasserMenge + aktuellesGesameltesAbwasser) <= maxLiterAbwasserKanister) {
         // Fragen ob das Ventil gedreht wurde
         char answerclear;
-        printf("\n\n -> Wurde das Ventil auf Spülung gestellt? J/N: ");
+        printf("\n\n -> Ventil auf Spülung stellen und Vorgang starten? J/N: ");
         scanf("%c", &answerclear);
         if (answerclear == 'Y' || answerclear == 'y' || answerclear == 'J' || answerclear == 'j'){
             // Wenn ja, Spülen
@@ -367,8 +367,6 @@ void clearSystem() {
             }
             sprintf(command, "12V %d 0 %d", pumpeRelaisNr, 1);
             system(command);
-            
-            
             printf("\n -> REINIGUNG BEENDET!\n");
             // Neue Gesammelt Abwassermenge in Konfiguration speichern
             sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", (abwasserMenge + aktuellesGesameltesAbwasser), (gesamteFilterMengeInLiter), pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);
