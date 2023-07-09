@@ -63,11 +63,10 @@ Internet Verbindung damit Sie die Eltakos über das Internet steuern können. Hi
 
 vom Terminal aus aufgerufen und in der Datei folgendes auskommentieren:
 
-dtoverlay=w1-gpio
++ dtoverlay=w1-gpio
 
-dtoverlay=disable-wifi
-
-dtoverlay=disable-bt
++ dtoverlay=disable-wifi
++ dtoverlay=disable-bt
 
 Mit dem drücken der Tastenkombination Strg + x kann die Änderung gespeichert werden.
 Danach wird die Raspberry Konfiguration aufgerufen mit dem Befehl
