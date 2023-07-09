@@ -371,28 +371,33 @@ void clearSystem() {
             int minuten =  s / 60;
             s = s % 60;
             int sekunden = s;   
-            printf(" -> REINIGUNG WIRD GESTARTET!\n");
-            printf(" -> Benötigte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);    
-            
-            int laufzeitSekunden=0;
+            printf(" -> REINIGUNG WIRD GESTARTET!  Benötigte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);    
             
             
-            while(true) {
-                print_progress( laufzeitSekunden, reinigungszeitInSekunden);
-                sleep(1);
-                laufzeitSekunden++;
-                if ( laufzeitSekunden == reinigungszeitInSekunden) break;
-            }
+            
 
-            
 
             
             
             // filter einschalten
             sprintf(command, "12V %d 1 1", pumpeRelaisNr);
             system(command);
-            sprintf(command, "12V %d 0 %d", pumpeRelaisNr, reinigungszeitInSekunden+1);
+
+            
+            int laufzeitSekunden=0;            
+            while(true) {
+                print_progress( laufzeitSekunden, reinigungszeitInSekunden);
+                sleep(1);
+                laufzeitSekunden++;
+                if ( laufzeitSekunden == reinigungszeitInSekunden) {
+                    print_progress( reinigungszeitInSekunden, reinigungszeitInSekunden);
+                    break;
+                }
+            }
+            sprintf(command, "12V %d 0 %d", pumpeRelaisNr, 1);
             system(command);
+            
+            
             printf(" -> REINIGUNG BEENDET!\n\n");
             // Neue Gesammelt Abwassermenge in Konfiguration speichern
             sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", (abwasserMenge + aktuellesGesameltesAbwasser), (gesamteFilterMengeInLiter), pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);
