@@ -109,10 +109,10 @@ int main(int argc, char* argv[]) {
     filterZeitFuerNullKommaEinsLiterInSekunden = config.h2o.filterZeitFuerNullKommaEinsLiterInSekunden;
     
     
-    printf("filterZeitFuerNullKommaEinsLiterInSekunden: %d", filterZeitFuerNullKommaEinsLiterInSekunden);
+    //printf("filterZeitFuerNullKommaEinsLiterInSekunden: %d", filterZeitFuerNullKommaEinsLiterInSekunden);
     
     
-    sleep(4);
+   // sleep(4);
     
     
     // Faktor Abwassermenge zu Filtermenge. Beispiel: 
