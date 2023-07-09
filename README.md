@@ -1,4 +1,4 @@
-# ENERGIEBOX SOFTWARE auf einem Raspberry PI
+# ENERGIEBOX Ver. 3 für Raspberry PI 3/4
 
 ### @Copyright 2023 by Johannes a.d.F. K r ä m e r
 
