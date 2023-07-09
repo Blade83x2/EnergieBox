@@ -279,7 +279,7 @@ void setup() {
             printf("An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
             scanf("%d", &p1);
         }
-        while (p1 < 1 || p1 > 16);
+        while ( !isdigit(p1)  ||   p1 < 1 || p1 > 16);
             
             
         
