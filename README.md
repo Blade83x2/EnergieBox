@@ -16,6 +16,12 @@ Ein 7" Touchdisplay sollte ebenfalls angeschlossen und eingerichtet sein.
 
 ## Installationsanweisung:
 
+
+- [x] #739
+- [ ] https://github.com/octo-org/octo-repo/issues/740
+- [ ] Add delight to the experience when all tasks are
+
+
 1) Installation benötigter Pakete & Energiebox
 2) Raspi Konfiguration
 3) Startup & Shutdown Service
