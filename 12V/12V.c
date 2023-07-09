@@ -511,7 +511,7 @@ void getDataForConfigFile(int relais, void* config) {
         
         
         
-        replace_char (strname, ' ' , '\\ ');
+        replace_char (strname, ' ' , '-');
 
 
         
