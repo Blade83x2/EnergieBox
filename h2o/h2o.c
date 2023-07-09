@@ -96,8 +96,6 @@ void SIGhandler(int);
 // Programmstart mit oder ohne Parameter
 int main(int argc, char* argv[]) { 
     signal(SIGINT, SIGhandler);
-
-    
     configuration config;
     // Konfiguration von h2o in config laden
     if (ini_parse("/Energiebox/h2o/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/h2o/config.ini'\n"); return 1; }
@@ -290,18 +288,14 @@ void setup() {
         int p1;
         printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
         scanf("%d", &p1);
-       
         int p2;
         printf("-> Wieviel GPD hat die Filteranlage? (etc. 50, 75, 100): ");
         scanf("%d", &p2);
-        
         int p3;
         printf("-> Wieviel (fertige) Liter Wasser sollte maximal mit einem Satz Filter gefiltert werden?: ");
         scanf("%d", &p3);
-        
         literProTag = literProGalone * gpd;
         int p4 = 0.1f /  (((literProTag/24)/60)/60);
-        
         int p5;
         printf("-> Wie ist das Verhältnis von gefiltertem Wasser zu Abwasser/Spülwasser? 1 zu: ");
         scanf("%d", &p5);
@@ -466,14 +460,18 @@ void showLogo() {
 // CTRL + C Handler
 void  SIGhandler(int sig)
 {
-     char  c;
-     signal(sig, SIG_IGN);
-     printf("OUCH, did you hit Ctrl-C?\n"
-            "Do you really want to quit? [y/n] ");
-     c = getchar();
-     if (c == 'y' || c == 'Y' || c == 'J' || c == 'j')
-          exit(0);
-     else
-          signal(SIGINT, SIGhandler);
-     getchar();
+    char  c;
+    signal(sig, SIG_IGN);
+    printf("\n -> CTRL + C erkannt. Beenden? [Y/N] ");
+    c = getchar();
+    if (c == 'y' || c == 'Y' || c == 'J' || c == 'j') {
+        // Pumpe auf aus sschalten
+        sprintf(command, "12V %d 0 1", pumpeRelaisNr);
+        system(command); 
+        sleep(1.2);
+        exit(0);
+    }
+    else
+        signal(SIGINT, SIGhandler);
+    getchar();
 }
