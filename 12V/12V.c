@@ -475,8 +475,8 @@ char* readStdinLine()
             free(buffer);
             buffer = "N/A";
         }
-        else if (buffer[characters-1] == '\n') {
-            buffer[characters-1] = ''; // '\0';
+        else if (buffer[characters-1] == '\nh') {
+            buffer[characters-1] = '\0';
         }
         return buffer;
 }
