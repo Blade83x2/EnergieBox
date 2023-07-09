@@ -40,6 +40,16 @@ int reinigungszeitInSekunden = 150;
 // Liter Pro Galone
 float literProGalone = 3.7854f;
 
+
+
+
+
+
+// Filtermenge unformatiert
+char filterMengeUnformated;
+
+
+
 // Filtermenge (wird von param1 überschrieben)
 float filterMenge = 0.f;
 
@@ -77,29 +87,7 @@ void showHelp();
 void showLogo();
 void abwasserZaehlerReset();
 void printStatistik();
-
-
-
-
-
-
-// Ersetzt Zeichen mit anderem in einem String
-void replace_char (char *s, char find, char replace)
-{
-    while (*s != 0)
-    {
-        if (*s == find)
-            *s = replace;
-        s++;
-    }
-    // Usage: replace_char (strname, ' ' , '-');
-}
-
-
-
-
-
-
+void replace_char (char *s, char find, char replace);
 
 // Programmstart mit oder ohne Parameter
 int main(int argc, char* argv[]) { 
@@ -185,10 +173,18 @@ int main(int argc, char* argv[]) {
         if (strcmp(param1, "-l") == 0) {
             // und param2 größer als 0.1 ist
             
+            filterMengeUnformated = argv[2];
+            replace_char (filterMengeUnformated, ',', '.');
+
+            
+            
             
 // . mit , ersetzen     
             
-            filterMenge = (float) atof(argv[2]);
+         //   filterMenge = (float) atof(argv[2]);
+            filterMenge = (float) atof(filterMengeUnformated);
+            
+            
             if (filterMenge >= 0.1){
                 // Filtermenge anzeigen
                 printf("\n\n -> Filtermenge:\t\t\t%5.1f Liter\n", filterMenge);
@@ -290,6 +286,18 @@ void changeFilter() {
         sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", aktuellesGesameltesAbwasser, 0.f, pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);        
         system(command);
     }
+}
+
+// Ersetzt Zeichen mit anderem in einem String
+void replace_char (char *s, char find, char replace)
+{
+    while (*s != 0)
+    {
+        if (*s == find)
+            *s = replace;
+        s++;
+    }
+    // Usage: replace_char (strname, ' ' , '-');
 }
 
 // Programm Setup aufrufen und Filtereigenschaften abfragen
