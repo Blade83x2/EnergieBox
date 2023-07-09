@@ -536,8 +536,13 @@ void getDataForConfigFile(int relais, void* config) {
         
 
     }
-    sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
-    system(command);
+    
+    
+        system("sudo sh /Energiebox/12V/setConfig.sh 5 \"N/A\" \"aha\" 12");
+
+    
+  //  sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
+    //system(command);
     sleep(2.5);
     system("clear && 12V");
 }
