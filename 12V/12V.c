@@ -499,13 +499,9 @@ void getDataForConfigFile(int relais, void* config) {
        // printf(" -> Verbrauch in Watt (Max. %d Watt): ", pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController);
         printf(" -> Verbrauch in Watt: ");
         strpMax = readStdinLine();
-        // Maximal verfügbare Watt - alte Eigeneinstellung
+        // Maximal verfügbare Watt = - alte Eigeneinstellung
         int maxRest;
-        
-        printf(" -> getDevicePower: %d", getDevicePower(relais, config));
-
-        
-        maxRest = getRestPower(config, 1);
+        maxRest = pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController
         
         printf(" -> getRestPower: %d", maxRest);
 
@@ -513,7 +509,7 @@ void getDataForConfigFile(int relais, void* config) {
         // prüfen ob neuer Verbrauch größer als 1 ist und kleiner als gesamtleistung - dieses Relais
         
         
-        
+        pconfig->mcp.maxPConverter-pconfig->mcp.maxPMicroController
         
         
         
