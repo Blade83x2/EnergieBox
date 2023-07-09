@@ -17,6 +17,10 @@ void setBit(int Port, int Status);
 int getBit(int Port);
 bool checkMainParameter(char* paramName, int number, void* config);
 int showHelp(char**argv, void* config);
+void getDataForConfigFile(int relais, void* config);
+char* readStdinLine();
+void replace_char (char *s, char find, char replace);
+
 
 char command[100];
 
@@ -247,6 +251,23 @@ int main(int argc, char**argv) {
         printf("%d", getElkoState(atoi(argv[1]), &config)); // Nur Relais Nr. übergeben. config.ini auslesen und int auf console printen
     }
     else if(argc == 3) {
+        
+        
+        
+        // Wenn Konfiguration aufgerufen wird z.B. mit 230V -set 3
+        if (strcmp(argv[1], "-set") == 0)  {
+            if (   atoi(argv[2]) > 0    && atoi(argv[2]) <= config.mcp.numberOfRelaisActive) 
+            {
+                // Abfrage für neue Daten starten, speichern und Liste anzeigen
+                getDataForConfigFile(atoi(argv[2]), &config);
+                return 0;
+            }
+        }
+        
+        
+        
+        
+        
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config)) {
             return showHelp(argv, &config);
         }
@@ -374,6 +395,92 @@ bool checkMainParameter(char* paramName, int number, void* config) {
     return true;
 }
 
+
+
+
+// Entfernt Leerzeichen vorne und hinten
+char *Trim(char *s)
+{
+    char *cp1;
+    char *cp2;
+    for (cp1=s; isspace(*cp1); cp1++ );
+    for (cp2=s; *cp1; cp1++, cp2++)
+        *cp2 = *cp1;
+    *cp2-- = 0;
+    while ( cp2 > s && isspace(*cp2) )
+        *cp2-- = 0;
+    return s;
+}
+
+// Liesst Zeileneingabe aus
+char* readStdinLine()
+{
+    char*  buffer  = NULL;
+    size_t bufsize = 0;
+    ssize_t characters = getline(&buffer, &bufsize, stdin);
+    if (characters == -1) {
+        free(buffer);
+        buffer = "NULL";
+    }
+    else if (buffer[characters-1] == '\n') {
+        buffer[characters-1] = '\0';
+    }
+    return buffer;
+}
+
+// Ersetzt Zeichen mit anderem in einem String
+void replace_char (char *s, char find, char replace)
+{
+    while (*s != 0)
+    {
+        if (*s == find)
+            *s = replace;
+        s++;
+    }
+    // Usage: replace_char (strname, ' ' , '-');
+}
+
+// Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
+void getDataForConfigFile(int relais, void* config) {
+    system("clear");   
+    printf("Neue Konfiguration für Relais Nr. -> %d erstellen:\n\n", relais);
+    printf(" -> Neue Bezeichnung eingeben (leer lassen für deaktivieren): ");
+    char* strname;
+    char* strpMax;
+    char* stractivateOnStart;
+    strname = readStdinLine();
+    strname = Trim(strname);
+    if (strcmp(strname, "") == 0)  {
+        strname="NULL";
+        strpMax="0";
+        stractivateOnStart="false";
+    } 
+    else {
+        printf(" -> Verbrauch in Watt: ");
+        strpMax = readStdinLine();
+        printf(" -> Beim starten aktivieren? (true/false): ");
+        stractivateOnStart = readStdinLine();
+        // prüfen ob true oder false, wenn keins von beiden, dann false
+        if (strcmp(stractivateOnStart, "true") != 0 && strcmp(stractivateOnStart, "false") != 0 )  { stractivateOnStart="false"; }
+        // Leerzeichen Bug
+        replace_char (strname, ' ' , '-');
+    }
+    sprintf(command, "sudo sh /Energiebox/230V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
+    system(command);
+    sleep(0.5);
+    system("clear && 230V");
+}
+
+
+
+
+
+
+
+
+
+
+
 // Zeigt Hilfe auf Console an
 int showHelp(char**argv, void* config) {
     configuration* pconfig = (configuration*)config;
@@ -382,9 +489,8 @@ int showHelp(char**argv, void* config) {
     printf("  %s 5\t\t[gibt denn aktuellen Schaltzustand von Relais 5 zurück. Relais verfügbar: 1 bis %d)]\n", argv[0], pconfig->mcp.numberOfRelaisActive);
     printf("  %s 5 1\t\t[schaltet Relais 5 auf 1 (an)]\n", argv[0]);
     printf("  %s 7 0 120\t\t[schaltet Relais 7 aus in 2 Minuten]\n", argv[0]);
-    printf("  %s 2 1 15 & disown\t[schaltet Relais 2 im Hintergrund an in 15 Sekunden und gibt die Konsole frei]\n\n", argv[0]);
-    printf("  In der Konfigurationsdatei können Namen für denn Belegungsplan vergeben werden!\n");
-    printf("  sudo nano /Energiebox/%s/config.ini\e[0m \n\n", argv[0]);
+    printf("  %s 2 1 15 & disown\t[schaltet Relais 2 im Hintergrund an in 15 Sekunden und gibt die Konsole frei]\n", argv[0]);
+    printf("  %s -set 5\t\t[Ruft das Einstellungsmenü für Relais 5 auf]\e[0m \n\n", argv[0]);
     return -1;
 }
 

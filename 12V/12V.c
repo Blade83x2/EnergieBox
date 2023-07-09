@@ -300,13 +300,6 @@ int main(int argc, char**argv) {
         printf("%d",  getElkoState(atoi(argv[1]), &config));
     }
     else if(argc == 3) {
-        
-        
-        
-        
-        
-        
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Wenn Konfiguration aufgerufen wird z.B. mit 12V -set 3
         if (strcmp(argv[1], "-set") == 0)  {
             if (   atoi(argv[2]) > 0    && atoi(argv[2]) <= config.mcp.numberOfRelaisActive) 
@@ -316,9 +309,6 @@ int main(int argc, char**argv) {
                 return 0;
             }
         }
-        
-        
-        
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config)) {
             return showHelp(argv, &config);
         }
@@ -488,7 +478,6 @@ void replace_char (char *s, char find, char replace)
 
 // Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
 void getDataForConfigFile(int relais, void* config) {
-    //configuration* pconfig = (configuration*)config;
     system("clear");   
     printf("Neue Konfiguration für Relais Nr. -> %d erstellen:\n\n", relais);
     printf(" -> Neue Bezeichnung eingeben (leer lassen für deaktivieren): ");
