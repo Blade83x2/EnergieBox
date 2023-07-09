@@ -497,8 +497,8 @@ void getDataForConfigFile(int relais, void* config) {
     printf("Neue Konfiguration für Relais Nr. -> %d erstellen:\n\n", relais);
     printf(" -> Neue Bezeichnung eingeben (leer lassen für deaktivieren): ");
     char* strname;
-    char* strpMax;
-    char* stractivateOnStart;
+    char* strpMax=0;
+    char* stractivateOnStart="false";
     strname = readStdinLine();
     if (strcmp(strname, "") == 0)  {
         strname="N/A";
@@ -519,7 +519,7 @@ void getDataForConfigFile(int relais, void* config) {
         printf(" -> Beim starten aktivieren? (true/false): ");
         stractivateOnStart = readStdinLine();
         // prüfen ob true oder false, wenn keins von beiden, dann false
-        if (strcmp(stractivateOnStart, "true") == -1 && strcmp(stractivateOnStart, "false") == -1    )  { stractivateOnStart="false"; }
+        if (strcmp(stractivateOnStart, "true") != 0 && strcmp(stractivateOnStart, "false") != 0    )  { stractivateOnStart="false"; }
         
         
         
