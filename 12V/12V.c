@@ -513,7 +513,7 @@ void getDataForConfigFile(int relais, void* config) {
         if((int)strpMax < (int)maxRest){
             printf("\n\e[0;31m Dieses Gerät hat einen zu hohen Watt Verbrauch. Es wird nie eingeschaltet werden können!\e[0m\n");
         }
-        if((int)1 > (int)strpMax){
+        if((int)1 < (int)strpMax){
             printf("\n\e[0;31m Dieses Gerät hat eine falsche Watt Angabe!\e[0m\n");
         }
         printf(" -> Beim starten aktivieren? (true/false): ");
