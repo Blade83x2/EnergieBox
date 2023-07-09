@@ -454,6 +454,21 @@ bool checkMainParameter(char* paramName, int number, void* config) {
     return true;
 }
 
+
+char *trim(char *s) {
+    char *ptr;
+    if (!s)
+        return "N/A";   // handle NULL string
+    if (!*s)
+        return "N/A";      // handle empty string
+    for (ptr = s + strlen(s) - 1; (ptr >= s) && isspace(*ptr); --ptr);
+    ptr[1] = '\0';
+    return s;
+}
+
+
+
+
 // Fragt ab wie die neuen Werte für Name, Verbrauch in Watt und aktiv beim Start sind
 void getDataForConfigFile(int relais, void* config) {
     system("clear");   
@@ -465,6 +480,7 @@ void getDataForConfigFile(int relais, void* config) {
     char strname[40];
     scanf("%[^\n]s",strname);
     
+    strname=trim(strname);
     
     
     
