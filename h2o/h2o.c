@@ -24,7 +24,7 @@ int gpd = 50;
 float warnLimitAbFilterMenge = 1000.f;
 
 // Dauer für 0,1 Liter Wasser zu filtern in Sekunden
-int filterZeitFuerNullKommaEinsLiterInSekunden = 42;
+int filterZeitFuerNullKommaEinsLiterInSekunden = 45;
 
 // Faktor Abwassermenge zu Filtermenge. Beispiel: 
 // Bei 1:2 (1 Liter gefiltertes Wasser und 2 Liter Abwasserproduktion) hier eine 2 eintragen
