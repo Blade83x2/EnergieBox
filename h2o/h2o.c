@@ -371,25 +371,16 @@ void clearSystem() {
             int minuten =  s / 60;
             s = s % 60;
             int sekunden = s;   
-            printf(" -> REINIGUNG WIRD GESTARTET!  Benötigte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);    
-            
-            
-            
-
-
-            
-            
+            printf(" -> Die Reinigung wird jetzt gestartet. Geschätzte benötigte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);                
             // filter einschalten
             sprintf(command, "12V %d 1 1", pumpeRelaisNr);
             system(command);
-
-            
             int laufzeitSekunden=0;            
             while(true) {
-                print_progress( laufzeitSekunden, reinigungszeitInSekunden);
-                sleep(1);
+                print_progress(laufzeitSekunden, reinigungszeitInSekunden);
+                sleep(0.1);
                 laufzeitSekunden++;
-                if ( laufzeitSekunden == reinigungszeitInSekunden) {
+                if ((laufzeitSekunden/10) == reinigungszeitInSekunden) {
                     print_progress( reinigungszeitInSekunden, reinigungszeitInSekunden);
                     break;
                 }
@@ -398,7 +389,7 @@ void clearSystem() {
             system(command);
             
             
-            printf(" -> REINIGUNG BEENDET!\n\n");
+            printf("\n -> REINIGUNG BEENDET!\n");
             // Neue Gesammelt Abwassermenge in Konfiguration speichern
             sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", (abwasserMenge + aktuellesGesameltesAbwasser), (gesamteFilterMengeInLiter), pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);
             system(command);
