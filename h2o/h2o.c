@@ -24,7 +24,7 @@ int gpd = 50;
 float warnLimitAbFilterMenge = 1000.f;
 
 // Dauer für 0,1 Liter Wasser zu filtern in Sekunden
-int filterZeitFuerNullKommaEinsLiterInSekunden = 45;
+int filterZeitFuerNullKommaEinsLiterInSekunden;
 
 // Faktor Abwassermenge zu Filtermenge. Beispiel: 
 // Bei 1:2 (1 Liter gefiltertes Wasser und 2 Liter Abwasserproduktion) hier eine 2 eintragen
@@ -107,6 +107,14 @@ int main(int argc, char* argv[]) {
     warnLimitAbFilterMenge = config.h2o.warnLimitAbFilterMenge;
     // Dauer für 0,1 Liter Wasser zu filtern in Sekunden
     filterZeitFuerNullKommaEinsLiterInSekunden = config.h2o.filterZeitFuerNullKommaEinsLiterInSekunden;
+    
+    
+    printf("filterZeitFuerNullKommaEinsLiterInSekunden: %d", filterZeitFuerNullKommaEinsLiterInSekunden);
+    
+    
+    
+    
+    
     // Faktor Abwassermenge zu Filtermenge. Beispiel: 
     // Bei 1:2 (1 Liter gefiltertes Wasser und 2 Liter Abwasserproduktion) hier eine 2 eintragen
     faktorGefiltertZuAbwasser = config.h2o.faktorGefiltertZuAbwasser;
