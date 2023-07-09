@@ -517,9 +517,7 @@ void getDataForConfigFile(int relais, void* config) {
         if((int)strpMax < (int)1){
             printf("\e[0;31m -> Dieses Gerät hat eine falsche Watt Angabe!\e[0m\n");
         }
-        
-        
-        if (strcmp(strpMax, "") == 0 || (int)strpMax < (int)2 )  { strpMax="0"; }
+        if (strcmp(strpMax, "") == 0)  { strpMax="0"; }
 
         
         
