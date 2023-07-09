@@ -255,42 +255,6 @@ void replace_char (char *s, char find, char replace)
 }
 
 
-int line2Int(char* line, int* x)
-{
-    int negative = 0;
-    int ret=0;
-    int temp = 0;
-
-    if (*line && *line == '-') 
-    {
-        line++;
-        negative = 1;
-    }
-    else if (*line && *line == '+')  // If a + is to be accepted
-        line++;                      // If a + is to be accepted
-
-    while (*line && *line != '\n')
-    {
-        if (!isdigit(*line)) return 0; // Illegal char found
-        ret = 1;
-
-            // Update the number
-        temp = 10 * temp;
-        temp = temp + (*line - '0');
-
-        ++line;
-    }
-
-    if (ret)
-    {
-        if (negative) temp = -temp;
-        *x = temp;
-    }
-    return ret;
-}
-
-
-
 
 
 
@@ -311,24 +275,12 @@ void setup() {
         //scanf("%d", &p1);
         
         
-        
-            
-        char line[200];
-        do {
-            
+        while(1) {   
             printf("An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
-            if (fgets(line, sizeof(line), stdin)) {
-                if (line2Int(line, &p1)) break;  // Legal number - break out
-                printf("Ungültige Eingabe %s", line);
-            }
-            
-        } while(p1 <  1 || p1 > 16);
-        
-        
+            scanf("%d", &p1);
+            if(p1 == 0) break;    
+        }
 
-        
-        
-        
         
         
         int p2;
