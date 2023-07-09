@@ -312,6 +312,9 @@ int main(int argc, char**argv) {
             {
                 // Abfrage starten und Programm beenden
                 getDataForConfigFile(atoi(argv[2]), &config);
+                
+                                         sleep(3);
+
                 return 0;
             }
         }
@@ -475,7 +478,7 @@ void getDataForConfigFile(int relais, void* config) {
     // Wenn Name leer, dann auf N/A, 0 und false
 
     
-    printf("Neuer Name: [%s]",strname);
+    printf("Neuer Name: %s",strname);
         
         
         
