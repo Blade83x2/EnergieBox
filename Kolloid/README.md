@@ -6,7 +6,7 @@ Mit diesem Programm können Kolloidale Metalle hergestellt werden.
 Die Ordnungsgemäße Funktion setzt vorraus, dass ein Magnetrührer oder eine 
 Heizplatte sowie ein Hochspannungstrafo an der EnergieBox angeschlossen ist.
 
-Weitere Informationen zu Kolloidalen Metallen auf <a href="https://kolloidalesgoldkaufen.de">kolloidalesgoldkaufen.de</a>
+Weitere Informationen zu Kolloidalen Metallen auf <a href="https://kolloidalesgoldkaufen.de" target="_blank">kolloidalesgoldkaufen.de</a>
 
 <p align="center"> 
     <img src="img/kolloid.png" style="width: 85%;" alt="kolloid Startseite" >
