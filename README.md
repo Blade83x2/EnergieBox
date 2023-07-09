@@ -8,7 +8,7 @@ ERSTINSTALLATION DER ENERGIEBOX SOFTWARE auf einem Raspberry PI
 
 
 Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS läuft und
-2 MCP23017 (WAVESHARE, Artikelnummer BO-MCP23017) auf den Adressen 0x22 und 0x27
+2 MCP23017 (WAVESHARE, Artikelnummer BO-MCP23017) mit Eltakos auf den Adressen 0x22 und 0x27
 sowie ein 7" Touchdisplay angeschlossen und eingerichtet sind. 
 
 
@@ -332,7 +332,13 @@ Den User pi bei Systembefehlen zum Passwort zwingen
 
 sudo nano /etc/sudoers.d/010_pi-nopasswd
 
-Nun änderst du pi ALL=(ALL) NOPASSWD: ALL zu pi ALL=(ALL) PASSWD: ALL
+Nun ändern wir:
+
+pi ALL=(ALL) NOPASSWD: ALL 
+
+zu 
+
+pi ALL=(ALL) PASSWD: ALL
 
 
 Automatische Sicherheitsupdates installieren
