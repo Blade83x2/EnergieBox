@@ -76,6 +76,10 @@ genutzt. Wenn man dagegen 3 Liter filtern möchte, verwendet man:
 </p>
 
 
+Wenn z.B. der Abwasser Tank voll ist, wird das Filtern nicht gestartet.
+
+
+
 
 
 
