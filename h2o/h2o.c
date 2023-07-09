@@ -307,35 +307,21 @@ void setup() {
     if (answersetup == 'Y' || answersetup == 'y' || answersetup == 'J' || answersetup == 'j'){
         // Wenn ja, alle Daten zusammen erfragen und externe Datei aufrufen
         int p1;
-        printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
-        scanf("%d", &p1);
+        //printf("-> An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?: ");
+        //scanf("%d", &p1);
         
         
         
             
-        char line[20];
-        int i;
-
-        int x , y=0;
-        while (true)
-        {
-            printf("Please Insert X value\n");
-            if (fgets(line, sizeof(line), stdin)) 
-            {
-                if (line2Int(line, &x)) break;  // Legal number - break out
-
-                printf("Illegal input %s", line);
+        char line;
+        while (true) {
+            printf("An welchem Relais vom 12V Block (1 bis 16) sind die Wasserpumpen angeschlossen?:\n");
+            if (fgets(line, sizeof(line), stdin)) {
+                if (line2Int(line, &p1)) break;  // Legal number - break out
+                printf("Ungültige Eingabe %s!", line);
             }
-            y++;
         }
 
-        if (y<5)
-            printf("x=%d\n", x);
-        else
-            printf("no more retries\n");
-
-
-        
         
         
         
@@ -344,6 +330,12 @@ void setup() {
         int p2;
         printf("-> Wieviel GPD hat die Filteranlage?: ");
         scanf("%d", &p2);
+        
+        
+        
+        
+        
+        
         int p3;
         printf("-> Wieviel (fertige) Liter Wasser sollte maximal mit einem Satz Filter gefiltert werden?: ");
         scanf("%d", &p3);
