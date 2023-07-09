@@ -13,14 +13,14 @@
 #include <string.h>
 #include <stdbool.h> 
 #include <ctype.h>
-#include  <signal.h>
+#include <signal.h>
 
 
 // 12V Relais Nr. für Pumpe & Boosterpumpe
 int pumpeRelaisNr = 6;
 
 // Filterleistung der Anlage in GPD
-int gpd = 50;
+int gpd = 75;
 
 // Warnung ab x Liter Filterleistung (Für Filtertausch Information)
 float warnLimitAbFilterMenge = 1000.f;
@@ -162,7 +162,9 @@ int main(int argc, char* argv[]) {
         filterMenge = (float) atof(filterMengeUnformated);
         if (filterMenge >= 0.1){
             // Filtermenge anzeigen
-            printf("\n\n -> Filtermenge:\t\t\t%5.1f Liter\n", filterMenge);         
+            printf("\n\n -> Filtermenge:\t\t\t%5.1f Liter\n", filterMenge);  
+            // Filterleistung anzeigen
+            printf("\n\n -> Filterleistung:\t\t\t%d GPD\n", gpd);  
             // Filterlaufzeit berechnen
             filterLaufzeit = ((filterMenge / 0.1) * filterZeitFuerNullKommaEinsLiterInSekunden);
             // Typecast in Integer
@@ -176,7 +178,7 @@ int main(int argc, char* argv[]) {
             int sekunden = s;     
             // Abwassermenge berechnen
             abwasserMenge = filterMenge * faktorGefiltertZuAbwasser;
-            printf(" -> Berechnete Abwasser Menge:\t\t%5.0f Liter\n", abwasserMenge);
+            printf(" -> Berechnete Abwasser Menge:\t\t%5.1f Liter\n", abwasserMenge);
             // Benötigte Sekundenanzahl
             printf(" -> Berechnete Filter Zeit:\t\t%5.0f Sek.\n", filterLaufzeit);
             // Maximal mögliches Abwasser ausrechnen und anzeigen
