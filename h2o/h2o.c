@@ -13,6 +13,8 @@
 #include <string.h>
 #include <stdbool.h> 
 #include <ctype.h>
+#include  <signal.h>
+
 
 // 12V Relais Nr. für Pumpe & Boosterpumpe
 int pumpeRelaisNr = 6;
@@ -88,10 +90,14 @@ void printStatistik();
 void replace_char (char *s, char find, char replace);
 void print_progress(size_t count, size_t max);
 void print_progress2(size_t count, size_t max);
+void SIGhandler(int);
 
 
 // Programmstart mit oder ohne Parameter
 int main(int argc, char* argv[]) { 
+    signal(SIGINT, SIGhandler);
+
+    
     configuration config;
     // Konfiguration von h2o in config laden
     if (ini_parse("/Energiebox/h2o/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/h2o/config.ini'\n"); return 1; }
@@ -454,4 +460,20 @@ void showLogo() {
     printf("  |  _  |/ __/| |_| |  ___) | |_| \\__ \\ ||  __/ | | | | |   \n");
     printf("  |_| |_|_____|\\___/  |____/ \\__, |___/\\__\\___|_| |_| |_|   \n");
     printf("                              |___/   by Johannes Krämer    \n"); 
+}
+
+
+// CTRL + C Handler
+void  SIGhandler(int sig)
+{
+     char  c;
+     signal(sig, SIG_IGN);
+     printf("OUCH, did you hit Ctrl-C?\n"
+            "Do you really want to quit? [y/n] ");
+     c = getchar();
+     if (c == 'y' || c == 'Y' || c == 'J' || c == 'j')
+          exit(0);
+     else
+          signal(SIGINT, SIGhandler);
+     getchar();
 }
