@@ -315,7 +315,7 @@ int main(int argc, char**argv) {
                 
                                          sleep(3);
 
-                return 0;
+                //return 0;
             }
         }
         
@@ -493,8 +493,8 @@ void getDataForConfigFile(int relais, void* config) {
 
     // sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %d", relais, strname         );
     // system(command);
-    sleep(6.1);
-    system("clear && 12V");
+    //sleep(6.1);
+    //system("clear && 12V");
 }
 
 // Zeigt Hilfe auf Console an
