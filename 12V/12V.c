@@ -455,17 +455,6 @@ bool checkMainParameter(char* paramName, int number, void* config) {
 }
 
 
-char *trim(char *s) {
-    char *ptr;
-    if (!s)
-        return NULL;   // handle NULL string
-    if (!*s)
-        return s;      // handle empty string
-    for (ptr = s + strlen(s) - 1; (ptr >= s) && isspace(*ptr); --ptr);
-    ptr[1] = '\0';
-    return s;
-}
-
 
 
 
@@ -481,7 +470,6 @@ void getDataForConfigFile(int relais, void* config) {
     scanf("%[^\n]s",strname);
     
     
-    strname=trim(strname);
     
     
     
@@ -492,7 +480,7 @@ void getDataForConfigFile(int relais, void* config) {
     // Wenn Name leer, dann auf N/A, 0 und false
 
     
-    printf("Neuer Name: %s",strname);
+    printf("Neuer Name: '%s'",strname);
         
         
         
