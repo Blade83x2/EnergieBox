@@ -87,6 +87,7 @@ void abwasserZaehlerReset();
 void printStatistik();
 void replace_char (char *s, char find, char replace);
 void print_progress(size_t count, size_t max);
+void print_progress2(size_t count, size_t max);
 
 
 // Programmstart mit oder ohne Parameter
@@ -199,11 +200,11 @@ int main(int argc, char* argv[]) {
                 printf("\n -> Wasser wird gefiltert. Benötigte Zeit: %02d:%02d:%02d\n", stunden, minuten, sekunden);      
                 int laufzeitSekunden=0;            
                 while(true) {
-                    print_progress(laufzeitSekunden, filterLaufzeit_int);
+                    print_progress2(laufzeitSekunden, filterLaufzeit_int);
                     sleep(1);
                     laufzeitSekunden++;
                     if (laufzeitSekunden == filterLaufzeit_int) {
-                        print_progress( filterLaufzeit_int, filterLaufzeit_int);
+                        print_progress2( filterLaufzeit_int, filterLaufzeit_int);
                         break;
                     }
                 }
@@ -384,9 +385,25 @@ void clearSystem() {
 }
 
 
-// Progress Bar
+// Progress Bar Reinigung
 void print_progress(size_t count, size_t max) {
     const int bar_width = 53;
+    float progress = (float) count / max;
+    int bar_length = progress * bar_width;
+    printf("\r -> [");
+    for (int i = 0; i < bar_length; ++i) {
+        printf("#");
+    }
+    for (int i = bar_length; i < bar_width; ++i) {
+        printf(" ");
+    }
+    printf("] %.2f%%", progress * 100);
+    fflush(stdout);
+}
+
+// Progress Bar
+void print_progress2(size_t count, size_t max) {
+    const int bar_width = 46;
     float progress = (float) count / max;
     int bar_length = progress * bar_width;
     printf("\r -> [");
