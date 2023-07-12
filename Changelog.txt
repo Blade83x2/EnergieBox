@@ -10,20 +10,16 @@ BUGs
                         
 Anschaffungen
 
-    4x DC 24V -> DC 12V Konverter
-    16x Eltakos für 12Volt
+    3x DC 24V -> DC 12V Konverter
     1x Digitaler Stromzähler
-    1x MCP23017
     1x EP Ever MPPT 100A
     1x PAL-ADP-50AN + Kabel
-    1x Temperatur Sensor Batterie EPEVER
     12x 200W Pannelen
     1x 200 Liter Wassertank
     3x 500W Tauchsieder
     1x Leinwand für Beamer + neue Lampe
     1x Waschmaschine
     1x Trockner
-    1x Teufel Audiosystem
     1x Saug / Wischrobot
     16x Sicherungen für 12V Anschlüsse mit diversen Sicherungen verschiedener Größen
 

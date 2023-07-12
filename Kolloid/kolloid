@@ -60,7 +60,7 @@ elif (( ${size} == 200 )); then
 elif (( ${size} == 400 )); then
     _endPlatte=950; # nicht geprüft: ##################
     if [ $metal == "au" ]; then
-        maxRuntime=900; # 15 minuten ###################
+        maxRuntime=720; # 15 minuten nachjustiert, prüfen
     elif [ $metal == "ag" ]; then
         maxRuntime=420; # 7 minuten ###################
     elif [ $metal == "pt" ]; then
