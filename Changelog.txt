@@ -10,7 +10,7 @@ BUGs
                         
 Anschaffungen
 
-    3x DC 24V -> DC 12V Konverter
+    1x DC 24V -> DC 12V Konverter
     1x Digitaler Stromzähler
     1x EP Ever MPPT 100A
     1x PAL-ADP-50AN + Kabel
@@ -52,7 +52,6 @@ PLANUNG für Version 4
 
  + 12V Relais für Lastenschaltung verfügbar machen
  + Digitaler Stromzähler für 230V
- + Wizzard für Namensvergabe der zu Steuernden Geräte
  + Shunt verbinden mit Mikrocontroller
  + PV auf 5KW erweitern
  + Zweiten Laderegler im Verbund anschliessen
