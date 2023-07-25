@@ -120,25 +120,25 @@ elif [ $metal == "ir" ]; then
     time=$(((($size/4) * 10) * $ppm)); # #################################### ZEIT ERMITTELN !!!!!!
 fi
 
-echo -e "\n .------------------------------------------------------------------------------.";
-echo -e " | Material\\tMenge (ml)\\tPPM\\t\\tKochzeit\\tProduktionszeit |";
+echo -e ".------------------------------------------------------------------------------.";
+echo -e " | Material\\tMenge (ml)\\tPPM\\t\\tKochzeit\\tPlasmazeit |\\t";
 echo -e " |------------------------------------------------------------------------------.";
 echo -e " | ${metal}\\t\\t${size} ml\\t\\t${ppm} PPM\\t\\t$(date -d@$(($_endPlatte)) -u +%H:%M:%S)\\t $(date -d@$(( $time)) -u +%H:%M:%S)\\t|";
 echo -e " *------------------------------------------------------------------------------*\n";
 if [ $metal == "au" ]; then
-    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
+    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand so\n      klein wie möglich einstellen!\n";
 elif [ $metal == "ag" ]; then
-    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
+    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand so \n      klein wie möglich einstellen!\n";
 elif [ $metal == "pt" ]; then
-    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
+    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand so\n      klein wie möglich einstellen!\n";
 elif [ $metal == "pd" ]; then
-    printf "\n > 1) Baren (${metal}) einspannen & Abstand so nah wie möglich einstellen!";
+    printf "\n > 1) Baren (${metal}) einspannen & Abstand so\n      nah wie möglich einstellen!\n";
 elif [ $metal == "ir" ]; then
-    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand so klein wie möglich einstellen!";
+    printf "\n > 1) Elektroden (${metal}) einspannen & Abstand so\n      klein wie möglich einstellen!\n";
 fi
-printf "\n > 2) ${size} ml Borosilikatglas bis zum Rand mit H²O füllen & auf Heizplatte stellen!";
+printf "\n > 2) ${size} ml Borosilikatglas bis zum Rand mit\n      H²O füllen & auf Heizplatte stellen!\n";
 source "$libsPath/elektrodenPosition.sh" || exit 1; 
-printf "\n > Taste drücken um fortzufahren oder beenden mit ctrl+c!";
+printf " > Taste drücken um fortzufahren oder beenden mit ctrl+c!";
 read -n 1 -s -r -p "";
 printf "\n\n";
 clear;
