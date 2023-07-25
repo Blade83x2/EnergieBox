@@ -5,9 +5,7 @@ Energiebox Ver.3 #
 BUGs
 
     230V MCP Kontakte sind locker
-    
-                                            
-                        
+
 Anschaffungen
 
     1x DC 24V -> DC 12V Konverter
@@ -23,21 +21,12 @@ Anschaffungen
     1x Saug / Wischrobot
     16x Sicherungen für 12V Anschlüsse mit diversen Sicherungen verschiedener Größen
 
-    
-    
+
 Todoś
 
-    Handy Anschluss prüfen / reparieren
-    Stromversorgung Filtersystem fertig stellen
     Notaus für Kolloidstation verbauen
-    Überwachungssystem Festplatte tauschen
-    Schalttaffel für 12V neu bauen mit neuen Bauteilen
-    Cam 3 neu positionieren
-    Anschlusskabel 230V Pannel erneuern
     Planne unter PV Module legen wegen Unkraut
-    
 
- 
 _______________________________________________________________________________________________________________________________________
 
 PLANUNG für Version 5
