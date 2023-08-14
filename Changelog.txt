@@ -18,6 +18,7 @@ Anschaffungen
     1x Waschmaschine
     1x Trockner
     1x Saug / Wischrobot
+    1x SSD Adapter
 
 Todoś
 
@@ -41,7 +42,7 @@ PLANUNG für Version 4
  + Shunt verbinden mit Mikrocontroller
  + PV Module auf 5KW erweitern
  + Lithium Batteriepack 2x 24V 200A
-
+ + nVme SSD 1TB einbinden und System von dort starten anstatt von Nand Speicherkarte
 
 
 _______________________________________________________________________________________________________________________________________
