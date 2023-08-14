@@ -8,10 +8,9 @@ BUGs
 
 Anschaffungen
 
-    1x DC 24V -> DC 12V Konverter
     1x Digitaler Stromzähler
-    1x EP Ever MPPT 100A
-    1x PAL-ADP-50AN + Kabel
+    1x EPEVER 5000W 48V Spannungswandler
+    1x Spannungswandler 48V -> 24V (1000 Watt)
     12x 200W Pannelen
     1x 200 Liter Wassertank
     3x 500W Tauchsieder
@@ -19,8 +18,6 @@ Anschaffungen
     1x Waschmaschine
     1x Trockner
     1x Saug / Wischrobot
-    16x Sicherungen für 12V Anschlüsse mit diversen Sicherungen verschiedener Größen
-
 
 Todoś
 
@@ -39,14 +36,13 @@ ________________________________________________________________________________
 
 PLANUNG für Version 4
 
- + 12V Relais für Lastenschaltung verfügbar machen
+
  + Digitaler Stromzähler für 230V
  + Shunt verbinden mit Mikrocontroller
- + PV auf 5KW erweitern
- + Zweiten Laderegler im Verbund anschliessen
+ + PV Module auf 5KW erweitern
  + Lithium Batteriepack 2x 24V 200A
- + Beheizbarer Wassertank
- + 12V Strom auf 100A erhöhen und jeden Abgang extra absichern
+
+
 
 _______________________________________________________________________________________________________________________________________
 
@@ -58,6 +54,7 @@ für den Dauerbetrieb geeignet. Dieser Planungsfehler wurde mit Stromstoß Eltak
 Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontroller wurde gegen das neueste und schnellste Model Raspberry Pi4 mit 8GB Arbeitsspeicher ausgetauscht. Ein LCD Touchdsplay wurde verbaut.
 
 
+ [UPDATE] Neues 12V Brett gebaut mit neuem MCP23017, 16x Relais Module, 16 Finder Lasteneltakos, 80A 12V Wandler, 100A Vorsicherung sowie Sicherungen vor jedem Eltako
  [NEW] USB Verbindung zum Auslesen der Laderegler Daten
  [NEW] Batterie Temperatur Sensor verbaut 
  [UPDATE] h2o Fortschrittsanzeige bei Filterung implementiert
