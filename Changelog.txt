@@ -7,10 +7,14 @@ BUGs
     230V MCP Kontakte sind locker
 
 Anschaffungen
-
+    2x 24V 200Ah Lithium Batterie
+		https://www.amazon.de/gp/product/B0BHT72LSK/ref=ox_sc_act_title_5?smid=A1JO8Q7CCRFD71&psc=1
     1x Digitaler Stromzähler
+		https://www.amazon.de/KETOTEK-Spannungspr%C3%BCfer-Leistungsmesser-Wechselstrom-Maschinenindustrie/dp/B095LYZWYV/ref=sr_1_19_sspa?keywords=einphasen%2Bz%C3%A4hler&qid=1692040117&sprefix=ein%2Bphasen%2Caps%2C91&sr=8-19-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&th=1
     1x EPEVER 5000W 48V Spannungswandler
-    1x Spannungswandler 48V -> 24V (1000 Watt)
+		https://www.amazon.de/gp/product/B09CQ131SP/ref=ox_sc_act_image_1?smid=A3JWKAKR8XB7XF&th=1
+    2x 48V -> 24V(30A) Spannungswandler
+		https://www.amazon.de/gp/product/B0BGPR9D2B/ref=ox_sc_act_title_3?smid=A3FPBEEGWY9PJL&psc=1
     12x 200W Pannelen
     1x 200 Liter Wassertank
     3x 500W Tauchsieder
@@ -30,7 +34,7 @@ ________________________________________________________________________________
 PLANUNG für Version 5
  
  + Grafische Oberfläche für Schaltkreis Steuerung sowie Setup auf 7" Touch Display
- + Schickes abgeschirmtes Gehäuse 
+ + Einbau in Schrank. Nicht mehr Sichtbar
 
 _______________________________________________________________________________________________________________________________________
 
