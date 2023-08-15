@@ -1,9 +1,9 @@
-# ENERGIEBOX Ver. 3 für Raspberry PI 3/4
+# ENERGIEBOX Ver. 3 für Raspberry PI 3/4 32Bit
 
 ### @Copyright 2023 by Johannes a.d.F. K r ä m e r
 
-> Diese Software ist konzipiert für einen Raspberry Pi 3/4 der verbunden ist mit 2 Port Expandern die
-an 32 Relais angeschlossen sind. Diese sollten dann starke Eltako Lastenstromstoßrelais steuern.
+> Diese Software ist konzipiert für einen Raspberry Pi 3/4 32Bit der verbunden ist mit 2 Port Expandern die
+jeweils 16 Relais steuern. Diese sollten dann starke Eltako Lastenstromstoßrelais steuern.
 Als Spannungsquelle ist eine Photovoltaik Anlage mit einem 15 KW Speicher angeschlossen. Die 
 Software beinhaltet ausserdem noch ein Programm zur Wasserfilterung sowie ein Programm zur Kolloid Herstellung.
 Die Programme 12V und 230V schalten die Stromkreise an/aus und prüfen dabei die maximale Belastung.
@@ -13,7 +13,7 @@ Die Programme 12V und 230V schalten die Stromkreise an/aus und prüfen dabei die
 </p>
 
 
-> Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS läuft und
+> Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS 32Bit läuft und
 2 MCP23017 (WAVESHARE, Artikelnummer BO-MCP23017) auf den Adressen 0x22 und 0x27 mit 
 16 fach Relaisplatinen verbunden sind und an Eltakos für Lastenschaltkriese installiert sind. 
 Ein 7" Touchdisplay sollte ebenfalls angeschlossen und eingerichtet sein. 
