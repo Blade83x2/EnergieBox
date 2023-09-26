@@ -3,20 +3,32 @@
 Energiebox Ver.4 #
 ##################
 
+<<<<<<< HEAD
+=======
 BUGs
 
     h2o -clean ctrl+c geht net
 
 
+>>>>>>> 4097c12c69cbd7822a4c201c9b62df4ae175c895
 _______________________________________________________________________________________________________________________________________
 
 PLANUNG für Version 5
- 
+
  + Grafische Oberfläche für Schaltkreis Steuerung sowie Setup auf 7" Touch Display
+<<<<<<< HEAD
+ + Auslesen der MPPT Tracker Daten
  + Eine Art Widget erstellen für die Tagessteuerung der Wohnung
+ + SUMMER installieren
+ + DHT11 installieren
+=======
+ + Eine Art Widget erstellen für die Tagessteuerung der Wohnung
+>>>>>>> 4097c12c69cbd7822a4c201c9b62df4ae175c895
+
 
 _______________________________________________________________________________________________________________________________________
 
+<<<<<<< HEAD
 
 NEUERUNGEN in Version 4
 
@@ -25,6 +37,15 @@ Jeder Schaltkreis kann jetzt belibig mit Sicherungen abgesichert werden. Die Urs
 Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
 
 
+=======
+NEUERUNGEN in Version 4
+
+Die Verfügbare Leistung für 230 Volt hat sich auf 5000 Watt erhöht. Gleichzeitig wurde die Anlage auf 48 Volt umgestellt. In den 12 Volt Schaltungen wurde die Stärke von 20A auf 60A umgestellt.
+Jeder Schaltkreis kann jetzt belibig mit Sicherungen abgesichert werden. Die Ursache für gelegentlichen I2C Verbindungsabrüchen zu den Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können schon zu Störungen kommen.
+Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
+
+
+>>>>>>> 4097c12c69cbd7822a4c201c9b62df4ae175c895
  [UPDATE] Weiterer Full HD Beamer angeschlossen
  [NEW] System wurde auf neueste Hardware kopiert und funktioniert Ordnungsgemäß
  [UPDATE] 5000 Watt 48 Volt EPEVER Spannungswandler eingebaut
