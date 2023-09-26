@@ -22,7 +22,7 @@ char* readStdinLine();
 void replace_char (char *s, char find, char replace);
 
 
-char command[100];
+
 
 // MCP Setup
 typedef struct {
@@ -52,6 +52,7 @@ typedef struct {
     relais_config r15; relais_config r16;
 } configuration;
 
+char command[100];
 char deviceNames[16][40];
 char deviceActiveOnStart[16][6];
 int devicePowerMax[16][4];
@@ -270,7 +271,7 @@ int main(int argc, char**argv) {
                 // Relais einschalten
                 setBit(atoi(argv[1])-1, 0);
                 //  elkoState in config.ini schreiben
-                sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
+                sprintf(command, "sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
                 system(command);
                 sleep(0.6);
                 system("clear && 230V");
@@ -285,7 +286,7 @@ int main(int argc, char**argv) {
             // Relais ausschalten
             setBit(atoi(argv[1])-1, 1);
             //  elkoState in config.ini schreiben
-            sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
+            sprintf(command, "sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
             system(command);
             sleep(0.6);
             system("clear && 230V");
@@ -303,7 +304,7 @@ int main(int argc, char**argv) {
                 // Relais einschalten
                 setBit(atoi(argv[1])-1, 0);
                 //  elkoState in config.ini schreiben
-                sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
+                sprintf(command, "sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
                 system(command);
                 sleep(0.6);
             }
@@ -317,7 +318,7 @@ int main(int argc, char**argv) {
             // Relais ausschalten
             setBit(atoi(argv[1])-1, 1);
             //  elkoState in config.ini schreiben
-            sprintf(command, "sudo sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
+            sprintf(command, "sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
             system(command);
             sleep(0.6);
         }
@@ -454,7 +455,7 @@ void getDataForConfigFile(int relais, void* config) {
         // Leerzeichen Bug
         replace_char (strname, ' ' , '-');
     }
-    sprintf(command, "sudo sh /Energiebox/230V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
+    sprintf(command, "sh /Energiebox/230V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
     system(command);
     sleep(0.5);
     system("clear && 230V");
