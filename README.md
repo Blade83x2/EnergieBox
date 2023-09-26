@@ -50,13 +50,6 @@ oder Sie installieren es bequem mit git clone direkt an die richtige Stelle:
  
 `sudo git clone https://github.com/Blade83x2/EnergieBox.git /Energiebox && sudo chmod -R 755 /Energiebox && cd /Energiebox/WiringPi && sudo ./build && cd .. && cd /Energiebox/230V && sudo make && cd /Energiebox/12V && sudo make && cd /Energiebox/h2o && sudo make && cd /Energiebox/Shutdown && sudo make && cd /Energiebox/Startup && sudo make`
 
-
-
-https://docs.sunfounder.com/projects/ts-7c/en/latest/settings_for_raspberry_pi.html
-
-
-
-
 Mit den folgenden Zeilen werden die Berechtigungen auf die Dateien und Ordner gesetzt:
 
 `sudo chmod 777 /Energiebox/12V/ && sudo chmod 755 /Energiebox/12V/12V && sudo chmod 755 /Energiebox/12V/12V.c && sudo chmod 766 /Energiebox/12V/12V.o && sudo chmod 666 /Energiebox/12V/config.ini && sudo chmod 744 /Energiebox/12V/Makefile && sudo chmod 755 /Energiebox/12V/mymcp23017.c && sudo chmod 755 /Energiebox/12V/mymcp23017.h && sudo chmod 755 /Energiebox/12V/mymcp23017.o && sudo chmod 755 /Energiebox/12V/setConfig.sh && sudo chmod 755 /Energiebox/12V/setIni.sh`
@@ -183,18 +176,7 @@ Das Programm h2o filtert Wasser, kolloid stellt Kolloidale Dispersionen her!
        Relais Nr. 1 bis 16__  |  |      Relais Nr. 1 bis 16__  |  |
                             | |  |                           | |  |
                    $~/  12V 1 1 90                  $~/ 230V 1 1 90       
-                   
-
-
-                   
-    
-    
-    
-    
-    
-    
-    
-    
+     
 Diese Änderung kann ebenfalls wieder mit der Tastenkombination 
 Strg + x gespeichert werden. Nun tippen wir auf der Konsole den Befehl 
 
@@ -202,12 +184,9 @@ Strg + x gespeichert werden. Nun tippen wir auf der Konsole den Befehl
 
 ein und fügen ganz unten am Ende der Datei folgendes ein:
 
-`pinout`
-
 `12V`
 
 `230V`
-
 
 Auch diese Aktion wird wieder mit Strg + x gespeichert.
 
@@ -310,6 +289,16 @@ In diese Datei folgendes kopieren:
 
 Die Grafische Schnittstelle wird nun beim Starten geladen.
 
+Um eine Virtuelle Tastatur auf dem Touchdisplay bei Berührung anzeigen zu lassen, installieren wir mit
+
+`sudo apt-get install onboard && sudo apt-get install at-spi2-core`
+
+die Entsprechenden Packete. Danach rufen wir über Startmenü > Preferences > Onboard Settings die
+Einstellungen auf. Unter General den Hacken bei Auto-show when editing text sowie
+Show when unlocking the screen setzen und speichern. Unter Window setzen wir Dock to screen edge.
+Unter Auto-show Hacken setzem bei Auto-show when editing text.
+Unter Layout wird Small gewählt und unter Theme DarkRoom. Zuletzt alles speichern.
+Die Tastatur muss nach jedem Start aktiviert werden unter Startmenü >Universal Access > Onboard
 
 
 -------------------------------------
