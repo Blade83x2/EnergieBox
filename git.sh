@@ -16,7 +16,9 @@ cd ..
 cd Startup
 sudo make
 cd ..
-
+cd gui
+sudo gcc gui.cpp -o gui $(pkg-config --cflags gtk+-3.0 --libs)
+cd ..
 
 sudo git add -A && sudo git commit -m "$1"
 sudo git push -u origin main

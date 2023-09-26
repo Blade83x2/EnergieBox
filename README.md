@@ -1,8 +1,9 @@
-# ENERGIEBOX Ver. 3 für Raspberry PI 3/4 32Bit
+
+# ENERGIEBOX Ver. 4 für Raspberry PI 4 32Bit
 
 ### @Copyright 2023 by Johannes a.d.F. K r ä m e r
 
-> Diese Software ist konzipiert für einen Raspberry Pi 3/4 32Bit der verbunden ist mit 2 Port Expandern die
+> Diese Software ist konzipiert für einen Raspberry Pi 4 32Bit der verbunden ist mit 2 Port Expandern die
 jeweils 16 Relais steuern. Diese sollten dann starke Eltako Lastenstromstoßrelais steuern.
 Als Spannungsquelle ist eine Photovoltaik Anlage mit einem 15 KW Speicher angeschlossen. Die 
 Software beinhaltet ausserdem noch ein Programm zur Wasserfilterung sowie ein Programm zur Kolloid Herstellung.
@@ -37,7 +38,7 @@ Installation benötigter Pakete      |
 
 Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Installation verschiedener benötigter Pakete:
 
-`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install uwf manpages-de python-dev python3-pip git-core ufw kate krusader -y && sudo pip install rpi.gpio`
+`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install uwf python-dev python3-pip git manpages-de ufw kate krusader mat hwinfo -y && sudo pip install rpi.gpio libgtk-3-dev xterm`
 
 
 -------------------------------------
@@ -45,10 +46,27 @@ Installation Energiebox             |
 -------------------------------------
 
 Die Energiebox können Sie per ZIP Download herunterladen und sollte unbedingt nach /Energiebox kopieren werden
-mit den Rechten 755 oder Sie installieren es bequem mit git clone direkt an die richtige Stelle:
+oder Sie installieren es bequem mit git clone direkt an die richtige Stelle:
  
 `sudo git clone https://github.com/Blade83x2/EnergieBox.git /Energiebox && sudo chmod -R 755 /Energiebox && cd /Energiebox/WiringPi && sudo ./build && cd .. && cd /Energiebox/230V && sudo make && cd /Energiebox/12V && sudo make && cd /Energiebox/h2o && sudo make && cd /Energiebox/Shutdown && sudo make && cd /Energiebox/Startup && sudo make`
- 
+
+
+
+https://docs.sunfounder.com/projects/ts-7c/en/latest/settings_for_raspberry_pi.html
+
+
+
+
+Mit den folgenden Zeilen werden die Berechtigungen auf die Dateien und Ordner gesetzt:
+
+`sudo chmod 777 /Energiebox/12V/ && sudo chmod 755 /Energiebox/12V/12V && sudo chmod 755 /Energiebox/12V/12V.c && sudo chmod 766 /Energiebox/12V/12V.o && sudo chmod 666 /Energiebox/12V/config.ini && sudo chmod 744 /Energiebox/12V/Makefile && sudo chmod 755 /Energiebox/12V/mymcp23017.c && sudo chmod 755 /Energiebox/12V/mymcp23017.h && sudo chmod 755 /Energiebox/12V/mymcp23017.o && sudo chmod 755 /Energiebox/12V/setConfig.sh && sudo chmod 755 /Energiebox/12V/setIni.sh`
+
+`sudo chmod 777 /Energiebox/230V/ && sudo chmod 755 /Energiebox/230V/230V && sudo chmod 755 /Energiebox/230V/230V.c && sudo chmod 766 /Energiebox/230V/230V.o && sudo chmod 666 /Energiebox/230V/config.ini && sudo chmod 744 /Energiebox/230V/Makefile && sudo chmod 755 /Energiebox/230V/mymcp23017.c && sudo chmod 755 /Energiebox/230V/mymcp23017.h && sudo chmod 755 /Energiebox/230V/mymcp23017.o && sudo chmod 755 /Energiebox/230V/setConfig.sh && sudo chmod 755 /Energiebox/230V/setIni.sh` 
+
+`sudo chmod 777 /Energiebox/h2o/ && sudo chmod 666 /Energiebox/h2o/config.ini && sudo chmod 755 /Energiebox/h2o/h2o && sudo chmod 755 /Energiebox/h2o/setIni.sh && sudo chmod 755 /Energiebox/h2o/h2o.c && sudo chmod 755 /Energiebox/h2o/h2o.o  && sudo chmod 744 /Energiebox/h2o/Makefile`
+
+`sudo chmod 777 /Energiebox/img/ && sudo chmod 777 /Energiebox/Kolloid/ && sudo chmod 777 /Energiebox/gui/`
+
  
 -------------------------------------
 Raspi Konfiguration                 |
@@ -73,7 +91,8 @@ Danach wählen wir einen anderen Benutzernamen um die Sicherheit zu erhöhen. Hi
 `sudo rename-user`
 
 ein und starten den Raspberry dann neu. Nach dem Hochfahren kommt eine Grafische Oberfläche wo der
-Benutzer geändert werden kann.
+Benutzer geändert werden kann. Wir haben uns für den Benutzer `box` entschieden!
+
 Als nächstes wird der Raspberry konfiguriert damit die Hardware entsprechend zusammen Arbeiten kann.
 WLAN sowie Bluetooth werden ausgeschaltet und das System bekommt einen festen Kabelanschluss für die
 Internet Verbindung damit Sie die Eltakos über das Internet steuern können. Hierzu wird der Befehl
@@ -101,7 +120,14 @@ Namen EnergieBox.
 Danach gehen wir in System Options -> Boot / Autologin rein und wählen dort Desktop Autologin aus.
 
 Nun wählen wir das Menü Performance -> GPU Memory aus. Hier tippen wir den Wert 256 ein und bestätigen
-dies mit einem Klick auf OK. Da wir nun fertig sind wählen wir als letztes Finish
+dies mit einem Klick auf OK. 
+
+Als letztes den Serial Port einschalten fürs Auslesen der RS-485 Schnittstelle. Dazu im Menu Interface Options den Serial Port auswählen.
+Bei der Frage ob eine Login Shell aktiviert werden soll, No/Nein wählen und bei der nächsten Frage ob der Serial Port eingeschaltet werden soll
+Yes/Ja wählen.
+
+
+Da wir nun fertig sind wählen wir als letztes Finish aus dem Hauptmenu
 und starten den Raspberry mit sudo reboot neu um die Einstellungen zu übernehmen.
 
 Nach dem Neustart öffnen wir wieder ein Terminal und setzen den Befehl
@@ -139,7 +165,7 @@ aufrufen und alles was in dieser Datei steht wird ersetzt mit:
                 |  _| | '_ \ / _ \ '__/ _` | |/ _ \  _ \ / _ \ \/ /
                 | |___| | | |  __/ | | (_| | |  __/ |_) | (_) >  <
                 |_____|_| |_|\___|_|  \__, |_|\___|____/ \___/_/\_\
-                                      |___/ V 3.0 by Johannes Krämer
+                                      |___/ V 4.0 by Johannes Krämer
 
 
 Von Hier aus kann die gesamelte Sonnenenergie über Relais verteilt werden.
@@ -175,6 +201,8 @@ Strg + x gespeichert werden. Nun tippen wir auf der Konsole den Befehl
 `sudo nano ~/.bashrc`
 
 ein und fügen ganz unten am Ende der Datei folgendes ein:
+
+`pinout`
 
 `12V`
 
@@ -256,6 +284,34 @@ Dies geschieht mit folgendem Terminal Befehl:
 `sudo systemctl enable rcshutdown.service`
 
 
+----------
+
+Wenn der Raspberry hoch gefahren wird, lassen wir eine Grafische Oberfläche starten damit per Tastendruck alles gesteuert werden kann.
+Dieser Schritt muss für jeden Benutzer separat gemacht werden wenn das Programm gestartet werden soll beim booten.
+
+
+
+Autostart Ordner erstellen (Zeigt Fehlermeldung wenn er bereits existiert)
+
+`mkdir ~/.config/autostart`
+
+Autostart Datei erstellen
+
+`sudo nano ~/.config/autostart/energiebox-gui.desktop`
+
+In diese Datei folgendes kopieren:
+
+`[Desktop Entry]`
+`Name=EnergieBox GUI`
+`Comment=Grafische Oberfläche zum steuern der Relais`
+`Type=Application`
+`Exec=/Energiebox/gui/gui`
+`Terminal=false`
+
+Die Grafische Schnittstelle wird nun beim Starten geladen.
+
+
+
 -------------------------------------
 PATH Variablen                      |
 -------------------------------------  
@@ -278,6 +334,7 @@ wieder ab mit Strg + x:
 
 `PATH=$PATH:/Energiebox/h2o`
 
+`PATH=$PATH:/Energiebox/gui`
 
 -------------------------------------
 IP Setup & DynDNS Einrichtung       |

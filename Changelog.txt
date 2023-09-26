@@ -1,56 +1,41 @@
+
 ##################
-Energiebox Ver.3 #
+Energiebox Ver.4 #
 ##################
 
 BUGs
 
-    230V MCP Kontakte sind locker
+    h2o -clean ctrl+c geht net
 
-Anschaffungen
-    2x 24V 200Ah Lithium Batterie
-		https://www.amazon.de/gp/product/B0BHT72LSK/ref=ox_sc_act_title_5?smid=A1JO8Q7CCRFD71&psc=1
-    1x Digitaler Stromzähler
-		https://www.amazon.de/KETOTEK-Spannungspr%C3%BCfer-Leistungsmesser-Wechselstrom-Maschinenindustrie/dp/B095LYZWYV/ref=sr_1_19_sspa?keywords=einphasen%2Bz%C3%A4hler&qid=1692040117&sprefix=ein%2Bphasen%2Caps%2C91&sr=8-19-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&th=1
-    1x EPEVER 5000W 48V Spannungswandler
-		https://www.amazon.de/gp/product/B09CQ131SP/ref=ox_sc_act_image_1?smid=A3JWKAKR8XB7XF&th=1
-    2x 48V -> 24V(30A) Spannungswandler
-		https://www.amazon.de/gp/product/B0BGPR9D2B/ref=ox_sc_act_title_3?smid=A3FPBEEGWY9PJL&psc=1
-    12x 200W Pannelen
-    1x 200 Liter Wassertank
-    3x 500W Tauchsieder
-    1x Leinwand für Beamer + neue Lampe
-    1x Waschmaschine
-    1x Trockner
-    1x Saug / Wischrobot
-    1x SSD Adapter
-		https://www.amazon.de/dp/B0B55TQMFJ/ref=emc_b_5_i
-		https://www.amazon.de/gp/product/B0BBL1CSMH/ref=ox_sc_act_image_1?smid=A2PBQMPS4N8CJ2&psc=1
-Todoś
-
-    Notaus für Kolloidstation verbauen
-    Planne unter PV Module legen wegen Unkraut
 
 _______________________________________________________________________________________________________________________________________
 
 PLANUNG für Version 5
  
  + Grafische Oberfläche für Schaltkreis Steuerung sowie Setup auf 7" Touch Display
- + Einbau in Schrank. Nicht mehr Sichtbar
+ + Eine Art Widget erstellen für die Tagessteuerung der Wohnung
 
 _______________________________________________________________________________________________________________________________________
 
 
-PLANUNG für Version 4
+NEUERUNGEN in Version 4
+
+Die Verfügbare Leistung für 230 Volt hat sich auf 5000 Watt erhöht. Gleichzeitig wurde die Anlage auf 48 Volt umgestellt. In den 12 Volt Schaltungen wurde die Stärke von 20A auf 60A umgestellt.
+Jeder Schaltkreis kann jetzt belibig mit Sicherungen abgesichert werden. Die Ursache für gelegentlichen I2C Verbindungsabrüchen zu den Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können schon zu Störungen kommen.
+Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
 
 
- + Digitaler Stromzähler für 230V
- + Shunt verbinden mit Mikrocontroller
- + PV Module auf 5KW erweitern
- + Lithium Batteriepack 2x 24V 200A
- + nVme SSD 1TB einbinden und System von dort starten anstatt von Nand Speicherkarte
-
-
-_______________________________________________________________________________________________________________________________________
+ [UPDATE] Weiterer Full HD Beamer angeschlossen
+ [NEW] System wurde auf neueste Hardware kopiert und funktioniert Ordnungsgemäß
+ [UPDATE] 5000 Watt 48 Volt EPEVER Spannungswandler eingebaut
+ [UPDATE] Gesamte Elektronik wurde mit Höchster Sorgfallt in einen Schrank eingebaut. Kabel liegen hinter der Elektronik. Alle Kabel wurden in Kabelkanäle gelegt
+ [UPDATE] Beim booten wird jetzt die Grafische Benutzeroberfläche gestartet. Alles andere wird ausgeblendet
+ [NEW] Am 230V Stromkreis ist nun ein Digitaler Stromzähler eingebaut der Frequenz, Spannung, Stromstärke sowie Leistung anzeigt
+ [UPDATE] Neues 12V Brett gebaut mit neuem MCP23017, 16x Relais Module, 16 Finder Lasteneltakos, 80A 12V Wandler, 100A Vorsicherung
+ [NEW] Jeder 12V Schaltkreis ist jetzt einzeln abgesichert mit einer entsprechenden Sicherung
+ [UPDATE] Betriebssystem wird jetzt von 1TB SSD M.2 geladen
+ [NEW] 1TB NVMe SSD M.2 PCIe Gen3x4 verbaut
+ [NEW] SSD M.2 Adapter verbaut
 
 
 NEUERUNGEN in Version 3
@@ -59,9 +44,6 @@ Bei dieser Version ist die gesamte Anlage schon 5 Monate am Stück gelaufen und 
 für den Dauerbetrieb geeignet. Dieser Planungsfehler wurde mit Stromstoß Eltakos behoben! Die Sicherung wurde deutlich erhöht. 
 Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontroller wurde gegen das neueste und schnellste Model Raspberry Pi4 mit 8GB Arbeitsspeicher ausgetauscht. Ein LCD Touchdsplay wurde verbaut.
 
-
- [UPDATE] Neues 12V Brett gebaut mit neuem MCP23017, 16x Relais Module, 16 Finder Lasteneltakos, 80A 12V Wandler, 100A Vorsicherung sowie Sicherungen vor jedem Eltako
- [NEW] USB Verbindung zum Auslesen der Laderegler Daten
  [NEW] Batterie Temperatur Sensor verbaut 
  [UPDATE] h2o Fortschrittsanzeige bei Filterung implementiert
  [UPDATE] h2o -clean Fortschrittsanzeige implementiert
