@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h> // atoi()
+
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "mymcp23017.h"
@@ -321,7 +322,7 @@ int main(int argc, char**argv) {
                          // Relais schalten 
                          setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais einschalten 
                         //  elkoState in config.ini schreiben
-                         sprintf(command, "sudo sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
+                         sprintf(command, "sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
                          sleep(0.6);
                          system("clear && 12V");
@@ -337,7 +338,7 @@ int main(int argc, char**argv) {
                          // Relais ausschalten
                          setBit(atoi(argv[1])-1, 1); // Relais ausschalten 
                          //  elkoState in config.ini schreiben
-                         sprintf(command, "sudo sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
+                         sprintf(command, "sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
                          sleep(0.6);
                          system("clear && 12V");
@@ -358,7 +359,7 @@ int main(int argc, char**argv) {
                          // impuls für Elko 
                          setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais einschalten 
                          //  elkoState in config.ini schreiben
-                         sprintf(command, "sudo sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
+                         sprintf(command, "sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
                          sleep(0.6);
                      }
@@ -371,7 +372,7 @@ int main(int argc, char**argv) {
                 else {
                         // wenn ausgeschaltet wird 
                          //  elkoState in config.ini schreiben
-                         sprintf(command, "sudo sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
+                         sprintf(command, "sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
                          sleep(0.6);
                          setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
@@ -501,7 +502,7 @@ void getDataForConfigFile(int relais, void* config) {
         // Leerzeichen Bug, Aus " " müssen "-" gemacht werden sonst wird nicht richtig gespeichert.
         replace_char (strname, ' ' , '-');
     }
-    sprintf(command, "sudo sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
+    sprintf(command, "sh /Energiebox/12V/setConfig.sh %d %s %s %s", relais, strname, stractivateOnStart, strpMax);
     system(command);
     sleep(0.5);
     system("clear && 12V");
