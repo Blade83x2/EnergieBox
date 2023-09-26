@@ -1,5 +1,5 @@
 /*
- * Controller & Management Software for H2O Osmose Filters  
+ * Controller & Management Software for H2O Osmose Filters
  * Vendor: Johannes Krämer
  * Version: 1.0
  * Date: 15.05.2023
@@ -17,10 +17,10 @@
 
 
 // 12V Relais Nr. für Pumpe & Boosterpumpe
-int pumpeRelaisNr = 6;
+int pumpeRelaisNr = 16;
 
 // Filterleistung der Anlage in GPD
-int gpd = 75;
+int gpd = 50;
 
 // Warnung ab x Liter Filterleistung (Für Filtertausch Information)
 float warnLimitAbFilterMenge = 1000.f;
@@ -200,7 +200,7 @@ int main(int argc, char* argv[]) {
             // Prüfen ob Abwasser Menge + Kannisterinhalt nicht mehr als maximale Füllmenge ist
             if( (abwasserMenge + aktuellesGesameltesAbwasser) <= maxLiterAbwasserKanister) {
                 // Neue Gesammelt Abwassermenge in Konfiguration speichern
-                sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", (aktuellesGesameltesAbwasser+abwasserMenge), (gesamteFilterMengeInLiter+filterMenge), pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);
+                sprintf(command, "sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", (aktuellesGesameltesAbwasser+abwasserMenge), (gesamteFilterMengeInLiter+filterMenge), pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);
                 system(command);
                 // filter nach einer Sekunde einschalten
                 sprintf(command, "12V %d 1 1", pumpeRelaisNr);
@@ -262,7 +262,7 @@ void changeFilter() {
     printf("\n\n -> Wurde der Sedimentfilter & Aktivkohlefilter sowie die Membrane gewechselt? Y/N: ");
     scanf("%c", &answerchange);
     if (answerchange == 'Y' || answerchange == 'y' || answerchange == 'J' || answerchange == 'j'){
-        sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", aktuellesGesameltesAbwasser, 0.f, pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);        
+        sprintf(command, "sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", aktuellesGesameltesAbwasser, 0.f, pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);        
         system(command);
     }
 }
@@ -309,7 +309,7 @@ void setup() {
         int p7;
         printf("-> Wieviele Sekunden sollen bei einer Spüllung gespüllt werden?: ");
         scanf("%d", &p7);  
-        sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", 0.f, 0.f, p1, p2, (float)p3, p4, p5, (float)p6, p7);        
+        sprintf(command, "sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", 0.f, 0.f, p1, p2, (float)p3, p4, p5, (float)p6, p7);        
         system(command);
     }
 }
@@ -378,7 +378,7 @@ void clearSystem() {
             system(command);
             printf("\n -> Reinigung beendet!\n");
             // Neue Gesammelt Abwassermenge in Konfiguration speichern
-            sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", (abwasserMenge + aktuellesGesameltesAbwasser), (gesamteFilterMengeInLiter), pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);
+            sprintf(command, "sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", (abwasserMenge + aktuellesGesameltesAbwasser), (gesamteFilterMengeInLiter), pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);
             system(command);
             printf(" -> Ventil auf normal Betrieb umstellen!\n\n");
         }
@@ -435,7 +435,7 @@ void abwasserZaehlerReset() {
         if (ini_parse("/Energiebox/h2o/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/h2o/config.ini'\n"); }
         gesamteFilterMengeInLiter = config.h2o.gesamteFilterMengeInLiter;
         // Wenn ja, ini auf 0 setzen       
-        sprintf(command, "sudo sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", 0.f, gesamteFilterMengeInLiter,    pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);        
+        sprintf(command, "sh /Energiebox/h2o/setIni.sh %f %f %d %d %f %d %d %f %d", 0.f, gesamteFilterMengeInLiter,    pumpeRelaisNr, gpd, warnLimitAbFilterMenge, filterZeitFuerNullKommaEinsLiterInSekunden, faktorGefiltertZuAbwasser, maxLiterAbwasserKanister, reinigungszeitInSekunden);        
         system(command);
         printf(" -> Abwasser Tank auf 0 Liter eingestellt!\n\n");
     }
@@ -458,16 +458,7 @@ void showLogo() {
     printf("  | |_| | __) | | | | \n");
     printf("  |  _  |/ __/| |_| | \n");
     printf("  |_| |_|_____|\\___/  \n");
-    printf("\n \n"); 
-    printf("    ____ _\n");
-    printf("   / ___| | ___  __ _ _ __ \n");
-    printf("  | |   | |/ _ \\/ _\' | \'_ \\   \n");
-    printf("  | |___| |  __/ (_| | | | |  \n");
-    printf("   \\____|_|\\___|\\__,_|_| |_|  \n");
-
-
-
-
+    printf("\n");
 }
 
 
