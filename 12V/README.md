@@ -38,7 +38,7 @@ können verwendet werden damit die Konsole wieder sofort verfügbar ist.
     <img src="img/set_time.png" style="width: 40%;" alt="Relais Status von Relais Nr. 4 nach 300 Sekunden ausschalten" >
 </p><br><br>
 Wenn ein Relais Eintrag verändert werden soll, z.B. Name, Leistungsaufnahme oder Automatisches Einschalten beim Starten,
-dann kann der Befehl <code>12V -set 3</code> verwendet werden. Hier würde jetzt das Relais Nr. 3 bearbeitet werden!
+dann kann der Befehl <code>12V -set 5</code> verwendet werden. Hier würde jetzt das Relais Nr. 5 bearbeitet werden!
 <br><br>
 <p align="left"> 
     <img src="img/set_menu.png" style="width: 70%;" alt="Relais Eintrag anpassen" >
