@@ -7,6 +7,12 @@ angefragte Last verfügbar ist um Überlasten abzufangen.
 Ein Timer zum schalten sowie eine Benutzerfreundliche Konfiguration
 der Endverbraucher ist ebenfalls implementiert!
 <br>
+<br>
+Die Eingabe des Befehls
+
+`12V`
+
+zeigt eine Liste an:<br><br>
 <p align="center"> 
     <img src="img/main.png" style="width: 70%;" alt="12V" >
 </p>
