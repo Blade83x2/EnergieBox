@@ -39,6 +39,7 @@ können verwendet werden damit die Konsole wieder sofort verfügbar ist.
 </p><br><br>
 Wenn ein Relais Eintrag verändert werden soll, z.B. Name, Leistungsaufnahme oder Automatisches Einschalten beim Starten,
 dann kann der Befehl <code>12V -set 5</code> verwendet werden. Hier würde jetzt das Relais Nr. 5 bearbeitet werden!
+Es sollte nicht vergessen werden das an der 12V Schalttaffel eine entsprechende Sicherung eingesetzt werden muss!
 <br><br>
 <p align="left"> 
     <img src="img/set_menu.png" style="width: 70%;" alt="12V Gerät konfigurieren" >
@@ -49,7 +50,7 @@ Eine kleine Hilfe gibt es auch. Ungültige Parameterübergabe oder das Aufrufen 
     <img src="img/help.png" style="width: 70%;" alt="12V Hilfe anzeigen" >
 </p><br><br>
 
-hgh
+Falls Programm Variablen angepasst werden müssen, kann das über <code>nano /EnergieBox/12V/config.ini</code> realisiert werden.
 <br><br>
 <p align="left"> 
     <img src="img/config.png" style="width: 70%;" alt="12V config.ini anpassen" >
