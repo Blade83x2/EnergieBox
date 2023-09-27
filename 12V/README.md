@@ -23,8 +23,17 @@ anderem Programm ausgelesen werden muss, kann dieser Wert z.B.
 </p><br>
 Der Status des Relais ist nun in der Datei status.txt gespeichert!
 Falls ein Relais geschaltet werden soll, so kann das mit dem Befehl  
-<code>12V 4 1</code> bewerkstelligt werden. Nach dem absetzen des Befehls wird wieder die Liste angezeigt!
+<code>12V 4 1</code> bewerkstelligt werden. Die 4 steht für die Relais Nummer und die
+1 für den gewünschten Zustand (Möglich: 0/1). Nach dem absetzen des Befehls wird wieder die Liste angezeigt!
 <br><br>
 <p align="left"> 
     <img src="img/set.png" style="width: 40%;" alt="Relais Status von Relais Nr. 4 einschalten" >
+</p><br>
+<br>
+Um ein Relais von einer Zeitschaltuhr steuern zu lassem, kann der Befehl <code>12V 4 0 300 & disown</code> verwendet 
+werden. In diesem Beispiel würde das Relais Nr. 4 ausgeschaltet werden nach 300 Sekunden. Die Parameter <code>& disown</code>
+können verwendet werden damit die Konsole wieder sofort verfügbar ist.
+<br><br>
+<p align="left"> 
+    <img src="img/set_time.png" style="width: 40%;" alt="Relais Status von Relais Nr. 4 nach 300 Sekunden ausschalten" >
 </p><br>
