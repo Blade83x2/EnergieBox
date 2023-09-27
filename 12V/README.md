@@ -52,9 +52,9 @@ Falls Programm Variablen angepasst werden müssen, kann das über <code>nano /En
 In dieser Datei muss der Hexadezimalwert als Adresse vom Port Expander vergeben werden. Dieser setzt sich zusammen aus der
 gesetzten Jumper Konfiguration auf dem Expander selber. Jede Adresse darf nur einmal pro I²C Kanal vergeben sein.
 Für maxPConverter muss die Maximale Ausgangsleistung der Spannungswandler in Watt angegeben werden.
-
-
-<br>
+Mit der Variable maxPMicroController wird der Leistungsverbrauch der Elektronik selber in Watt angegeben da diese ebenfalls
+von den 12V Spannungswandlern versorgt wird!
+<br><br>
 <p align="left"> 
     <img src="img/config.png" style="width: 70%;" alt="12V config.ini anpassen" >
 </p><br>
