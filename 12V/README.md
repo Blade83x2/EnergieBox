@@ -29,21 +29,20 @@ Falls ein Relais geschaltet werden soll, so kann das mit dem Befehl
 <p align="left"> 
     <img src="img/set.png" style="width: 40%;" alt="Relais Status von Relais Nr. 4 einschalten" >
 </p><br>
-<br>
 Um ein Relais von einer Zeitschaltuhr steuern zu lassem, kann der Befehl <code>12V 4 0 300 & disown</code> verwendet 
 werden. In diesem Beispiel würde das Relais Nr. 4 ausgeschaltet werden nach 300 Sekunden. Die Parameter <code>& disown</code>
 können verwendet werden damit die Konsole wieder sofort verfügbar ist.
 <br><br>
 <p align="left"> 
     <img src="img/set_time.png" style="width: 40%;" alt="Relais Status von Relais Nr. 4 nach 300 Sekunden ausschalten" >
-</p><br><br>
+</p><br>
 Wenn ein Relais Eintrag verändert werden soll, z.B. Name, Leistungsaufnahme oder Automatisches Einschalten beim Starten,
 dann kann der Befehl <code>12V -set 5</code> verwendet werden. Hier würde jetzt das Relais Nr. 5 bearbeitet werden!
 Es sollte nicht vergessen werden das an der 12V Schalttaffel eine entsprechende Sicherung eingesetzt werden muss!
 <br><br>
 <p align="left"> 
     <img src="img/set_menu.png" style="width: 70%;" alt="12V Gerät konfigurieren" >
-</p><br><br>
+</p><br>
 Eine kleine Hilfe gibt es auch. Ungültige Parameterübergabe oder das Aufrufen von <code>12V -h</code> lässt die Hilfe erscheinen!
 <br><br>
 <p align="left"> 
