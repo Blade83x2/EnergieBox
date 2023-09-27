@@ -29,7 +29,7 @@ Ein 7" Touchdisplay sollte ebenfalls angeschlossen und eingerichtet sein.
 4) PATH Variablen setzen
 5) DynDNS Einrichtung für Mobile App Zugriff
 6) Firewall einstellen
-7) GPIO Zustände beim starten
+7) HTTP, HTTPS, MySQL + PHPmyAdmin installation
 
 
 -------------------------------------
@@ -409,22 +409,29 @@ Im neuen Fenster Ja wählen
 
 
 -------------------------------------
-GPIO Zustände                       |
--------------------------------------  
+ Webserver installation             |
+------------------------------------- 
 
-Da wir in der Energiebox 32 Kanäle und somit 32 Stromkreise schalten, haben wir
-uns natürlich für PortExpander entschieden die über I2C verbunden sind.
-Falls es jedoch mal notwendig sein sollte, einen einzelnen GPIO Kanal zu schalten, der 
-hat hier ein Beispiel für das Setzen der GPIO Direction (in/out) sowie für den Wert (nur bei out):
+  sudo apt install apache2 -y
+  sudo apt install php -y
+  sudo service apache2 restart
+  sudo ufw allow 80
+  sudo ufw allow 443
+  sudo apt install mariadb-server php-mysql -y
+  sudo service apache2 restart
+  sudo mysql_secure_installation
+  sudo apt install phpmyadmin -y
+  sudo phpenmod mysqli
+  sudo service apache2 restart
+  sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
+  sudo chown -R box:www-data /var/www/html/
+  sudo chmod -R 770 /var/www/html/
+  sudo service apache2 stop
+  sudo apt install python3-certbot-apache
+  sudo certbot --apache
+  sudo service apache2 restart
 
-`sudo nano /etc/rc.local`
-                   
-`sleep 0.1`
+ 
 
-`echo "20" > /sys/class/gpio/export`
-
-`sleep 0.1`
-
-`echo "out" > /sys/class/gpio/gpio20/direction`
-
-`echo "1" > /sys/class/gpio/gpio20/value`
+sudo crontab -e
+ 33 3 */2 * 7 certbot renew > /dev/null 2>&1
