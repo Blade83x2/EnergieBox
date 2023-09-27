@@ -23,10 +23,7 @@ anderem Programm ausgelesen werden muss, kann dieser Wert z.B.
 </p><br>
 Der Status des Relais ist nun in der Datei status.txt gespeichert!
 Falls ein Relais geschaltet werden soll, so kann das mit dem Befehl  
-
-`12V 4 1`  
-
-bewerkstelligt werden. Nach dem absetzen des Befehls wird wieder die Liste angezeigt!
+`12V 4 1`  bewerkstelligt werden. Nach dem absetzen des Befehls wird wieder die Liste angezeigt!
 <br><br>
 <p align="center"> 
     <img src="img/set.png" style="width: 40%;" alt="Relais Status von Relais Nr. 4 einschalten" >
