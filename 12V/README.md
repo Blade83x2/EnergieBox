@@ -39,12 +39,15 @@ können verwendet werden damit die Konsole wieder sofort verfügbar ist.
 </p><br><br>
 Wenn ein Relais Eintrag verändert werden soll, z.B. Name, Leistungsaufnahme oder Automatisches Einschalten beim Starten,
 dann kann der Befehl <code>12V -set 5</code> verwendet werden. Hier würde jetzt das Relais Nr. 5 bearbeitet werden!
-<br><br>
+><br>
+<p align="left"> 
+    <img src="img/set_menu.png" style="width: 70%;" alt="12V Gerät konfigurieren" >
+</p><br><br>
+Eine kleine Hilfe gibt es auch. Ungültige Parameterübergabe oder das Aufrufen von <code>12V -h</code> lässt die Hilfe erscheinen!
+><br>
 <p align="left"> 
     <img src="img/help.png" style="width: 70%;" alt="12V Hilfe anzeigen" >
 </p><br><br>
-Eine kleine Hilfe gibt es auch. Ungültige Parameterübergabe oder das Aufrufen von <code>12V -h</code> lässt die Hilfe erscheinen!
-
 
 
 
