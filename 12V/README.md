@@ -16,7 +16,7 @@ Die Eingabe des Befehls `12V` zeigt eine Liste an:<br><br>
 <br><br>
 Falls ein Relais Status (0 oder 1) von einem Relais von einem
 anderem Programm ausgelesen werden muss, kann dieser Wert z.B. 
-über den Pipe oder >> Oberator übergeben werden:
+über den | oder >> Operator übergeben werden:
 <br><br>
 <p align="left"> 
     <img src="img/statusRelais.png" style="width: 40%;" alt="Relais Status von Relais Nr. 4" >
