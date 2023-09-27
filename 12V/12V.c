@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h> // atoi()
-
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "mymcp23017.h"
@@ -274,10 +273,6 @@ int main(int argc, char**argv) {
        || signal(SIGBUS,sigfunc) == SIG_ERR
     ) { fprintf(stderr, "Signal Fehler!\n"); }
     // Test Signal senden
-    //if (raise(SIGBUS) != 0) { printf("Error while raising the SIGTERM signal.\n"); exit(EXIT_FAILURE); }
-
-    
-    
     configuration config;
     if (ini_parse("/Energiebox/12V/config.ini", handler, &config) < 0) { fprintf(stderr, "Can't load '/Energiebox/12V/config.ini\n"); return 1; }
     if(wiringPiSetup()<0) { fprintf(stderr, "wiringPiSetup error!!!\n"); return -1; }
@@ -321,7 +316,7 @@ int main(int argc, char**argv) {
                     if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxPConverter) {
                          // Relais schalten 
                          setBit(atoi(argv[1])-1, atoi(argv[2])==1?0:1); // Relais einschalten 
-                        //  elkoState in config.ini schreiben
+                         // elkoState in config.ini schreiben
                          sprintf(command, "sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
                          sleep(0.6);
@@ -334,7 +329,7 @@ int main(int argc, char**argv) {
                     }
               }
                 else {
-                        // wenn ausgeschaltet wird
+                         // wenn ausgeschaltet wird
                          // Relais ausschalten
                          setBit(atoi(argv[1])-1, 1); // Relais ausschalten 
                          //  elkoState in config.ini schreiben
@@ -349,7 +344,7 @@ int main(int argc, char**argv) {
         if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config) || !checkMainParameter("relaisTime", atoi(argv[3]), &config )) {
             return showHelp(argv, &config);
         }
-       // wenn gewünschter relaiszustand und config stand gleich sind, nix machen
+        // wenn gewünschter relaiszustand und config stand gleich sind, nix machen
         if(atoi(argv[2]) != getElkoState(atoi(argv[1]), &config)){ 
             sleep(atoi(argv[3]));
             // wenn eingeschaltet wird
@@ -370,7 +365,7 @@ int main(int argc, char**argv) {
                     }
                 }
                 else {
-                        // wenn ausgeschaltet wird 
+                         // wenn ausgeschaltet wird 
                          //  elkoState in config.ini schreiben
                          sprintf(command, "sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                          system(command);
