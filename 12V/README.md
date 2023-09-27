@@ -4,7 +4,9 @@ Dieses Programm schaltet maximal 16 Eltakos für 12Volt Stromkreise.
 Die Stromstärke beträgt derzeit 90 Ampere bei 12 Volt (1080 Watt).
 Beim Einschalten eines Gerätes wird geprüft, ob die Notwendige 
 angefragte Last verfügbar ist um Überlasten abzufangen.
-
+Ein Timer zum schalten sowie eine Benutzerfreundliche Konfiguration
+der Endverbraucher ist ebenfalls implementiert!
+<br>
 <p align="center"> 
     <img src="img/main.png" style="width: 70%;" alt="12V" >
 </p>
