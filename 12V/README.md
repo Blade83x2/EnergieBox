@@ -11,7 +11,7 @@ der Endverbraucher ist ebenfalls implementiert!
 <br>
 Die Eingabe des Befehls `12V` zeigt eine Liste an:<br><br>
 <p align="center"> 
-    <img src="img/main.png" style="width: 70%;" alt="12V" >
+    <img src="img/main.png" style="width: 70%;" alt="12V" >Der Status des Relais ist nun in der Datei status.txt gespeichert! Falls ein Relais geschaltet werden soll, so kann das mit dem Befehl `12V 4 1` 
 </p>
 <br><br>
 Falls ein Relais Status (0 oder 1) von einem Relais von einem
@@ -23,7 +23,9 @@ anderem Programm ausgelesen werden muss, kann dieser Wert z.B.
 </p><br>
 Der Status des Relais ist nun in der Datei status.txt gespeichert!
 Falls ein Relais geschaltet werden soll, so kann das mit dem Befehl  
-`12V 4 1`    
+
+`12V 4 1`  
+
 bewerkstelligt werden. Nach dem absetzen des Befehls wird wieder die Liste angezeigt!
 <br><br>
 <p align="center"> 
