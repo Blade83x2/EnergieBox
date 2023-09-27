@@ -51,10 +51,10 @@ Eine kleine Hilfe gibt es auch. Ungültige Parameterübergabe oder das Aufrufen 
 Falls Programm Variablen angepasst werden müssen, kann das über <code>nano /Energiebox/12V/config.ini</code> realisiert werden.
 In dieser Datei muss der Hexadezimalwert als Adresse vom Port Expander vergeben werden. Dieser setzt sich zusammen aus der
 gesetzten Jumper Konfiguration auf dem Expander selber. Jede Adresse darf nur einmal pro I²C Kanal vergeben sein.
+Für maxPConverter muss die Maximale Ausgangsleistung der Spannungswandler in Watt angegeben werden.
 
 
-
-<br><br>
+<br>
 <p align="left"> 
     <img src="img/config.png" style="width: 70%;" alt="12V config.ini anpassen" >
 </p><br>
