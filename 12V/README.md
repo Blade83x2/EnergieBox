@@ -10,7 +10,7 @@ der Endverbraucher ist ebenfalls implementiert!
 <br>
 <br>
 Die Eingabe des Befehls `12V` zeigt eine Liste an:<br><br>
-<p align="center"> 
+<p align="left"> 
     <img src="img/main.png" style="width: 70%;" alt="12V" >
 </p>
 <br><br>
@@ -41,8 +41,9 @@ Wenn ein Relais Eintrag verändert werden soll, z.B. Name, Leistungsaufnahme ode
 dann kann der Befehl <code>12V -set 5</code> verwendet werden. Hier würde jetzt das Relais Nr. 5 bearbeitet werden!
 <br><br>
 <p align="left"> 
-    <img src="img/set_menu.png" style="width: 70%;" alt="Relais Eintrag anpassen" >
+    <img src="img/help.png" style="width: 70%;" alt="12V Hilfe anzeigen" >
 </p><br><br>
+Eine kleine Hilfe gibt es auch. Ungültige Parameterübergabe oder das Aufrufen von <code>12V -h</code> lässt die Hilfe erscheinen!
 
 
 
