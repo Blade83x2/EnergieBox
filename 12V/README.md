@@ -20,5 +20,5 @@ anderem Programm ausgelesen werden muss, kann dieser Wert z.B.
 <br><br>
 <p align="center"> 
     <img src="img/statusRelais.png" style="width: 40%;" alt="Relais Status von Relais Nr. 4" >
-</p>
+</p><br><br>
 Der Status des Relais ist nun in der Datei status.txt gespeichert!
