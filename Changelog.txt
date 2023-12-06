@@ -8,13 +8,10 @@ ________________________________________________________________________________
 PLANUNG für Version 5
 
  + Grafische Oberfläche für Schaltkreis Steuerung sowie Setup auf 7" Touch Display
- + Auslesen der MPPT Tracker Daten über Serial Port
  + Eine Art Widget erstellen für die Tagessteuerung der Wohnung
- + SUMMER installieren
- + DHT11 installieren
  + ExecOnStart hinzufügen
- + ExecOnEnd hinzufügen
- + Einbau Display in Schranktür (+ I2C Expander verbauen)
+ + ExecOnEnd hinzufügen)
+ + Einbau Lüfter Schrank
 
 _______________________________________________________________________________________________________________________________________
 
@@ -22,11 +19,25 @@ ________________________________________________________________________________
 NEUERUNGEN in Version 4
 
 Die Verfügbare Leistung für 230 Volt hat sich auf 5000 Watt erhöht. Gleichzeitig wurde die Anlage auf 48 Volt umgestellt. In den 12 Volt Schaltungen wurde die Stärke 
-von 20A auf 60A umgestellt. Jeder Schaltkreis kann jetzt belibig mit Sicherungen abgesichert werden. Die Ursache für gelegentlichen I2C Verbindungsabrüchen zu den 
-Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können schon zu Störungen kommen.
+von 20A auf 60A umgestellt. Jeder Schaltkreis kann jetzt beliebig mit Sicherungen abgesichert werden. Die Ursache für gelegentlichen I2C Verbindungsabrüchen zu den 
+Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können ohne Endwiderstände schon zu Störungen kommen.
 Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
 
- [NEW] Apache2, MySQL, phpMyAdmin + SSL Zertifikat erstellt
+
+ [UPDATE] Auslesen aller Relevanten Daten aus dem Tracer -> wird in tracer.txt gespeichert
+ [NEW] 24 Volt (max. 30 A) Anschluss hinzugefügt
+ [UPDATE] Maximaler Batterie Strom auf 100A bei 48 Volt eingestellt am MPPT
+ [NEW] Analog / Digitalwandler auf Adresse 0x48 angeschlossen
+ [NEW] Weitere Untertisch LED Lightshow verbaut
+ [UPDATE] Shutdownscript funktioniert jetzt Ordnungsgemäß
+ [UPDATE] I²C Widerstände verbaut für stabile Verbindung
+ [UPDATE] Neue MC4 Stecker an PV Input
+ [UPDATE] Potenzialausgleich vollständig
+ [UPDATE] 70mm² von Verteiler zu Laderegler verlegt
+ [UPDATE] 16mm² Klemmen eingebaut
+ [NEW] SUMMER installiert
+ [NEW] DHT11 installiert
+ [NEW] Auslesen der MPPT Tracker Daten über USB Kabel
  [NEW] Bildschirmtastatur hinzugefügt für Touchdisplay
  [NEW] README.md für 12V erstellt 
  [UPDATE] 2x 24V 100A Lithium Batterien angeklemmt

@@ -184,6 +184,8 @@ Strg + x gespeichert werden. Nun tippen wir auf der Konsole den Befehl
 
 ein und fügen ganz unten am Ende der Datei folgendes ein:
 
+`/Energiebox/System/check.sh`
+
 `12V`
 
 `230V`
@@ -231,6 +233,10 @@ eingegeben und in diese Datei wird folgendes rein kopiert:
 
 
 Diese Aktion wird wieder mit Strg + x gespeichert.
+Nun geben wir dieser Datei noch Ausführungsrechte mit 
+
+`sudo chmod +x /etc/rc.shutdown`
+
 Als nächstes wird der Befehl
 
 `sudo nano /etc/systemd/system/rcshutdown.service`
@@ -281,11 +287,24 @@ Autostart Datei erstellen
 In diese Datei folgendes kopieren:
 
 `[Desktop Entry]`
+
 `Name=EnergieBox GUI`
+
 `Comment=Grafische Oberfläche zum steuern der Relais`
+
 `Type=Application`
+
 `Exec=/Energiebox/gui/gui`
+
 `Terminal=false`
+
+
+
+Damit jede 3 Minuten die Daten des Ladereglers ausgelesen werden können, tragen wir einen CronJob mit folgender Zeile ein:
+
+`sudo crontab -e */3 * * * * sh /Energiebox/Tracer/tracerCron.sh > /dev/null 2>&1`
+
+
 
 Die Grafische Schnittstelle wird nun beim Starten geladen.
 
@@ -312,7 +331,7 @@ und tippen den folgenden Befehl ein:
 
 `sudo nano /etc/bash.bashrc`
 
-am Ende fügen wir die 4 Zeilen hinzu und speichern diese danach
+am Ende fügen wir die 6 Zeilen hinzu und speichern diese danach
 wieder ab mit Strg + x:
 
 `PATH=$PATH:/Energiebox/12V`
@@ -325,6 +344,8 @@ wieder ab mit Strg + x:
 
 `PATH=$PATH:/Energiebox/gui`
 
+`PATH=$PATH:/Energiebox/Tracer`
+
 -------------------------------------
 IP Setup & DynDNS Einrichtung       |
 -------------------------------------  
@@ -336,9 +357,13 @@ IP Einstellungen aufrufen mit:
 und dort folgendes eintragen(vorher abändern)
 
 `interface eth0`
+
 `static ip_address=10.0.0.2/24`
+
 `static ip6_address=29c5:ef1d:3023:5c04::ff/64`
+
 `static routers=10.0.0.1`
+
 `static domain_name_servers=10.0.0.1 8.8.8.8 29c5:ef1d:3023:5c04::1`
 
 
