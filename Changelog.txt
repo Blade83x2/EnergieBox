@@ -1,0 +1,142 @@
+##################
+Energiebox Ver.4 #
+##################
+
+
+_______________________________________________________________________________________________________________________________________
+
+PLANUNG für Version 5
+
+ + ExecOnStart hinzufügen
+ + ExecOnEnd hinzufügen)
+
+
+_______________________________________________________________________________________________________________________________________
+
+
+NEUERUNGEN in Version 4
+
+Die Verfügbare Leistung für 230 Volt hat sich auf 5000 Watt erhöht. Gleichzeitig wurde die Anlage auf 48 Volt umgestellt. In den 12 Volt Schaltungen wurde die Stärke 
+von 20A auf 60A umgestellt. Jeder Schaltkreis kann jetzt beliebig mit Sicherungen abgesichert werden. Die Ursache für gelegentlichen I2C Verbindungsabrüchen zu den 
+Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können ohne Endwiderstände schon zu Störungen kommen.
+Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
+
+
+ [UPDATE] 230V Automat verbaut für Schrankbeleuchtung
+ [UPDATE] Ladekabel für Haarmaschiene passend gebaut
+ [UPDATE] Lüfter in der Schrankdecke eingebaut
+ [UPDATE] Deutsches Sprachpaket installiert
+ [NEW] CronJob jede 3 Minuten für Daten vom Laderegler zu laden um Batteriespannungen zu Überwachen. Notfalls werden Verbraucher automatisch abgeschaltet.
+ [UPDATE] Auslesen aller Relevanten Daten aus dem Tracer -> wird in tracer.txt gespeichert
+ [NEW] 24 Volt (max. 30 A) Anschluss hinzugefügt
+ [UPDATE] Maximaler Batterie Strom auf 100A bei 48 Volt eingestellt am MPPT
+ [NEW] Analog / Digitalwandler auf Adresse 0x48 angeschlossen
+ [NEW] Weitere Untertisch LED Lightshow verbaut
+ [UPDATE] Shutdownscript funktioniert jetzt Ordnungsgemäß
+ [UPDATE] I²C Widerstände verbaut für stabile Verbindung
+ [UPDATE] Neue MC4 Stecker an PV Input
+ [UPDATE] Potenzialausgleich vollständig
+ [UPDATE] 70mm² von Verteiler zu Laderegler verlegt
+ [UPDATE] 16mm² Klemmen eingebaut
+ [NEW] SUMMER installiert
+ [NEW] DHT11 installiert
+ [NEW] Auslesen der MPPT Tracker Daten über USB Kabel
+ [NEW] Bildschirmtastatur hinzugefügt für Touchdisplay
+ [NEW] README.md für 12V erstellt 
+ [UPDATE] 2x 24V 100A Lithium Batterien angeklemmt
+ [UPDATE] Weiterer Full HD Beamer angeschlossen
+ [NEW] System wurde auf neueste Hardware kopiert und funktioniert Ordnungsgemäß
+ [UPDATE] 5000 Watt 48 Volt EPEVER Spannungswandler eingebaut
+ [UPDATE] Gesamte Elektronik wurde mit Höchster Sorgfallt in einen Schrank eingebaut. Kabel liegen hinter der Elektronik. Alle Kabel wurden in Kabelkanäle gelegt
+ [UPDATE] Beim booten wird jetzt die Grafische Benutzeroberfläche gestartet. Alles andere wird ausgeblendet
+ [NEW] Am 230V Stromkreis ist nun ein Digitaler Stromzähler eingebaut der Frequenz, Spannung, Stromstärke sowie Leistung anzeigt
+ [UPDATE] Neues 12V Brett gebaut mit neuem MCP23017, 16x Relais Module, 16 Finder Lasteneltakos, 80A 12V Wandler, 100A Vorsicherung
+ [NEW] Jeder 12V Schaltkreis ist jetzt einzeln abgesichert mit einer entsprechenden Sicherung
+ [UPDATE] Betriebssystem wird jetzt von 1TB SSD M.2 geladen
+ [NEW] 1TB NVMe SSD M.2 PCIe Gen3x4 verbaut
+ [NEW] SSD M.2 Adapter verbaut
+
+
+NEUERUNGEN in Version 3
+
+Bei dieser Version ist die gesamte Anlage schon 5 Monate am Stück gelaufen und hat somit den Dauerbetriebs Test bestanden. Die Schaltkontakte der Relais sind bei größeren Verbrauchern abgenutzt und waren nicht
+für den Dauerbetrieb geeignet. Dieser Planungsfehler wurde mit Stromstoß Eltakos behoben! Die Sicherung wurde deutlich erhöht. 
+Mögliche Einstellfehler (Überlastungsschutz) werden abgefangen. Der Microcontroller wurde gegen das neueste und schnellste Model Raspberry Pi4 mit 8GB Arbeitsspeicher ausgetauscht. Ein LCD Touchdsplay wurde verbaut.
+
+ [NEW] Batterie Temperatur Sensor verbaut 
+ [UPDATE] h2o Fortschrittsanzeige bei Filterung implementiert
+ [UPDATE] h2o -clean Fortschrittsanzeige implementiert
+ [UPDATE] Bei dem Filterparameter sind jetzt Koma und Punkte erlaubt
+ [UPDATE] Filterlaufzeit für 100ml wird nun automatisch berechnet aus GPD
+ [UPDATE] -l Parameter wurde entfernt bei h2o
+ [UPDATE] README.me für GitHub formatiert
+ {NEW] Parameter in 230V eingebaut mit dem die Konfiguration der Relais über die Konsole eingestellt werden kann. Beispiel: 230V -set 5 würde die Einstellungen für das 230 Volt Relais 5 setzen. 
+ {NEW] Parameter in 12V eingebaut mit dem die Konfiguration der Relais über die Konsole eingestellt werden kann. Beispiel: 12V -set 8 würde die Einstellungen für das 12 Volt Relais 8 setzen. 
+ {NEW] Hinter dem PC Anschluss wurde eine USV installiert damit beim EnergieBox Neustart nicht ständig alles abstürzt
+ {NEW] FI Schutzschaltung mit Potentialausgleich in die Erde verbaut. Umschalten auf Hausstrom nicht mehr möglich
+ [UPDATE] README.MD für Programm h2o erstellt in Text und Bild
+ [UPDATE] README.MD für Programm kolloid erstellt in Text und Bild
+ [UPDATE] Laderegler -> Batterie neue 70mm² Leitungen mit Quetsch Hühlsen
+ [UPDATE] Router angeschlossen
+ [UPDATE] Belüftung angeschlossen
+ [UPDATE] Gitarre angeschlossen
+ [UPDATE] 4K Beamer + BeamerCast angeschlossen
+ [NEW] 150A Sicherung am Batteriepack
+ [NEW] 150A Batterie Switch (An aus Schalter)
+ [BUGFIX] Balancer ausgetauscht und Zentraliliesiert.
+ [NEW] DC 1000 Volt Überspannungsschutz für PV verbaut
+ [NEW] h2o Pumpengestell vollständig gebaut. Boosterpumpe noch nicht bereit wegen Spannungsabfall
+ [NEW] Batteriepack - Batterien beschriftet
+ [NEW] h2o -stats Statistik Anzeige über Filtereigenschaften, Verbrauch und Wassertank
+ [UPDATE] h2o -clean Verfügbare Tankgröße wird berechnet. Aufruf h2o -empty entfernt.
+ [BUGFIX] h2o Konfiguration vollständig in config.ini verlegt 
+ [UPDATE] Raspberry Pi4 8GB mit 7" Touchdisplay eingerichtet für Hardware Update
+ [NEW] h2o Einrichtungsasistent erstellt. Alle wichtigen Parameter betreffend der Filteranlage werden beim Einrichten abgefragt
+ [NEW] h2o Zeitgenaue Steuerung der Laufzeiten. Wassermengen können in 100ml Schritten angegeben werden. Keine nicht geplannten Putz- Sessions mehr 
+ [NEW] h2o Filterinformationen implementiert für Qualitätsüberwachung
+ [NEW] h2o Selbst- Reinigungsfunktion sowie Filterwechsel können nun von der Konsole aufgerufen werden
+ [NEW] Design und Logo wurden nochmals neu erstellt
+ [NEW] Aktueller Watt Verbrauch in Listenansicht für 12V und 230V hinzugefügt
+ [UPDATE] Autostart für Eltakoschaltungen und Leistungsschutz geändert
+ [NEW] Auto Git Push->  sudo sh /Energiebox/git.sh "Vesions Kommentar...." pusht alles zu GitHub hoch
+ [BUGFIX] Eltakos für 230 Volt Schaltkreise verbaut. Große Ströme sind nun kein Problem mehr
+ [BUGFIX] Neues 16 fach Relais für 230 Volt Anschluß als Steuereinheit für Eltakos verbaut
+ [NEW] EPVER 100 Ampere MPPT Laderegler verbaut
+ [NEW] 2 neue Busbars am Batteriepack installiert
+ [UPDATE] Batterie Kapazität auf 14.440 Wattstunden erhöht (10x 120 Ampere LKW Batterien)
+ [UPDATE] 16mm² Potentialausgleichs Kabel mit Erdpol angeschlossen
+ [UPDATE] Neue 3 Pannelen Stringbildung. Gesamte Eingangsleistung der Pannelen: 2.460 Watt
+ [NEW] Kontrolle für Gesamt Abnahme Leistung verbaut. Funktioniert als Überlastungsschutz für Spannungswandler
+ [NEW] Namensvergabe für Anschlußvergabe in Konfigurationsdatei eingebaut
+ [NEW] Steuerprogramme für Automatische Wasserfilterung erstellt
+ [NEW] Steuerprogramme für Automatische Kolloid Herstellung erstellt
+ [NEW] Webserver mit SSL Zertifikat installiert
+ [UPDATE] Zeitschaltuhr für Relais Schaltung verbaut
+ [NEW] Watt Anzeige bei 230V Anzeige
+
+
+NEUERUNGEN in Version 2
+
+Mit der neuen Hardware lassen sich ohne Probleme große Verbraucher (z.B. Waschmaschine, Herd) betreiben.
+
+ [UPDATE] Remote Steuerung mit Raspberry Controller App möglich
+ [UPDATE] Systemspannung 24 Volt (Vorher 12 Volt)
+ [BUGFIX] Keine Spannungsschwankungen am Mikrocontroller mehr während dem Laden der Batterien - Dauerbetrieb möglich
+ [NEW] An/Aus Schalter für Mikrocontroller
+ [NEW] VictronEnergie DC-DC Konverter von 24 Volt auf 12 Volt (240 Watt)
+ [NEW] VictronEnergie Batterie Balancer
+ [NEW] Solartronics Spannungswandler 24 Volt, 3000 Watt Dauerleistung (Peak: 6000 Watt)
+ [BUGFIX] Abstandshalter hinterm Brett hinzugefügt - Nun bleibt die Wand unbeschadet
+ [NEW] 2 neue Spannungswandler mit Volt Anzeige für Mikrocontroller
+ [BUGFIX] Keine nervigen Lüftergeräusche mehr bei minimalem Verbrauch (<=500W)
+ [UPDATE] Tiefenentladungs Schutz - Mikrocontroller schaltet sich bei 18 Volt aus und trennt alle Verbraucher per Relais
+ [NEW] Wenn die Programme 12V und 230V ohne Parameter aufgerufen werden, wird eine Liste angezeigt was an/aus ist
+ [NEW] Konfigurationsdatei für 12V & 230V. Es kann ein Name für das angeschlossene Gerät am Relais und der Start Status (An/Aus) eingestellt werden.
+ [UPDATE] Aufteilung der Komponenten in 3 getrennte Bereiche mit Kabelanschluß
+
+Initial Version
+
+Es wurde eine Photovoltaik Anlage bestehend aus Solar Pannelen, einem Akkupack, sowie PWM Laderegler und Spannungswandler verbaut.
+Der integrierte Mikrocontroller Raspberry 3B+ ist an 2 Port Expander (MCP) angeschlossen und steuert 32 Relais Schaltkreise (12Volt & 230Volt)
+
+
