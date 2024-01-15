@@ -21,7 +21,7 @@ von 20A auf 60A umgestellt. Jeder Schaltkreis kann jetzt beliebig mit Sicherunge
 Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können ohne Endwiderstände schon zu Störungen kommen.
 Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
 
-
+ [UPDATE] Github ist wieder Verbunden. Neues Branch-> master
  [UPDATE] 230V Automat verbaut für Schrankbeleuchtung
  [UPDATE] Ladekabel für Haarmaschiene passend gebaut
  [UPDATE] Lüfter in der Schrankdecke eingebaut
