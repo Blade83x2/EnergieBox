@@ -9,7 +9,7 @@ PLANUNG für Version 5
 
  + ExecOnStart hinzufügen
  + ExecOnEnd hinzufügen)
- + Einbau Lüfter Schrank
+
 
 _______________________________________________________________________________________________________________________________________
 
@@ -22,6 +22,10 @@ Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können ohne Endwiderstände 
 Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
 
 
+ [UPDATE] 230V Automat verbaut für Schrankbeleuchtung
+ [UPDATE] Ladekabel für Haarmaschiene passend gebaut
+ [UPDATE] Lüfter in der Schrankdecke eingebaut
+ [UPDATE] Deutsches Sprachpaket installiert
  [NEW] CronJob jede 3 Minuten für Daten vom Laderegler zu laden um Batteriespannungen zu Überwachen. Notfalls werden Verbraucher automatisch abgeschaltet.
  [UPDATE] Auslesen aller Relevanten Daten aus dem Tracer -> wird in tracer.txt gespeichert
  [NEW] 24 Volt (max. 30 A) Anschluss hinzugefügt

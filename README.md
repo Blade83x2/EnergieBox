@@ -190,6 +190,12 @@ ein und fügen ganz unten am Ende der Datei folgendes ein:
 
 `230V`
 
+`HISTTIMEFORMAT="%F %T "`
+
+`HISTIGNORE="230V**:12V*"`
+
+
+
 Auch diese Aktion wird wieder mit Strg + x gespeichert.
 
 Nun prüfen wir noch kurz, ob die beiden Port Expander (0x22 und 0x27) angezeigt werden unter dem Befehl:
@@ -302,7 +308,11 @@ In diese Datei folgendes kopieren:
 
 Damit jede 3 Minuten die Daten des Ladereglers ausgelesen werden können, tragen wir einen CronJob mit folgender Zeile ein:
 
-`sudo crontab -e */3 * * * * sh /Energiebox/Tracer/tracerCron.sh > /dev/null 2>&1`
+`sudo crontab -e`
+
+Ganz unten fügen wir folgende Zeile hinzu:
+
+`*/3 * * * * /usr/bin/python3 /Energiebox/Tracer/readall.py > /Energiebox/Tracer/tracer.txt && sleep 7 && cd /Energiebox/Tracer && ./tracer > /dev/null &2>1`
 
 
 
@@ -324,14 +334,14 @@ Die Tastatur muss nach jedem Start aktiviert werden unter Startmenü >Universal 
 PATH Variablen                      |
 -------------------------------------  
 
-Nun bearbeiten wir noch die PATH Variablen. Dies dient dazu,
+Nun bearbeiten wir noch die Systemsprache sowie die PATH Variablen. Dies dient dazu,
 das alle Programme die im Ordner /Energiebox/* gespeichert sind
 von überall zugänglich sind. Dazu öffnen wir wieder ein Terminal
 und tippen den folgenden Befehl ein:
 
 `sudo nano /etc/bash.bashrc`
 
-am Ende fügen wir die 6 Zeilen hinzu und speichern diese danach
+am Ende fügen wir die 10 Zeilen hinzu und speichern diese danach
 wieder ab mit Strg + x:
 
 `PATH=$PATH:/Energiebox/12V`
@@ -344,7 +354,15 @@ wieder ab mit Strg + x:
 
 `PATH=$PATH:/Energiebox/gui`
 
-`PATH=$PATH:/Energiebox/Tracer`
+`export LANGUAGE=de_DE.UTF-8`
+
+`export LC_ALL=de_DE.UTF-8`
+
+`export LANG=de_DE.UTF-8`
+
+`export LC_TYPE=de_DE.UTF-8`
+
+
 
 -------------------------------------
 IP Setup & DynDNS Einrichtung       |
@@ -437,26 +455,53 @@ Im neuen Fenster Ja wählen
  Webserver installation             |
 ------------------------------------- 
 
-  sudo apt install apache2 -y
-  sudo apt install php -y
-  sudo service apache2 restart
-  sudo ufw allow 80
-  sudo ufw allow 443
-  sudo apt install mariadb-server php-mysql -y
-  sudo service apache2 restart
-  sudo mysql_secure_installation
-  sudo apt install phpmyadmin -y
-  sudo phpenmod mysqli
-  sudo service apache2 restart
-  sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
-  sudo chown -R box:www-data /var/www/html/
-  sudo chmod -R 770 /var/www/html/
-  sudo service apache2 stop
-  sudo apt install python3-certbot-apache
-  sudo certbot --apache
-  sudo service apache2 restart
+Damit der Raspberry im Netzwerk als Server verfügbar ist, installieren
+wir noch Apache2, PHP, MySQL und phpmyadmin sowie ein SSL Zertifikat
 
- 
+ `sudo apt install apache2 -y`
 
-sudo crontab -e
- 33 3 */2 * 7 certbot renew > /dev/null 2>&1
+ `sudo apt install php -y`
+
+ `sudo service apache2 restart`
+
+ `sudo ufw allow 80`
+
+ `sudo ufw allow 443`
+
+ `sudo apt install mariadb-server php-mysql -y`
+
+ `sudo service apache2 restart`
+
+ `sudo mysql_secure_installation`
+
+ `sudo apt install phpmyadmin -y`
+
+ `sudo phpenmod mysqli`
+
+ `sudo service apache2 restart`
+
+ `sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin`
+
+ `sudo chown -R box:www-data /var/www/html/`
+
+ `sudo chmod -R 770 /var/www/html/`
+
+ `sudo service apache2 stop`
+
+ `sudo apt install python3-certbot-apache`
+
+ `sudo certbot --apache`
+
+ `sudo service apache2 restart`
+
+Damit das SSL Zertifikat regelmässig erneuert wird,
+erstellen wir einen Cronjob mit root Rechten: 
+
+Mit `sudo crontab -e` Editor aufrufen:
+
+ `33 3 */2 * 7 certbot renew > /dev/null 2>&1`
+
+und speichern mit STRG + X
+
+
+
