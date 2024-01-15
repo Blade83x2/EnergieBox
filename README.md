@@ -5,7 +5,7 @@
 
 > Diese Software ist konzipiert für einen Raspberry Pi 4 32Bit der verbunden ist mit 2 Port Expandern die
 jeweils 16 Relais steuern. Diese sollten dann starke Eltako Lastenstromstoßrelais steuern.
-Als Spannungsquelle ist eine Photovoltaik Anlage mit einem 15 KW Speicher angeschlossen. Die 
+Als Spannungsquelle ist eine Photovoltaik Anlage mit einem 5 KW Speicher angeschlossen. Die 
 Software beinhaltet ausserdem noch ein Programm zur Wasserfilterung sowie ein Programm zur Kolloid Herstellung.
 Die Programme 12V und 230V schalten die Stromkreise an/aus und prüfen dabei die maximale Belastung.
 
