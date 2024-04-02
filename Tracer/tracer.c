@@ -9,7 +9,7 @@ int main(void) {
 	const char* filename = "/Energiebox/Tracer/tracer.txt";
 	char command[255];
 	char batt_voltage[] = "Batterie: Aktuelle Spannung in Volt = ";
-	char batt_volatage_disable[] = "48.00"; // in Volt
+	char batt_volatage_disable[] = "49.00"; // in Volt
 	FILE* input_file = fopen(filename, "r");
 	if (!input_file) exit(EXIT_FAILURE);
 	char* contents = NULL;

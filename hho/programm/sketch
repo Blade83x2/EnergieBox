@@ -1,0 +1,444 @@
+#include <OneWire.h>
+#include <DallasTemperature.h>
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(2, 3, 6, 7, 8, 9);
+bool canStart = false, sensorError = false;
+int State = 0;  // 0 Start, 1 Selbsttest, 2 Manuell starten, 3 Startphase, 4 Normaler Betrieb, 5 Fehler
+String StartMsg = " HHO Generator", Version = " Vers. 1.0alpha", Selfcheck = "...Sensortest...", StartBtn = "Bitte starten...", RunWarmup = "Start Phase...", RunNormal = ">> Zersetzung <<", Error = "Fehler:";
+String RunNormal2_1 = "H2O >>>     HH+O", RunNormal2_2 = "H2O >>>>    HH+O", RunNormal2_3 = "H2O >>>>>   HH+O", RunNormal2_4 = "H2O >>>>>>  HH+O", RunNormal2_5 = "H2O >>>>>>> HH+O";
+String RunNormal2_6 = "H2O  >>>>>> HH+O", RunNormal2_7 = "H2O   >>>>> HH+O", RunNormal2_8 = "H2O    >>>> HH+O", RunNormal2_9 = "H2O     >>> HH+O", RunNormal2_10 = "H2O      >> HH+O";
+String ErrorMsg = "";
+
+#define TEMPSENSORS 4
+OneWire oneWire(TEMPSENSORS);
+DallasTemperature sensors(&oneWire);
+DeviceAddress Arrestor1, Arrestor2, Generator;
+
+#define maxGas 400
+#define sensorGas1 0
+float sensorGas1Value;
+#define sensorGas2 1
+float sensorGas2Value;
+#define maxDruck 500
+#define sensorDruck 2
+float sensorDruckValue;
+
+
+
+void setup() {
+	Serial.begin(9600);
+	while (!Serial) {
+		;  // warte auf Serial Port zum Verbinden. Nur bei USB
+	}
+	lcd.begin(16, 2);
+	lcd.clear();
+	delay(500);
+	Serial.println("Starte" + StartMsg + Version);
+	sensors.begin();
+	delay(500);
+	Serial.print("Sensoren suchen: ");
+	Serial.print(sensors.getDeviceCount(), DEC);
+	Serial.println(" Sensoren gefunden");
+	if (!sensors.getAddress(Arrestor1, 0)) { Serial.println("Sensor für Arrestor1 nicht verfügbar"); sensorError = true; }
+	else { sensors.setHighAlarmTemp(Arrestor1, 65);	sensors.setLowAlarmTemp(Arrestor1, -10); }
+	delay(100);
+	if (!sensors.getAddress(Arrestor2, 1)) { Serial.println("Sensor für Arrestor2 nicht verfügbar"); sensorError = true; }
+	else { sensors.setHighAlarmTemp(Arrestor2, 66);	sensors.setLowAlarmTemp(Arrestor2, -10); }
+	delay(100);
+	if (!sensors.getAddress(Generator, 2)) { Serial.println("Sensor für Generatot nicht verfügbar"); sensorError = true; }
+	else { sensors.setHighAlarmTemp(Generator, 60);	sensors.setLowAlarmTemp(Generator, -10); }
+}
+
+void printAddress(DeviceAddress deviceAddress)
+{
+	for (uint8_t i = 0; i < 8; i++)
+	{
+		if (deviceAddress[i] < 16) 
+			Serial.print("0");
+		Serial.print(deviceAddress[i], HEX);
+	}
+}
+
+void printAlarms(uint8_t deviceAddress[])
+{
+	char temp;
+	temp = sensors.getHighAlarmTemp(deviceAddress);
+	Serial.print("High Alarm: ");
+	Serial.print(temp, DEC);
+	Serial.print("C");
+	Serial.print(" | Low Alarm: ");
+	temp = sensors.getLowAlarmTemp(deviceAddress);
+	Serial.print(temp, DEC);
+	Serial.print("C");
+}
+
+// main function to print information about a device
+void printData(DeviceAddress deviceAddress)
+{
+	Serial.print("Geräte Adresse: ");
+	printAddress(deviceAddress);
+}
+
+void checkAlarm(DeviceAddress deviceAddress)
+{
+	if (sensors.hasAlarm(deviceAddress))
+	{
+		if( deviceAddress == Arrestor1) ErrorMsg = "Arrestor1 heiss";
+		if( deviceAddress == Arrestor2) ErrorMsg = "Arrestor2 heiss";
+		if( deviceAddress == Generator) ErrorMsg = "Generator heiss";
+		if (sensorError == false){
+			Serial.print("Fehler: ");
+			Serial.println(ErrorMsg);
+		}
+		sensorError = true;
+		State = 5;
+	}
+}
+
+void state0() {
+	lcd.blink();
+	lcd.setCursor(0, 0);
+	for (int i = 0; i < StartMsg.length(); i++) {
+		lcd.print(StartMsg.charAt(i));
+		delay(200);
+	}
+	lcd.setCursor(0, 1);
+	for (int i = 0; i < Version.length(); i++) {
+		lcd.print(Version.charAt(i));
+		delay(150);
+	}
+	lcd.noBlink();
+	delay(3500);
+	lcd.clear();
+	State = 1;
+}
+
+void state1() {
+	Serial.println("Starte Sensortest");
+	lcd.blink();
+	lcd.setCursor(0, 0);
+	for (int i = 0; i < Selfcheck.length(); i++) {
+		lcd.print(Selfcheck.charAt(i));
+		delay(200);
+	}
+	lcd.noBlink();
+	delay(3500);
+	lcd.clear();
+	lcd.print("Arrestor 1");
+	lcd.setCursor(0, 1);
+	delay(500);
+	float arest1 = sensors.getTempC(Arrestor1);
+	if(arest1 == -127.00){
+		lcd.println("Sensor fehlt! ");
+	}
+	else {
+		lcd.print("Temp.: ");
+		lcd.print(arest1);
+		lcd.print(" C");
+		Serial.print("Arrestor 1: ");
+		Serial.print(arest1);
+		Serial.print(" C\n");
+	}
+	delay(2000);
+	lcd.clear();
+	lcd.print("Arrestor 2");
+	lcd.setCursor(0, 1);
+	delay(500);
+	float arest2 = sensors.getTempC(Arrestor2);
+	if(arest2 == -127.00){
+		lcd.println("Sensor fehlt! ");
+	}
+	else {
+		lcd.print("Temp.: ");
+		lcd.print(arest2);
+		lcd.print(" C");
+		Serial.print("Arrestor 2: ");
+		Serial.print(arest2);
+		Serial.print(" C\n");
+	}
+	delay(2000);
+	lcd.clear();
+	lcd.print("Generator");
+	lcd.setCursor(0, 1);
+	delay(900);
+	
+	float gen = sensors.getTempC(Generator);
+	if(gen == -127.00){
+		lcd.println("Sensor fehlt! ");
+	}
+	else {
+		lcd.print("Temp.: ");
+		lcd.print(gen);
+		lcd.print(" C");
+		Serial.print("Generator: ");
+		Serial.print(gen);
+		Serial.print(" C\n");
+	}
+	delay(2000);
+	
+	lcd.clear();
+	lcd.print("MQ2 Sensor 1");
+	lcd.setCursor(0, 1);
+	delay(900);
+	lcd.print("Wert: ");
+	sensorGas1Value = analogRead(sensorGas1);
+	lcd.print(sensorGas1Value);
+	Serial.print("MQ2 Sensor 1: ");
+	Serial.println(sensorGas1Value);
+	if(sensorGas1Value > maxGas){
+		ErrorMsg = "Gas Sensor 1";
+		sensorError = true;
+	}
+	delay(2000);
+	
+	lcd.clear();
+	lcd.print("MQ2 Sensor 2");
+	lcd.setCursor(0, 1);
+	delay(900);
+	lcd.print("Wert: ");
+	sensorGas2Value = analogRead(sensorGas2);
+	lcd.print(sensorGas2Value);
+	Serial.print("MQ2 Sensor 2: ");
+	Serial.println(sensorGas2Value);
+	if(sensorGas2Value > maxGas){
+		ErrorMsg = "Gas Sensor 2";
+		sensorError = true;
+	}
+	delay(2000);
+	lcd.clear();
+	lcd.print("Gasdruck Sensor");
+	lcd.setCursor(0, 1);
+	delay(900);
+	lcd.print("Wert: ");
+	sensorDruckValue = analogRead(sensorDruck);
+	lcd.print(sensorDruckValue);
+	Serial.print("Gasdruck Sensor: ");
+	Serial.println(sensorDruckValue);
+	if(sensorDruckValue > maxDruck){
+		ErrorMsg = "Druck Sensor";
+		sensorError = true;
+		State = 5;
+	}
+	delay(2000);
+	
+	
+	/*
+	 * 
+	 * 
+	 *  lcd.clear();
+	 *  lcd.print("Wassertank");
+	 *  lcd.setCursor(0, 1);
+	 *  delay(500);
+	 *  lcd.print("Wert: Voll");
+	 *  Serial.println("Wassertank: Voll");
+	 *  delay(2000);
+	 * 
+	 *  lcd.clear();
+	 *  lcd.print("Kreislauf Sensor");
+	 *  lcd.setCursor(0, 1);
+	 *  delay(500);
+	 *  - 
+	 *  Serial.println("Kreislauf Sensor: Zirkulation");
+	 *  delay(2000);
+	 * 
+	 * 
+	 */
+	
+	
+	
+	canStart = true;
+	State = 2;
+	Serial.println("Beende Sensortest");
+	
+	delay(2000);
+	
+	
+	
+	/*
+	 * 
+	 *  lcd.clear();
+	 *  lcd.print("Netzwerk");
+	 *  lcd.setCursor(0, 1);
+	 *  delay(500);
+	 *  lcd.print("192.168.100.100");
+	 *  Serial.println("IP:192.168.100.100");
+	 *  delay(2000);
+	 * 
+	 * 
+	 */
+	
+	
+	
+}
+
+void state2() {
+	lcd.clear();
+	lcd.blink();
+	lcd.setCursor(0, 0);
+	for (int i = 0; i < StartBtn.length(); i++) {
+		lcd.print(StartBtn.charAt(i));
+		delay(200);
+	}
+	lcd.noBlink();
+	Serial.println("Warte auf Benutzereingabe um zu starten");
+	delay(6500);
+	
+	// Hier Button abfangen
+	
+	lcd.clear();
+	State = 3;
+}
+
+void state3() { // AUFWÄRMEN
+	lcd.clear();
+	lcd.blink();
+	lcd.setCursor(0, 0);
+	for (int i = 0; i < RunWarmup.length(); i++) {
+		lcd.print(RunWarmup.charAt(i));
+		delay(200);
+	}
+	lcd.noBlink();
+	Serial.println("System auf Betriebstemperatur hoch bringen");
+	delay(10000);
+	lcd.clear();
+	State = 4;
+	Serial.println("System ist im normalen Betriebszustand");
+}
+
+void state4() { // Normal Betrieb
+	lcd.setCursor(0, 0);
+	lcd.clear();
+	lcd.blink();
+	for (int i = 0; i < RunNormal.length(); i++) {
+		lcd.print(RunNormal.charAt(i));
+		delay(250);
+	}
+	lcd.noBlink();
+	lcd.setCursor(0, 1);
+	lcd.println(RunNormal2_1);
+	delay(400);
+	lcd.setCursor(0, 1);
+	lcd.println(RunNormal2_2);
+	delay(400);
+	lcd.setCursor(0, 1);
+	lcd.println(RunNormal2_3);
+	delay(400);
+	lcd.setCursor(0, 1);
+	lcd.println(RunNormal2_4);
+	delay(400);
+	lcd.setCursor(0, 1);
+	lcd.println(RunNormal2_5);
+	delay(400);
+	lcd.setCursor(0, 1);
+	lcd.println(RunNormal2_6);
+	delay(400);
+	lcd.setCursor(0, 1);
+	lcd.println(RunNormal2_7);  
+	delay(400);
+	lcd.setCursor(0, 1);
+	lcd.println(RunNormal2_8);
+	delay(400);
+	lcd.setCursor(0, 1);
+	lcd.println(RunNormal2_9);
+	delay(400);
+	lcd.setCursor(0, 1);
+	lcd.println(RunNormal2_10);
+	delay(400);
+	lcd.clear();
+	lcd.setCursor(0, 0);
+	lcd.print("Live Sensordaten");
+	lcd.setCursor(0, 1);
+	float arest1 = sensors.getTempC(Arrestor1);
+	if(arest1 == -127.00){
+		ErrorMsg = "Arrestor1 Sensor fehlt";
+		sensorError = true;
+		State = 5;
+	}
+	lcd.print(arest1);
+	lcd.print(" ");
+	float arest2 = sensors.getTempC(Arrestor2);
+	if(arest2 == -127.00){
+		ErrorMsg = "Arrestor2 Sensor fehlt";
+		sensorError = true;
+		State = 5;
+	}
+	lcd.print(arest2);
+	lcd.print(" ");
+	float gen = sensors.getTempC(Generator);
+	if(gen == -127.00){
+		ErrorMsg = "Generator Sensor fehlt";
+		sensorError = true;
+		State = 5;
+	}
+	lcd.print(gen);
+	checkAlarm(Arrestor1);
+	checkAlarm(Arrestor2);
+	checkAlarm(Generator);
+	delay(4133);
+	lcd.clear();
+	lcd.setCursor(0, 0);
+	lcd.print("Live Sensordaten");
+	lcd.setCursor(0, 1);
+	
+	sensorGas1Value = analogRead(sensorGas1);
+	lcd.print(sensorGas1Value);
+	lcd.print(" ");
+	Serial.print("sensorGas1: ");
+	Serial.println(sensorGas1Value);
+	if(sensorGas1Value > maxGas){
+		ErrorMsg = "Gas Sensor 1";
+		sensorError = true;
+		State = 5;
+	}
+	sensorGas2Value = analogRead(sensorGas2);
+	lcd.print(sensorGas2Value);
+	lcd.print(" ");
+	Serial.print("sensorGas2: ");
+	Serial.println(sensorGas2Value);
+	if(sensorGas2Value > maxGas){
+		ErrorMsg = "Gas Sensor 2";
+		sensorError = true;
+		State = 5;
+	}
+	sensorDruckValue = analogRead(sensorDruck);
+	lcd.print(sensorDruckValue);
+	lcd.print(" ");
+	Serial.print("sensorDruck: ");
+	Serial.println(sensorDruckValue);
+	if(sensorDruckValue > maxDruck){
+		ErrorMsg = "Druck Sensor";
+		sensorError = true;
+		State = 5;
+	}
+	delay(4133);
+}
+
+void state5() { // Error
+	lcd.clear();
+	lcd.blink();
+	lcd.setCursor(0, 0);
+	for (int i = 0; i < Error.length(); i++) {
+		lcd.print(Error.charAt(i));
+		delay(100);
+	}
+	lcd.noBlink();
+	delay(100);
+	lcd.setCursor(0, 1);
+	lcd.print(ErrorMsg);
+	delay(5000);
+	// url auf webserver aufrufen um email zu senden #############################################################################
+	lcd.clear();
+}
+
+void loop() {
+	sensors.requestTemperatures();
+	switch (State) {
+		case 0: state0(); break;
+		case 1: state1(); break;
+		case 2: state2(); break;
+		case 3: state3(); break;
+		case 4: state4(); break;
+		case 5: state5(); break;
+	}
+}
+

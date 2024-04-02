@@ -9,6 +9,33 @@ PLANUNG für Version 5
 
  + ExecOnStart hinzufügen
  + ExecOnEnd hinzufügen)
+ + 24V, 30A Schaltrelais für 12V Trafo (zuschalten wenn auf 12V Seite mehr als 30A genutzt werden, Geräte nur bis 85% Kapazität ausnutzen) 
+ + 230V 16A Schaltrelais für Grid- Netzladegerät
+ + 60V 20A Schaltrelais für Grid- Netzladegerät (Batteriepol)
+ + 24V 30A Schaltrelais für HHO Generator
+
+
+Powersafe Modus - Transformator für 12 Volt Seite wird bei bedarf zugeschaltet
+Grid Powerlod Modus - Automatisches laden der Batterien aus dem lokalen Netz.
+
+
+Bugfixes
+defekter Trafo entfernen
+2ter 720W 24V Trafo abklemmen
+Batteriezuleitung auf 70mm
+24V Leitung richtig anschliessen
+USB Ladebuchse auf 6A umbauen
+Lüftersteuerung hinzufügen
+Wasserfilter (Ventil) 
+Frequenzimpuls senden nach Filterung
+h2o auf Ventilbetrieb verfügbar machen
+Sunlight Birne bestellen und verbauen
+
+25,6V 100Ah LiFePo4: Überspannungsabschaltung=30V, Ladespannung=29,2V, Unterspannungsabschaltung=21,6V, Erhaltungsladespannung=27,6V
+
+
+
+
 
 
 _______________________________________________________________________________________________________________________________________
