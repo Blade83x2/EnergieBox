@@ -2,7 +2,7 @@
 
 isSuperUser()
 {
-    if [ "$(id -u)" == "0" ]; then
+    if [[ $(id -u) == 0 ]]; then
         true;
     else
         false;
