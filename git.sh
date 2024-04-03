@@ -11,7 +11,7 @@ isSuperUser()
 
 if isSuperUser ; then
     echo "Bitte als sudo User aufrufen!";
-    exit 1;
+    exit 0;
 fi
 
 
