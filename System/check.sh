@@ -17,7 +17,7 @@
 A=( [ 0]="Unterspannungswarnung am Controller"
     [ 1]="Arm Frequenz begrenzt"
     [ 2]="Derzeit gedrosselt"
-    [ 3]="Zulaessige Temperaturgrenze erreicht"
+    [ 3]="Zulässige Temperaturgrenze erreicht"
     [16]="Unterspannung am Controller"
     [17]="Arm Frequenz wurde begrenzt"
     [18]="Drossel wurde aktiviert"
