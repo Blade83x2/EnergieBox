@@ -1,17 +1,10 @@
 #!/bin/bash
 
-isSuperUser()
-{
-    if [[ $(id -u) == 0 ]]; then
-        true;
-    else
-        false;
-    fi
-}
 
-if isSuperUser ; then
-    echo "Bitte als sudo User aufrufen!";
-    exit 0;
+
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
 fi
 
 
