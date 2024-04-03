@@ -9,7 +9,7 @@ isSuperUser()
     fi
 }
 
-if !isSuperUser ; then
+if isSuperUser ; then
     echo "Bitte als sudo User aufrufen!";
     exit 1;
 fi
