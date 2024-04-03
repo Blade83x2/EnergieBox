@@ -1,5 +1,20 @@
 #!/bin/bash
 
+isSuperUser()
+{
+    if [ "$(id -u)" == "0" ]; then
+        true;
+    else
+        false;
+    fi
+}
+
+if !isSuperUser ; then
+    echo "Bitte als sudo User aufrufen!";
+    exit 1;
+fi
+
+
 
 cd 230V
 sudo make
