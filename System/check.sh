@@ -25,7 +25,7 @@ A=( [ 0]="Unterspannungswarnung am Controller"
 
 for ((i=0; i<32; i++)); do
     if [[ ! ${A[i]} ]]; then
-        A[i]="set, but meaning is unknown. See vcgencmd(1)."
+        A[i]="Gesetzt, ist aber unbekannt. See vcgencmd(1)."
     fi
 done
 eval $(vcgencmd get_throttled)
