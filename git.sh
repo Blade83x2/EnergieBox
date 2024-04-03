@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ `id -u` -ne 0 ]
-  then echo Script kann nur mit root Rechten aufgerufen werden!
+  then echo "Script kann nur mit root Rechten aufgerufen werden!"
   exit
 fi
 
