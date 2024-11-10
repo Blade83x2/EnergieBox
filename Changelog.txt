@@ -15,10 +15,10 @@ PLANUNG für Version 5
  + Lüftersteuerung hinzufügen
  + Grid Powerlod Modus - Software für Netzlade Funktion erstellen (25,6V 100Ah LiFePo4: Überspannungsabschaltung=30V, Ladespannung=29,2V, Unterspannungsabschaltung=21,6V, Erhaltungsladespannung=27,6V)
  + Umtausch 4mm² Leitung vom Inverter -> 230V Modul
- + Bilder README.MD anpassen
+ 
  + 16A Leitungsschutz hinzufügen
  + 100A Siccherungen bestellen
- + Neue Cat7 abgeschirmte I²C Leitungen installieren
+ 
  + Gitarre mit Sonnenlicht austauschen
  + FIX -> Wenn Gerät schon an und versucht wird an zu schalten, keine Leistungsüberprüfung
  + FIX an/aus Parameter: irgendwas validieren -> ergibt automatisch 0
@@ -39,7 +39,15 @@ Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafisc
  [NEW] CronJob jede 3 Minuten für Daten vom Laderegler zu laden um Batteriespannungen zu Überwachen. Notfalls wird aus dem GRID nach geladen ########################################################################
 
 
-
+ 
+ + Neue Cat7 abgeschirmte I²C Leitungen installieren
+ 
+ kühlkörper
+ 
+ 
+ 
+ 
+ [BUGFIX] Bilder in README.MD von 230V/ anpassen
  [NEW] Sinus Wave Generator an 12V Relais 7 installiert
  [UPDATE] Anschluss Skize für Controller erstellt
  [NEW] Modul für GRID-LOAD verbaut (Portexpander, Relais, 80A Relais & Relais für Ladegerät- Zuleitung)
