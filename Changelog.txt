@@ -9,18 +9,17 @@ PLANUNG für Version 5
 
  + Option für Zeitgesteuerte Anwendung hinzufügen
  + Powersafe Modus - Zweiter 24V=>12V Konverter wird nur bei bedarf zugeschaltet
- + Überspannungsschutz hinzufügen
  + PV Pannelen Erdung 
  + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen
  + Lüftersteuerung hinzufügen
  + Grid Powerlod Modus - Software für Netzlade Funktion erstellen (25,6V 100Ah LiFePo4: Überspannungsabschaltung=30V, Ladespannung=29,2V, Unterspannungsabschaltung=21,6V, Erhaltungsladespannung=27,6V)
  + Umtausch 4mm² Leitung vom Inverter -> 230V Modul
  
- + 16A Leitungsschutz hinzufügen
- + 100A Siccherungen bestellen
+ + 16A Leitungsschutz hinzufügen (bessere Aufteilung)
+ + 100A Sicherungen bestellen
  
  + Gitarre mit Sonnenlicht austauschen
- + FIX -> Wenn Gerät schon an und versucht wird an zu schalten, keine Leistungsüberprüfung
+ + FIX -> 12V & 230V -> Wenn Gerät schon an und versucht wird an zu schalten, keine Leistungsüberprüfung
  + FIX an/aus Parameter: irgendwas validieren -> ergibt automatisch 0
  + FIX Ordnerberechtigungen einschränken
  
