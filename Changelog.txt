@@ -7,17 +7,20 @@ ________________________________________________________________________________
 
 PLANUNG für Version 5
 
- + ExecOnStart hinzufügen
- + ExecOnEnd hinzufügen
- + Powersafe Modus - Transformator für 12 Volt Seite wird bei bedarf zugeschaltet
- + Grid Powerlod Modus - Automatisches laden der Batterien aus dem lokalen Netz.
+ + Option für Zeitgesteuerte Anwendung hinzufügen
+ + Powersafe Modus - Zweiter 24V=>12V Konverter wird nur bei bedarf zugeschaltet
+ + Überspannungsschutz hinzufügen
+ + PV Pannelen Erdung 
+ + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen
  + Lüftersteuerung hinzufügen
  + Grid Powerlod Modus - Software für Netzlade Funktion erstellen (25,6V 100Ah LiFePo4: Überspannungsabschaltung=30V, Ladespannung=29,2V, Unterspannungsabschaltung=21,6V, Erhaltungsladespannung=27,6V)
- + Neue Cat7 abgeschirmte I²C Leitungen installieren
  + Umtausch 4mm² Leitung vom Inverter -> 230V Modul
  + Bilder README.MD anpassen
-
-
+ + 16A Leitungsschutz hinzufügen
+ + 100A Siccherungen bestellen
+ + Neue Cat7 abgeschirmte I²C Leitungen installieren
+ + Gitarre mit Sonnenlicht austauschen
+  
 
 _______________________________________________________________________________________________________________________________________
 
@@ -29,10 +32,14 @@ von 20A auf 60A umgestellt. Jeder Schaltkreis kann jetzt beliebig mit Sicherunge
 Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können ohne Endwiderstände schon zu Störungen kommen.
 Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
 
+ [NEW] CronJob jede 3 Minuten für Daten vom Laderegler zu laden um Batteriespannungen zu Überwachen. Notfalls wird aus dem GRID nach geladen ########################################################################
+
+
+
  [NEW] Sinus Wave Generator an 12V Relais 7 installiert
- [UPDATE] Anschluss Skizze für Controller erstellt
+ [UPDATE] Anschluss Skize für Controller erstellt
  [NEW] Modul für GRID-LOAD verbaut (Portexpander, Relais, 80A Relais & Relais für Ladegerät- Zuleitung)
- [BUGFIX] PE Querschnitt für Inverter & Laderegler auf 16mm² erhöht
+ [BUGFIX] Potenzialausgleich Querschnitt für Inverter & Laderegler auf 16mm² erhöht
  [UPDATE] Unnötige 48V -> 24V Wandler entfernt
  [UPDATE] Fünfter PV String hat eigenes Kabel
  [UPDATE] PV Kabel verkürzt
@@ -48,7 +55,6 @@ Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafisc
  [UPDATE] Ladekabel für Haarmaschiene passend gebaut
  [UPDATE] Lüfter in der Schrankdecke eingebaut
  [UPDATE] Deutsches Sprachpaket installiert
- [NEW] CronJob jede 3 Minuten für Daten vom Laderegler zu laden um Batteriespannungen zu Überwachen. Notfalls werden Verbraucher automatisch abgeschaltet.
  [UPDATE] Auslesen aller Relevanten Daten aus dem Tracer -> wird in tracer.txt gespeichert
  [NEW] Schuko- Schranksteckdose installiert
  [UPDATE] Maximaler Batterie Strom auf 100A bei 48 Volt eingestellt am MPPT
