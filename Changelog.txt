@@ -20,6 +20,7 @@ PLANUNG für Version 5
  + 100A Siccherungen bestellen
  + Neue Cat7 abgeschirmte I²C Leitungen installieren
  + Gitarre mit Sonnenlicht austauschen
+ 
   
 
 _______________________________________________________________________________________________________________________________________
