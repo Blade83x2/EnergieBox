@@ -190,10 +190,6 @@ ein und fügen ganz unten am Ende der Datei folgendes ein:
 
 `230V`
 
-`HISTTIMEFORMAT="%F %T "`
-
-`HISTIGNORE="230V*:12V*"`
-
 
 
 Auch diese Aktion wird wieder mit Strg + x gespeichert.
@@ -208,6 +204,11 @@ Sollte das der Fall sein, sollte die Ausgabe so aussehen:
     <img src="img/i2cdetect.png" style="width: 85%;" alt="ic2detect Ausgabe EnergieBox" >
 </p>
 
+
+
+Eine Übersicht der Belegung auf der Platine kann eingesehen werden mit:
+
+`gpio -g readall`
 
 
 
@@ -280,6 +281,7 @@ Dies geschieht mit folgendem Terminal Befehl:
 Wenn der Raspberry hoch gefahren wird, lassen wir eine Grafische Oberfläche starten damit per Tastendruck alles gesteuert werden kann.
 Dieser Schritt muss für jeden Benutzer separat gemacht werden wenn das Programm gestartet werden soll beim booten.
 
+PS: Dieses Programm ist noch nicht entwickelt!!!!
 
 
 Autostart Ordner erstellen (Zeigt Fehlermeldung wenn er bereits existiert)

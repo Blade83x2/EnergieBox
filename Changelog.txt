@@ -22,6 +22,7 @@ PLANUNG für Version 5
  + Gitarre mit Sonnenlicht austauschen
  + FIX -> Wenn Gerät schon an und versucht wird an zu schalten, keine Leistungsüberprüfung
  + FIX an/aus Parameter: irgendwas validieren -> ergibt automatisch 0
+ + FIX Ordnerberechtigungen einschränken
  
   
 
