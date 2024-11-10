@@ -21,6 +21,7 @@ PLANUNG für Version 5
  + Neue Cat7 abgeschirmte I²C Leitungen installieren
  + Gitarre mit Sonnenlicht austauschen
  + FIX -> Wenn Gerät schon an und versucht wird an zu schalten, keine Leistungsüberprüfung
+ + FIX an/aus Parameter: irgendwas validieren -> ergibt automatisch 0
  
   
 

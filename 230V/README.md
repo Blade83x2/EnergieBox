@@ -29,15 +29,15 @@ Falls ein Relais geschaltet werden soll, so kann das mit dem Befehl
 <p align="left"> 
     <img src="img/set.png" style="width: 40%;" alt="Relais Status von Relais Nr. 4 einschalten" >
 </p><br>
-Um ein Relais von einer Zeitschaltuhr steuern zu lassem, kann der Befehl <code>230V 4 0 300 & disown</code> verwendet 
+Um ein Relais von einer Zeitschaltuhr ausschalten zu lassen, kann der Befehl <code>230V 4 0 300 & disown</code> verwendet 
 werden. In diesem Beispiel würde das Relais Nr. 4 ausgeschaltet werden nach 300 Sekunden. Die Parameter <code>& disown</code>
 können verwendet werden damit die Konsole wieder sofort verfügbar ist.
 <br><br>
 <p align="left"> 
-    <img src="img/set_time.png" style="width: 40%;" alt="Relais Status von Relais Nr. 4 nach 300 Sekunden ausschalten" >
+    <img src="img/set_time.png" style="width: 40%;" alt="Relais Status von Relais Nr. 14 nach 300 Sekunden ausschalten" >
 </p><br>
 Wenn ein Relais Eintrag verändert werden soll, z.B. Name, Leistungsaufnahme oder Automatisches Einschalten beim Starten,
-dann kann der Befehl <code>230V -set 5</code> verwendet werden. Hier würde jetzt das Relais Nr. 5 bearbeitet werden!
+dann kann der Befehl <code>230V -set 14</code> verwendet werden. Hier würde jetzt das Relais Nr. 14 bearbeitet werden!
 
 <br><br>
 <p align="left"> 
