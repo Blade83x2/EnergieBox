@@ -35,10 +35,10 @@ Ein 7" Touchdisplay sollte ebenfalls angeschlossen und eingerichtet sein.
 -------------------------------------
 Installation benötigter Pakete      |
 -------------------------------------
-
+sudo apt-get install build-essential libgtk-3-dev
 Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Installation verschiedener benötigter Pakete:
 
-`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install uwf python-dev python3-pip git manpages-de ufw kate krusader mat hwinfo -y && sudo pip install rpi.gpio libgtk-3-dev xterm`
+`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install build-essential libgtk-3-dev ufw python3-dev python3-pip git manpages-de ufw kate krusader mat hwinfo -y && sudo pip install rpi.gpio libgtk-3-dev xterm pymodbus`
 
 
 -------------------------------------
@@ -305,18 +305,9 @@ In diese Datei folgendes kopieren:
 `Terminal=false`
 
 
-
-Damit jede 3 Minuten die Daten des Ladereglers ausgelesen werden können, tragen wir einen CronJob mit folgender Zeile ein:
-
-`sudo crontab -e`
-
-Ganz unten fügen wir folgende Zeile hinzu:
-
-`*/3 * * * * /usr/bin/python3 /Energiebox/Tracer/readall.py > /Energiebox/Tracer/tracer.txt && sleep 7 && cd /Energiebox/Tracer && ./tracer > /dev/null &2>1`
-
-
-
 Die Grafische Schnittstelle wird nun beim Starten geladen.
+
+
 
 Um eine Virtuelle Tastatur auf dem Touchdisplay bei Berührung anzeigen zu lassen, installieren wir mit
 
@@ -328,6 +319,21 @@ Show when unlocking the screen setzen und speichern. Unter Window setzen wir Doc
 Unter Auto-show Hacken setzem bei Auto-show when editing text.
 Unter Layout wird Small gewählt und unter Theme DarkRoom. Zuletzt alles speichern.
 Die Tastatur muss nach jedem Start aktiviert werden unter Startmenü >Universal Access > Onboard
+
+
+
+
+
+Damit jede 3 Minuten die Daten des Ladereglers ausgelesen werden können, tragen wir einen CronJob mit folgender Zeile ein:
+
+`sudo crontab -e`
+
+Ganz unten fügen wir folgende Zeile hinzu:
+
+`*/3 * * * * /usr/bin/python3 /Energiebox/Tracer/readall.py > /Energiebox/Tracer/tracer.txt && sleep 7 && cd /Energiebox/Tracer && ./tracer > /dev/null &2>1`
+
+
+
 
 
 -------------------------------------
@@ -408,7 +414,7 @@ Die erzeugten Keys können jetzt angezeigt werden mit:
 Um diesen Key mit dem Raspberry zu Verbinden folgendes Ausführen:
 (Port, Username & DynDNS entsprechend anpassen!)
 
-`ssh-copy-id -p 2222 pi@home.cplusplus-development.de`
+`ssh-copy-id -p 2222 box@home.cplusplus-development.de`
 
 
 

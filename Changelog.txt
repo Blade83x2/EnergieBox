@@ -8,33 +8,14 @@ ________________________________________________________________________________
 PLANUNG für Version 5
 
  + ExecOnStart hinzufügen
- + ExecOnEnd hinzufügen)
- + 24V, 30A Schaltrelais für 12V Trafo (zuschalten wenn auf 12V Seite mehr als 30A genutzt werden, Geräte nur bis 85% Kapazität ausnutzen) 
- + 230V 16A Schaltrelais für Grid- Netzladegerät
- + 60V 20A Schaltrelais für Grid- Netzladegerät (Batteriepol)
- + 24V 30A Schaltrelais für HHO Generator
-
-
-Powersafe Modus - Transformator für 12 Volt Seite wird bei bedarf zugeschaltet
-Grid Powerlod Modus - Automatisches laden der Batterien aus dem lokalen Netz.
-
-
-Bugfixes
-defekter Trafo entfernen
-2ter 720W 24V Trafo abklemmen
-Batteriezuleitung auf 70mm
-24V Leitung richtig anschliessen
-USB Ladebuchse auf 6A umbauen
-Lüftersteuerung hinzufügen
-Wasserfilter (Ventil) 
-Frequenzimpuls senden nach Filterung
-h2o auf Ventilbetrieb verfügbar machen
-Sunlight Birne bestellen und verbauen
-
-25,6V 100Ah LiFePo4: Überspannungsabschaltung=30V, Ladespannung=29,2V, Unterspannungsabschaltung=21,6V, Erhaltungsladespannung=27,6V
-
-
-
+ + ExecOnEnd hinzufügen
+ + Powersafe Modus - Transformator für 12 Volt Seite wird bei bedarf zugeschaltet
+ + Grid Powerlod Modus - Automatisches laden der Batterien aus dem lokalen Netz.
+ + Lüftersteuerung hinzufügen
+ + Grid Powerlod Modus - Software für Netzlade Funktion erstellen (25,6V 100Ah LiFePo4: Überspannungsabschaltung=30V, Ladespannung=29,2V, Unterspannungsabschaltung=21,6V, Erhaltungsladespannung=27,6V)
+ + Neue Cat7 abgeschirmte I²C Leitungen installieren
+ + Umtausch 4mm² Leitung vom Inverter -> 230V Modul
+ + Bilder README.MD anpassen
 
 
 
@@ -48,6 +29,20 @@ von 20A auf 60A umgestellt. Jeder Schaltkreis kann jetzt beliebig mit Sicherunge
 Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können ohne Endwiderstände schon zu Störungen kommen.
 Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
 
+ [NEW] Sinus Wave Generator an 12V Relais 7 installiert
+ [UPDATE] Anschluss Skizze für Controller erstellt
+ [NEW] Modul für GRID-LOAD verbaut (Portexpander, Relais, 80A Relais & Relais für Ladegerät- Zuleitung)
+ [BUGFIX] PE Querschnitt für Inverter & Laderegler auf 16mm² erhöht
+ [UPDATE] Unnötige 48V -> 24V Wandler entfernt
+ [UPDATE] Fünfter PV String hat eigenes Kabel
+ [UPDATE] PV Kabel verkürzt
+ [UPDATE] 40A FI-LS verbaut
+ [BUGFIX] Stecker für Modulverbindungen sinnvoller platziert
+ [BUGFIX] Kabellänge auf 12V Modul reduziert
+ [NEW] 3 Sunlight Birnen a 300W verfügbar
+ [NEW] Kabel verlegt für H²O Hexagonalfrequenzgerät (Impulsstart)
+ [UPDATE] Ventilbetrieb für H²O Anlage vollständig
+ [BUGFIX] Defekter 12V Trafo entfernt
  [UPDATE] Github ist wieder Verbunden. Neues Branch-> master
  [UPDATE] 230V Automat verbaut für Schrankbeleuchtung
  [UPDATE] Ladekabel für Haarmaschiene passend gebaut
@@ -55,7 +50,7 @@ Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafisc
  [UPDATE] Deutsches Sprachpaket installiert
  [NEW] CronJob jede 3 Minuten für Daten vom Laderegler zu laden um Batteriespannungen zu Überwachen. Notfalls werden Verbraucher automatisch abgeschaltet.
  [UPDATE] Auslesen aller Relevanten Daten aus dem Tracer -> wird in tracer.txt gespeichert
- [NEW] 24 Volt (max. 30 A) Anschluss hinzugefügt
+ [NEW] Schuko- Schranksteckdose installiert
  [UPDATE] Maximaler Batterie Strom auf 100A bei 48 Volt eingestellt am MPPT
  [NEW] Analog / Digitalwandler auf Adresse 0x48 angeschlossen
  [NEW] Weitere Untertisch LED Lightshow verbaut
@@ -75,9 +70,9 @@ Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafisc
  [NEW] System wurde auf neueste Hardware kopiert und funktioniert Ordnungsgemäß
  [UPDATE] 5000 Watt 48 Volt EPEVER Spannungswandler eingebaut
  [UPDATE] Gesamte Elektronik wurde mit Höchster Sorgfallt in einen Schrank eingebaut. Kabel liegen hinter der Elektronik. Alle Kabel wurden in Kabelkanäle gelegt
- [UPDATE] Beim booten wird jetzt die Grafische Benutzeroberfläche gestartet. Alles andere wird ausgeblendet
+ [UPDATE] Beim booten wird jetzt die Grafische Benutzeroberfläche gestartet. Alles andere wird ausgeblendet - deaktiviert
  [NEW] Am 230V Stromkreis ist nun ein Digitaler Stromzähler eingebaut der Frequenz, Spannung, Stromstärke sowie Leistung anzeigt
- [UPDATE] Neues 12V Brett gebaut mit neuem MCP23017, 16x Relais Module, 16 Finder Lasteneltakos, 80A 12V Wandler, 100A Vorsicherung
+ [UPDATE] Neues 12V Brett gebaut mit neuem MCP23017, 16x Relais Module, 16 Finder Lasteneltakos, 60A 12V Spannungswandler, 100A Vorsicherung
  [NEW] Jeder 12V Schaltkreis ist jetzt einzeln abgesichert mit einer entsprechenden Sicherung
  [UPDATE] Betriebssystem wird jetzt von 1TB SSD M.2 geladen
  [NEW] 1TB NVMe SSD M.2 PCIe Gen3x4 verbaut
