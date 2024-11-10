@@ -31,4 +31,5 @@ cd ..
 git add -A 
 git commit -m "$1"
 git push -u origin master
-# https://github.com/settings/tokens 
+# https://github.com/settings/tokens für Token auslesen
+# sudo git config --global credential.helper store
