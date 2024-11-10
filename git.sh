@@ -31,4 +31,4 @@ cd ..
 git add -A 
 git commit -m "$1"
 git push -u origin master
-
+# https://github.com/settings/tokens 
