@@ -7,7 +7,7 @@ ________________________________________________________________________________
 
 PLANUNG für Version 5
 
- + Option für Zeitgesteuerte Anwendung hinzufügen
+ + Option für Zeitgesteuerten Anwendungsstart / stop hinzufügen
  + Powersafe Modus - Zweiter 24V=>12V Konverter wird nur bei bedarf zugeschaltet
  + PV Pannelen Erdung 
  + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen
@@ -20,11 +20,13 @@ PLANUNG für Version 5
  
  + Gitarre mit Sonnenlicht austauschen
  + FIX -> 12V & 230V -> Wenn Gerät schon an und versucht wird an zu schalten, keine Leistungsüberprüfung
- + FIX an/aus Parameter: irgendwas validieren -> ergibt automatisch 0
+ + FIX Beim booten an/aus Parameter: irgendwas validieren -> ergibt automatisch 0
 
- 
+ + Update Alle Verbraucher messen mit Labornetzteil und config Dateien aktualisieren.
   
-
+ [UPDATE] 5.1V Supply Spannung abgeglichen
+ 
+ 
 _______________________________________________________________________________________________________________________________________
 
 
@@ -35,18 +37,12 @@ von 20A auf 60A umgestellt. Jeder Schaltkreis kann jetzt beliebig mit Sicherunge
 Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können ohne Endwiderstände schon zu Störungen kommen.
 Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
 
- [NEW] CronJob jede 3 Minuten für Daten vom Laderegler zu laden um Batteriespannungen zu Überwachen. Notfalls wird aus dem GRID nach geladen ########################################################################
+ [NEW] CronJob jede 3 Minuten für Daten vom Laderegler zu laden um Batteriespannungen zu Überwachen.
 
-
- 
- + Neue Cat7 abgeschirmte I²C Leitungen installieren
- 
- kühlkörper
- 
- 
- 
- 
- [BUGFIX] Bilder in README.MD von 230V/ anpassen
+ [BUGFIX] Alle 5V GPIO's & I²C Verbindungen auf 3,3V ungestellt. Relaisversorgungsströme vom RPI4 getrennt
+ [BUGFIX] Defekten RPI4 Controller ausgetauscht
+ [UPDATE] Neue Cat7 abgeschirmte I²C Leitungen installiert. P82B715PM Expander instaliert für verbesserten Signaltransport
+ [BUGFIX] Bilder in README.MD von 230V/ angepasst
  [NEW] Sinus Wave Generator an 12V Relais 7 installiert
  [UPDATE] Anschluss Skize für Controller erstellt
  [NEW] Modul für GRID-LOAD verbaut (Portexpander, Relais, 80A Relais & Relais für Ladegerät- Zuleitung)
@@ -56,7 +52,7 @@ Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafisc
  [UPDATE] PV Kabel verkürzt
  [UPDATE] 40A FI-LS verbaut
  [BUGFIX] Stecker für Modulverbindungen sinnvoller platziert
- [BUGFIX] Kabellänge auf 12V Modul reduziert
+ [BUGFIX] Kabellänge in 12V Modul reduziert
  [NEW] 3 Sunlight Birnen a 300W verfügbar
  [NEW] Kabel verlegt für H²O Hexagonalfrequenzgerät (Impulsstart)
  [UPDATE] Ventilbetrieb für H²O Anlage vollständig
