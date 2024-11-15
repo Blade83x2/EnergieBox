@@ -24,12 +24,12 @@ int main(int argc, char**argv) {
     }
     mcp_initReg();
     //  Alle als OUTPUT definieren und ausschalten
-    // mcp_writeRegister(0x00, 0x00); // bank a auf output
-    // mcp_writeRegister(0x01, 0x00);  // bank b auf output
+    mcp_writeRegister(0x00, 0x00);  // bank a auf output
+    mcp_writeRegister(0x01, 0x00);  // bank b auf output
 
     for(int i = 0; i<16; i++) {
-        mcp_pinMode(i, 0);
-        mcp_digitalWrite(i,1);
+     //   mcp_pinMode(i, 0);
+     //   mcp_digitalWrite(i,1);
         sprintf(command, "sh /Energiebox/12V/setIni.sh %d %d", (i+1), 0);
         system(command);
 	sleep(0.1);
