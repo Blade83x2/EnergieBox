@@ -51,7 +51,6 @@ static int handler(void* config, const char* section, const char* name, const ch
     else if(MATCH("grid", "supplyMaxLoadWh")) { pconfig->grid.supplyMaxLoadWh = atoi(value); }
     else if(MATCH("grid", "battVoltageStartLoading")) { pconfig->grid.battVoltageStartLoading = atoi(value); }
     else if(MATCH("grid", "loadingCapacityWh")) { pconfig->grid.loadingCapacityWh = atoi(value); }
-
     else { return 0; }
     return 1;
 }
