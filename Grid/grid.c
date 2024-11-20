@@ -113,11 +113,11 @@ int main(int argc, char *argv[]){
         return showHelp(argv, &config);
     }
     
-    float supplyMaxVoltage = 0.f;
+    float supplyMaxVoltage = 0.2f;
     supplyMaxVoltage = config.grid.supplyMaxVoltage;
-    float supplyMaxCurrent = 0.f;
+    float supplyMaxCurrent = 0.2f;
     supplyMaxCurrent = config.grid.supplyMaxCurrent;
-    float supplyLoadPower = 0.f;
+    float supplyLoadPower = 0.2f;
     supplyLoadPower = supplyMaxVoltage * supplyMaxCurrent;
     float supplyLoadTimeSec = 0.f;
     float supplyLoadWattStunden = 0.f;
@@ -153,7 +153,7 @@ int main(int argc, char *argv[]){
                     printf("\e[0;31m Der maximale Wert für -w beträgt %d\n", config.grid.supplyMaxLoadWh);
                     return 1;
                 }
-                printf("\n  Ladespannung (U):\t\t %3.2fV\n", supplyMaxVoltage);
+                printf("\n  Ladespannung (U):\t\t %2.2fV\n", supplyMaxVoltage);
                 printf("  Ladestrom (A):\t\t %3.2fA\n", supplyMaxCurrent);
                 printf("  Ladeleistung pro Stunde (W):\t %4.2fW \n", supplyLoadPower);
                 printf("  Ladeleistung pro Sekunde (W):\t %4.2fW \n", supplyLoadPower/3600);
