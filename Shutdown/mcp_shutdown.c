@@ -15,37 +15,12 @@
 typedef struct {
     int address;
     int numberOfRelaisActive;
-    int maxOutputPower;
-    int maxPConverter;
-    int maxPMicroController;
 } mcp_setup;
 
-// Relais Strukturen
-typedef struct {
-    const char* name;
-    bool activateOnStart;
-    int eltakoState[1];
-    int pMax[4];
-} relais_config;
+
 
 typedef struct {
     mcp_setup mcp;
-    relais_config r1;
-    relais_config r2;
-    relais_config r3;
-    relais_config r4;
-    relais_config r5;
-    relais_config r6;
-    relais_config r7;
-    relais_config r8;
-    relais_config r9;
-    relais_config r10;
-    relais_config r11;
-    relais_config r12;
-    relais_config r13;
-    relais_config r14;
-    relais_config r15;
-    relais_config r16;
 } configuration;
 
 
