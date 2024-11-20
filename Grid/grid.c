@@ -162,11 +162,6 @@ int main(int argc, char *argv[]){
                 system(command);
                 return 0;
                 break;  
-                
-                
-                
-                
-                
             case ':':  
                 printf("Dieser Parameter benötigt einen Wert!\n");  
                 break;  
@@ -175,6 +170,5 @@ int main(int argc, char *argv[]){
                 break;  
         }  
     }  
-
     return 0;
 }

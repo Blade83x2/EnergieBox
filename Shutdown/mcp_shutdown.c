@@ -9,7 +9,6 @@
 #include <ctype.h>
 #include <stdlib.h> // atoi()
 
-
 // MCP Setup
 typedef struct {
     int address;
@@ -19,7 +18,6 @@ typedef struct {
 typedef struct {
     mcp_setup mcp;
 } configuration;
-
 
 static int handlerGrid(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
@@ -51,7 +49,6 @@ static int handler230(void* config, const char* section, const char* name, const
 char command[100];
 
 int main(int argc, char**argv) {
-    
     configuration config;
     /////////////////////
     //// 12 Volt  ///////
@@ -131,6 +128,5 @@ int main(int argc, char**argv) {
         mcp_digitalWrite(i, 1);
         sleep(0.1);
     }
-    
     return 0;
 }
