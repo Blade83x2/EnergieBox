@@ -16,8 +16,6 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-
-
 // MCP Setup
 typedef struct {
     int address;
@@ -59,22 +57,11 @@ static int handler(void* config, const char* section, const char* name, const ch
     return 1;
 }
 
-
-
-
-
-
 int main(void) {
     configuration config;
     if (ini_parse("/Energiebox/Grid/config.ini", handler, &config) < 0) { fprintf(stderr, "Can't load '/Energiebox/Grid/config.ini\n"); return 1; }
-
-	printf("-> %2.2fV \n", config.grid.battVoltageStartLoading);
-	
-	
 	const char* filename = "/Energiebox/Tracer/tracer.txt";
 	char batt_voltage[] = "Batterie: Aktuelle Spannung in Volt = ";
-	//char batt_volatage_disable[] = config.grid.battVoltageStartLoading; // in Volt
-	//char batt_volatage_disable[] = "55.10"; // in Volt
 	FILE* input_file = fopen(filename, "r");
 	if (!input_file) exit(EXIT_FAILURE);
 	char* contents = NULL;
@@ -99,7 +86,7 @@ int main(void) {
 			}
 			else {
 				printf("-> Niedrige Batteriespannung entdeckt, Grid load wird gestartet! Es werden %d Wh geladen\n", config.grid.loadingCapacityWh);
-				sprintf(command, "grid -w %d", config.grid.loadingCapacityWh);
+				sprintf(command, "grid -w %d & ", config.grid.loadingCapacityWh);
 				system(command);
 			}
 		}
