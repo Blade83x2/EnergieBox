@@ -26,6 +26,9 @@ cd ..
 cd Tracer
 gcc -o tracer tracer.c
 cd ..
+cd Grid
+make
+cd ..
 
 
 git add -A 
