@@ -4,7 +4,6 @@
 #include <string.h>
 #include <sys/stat.h>
 
-
 int main(void) {
 	const char* filename = "/Energiebox/Tracer/tracer.txt";
 	char command[255];
@@ -19,7 +18,6 @@ int main(void) {
 		printf("%s", contents);
 		// n Ersten Zeichen vergleichen mit batt_voltage
 		if(strncmp(batt_voltage, contents, 38)==0){
-			//printf("vergleich\n");
 			// Delimeter auf = setzen
 			char *token = strtok(contents, "=");
 			// Position auf Bereich hinter = schieben
@@ -30,7 +28,6 @@ int main(void) {
 			}
 			// hinter der zweiten Komastelle abschneiden für float vergleich
 			token[5] = '\0';
-			//printf("Cur. batt: %f \n disable at:  %f \n", atof(token), atof(batt_volatage_disable));
 			if(atof(batt_volatage_disable) <= atof(token)){
 				//printf("volt ok \n");
 			}

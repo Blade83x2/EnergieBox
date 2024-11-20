@@ -206,11 +206,10 @@ Sollte das der Fall sein, sollte die Ausgabe so aussehen:
 
 
 
+
 Eine Übersicht der Belegung auf der Platine kann eingesehen werden mit:
 
 `gpio -g readall`
-
-
 
 
 
@@ -357,6 +356,40 @@ Ganz unten fügen wir folgende Zeile hinzu:
 
 `*/3 * * * * /usr/bin/python3 /Energiebox/Tracer/readall.py > /Energiebox/Tracer/tracer.txt && sleep 7 && cd /Energiebox/Tracer && ./tracer > /dev/null &2>1`
 
+Damit dies geschehen kann, muss der EP-EVER per RS-485 Adapter am USB Port des Raspberry's eingesteckt sein.
+Im Python Script muss der verwendete USB Port eingetragen werden.  Um den Port zu ermitteln, kann die
+Differenz des Befehls
+
+`ls /dev/tty*`
+
+genutzt werden. Ist der RS-485 Adapter eingesteckt, wird ein Eintrag zusätzlich angezeigt.
+Bislang war es immer der Eintrag `/dev/ttyACM0`. Es kommt allerdings darauf an,
+wieviele USB Geräte angeschlossen sind. Nachdem diese Port Adresse ausfindig gemacht worden ist,
+muss diese im Script eingetragen werden. Hierzu folgenden Befehl aufrufen:
+
+`cd /Energiebox/Tracer/ && sudo nano readall.py`
+
+und in der Zeile 12 unter Port die Geräteadresse eintragen
+
+<p align="center"> 
+    <img src="img/usbport.png" style="width: 85%;" alt="USB Port Adresse" >
+</p>
+
+Den gleichen Eintrag ebenfalls in die client.py in Zeile 15 hinzufügen
+
+<p align="center"> 
+    <img src="img/usbportclient.png" style="width: 85%;" alt="USB Port Adresse Client" >
+</p>
+
+Zum Testen in der Konsole 
+
+`python3 /Energiebox/Tracer/readall.py > /Energiebox/Tracer/tracer.txt`
+
+aufrufen. Mit 
+
+`cat /Energiebox/Tracer/tracer.txt`
+
+sollten alle Ausgelesenen Daten angezeigt werden.
 
 
 
