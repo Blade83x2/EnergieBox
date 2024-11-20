@@ -158,12 +158,37 @@ int main(int argc, char *argv[]){
                 printf("  Ladeleistung pro Sekunde (W):\t %4.2fW \n", supplyLoadPower/3600);
                 supplyLoadTimeSec = supplyLoadWattStunden / (supplyLoadPower/3600);
                 printf("  Ladezeit in Sekunden:\t\t%4.0f Sek\n\n", supplyLoadTimeSec);  
-                setBit(0, 0); // Netzanschluss Relais einschalten 
-                sleep(5);
-                setBit(1, 0); // Batterie Relais einschalten 
-                // Selbst aufrufen mit Parameter -s sowie Ladezeit in Sekunden
-                sprintf(command, "%s -s %4.0f & ", argv[0], supplyLoadTimeSec);
-                system(command);
+                
+                
+                // prüfen ob bereits schon eine ladung am laufen ist
+                
+                
+                lockfile=/Energiebox/Grid/lockfile.lock
+
+                
+                if { set -C; 2>/dev/null >${lockfile}; }; then
+                    trap "rm -f ${lockfile}" EXIT
+                        
+                
+                    setBit(0, 0); // Netzanschluss Relais einschalten 
+                    sleep(5);
+                    setBit(1, 0); // Batterie Relais einschalten 
+                    // Selbst aufrufen mit Parameter -s sowie Ladezeit in Sekunden
+                    sprintf(command, "%s -s %4.0f & ", argv[0], supplyLoadTimeSec);
+                    system(command);
+                    
+                
+                        
+                else
+                        echo "Lock file exists… exiting"
+                        exit
+                fi
+
+                
+               
+                                
+
+                
                 return 0;
                 break;  
             case ':':  
