@@ -16,19 +16,26 @@ void setBit(int Port, int Status);
 int showHelp(char**argv, void* config);
 
 
-
-
-typedef struct {
-    mcp_setup mcp;
-} configuration;
-
-
-
 // MCP Setup
 typedef struct {
     int address;
     int numberOfRelaisActive;
 } mcp_setup;
+
+
+// GRID Setup
+typedef struct {
+    int supplyMaxCurrent;
+    int supplyMaxVoltage;
+} grid_setup;
+
+
+
+typedef struct {
+    mcp_setup mcp;
+    grid_setup grid;
+} configuration;
+
 
 
 
@@ -37,6 +44,8 @@ static int handler(void* config, const char* section, const char* name, const ch
     #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
     if(MATCH("mcp", "address")) {  pconfig->mcp.address = atoi(value); }
     else if(MATCH("mcp", "numberOfRelaisActive")) { pconfig->mcp.numberOfRelaisActive = atoi(value); }
+    else if(MATCH("grid", "supplyMaxCurrent")) { pconfig->grid.supplyMaxCurrent = atoi(value); }
+    else if(MATCH("grid", "supplyMaxVoltage")) { pconfig->grid.supplyMaxVoltage = atoi(value); }
     else { return 0; }
     return 1;
 }
@@ -58,10 +67,9 @@ int main(int argc, char**argv) {
     
     
     mcp_digitalWrite(0, 0);
-mcp_digitalWrite(1, 1);
-mcp_digitalWrite(2, 0);
-  //  setBit(0, 1); // Relais einschalten 
-  //  setBit(1, 1); // Relais einschalten 
+    mcp_digitalWrite(1, 1);
+
+
     sleep(2);
     return 0;
 }
