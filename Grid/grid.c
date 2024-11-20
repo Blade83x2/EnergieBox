@@ -22,10 +22,12 @@ typedef struct {
 
 // GRID Setup
 typedef struct {
-    int supplyMaxCurrent;
-    int supplyMaxVoltage;
+    float supplyMaxCurrent;
+    float supplyMaxVoltage;
     int supplyMinLoadWh;
     int supplyMaxLoadWh;
+    float battVoltageStartLoading;
+    float loadingCapacityWh;
 } grid_setup;
 
 // config
@@ -47,6 +49,9 @@ static int handler(void* config, const char* section, const char* name, const ch
     else if(MATCH("grid", "supplyMaxVoltage")) { pconfig->grid.supplyMaxVoltage = atoi(value); }
     else if(MATCH("grid", "supplyMinLoadWh")) { pconfig->grid.supplyMinLoadWh = atoi(value); }
     else if(MATCH("grid", "supplyMaxLoadWh")) { pconfig->grid.supplyMaxLoadWh = atoi(value); }
+    else if(MATCH("grid", "battVoltageStartLoading")) { pconfig->grid.battVoltageStartLoading = atoi(value); }
+    else if(MATCH("grid", "loadingCapacityWh")) { pconfig->grid.loadingCapacityWh = atoi(value); }
+
     else { return 0; }
     return 1;
 }
