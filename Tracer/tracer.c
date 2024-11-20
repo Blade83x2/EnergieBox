@@ -68,7 +68,7 @@ int main(void) {
 	size_t len = 0;
 	// Jede Zeile auslesen
 	while (getline(&contents, &len, input_file) != -1) {
-		printf("%s", contents);
+		//printf("%s", contents);
 		// n Ersten Zeichen vergleichen mit batt_voltage
 		if(strncmp(batt_voltage, contents, 38)==0){
 			// Delimeter auf = setzen
@@ -85,7 +85,7 @@ int main(void) {
 				//printf("volt ok \n");
 			}
 			else {
-				printf("-> Niedrige Batteriespannung entdeckt, Grid load wird gestartet! Es werden %d Wh geladen\n", config.grid.loadingCapacityWh);
+				//printf("-> Niedrige Batteriespannung entdeckt, Grid load wird gestartet! Es werden %d Wh geladen\n", config.grid.loadingCapacityWh);
 				sprintf(command, "grid -w %d & ", config.grid.loadingCapacityWh);
 				system(command);
 			}
