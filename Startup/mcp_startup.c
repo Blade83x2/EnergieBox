@@ -65,10 +65,6 @@ static int handlerGrid(void* config, const char* section, const char* name, cons
 }
 
 
-
-
-
-
 static int handler12(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
     #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
