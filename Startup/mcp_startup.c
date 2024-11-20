@@ -54,6 +54,21 @@ int deviceEltakoState[16][1];
 int devicePMax[16];
 int pMaxCurrent;
 
+
+static int handlerGrid(void* config, const char* section, const char* name, const char* value) {
+    configuration* pconfig = (configuration*)config;
+    #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
+    if(MATCH("mcp", "address")) {  pconfig->mcp.address = atoi(value); } 
+    else if(MATCH("mcp", "numberOfRelaisActive")) { pconfig->mcp.numberOfRelaisActive = atoi(value); } 
+    else { return 0; }
+    return 1;
+}
+
+
+
+
+
+
 static int handler12(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
     #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
@@ -372,5 +387,37 @@ int main(int argc, char**argv) {
             }
         }
     }
+    
+    
+    ////////////////////
+    ///// GRID      ////
+    ////////////////////
+    // config Objekt überladen
+    if (ini_parse("/Energiebox/Grid/config.ini", handlerGrid, &config) < 0) {
+        printf("Can't load '/Energiebox/Grid/config.ini'\n");
+        return 1;
+    }
+    mcp_begin(config.mcp.address);
+    fd = wiringPiI2CSetup(MCP23017_ADDRESS | i2caddr);
+    if(fd <0) {
+        printf("wiringPi I2C Setup error!!!");
+        return -1;
+    }
+    mcp_initReg();
+    // Alle als OUTPUT definieren und ausschalten
+    for(int i = 0; i<config.mcp.numberOfRelaisActive; i++) {
+        mcp_pinMode(i, 0);
+        mcp_digitalWrite(i, 1);
+        sleep(0.1);
+    }
+
+    // Relais einschalten
+    mcp_digitalWrite(0, 0);
+
+
+    
+    
+    
+    
     return 0;
 }
