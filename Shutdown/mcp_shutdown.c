@@ -1,13 +1,15 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "mymcp23017.h"
 #include <unistd.h>
+#include <time.h>
+#include <string.h>
+#include <stdbool.h>
+#include <ctype.h>
+#include <stdlib.h> // atoi()
 
 char command[100];
-
-
 
 static int handlerGrid(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
