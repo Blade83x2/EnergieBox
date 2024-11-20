@@ -65,17 +65,15 @@ static int handler(void* config, const char* section, const char* name, const ch
 
 
 int main(void) {
-	
     configuration config;
     if (ini_parse("/Energiebox/Grid/config.ini", handler, &config) < 0) { fprintf(stderr, "Can't load '/Energiebox/Grid/config.ini\n"); return 1; }
-	
+
 	printf("-> %2.2fV \n", config.grid.battVoltageStartLoading);
 	
 	
 	const char* filename = "/Energiebox/Tracer/tracer.txt";
-	
 	char batt_voltage[] = "Batterie: Aktuelle Spannung in Volt = ";
-	char batt_volatage_disable[] = "50.00"; // in Volt
+	char batt_volatage_disable[] = config.grid.battVoltageStartLoading; // in Volt
 	FILE* input_file = fopen(filename, "r");
 	if (!input_file) exit(EXIT_FAILURE);
 	char* contents = NULL;
@@ -99,23 +97,9 @@ int main(void) {
 				//printf("volt ok \n");
 			}
 			else {
-				printf("-> Niedrige Batteriespannung entdeckt, Grid load wird gestartet!\n");
-				sprintf(command, "grid -w 100");
+				printf("-> Niedrige Batteriespannung entdeckt, Grid load wird gestartet! Es werden %s Wh geladen\n", grid.loadingCapacityWh);
+				sprintf(command, "grid -w %s", grid.loadingCapacityWh);
 				system(command);
-				// Alles ausschalten was nicht notwendig ist
-				// 230V
-				//sprintf(command, "/Energiebox/230V/230V 1 0 0 && /Energiebox/230V/230V 2 0 0 && /Energiebox/230V/230V 3 0 0 && /Energiebox/230V/230V 4 0 0 && /Energiebox/230V/230V 5 0 0");
-				//system(command);
-				//sprintf(command, "/Energiebox/230V/230V 6 0 0 && /Energiebox/230V/230V 7 0 0 && /Energiebox/230V/230V 8 0 0 && /Energiebox/230V/230V 9 0 0 && /Energiebox/230V/230V 10 0 0");
-				//system(command);
-				//sprintf(command, "/Energiebox/230V/230V 11 0 0 && /Energiebox/230V/230V 12 0 0 && /Energiebox/230V/230V 13 0 0 && /Energiebox/230V/230V 14 0 0 && /Energiebox/230V/230V 15 0 0 && /Energiebox/230V/230V 16 0 0");
-				//system(command);
-
-				// 12V
-				//sprintf(command, "/Energiebox/12V/12V 3 0 0 && /Energiebox/12V/12V 4 0 0 && /Energiebox/12V/12V 5 0 0 && /Energiebox/12V/12V 6 0 0 && /Energiebox/12V/12V 7 0 0");
-				//system(command);
-				//sprintf(command, "/Energiebox/12V/12V 10 0 0 && /Energiebox/12V/12V 11 0 0 && /Energiebox/12V/12V 12 0 0 && /Energiebox/12V/12V 13 0 0 && /Energiebox/12V/12V 14 0 0 && /Energiebox/12V/12V 15 0 0");
-				//system(command);
 			}
 		}
 	}
