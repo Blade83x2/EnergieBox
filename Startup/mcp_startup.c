@@ -411,8 +411,8 @@ int main(int argc, char**argv) {
         sleep(0.1);
     }
 
-    // Relais einschalten
-    mcp_digitalWrite(0, 0);
+    
+    
 
 
     

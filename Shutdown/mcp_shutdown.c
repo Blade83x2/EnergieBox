@@ -14,7 +14,8 @@ int main(int argc, char**argv) {
     }
     //XXX X  A2 A1 A0
     //010 0  1  1  1      0x27       7   230Volt Bank
-    //010 0  0  1  0      0x22       2   12Volt Bank
+    //010 0  0  1  0      0x26       6   12Volt Bank
+    //010 0  0  1  0      0x22       2   Grid Bank
     // 12 Volt
     mcp_begin(6);
     fd = wiringPiI2CSetup(MCP23017_ADDRESS | i2caddr);

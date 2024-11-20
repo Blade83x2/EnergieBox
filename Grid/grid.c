@@ -17,16 +17,18 @@ int showHelp(char**argv, void* config);
 
 
 
+
+typedef struct {
+    mcp_setup mcp;
+} configuration;
+
+
+
 // MCP Setup
 typedef struct {
     int address;
     int numberOfRelaisActive;
 } mcp_setup;
-
-
-typedef struct {
-    mcp_setup mcp;
-} configuration;
 
 
 
@@ -52,8 +54,15 @@ int main(int argc, char**argv) {
     if(fd <0) { fprintf(stderr, "wiringPi I2C Setup error!!!"); return -1; }
 
     
-    setBit(0, 0); // Relais einschalten 
-    setBit(1, 1); // Relais einschalten 
+
+    
+    
+    mcp_digitalWrite(0, 0);
+mcp_digitalWrite(1, 1);
+mcp_digitalWrite(2, 0);
+  //  setBit(0, 1); // Relais einschalten 
+  //  setBit(1, 1); // Relais einschalten 
+    sleep(2);
     return 0;
 }
 
