@@ -194,7 +194,7 @@ int main(int argc, char* argv[]) {
         }
         // Wenn param1 gleich -empty ist, Literzähler für Abwasserabfang Kanister auf 0 setzen
         else if (strcmp(param1, "-empty") == 0) {
-            abwasserZaehlerReset();
+            abwasserZaehlerReset();///////////////////////////////////////////////////////////
             return 0;
         }
         // Wenn param1 gleich -setup ist, Konfigurationsprogramm aufrufen
