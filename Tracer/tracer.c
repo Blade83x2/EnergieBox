@@ -74,7 +74,7 @@ int main(void) {
 	const char* filename = "/Energiebox/Tracer/tracer.txt";
 	char batt_voltage[] = "Batterie: Aktuelle Spannung in Volt = ";
 	//char batt_volatage_disable[] = config.grid.battVoltageStartLoading; // in Volt
-	char batt_volatage_disable[] = "55.10"; // in Volt
+	//char batt_volatage_disable[] = "55.10"; // in Volt
 	FILE* input_file = fopen(filename, "r");
 	if (!input_file) exit(EXIT_FAILURE);
 	char* contents = NULL;
@@ -94,7 +94,7 @@ int main(void) {
 			}
 			// hinter der zweiten Komastelle abschneiden für float vergleich
 			token[5] = '\0';
-			if(atof(batt_volatage_disable) <= atof(token)){
+			if(config.grid.battVoltageStartLoading <= atof(token)){
 				//printf("volt ok \n");
 			}
 			else {
