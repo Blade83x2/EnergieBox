@@ -3,8 +3,8 @@
 
 ### @Copyright 2023 by Johannes a.d.F. K r ä m e r
 
-> Diese Software ist konzipiert für einen Raspberry Pi 4 32Bit der verbunden ist mit 2 Port Expandern die
-jeweils 16 Relais steuern. Diese sollten dann starke Eltako Lastenstromstoßrelais steuern.
+> Diese Software ist konzipiert für einen Raspberry Pi 4 32Bit der verbunden ist mit 3 Port Expandern an
+denen insgesamt 34 Relais angeschlossen sind. Diese sollten dann starke Eltako Lastenstromstoßrelais steuern.
 Als Spannungsquelle ist eine Photovoltaik Anlage mit einem 5 KW Speicher angeschlossen. Die 
 Software beinhaltet ausserdem noch ein Programm zur Wasserfilterung sowie ein Programm zur Kolloid Herstellung.
 Die Programme 12V und 230V schalten die Stromkreise an/aus und prüfen dabei die maximale Belastung.
@@ -15,7 +15,7 @@ Die Programme 12V und 230V schalten die Stromkreise an/aus und prüfen dabei die
 
 
 > Es wird davon ausgegangen, dass bereits ein funktionierendes Raspberry OS 32Bit läuft und
-2 MCP23017 (WAVESHARE, Artikelnummer BO-MCP23017) auf den Adressen 0x22 und 0x27 mit 
+3 MCP23017 (WAVESHARE, Artikelnummer BO-MCP23017) auf den Adressen 0x22, 0x26 und 0x27 mit 
 16 fach Relaisplatinen verbunden sind und an Eltakos für Lastenschaltkriese installiert sind. 
 Ein 7" Touchdisplay sollte ebenfalls angeschlossen und eingerichtet sein. 
 
@@ -58,7 +58,7 @@ Mit den folgenden Zeilen werden die Berechtigungen auf die Dateien und Ordner ge
 
 `sudo chmod 777 /Energiebox/h2o/ && sudo chmod 666 /Energiebox/h2o/config.ini && sudo chmod 755 /Energiebox/h2o/h2o && sudo chmod 755 /Energiebox/h2o/setIni.sh && sudo chmod 755 /Energiebox/h2o/h2o.c && sudo chmod 755 /Energiebox/h2o/h2o.o  && sudo chmod 744 /Energiebox/h2o/Makefile`
 
-`sudo chmod 777 /Energiebox/img/ && sudo chmod 777 /Energiebox/Kolloid/ && sudo chmod 777 /Energiebox/gui/`
+`sudo chmod 777 /Energiebox/img/ && sudo chmod 777 /Energiebox/Kolloid/ && sudo chmod 777 /Energiebox/gui/ && sudo chmod 777 /Energiebox/Grid/`
 
  
 -------------------------------------
@@ -194,7 +194,7 @@ ein und fügen ganz unten am Ende der Datei folgendes ein:
 
 Auch diese Aktion wird wieder mit Strg + x gespeichert.
 
-Nun prüfen wir noch kurz, ob die beiden Port Expander (0x22 und 0x27) angezeigt werden unter dem Befehl:
+Nun prüfen wir noch kurz, ob alle 3 Port Expander (0x22, 0x26 und 0x27) angezeigt werden unter dem Befehl:
 
 `sudo i2cdetect -y 1`
 
@@ -209,6 +209,29 @@ Sollte das der Fall sein, sollte die Ausgabe so aussehen:
 Eine Übersicht der Belegung auf der Platine kann eingesehen werden mit:
 
 `gpio -g readall`
+
+
+
+
+
+Falls das Betriebssystem auf einer SD Karte im Raspberry läuft, empfiehlt es sich,
+die Swap Funktion zu deaktivieren. Diese schreibt Daten aus dem RAM auf die SD Karte.
+Mit dem Befehl
+
+`sudo service dphys-swapfile status`
+
+kann geschaut werden ob diese Funktion läuft. Mit 
+
+`sudo service dphys-swapfile stop`
+
+kann der Dienst angehalten werden und mit 
+
+`free -m -t`
+
+sieht man ob die Swap Datei wirklich leer ist. Vollständig deaktivieren 
+kann man den Dienst mit 
+
+`sudo systemctl disable dphys-swapfile`
 
 
 
@@ -361,6 +384,8 @@ wieder ab mit Strg + x:
 `PATH=$PATH:/Energiebox/h2o`
 
 `PATH=$PATH:/Energiebox/gui`
+
+`PATH=$PATH:/Energiebox/Grid`
 
 `export LANGUAGE=de_DE.UTF-8`
 

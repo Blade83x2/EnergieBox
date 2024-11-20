@@ -12,8 +12,8 @@ PLANUNG für Version 5
  + PV Pannelen Erdung 
  + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen
  + Lüftersteuerung hinzufügen
- + Grid Powerlod Modus - Software für Netzlade Funktion erstellen (25,6V 100Ah LiFePo4: Überspannungsabschaltung=30V, Ladespannung=29,2V, Unterspannungsabschaltung=21,6V, Erhaltungsladespannung=27,6V)
- + Umtausch 4mm² Leitung vom Inverter -> 230V Modul
+  
+ 
  
  + 16A Leitungsschutz hinzufügen (bessere Aufteilung)
  + 100A Sicherungen bestellen
@@ -39,7 +39,7 @@ Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafisc
 
  [NEW] CronJob jede 3 Minuten für Daten vom Laderegler zu laden um Batteriespannungen zu Überwachen.
 
- [BUGFIX] Alle 5V GPIO's & I²C Verbindungen auf 3,3V ungestellt. Relaisversorgungsströme vom RPI4 getrennt
+ [NEW] Programm Grid erstellt. Nun kann per Kommandozeile aus dem Öffentlichen Stromnetz nachgeladen werden.
  [BUGFIX] Defekten RPI4 Controller ausgetauscht
  [UPDATE] Neue Cat7 abgeschirmte I²C Leitungen installiert. P82B715PM Expander instaliert für verbesserten Signaltransport
  [BUGFIX] Bilder in README.MD von 230V/ angepasst

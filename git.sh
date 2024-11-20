@@ -27,7 +27,7 @@ cd Tracer
 gcc -o tracer tracer.c
 cd ..
 cd Grid
-make
+sudo make
 cd ..
 
 
