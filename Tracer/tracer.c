@@ -83,7 +83,7 @@ int main(void) {
 			token[5] = '\0';
 			if(config.grid.battVoltageStartLoading < atof(token)){
 				
-				printf("config.grid.battVoltageStartLoading %s", config.grid.battVoltageStartLoading);
+				printf("config.grid.battVoltageStartLoading %2.2f", config.grid.battVoltageStartLoading);
 			}
 			else {
 				//printf("-> Niedrige Batteriespannung entdeckt, Grid load wird gestartet! Es werden %d Wh geladen\n", config.grid.loadingCapacityWh);
