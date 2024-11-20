@@ -97,8 +97,8 @@ int main(void) {
 				//printf("volt ok \n");
 			}
 			else {
-				printf("-> Niedrige Batteriespannung entdeckt, Grid load wird gestartet! Es werden %s Wh geladen\n", grid.loadingCapacityWh);
-				sprintf(command, "grid -w %s", grid.loadingCapacityWh);
+				printf("-> Niedrige Batteriespannung entdeckt, Grid load wird gestartet! Es werden %s Wh geladen\n", config.grid.loadingCapacityWh);
+				sprintf(command, "grid -w %s", config.grid.loadingCapacityWh);
 				system(command);
 			}
 		}
