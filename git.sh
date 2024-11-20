@@ -24,7 +24,7 @@ cd gui
 sudo gcc gui.cpp -o gui $(pkg-config --cflags gtk+-3.0 --libs)
 cd ..
 cd Tracer
-sudo gcc -o tracer tracer.c
+sudo gcc -Wall -o tracer tracer.c mymcp23017.o -lwiringPi -std=gnu99
 cd ..
 cd Grid
 sudo make
