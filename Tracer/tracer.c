@@ -92,6 +92,13 @@ int main(void) {
 			if(config.grid.battVoltageStartLoading <= atof(token)){
 				//printf("atof(token) %2.2f", atof(token));
 				//printf("config.grid.battVoltageStartLoading %2.2f", config.grid.battVoltageStartLoading);
+				if (access("/Energiebox/Grid/isLoading.lock", F_OK) == 0) {
+    printf("ja");
+} else {
+    printf("no");
+}
+				
+				
 			}
 			else {
 				//printf("-> Niedrige Batteriespannung entdeckt, Grid load wird gestartet! Es werden %d Wh geladen\n", config.grid.loadingCapacityWh);
