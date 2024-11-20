@@ -79,7 +79,6 @@ Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafisc
  [NEW] Bildschirmtastatur hinzugefügt für Touchdisplay
  [NEW] README.md für 12V erstellt 
  [UPDATE] 2x 24V 100A Lithium Batterien angeklemmt
- [UPDATE] Weiterer Full HD Beamer angeschlossen
  [NEW] System wurde auf neueste Hardware kopiert und funktioniert Ordnungsgemäß
  [UPDATE] 5000 Watt 48 Volt EPEVER Spannungswandler eingebaut
  [UPDATE] Gesamte Elektronik wurde mit Höchster Sorgfallt in einen Schrank eingebaut. Kabel liegen hinter der Elektronik. Alle Kabel wurden in Kabelkanäle gelegt
