@@ -6,25 +6,25 @@ if [ `id -u` -ne 0 ]
 fi
 
 cd 230V
-make
+sudo make
 cd ..
 cd 12V
-make
+sudo make
 cd ..
 cd h2o
-make
+sudo make
 cd ..
 cd Shutdown
-make
+sudo make
 cd ..
 cd Startup
-make
+sudo make
 cd ..
 cd gui
 sudo gcc gui.cpp -o gui $(pkg-config --cflags gtk+-3.0 --libs)
 cd ..
 cd Tracer
-gcc -o tracer tracer.c
+sudo gcc -o tracer tracer.c
 cd ..
 cd Grid
 sudo make
