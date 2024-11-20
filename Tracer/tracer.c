@@ -87,7 +87,7 @@ int main(void) {
 			}
 			else {
 				//printf("-> Niedrige Batteriespannung entdeckt, Grid load wird gestartet! Es werden %d Wh geladen\n", config.grid.loadingCapacityWh);
-				sprintf(command, "grid -w %d & ", config.grid.loadingCapacityWh);
+				sprintf(command, "/Energiebox/Grid/grid -w %d & ", config.grid.loadingCapacityWh);
 				system(command);
 			}
 		}
