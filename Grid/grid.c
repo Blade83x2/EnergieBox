@@ -163,10 +163,10 @@ int main(int argc, char *argv[]){
                 // prüfen ob bereits schon eine ladung am laufen ist
                 
                 
-                lockfile=/Energiebox/Grid/lockfile.lock
+                
 
                 
-                if { set -C; 2>/dev/null >${lockfile}; }; then
+                if { set -C; 2>/dev/null > /Energiebox/Grid/lockfile.lock; }; then
                     trap "rm -f ${lockfile}" EXIT
                         
                 
