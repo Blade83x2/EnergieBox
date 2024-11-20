@@ -162,7 +162,8 @@ int main(int argc, char *argv[]){
                 
                 // prüfen ob bereits schon eine ladung am laufen ist
                 
-                
+                sprintf(command, "touch /Energiebox/Grid/isLoading.lock");
+                system(command);
 
                 
                 setBit(0, 0); // Netzanschluss Relais einschalten 
