@@ -13,6 +13,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <unistd.h>
 
 // MCP Setup
 typedef struct {
@@ -132,11 +133,28 @@ int main(int argc, char *argv[]){
                     printf("\e[0;31m Der eingegebene Parameter ist keine Zahl!\n");
                     return 1; 
                 }
+                
+                
+                
+                
+                
+                
                 sleep(atof(optarg));
                 setBit(1, 1); // Batterie Relais ausschalten 
                 sleep(5);
                 setBit(0, 1); // Netzanschluss Relais ausschalten 
+                
+            
+                sprintf(command, "rm -f /Energiebox/Grid/isLoading.lock");
+                system(command);
+            
+            
                 return 0;
+                
+                
+                
+                
+                
                 break;  
             case 'w': 
                 supplyLoadWattStunden = atof(optarg);
@@ -164,25 +182,21 @@ int main(int argc, char *argv[]){
                 
 
                 
-                setBit(0, 0); // Netzanschluss Relais einschalten 
-                sleep(5);
-                setBit(1, 0); // Batterie Relais einschalten 
-                // Selbst aufrufen mit Parameter -s sowie Ladezeit in Sekunden
-                sprintf(command, "%s -s %4.0f & ", argv[0], supplyLoadTimeSec);
-                system(command);
-                
-                
-                
-            
-                            
-
-      
-                
- 
-       
-                
-               
-                                
+				if (access("/Energiebox/Grid/isLoading.lock", F_OK) == 0) {
+					printf("ist bereits am laden");
+				} 
+				else {
+					
+                    setBit(0, 0); // Netzanschluss Relais einschalten 
+                    sleep(5);
+                    setBit(1, 0); // Batterie Relais einschalten 
+                    // Selbst aufrufen mit Parameter -s sowie Ladezeit in Sekunden
+                    sprintf(command, "%s -s %4.0f & ", argv[0], supplyLoadTimeSec);
+                    system(command);
+                        
+					sprintf(command, "touch /Energiebox/Grid/isLoading.lock");
+					system(command);
+				}
 
                 
                 return 0;

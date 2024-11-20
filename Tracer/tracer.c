@@ -97,17 +97,11 @@ int main(void) {
 			else {
 				//printf("-> Niedrige Batteriespannung entdeckt, Grid load wird gestartet! Es werden %d Wh geladen\n", config.grid.loadingCapacityWh);
 				
-				
-				if (access("/Energiebox/Grid/isLoading.lock", F_OK) == 0) {
-					printf("ist bereits am laden");
-				} else {
-					
-					sprintf(command, "/Energiebox/Grid/grid -w %d & ", config.grid.loadingCapacityWh);
-					system(command);
-					
-					sprintf(command, "touch /Energiebox/Grid/isLoading.lock");
-					system(command);
-				}
+
+				sprintf(command, "/Energiebox/Grid/grid -w %d & ", config.grid.loadingCapacityWh);
+				system(command);
+
+			
 			}
 		}
 	}
