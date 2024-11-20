@@ -17,4 +17,4 @@ Batterie: Derzeitige Ladeleistung in Watt = 0.0W
 Batterie: Maximale Spannung heute in Volt = 54.48V
 Batterie: Minimale Spannung heute in Volt = 49.63V
 Batterie: Aufnahme in Ampere Stunden = 100Ah
-Batterie: Ladezustand in Prozent = 67%
+Batterie: Ladezustand in Prozent = 68%
