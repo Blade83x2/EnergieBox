@@ -16,7 +16,7 @@ PLANUNG für Version 5
  
  
  + 16A Leitungsschutz hinzufügen (bessere Aufteilung)
- + 100A Sicherungen bestellen
+ + 100A & 150A Sicherungen bestellen
  
  + Gitarre mit Sonnenlicht austauschen
  + FIX -> 12V & 230V -> Wenn Gerät schon an und versucht wird an zu schalten, keine Leistungsüberprüfung
@@ -24,7 +24,7 @@ PLANUNG für Version 5
 
  + Update Alle Verbraucher messen mit Labornetzteil und config Dateien aktualisieren.
   
- [UPDATE] 5.1V Supply Spannung abgeglichen
+ 
  
  
 _______________________________________________________________________________________________________________________________________
@@ -37,8 +37,7 @@ von 20A auf 60A umgestellt. Jeder Schaltkreis kann jetzt beliebig mit Sicherunge
 Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können ohne Endwiderstände schon zu Störungen kommen.
 Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
 
- [NEW] CronJob jede 3 Minuten für Daten vom Laderegler zu laden um Batteriespannungen zu Überwachen.
-
+ [UPDATE] CronJob jede 3 Minuten für Daten vom Laderegler zu laden und um gegebenfalls aus dem Netz nach laden.
  [NEW] Programm Grid erstellt. Nun kann per Kommandozeile aus dem Öffentlichen Stromnetz nachgeladen werden.
  [BUGFIX] Defekten RPI4 Controller ausgetauscht
  [UPDATE] Neue Cat7 abgeschirmte I²C Leitungen installiert. P82B715PM Expander instaliert für verbesserten Signaltransport
