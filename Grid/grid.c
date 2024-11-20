@@ -53,7 +53,7 @@ int main(int argc, char**argv) {
 
     
     setBit(0, 0); // Relais einschalten 
-    setBit(1, 0); // Relais einschalten 
+    setBit(1, 1); // Relais einschalten 
     return 0;
 }
 
