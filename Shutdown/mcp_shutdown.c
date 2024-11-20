@@ -68,6 +68,7 @@ static int handlerGrid(void* config, const char* section, const char* name, cons
 
 
 int main(int argc, char**argv) {
+    configuration config;
     if(wiringPiSetup()<0) {
         printf("wiringPiSetup error!!!");
         return -1;
