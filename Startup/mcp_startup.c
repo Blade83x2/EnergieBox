@@ -407,17 +407,10 @@ int main(int argc, char**argv) {
     // Alle als OUTPUT definieren und ausschalten
     for(int i = 0; i<config.mcp.numberOfRelaisActive; i++) {
         mcp_pinMode(i, 0);
-        mcp_digitalWrite(i, 0);
+        mcp_digitalWrite(i, 1);
         sleep(0.1);
     }
 
-    
-    
 
-
-    
-    
-    
-    
     return 0;
 }
