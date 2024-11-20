@@ -162,24 +162,20 @@ int main(int argc, char *argv[]){
                 
                 // prüfen ob bereits schon eine ladung am laufen ist
                 
-                int fd2 = open("/Energiebox/Grid/lockfile.lock", O_RDWR|O_CREAT, 0777);  // Originally 777 (see comments)
+                
 
-                if (fd2 != -1) {
-                    // ist gerade am laden
-                    close(fd2);
-                } else {
-                 
-                   setBit(0, 0); // Netzanschluss Relais einschalten 
-                    sleep(5);
-                    setBit(1, 0); // Batterie Relais einschalten 
-                    // Selbst aufrufen mit Parameter -s sowie Ladezeit in Sekunden
-                    sprintf(command, "%s -s %4.0f & ", argv[0], supplyLoadTimeSec);
-                    system(command);
-                    
-                  
-                    
-                }
-                                
+                
+                setBit(0, 0); // Netzanschluss Relais einschalten 
+                sleep(5);
+                setBit(1, 0); // Batterie Relais einschalten 
+                // Selbst aufrufen mit Parameter -s sowie Ladezeit in Sekunden
+                sprintf(command, "%s -s %4.0f & ", argv[0], supplyLoadTimeSec);
+                system(command);
+                
+                
+                
+            
+                            
 
       
                 
