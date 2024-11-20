@@ -98,9 +98,9 @@ int main(void) {
 				
 				
 if (access("/Energiebox/Grid/isLoading.lock", F_OK) == 0) {
-    fprint("ja");
+    printf("ja");
 } else {
-    fprint("no");
+    printf("no");
 }
 				
 				
