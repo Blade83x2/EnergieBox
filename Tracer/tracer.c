@@ -14,7 +14,11 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include <fcntl.h>
+#include <unistd.h>
 #include <sys/stat.h>
+
+
+
 
 // MCP Setup
 typedef struct {
@@ -57,6 +61,10 @@ static int handler(void* config, const char* section, const char* name, const ch
     return 1;
 }
 
+
+
+
+
 int main(void) {
     configuration config;
     if (ini_parse("/Energiebox/Grid/config.ini", handler, &config) < 0) { fprintf(stderr, "Can't load '/Energiebox/Grid/config.ini\n"); return 1; }
@@ -87,8 +95,23 @@ int main(void) {
 			}
 			else {
 				//printf("-> Niedrige Batteriespannung entdeckt, Grid load wird gestartet! Es werden %d Wh geladen\n", config.grid.loadingCapacityWh);
+				
+				
+if (access("/Energiebox/Grid/isLoading.lock", F_OK) == 0) {
+    fprint("ja");
+} else {
+    fprint("no");
+}
+				
+				
 				sprintf(command, "/Energiebox/Grid/grid -w %d & ", config.grid.loadingCapacityWh);
 				system(command);
+				
+				sprintf(command, "touch /Energiebox/Grid/isLoading.lock");
+                system(command);
+
+				
+				
 			}
 		}
 	}
