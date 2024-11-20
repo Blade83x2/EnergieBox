@@ -152,12 +152,12 @@ int main(int argc, char *argv[]){
                     printf("\e[0;31m Der maximale Wert für -w beträgt %d\n", config.grid.supplyMaxLoadWh);
                     return 1;
                 }
-                printf("\n  Ladespannung (U):\t\t %2.2fV\n", supplyMaxVoltage);
-                printf("  Ladestrom (A):\t\t %3.2fA\n", supplyMaxCurrent);
-                printf("  Ladeleistung pro Stunde (W):\t %4.2fW \n", supplyLoadPower);
-                printf("  Ladeleistung pro Sekunde (W):\t %4.2fW \n", supplyLoadPower/3600);
+                //printf("\n  Ladespannung (U):\t\t %2.2fV\n", supplyMaxVoltage);
+                //printf("  Ladestrom (A):\t\t %3.2fA\n", supplyMaxCurrent);
+                //printf("  Ladeleistung pro Stunde (W):\t %4.2fW \n", supplyLoadPower);
+                //printf("  Ladeleistung pro Sekunde (W):\t %4.2fW \n", supplyLoadPower/3600);
                 supplyLoadTimeSec = supplyLoadWattStunden / (supplyLoadPower/3600);
-                printf("  Ladezeit in Sekunden:\t\t%4.0f Sek\n\n", supplyLoadTimeSec);  
+                //printf("  Ladezeit in Sekunden:\t\t%4.0f Sek\n\n", supplyLoadTimeSec);  
                 setBit(0, 0); // Netzanschluss Relais einschalten 
                 sleep(5);
                 setBit(1, 0); // Batterie Relais einschalten 
@@ -168,6 +168,7 @@ int main(int argc, char *argv[]){
                 break;  
             case ':':  
                 printf("Dieser Parameter benötigt einen Wert!\n");  
+                return 1;
                 break;  
             case '?':  
                 return showHelp(argv, &config);
