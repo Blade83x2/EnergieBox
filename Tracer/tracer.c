@@ -81,8 +81,8 @@ int main(void) {
 			}
 			// hinter der zweiten Komastelle abschneiden für float vergleich
 			token[5] = '\0';
-			if(config.grid.battVoltageStartLoading < atof(token)){
-				
+			if(config.grid.battVoltageStartLoading > atof(token)){
+				printf("atof(token) %2.2f", atof(token));
 				printf("config.grid.battVoltageStartLoading %2.2f", config.grid.battVoltageStartLoading);
 			}
 			else {
