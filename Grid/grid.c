@@ -190,12 +190,14 @@ int main(int argc, char *argv[]){
                     setBit(0, 0); // Netzanschluss Relais einschalten 
                     sleep(5);
                     setBit(1, 0); // Batterie Relais einschalten 
+                        
+					sprintf(command, "touch /Energiebox/Grid/isLoading.lock");
+					system(command);            
+                    
                     // Selbst aufrufen mit Parameter -s sowie Ladezeit in Sekunden
                     sprintf(command, "%s -s %4.0f & ", argv[0], supplyLoadTimeSec);
                     system(command);
-                        
-					sprintf(command, "touch /Energiebox/Grid/isLoading.lock");
-					system(command);
+
 				}
 
                 
