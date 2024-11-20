@@ -73,7 +73,8 @@ int main(void) {
 	
 	const char* filename = "/Energiebox/Tracer/tracer.txt";
 	char batt_voltage[] = "Batterie: Aktuelle Spannung in Volt = ";
-	char batt_volatage_disable[] = config.grid.battVoltageStartLoading; // in Volt
+	//char batt_volatage_disable[] = config.grid.battVoltageStartLoading; // in Volt
+	char batt_volatage_disable[] = "55.10"; // in Volt
 	FILE* input_file = fopen(filename, "r");
 	if (!input_file) exit(EXIT_FAILURE);
 	char* contents = NULL;
