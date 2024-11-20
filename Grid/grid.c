@@ -64,9 +64,9 @@ int main(int argc, char**argv) {
 
     
 
+    sleep(2);
     
-    
-    mcp_digitalWrite(0, 0);
+    mcp_digitalWrite(0, 1);
     mcp_digitalWrite(1, 1);
 
 
