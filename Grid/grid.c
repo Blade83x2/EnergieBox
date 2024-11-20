@@ -9,7 +9,6 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "mymcp23017.h"
-#include "iniParse.h"
 #include <unistd.h> // sleep()
 #include <string.h>
 #include <stdbool.h>

@@ -354,7 +354,7 @@ Damit jede 3 Minuten die Daten des Ladereglers ausgelesen werden können, tragen
 
 Ganz unten fügen wir folgende Zeile hinzu:
 
-`*/3 * * * * /usr/bin/python3 /Energiebox/Tracer/readall.py > /Energiebox/Tracer/tracer.txt && sleep 7 && cd /Energiebox/Tracer && ./tracer > /dev/null &2>1`
+`*/3 * * * * sudo -u box /usr/bin/python3 /Energiebox/Tracer/readall.py > /Energiebox/Tracer/tracer.txt && sleep 7 && cd /Energiebox/Tracer && ./tracer > /dev/null &2>1`
 
 Damit dies geschehen kann, muss der EP-EVER per RS-485 Adapter am USB Port des Raspberry's eingesteckt sein.
 Im Python Script muss der verwendete USB Port eingetragen werden.  Um den Port zu ermitteln, kann die
