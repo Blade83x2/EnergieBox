@@ -68,7 +68,7 @@ int main(void) {
 	size_t len = 0;
 	// Jede Zeile auslesen
 	while (getline(&contents, &len, input_file) != -1) {
-		printf("%s", contents);
+		//printf("%s", contents);
 		// n Ersten Zeichen vergleichen mit batt_voltage
 		if(strncmp(batt_voltage, contents, 38)==0){
 			// Delimeter auf = setzen
@@ -81,9 +81,9 @@ int main(void) {
 			}
 			// hinter der zweiten Komastelle abschneiden für float vergleich
 			token[5] = '\0';
-			if(config.grid.battVoltageStartLoading > atof(token)){
-				printf("atof(token) %2.2f", atof(token));
-				printf("config.grid.battVoltageStartLoading %2.2f", config.grid.battVoltageStartLoading);
+			if(config.grid.battVoltageStartLoading <= atof(token)){
+				//printf("atof(token) %2.2f", atof(token));
+				//printf("config.grid.battVoltageStartLoading %2.2f", config.grid.battVoltageStartLoading);
 			}
 			else {
 				//printf("-> Niedrige Batteriespannung entdeckt, Grid load wird gestartet! Es werden %d Wh geladen\n", config.grid.loadingCapacityWh);
