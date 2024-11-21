@@ -406,6 +406,10 @@ int main(int argc, char**argv) {
         mcp_digitalWrite(i, 1);
         sleep(0.1);
     }
+    
+    sprintf(command, "rm -f /Energiebox/Grid/isLoading.lock");
+    system(command);
+      
 
 
     return 0;

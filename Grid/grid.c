@@ -133,18 +133,14 @@ int main(int argc, char *argv[]){
                     printf("\e[0;31m Der eingegebene Parameter ist keine Zahl!\n");
                     return 1; 
                 }
-                
-                
-                
-                
-                
-                
                 sleep(atof(optarg));
                 setBit(1, 1); // Batterie Relais ausschalten 
                 sleep(5);
                 setBit(0, 1); // Netzanschluss Relais ausschalten 
                 
-            
+                
+                
+                // beim starten sowie beim runter fahren ausführen
                 sprintf(command, "rm -f /Energiebox/Grid/isLoading.lock");
                 system(command);
             

@@ -46,6 +46,7 @@ static int handler230(void* config, const char* section, const char* name, const
     return 1;
 }
 
+// System Kommandos String
 char command[100];
 
 int main(int argc, char**argv) {
@@ -128,5 +129,10 @@ int main(int argc, char**argv) {
         mcp_digitalWrite(i, 1);
         sleep(0.1);
     }
+    
+    sprintf(command, "rm -f /Energiebox/Grid/isLoading.lock");
+    system(command);
+                
+                
     return 0;
 }
