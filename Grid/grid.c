@@ -88,17 +88,14 @@ int showHelp(char**argv, void* config) {
 }
 
 
-bool isNumeric(const char *str) 
-{
-    while(*str != '\0')
-    {
+bool isNumeric(const char *str) {
+    while(*str != '\0') {
         if(*str < '0' || *str > '9')
             return false;
         str++;
     }
     return true;
 }
-
 
 // Programmstart
 int main(int argc, char *argv[]){ 
@@ -137,20 +134,10 @@ int main(int argc, char *argv[]){
                 setBit(1, 1); // Batterie Relais ausschalten 
                 sleep(5);
                 setBit(0, 1); // Netzanschluss Relais ausschalten 
-                
-                
-                
                 // beim starten sowie beim runter fahren ausführen
                 sprintf(command, "rm -f /Energiebox/Grid/isLoading.lock");
                 system(command);
-            
-            
                 return 0;
-                
-                
-                
-                
-                
                 break;  
             case 'w': 
                 supplyLoadWattStunden = atof(optarg);
@@ -172,31 +159,21 @@ int main(int argc, char *argv[]){
                 printf("  Ladeleistung pro Sekunde (W):\t %4.2fW \n", supplyLoadPower/3600);
                 supplyLoadTimeSec = supplyLoadWattStunden / (supplyLoadPower/3600);
                 printf("  Ladezeit in Sekunden:\t\t%4.0f Sek\n\n", supplyLoadTimeSec);  
-                
-                
                 // prüfen ob bereits schon eine ladung am laufen ist
-                
-
-                
 				if (access("/Energiebox/Grid/isLoading.lock", F_OK) == 0) {
-					printf("ist bereits am laden");
+                    printf("\e[0;31m Es wird bereits aus dem Netz geladen!\n");
 				} 
-				else {
-					
+				else 
+                {
                     setBit(0, 0); // Netzanschluss Relais einschalten 
                     sleep(5);
                     setBit(1, 0); // Batterie Relais einschalten 
-                        
 					sprintf(command, "touch /Energiebox/Grid/isLoading.lock");
 					system(command);            
-                    
-                    // Selbst aufrufen mit Parameter -s sowie Ladezeit in Sekunden
+                    // Selbst aufrufen mit Parameter -s sowie Ausschaltzeit in Sekunden
                     sprintf(command, "%s -s %4.0f & ", argv[0], supplyLoadTimeSec);
                     system(command);
-
 				}
-
-                
                 return 0;
                 break;  
             case ':':  
