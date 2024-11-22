@@ -302,18 +302,21 @@ int main(int argc, char**argv) {
         sleep(atoi(argv[3]));
         // wenn eingeschaltet wird
         if(atoi(argv[2])==1) {
-            // prüfen ob Spannungswandler genug Watt  für alles liefert
-            if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxOutputPower) {
-                // Relais einschalten
-                setBit(atoi(argv[1])-1, 0);
-                //  elkoState in config.ini schreiben
-                sprintf(command, "sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
-                system(command);
-                sleep(0.6);
-            }
-            else {
-                // Nicht genug Watt verfügbar für neues Gerät
-                printf("\e[0;31mDas Gerät benötigt %d Watt aber es sind nur %d Watt verfügbar! Andere Geräte ausschalten..!?\n", getDevicePower(atoi(argv[1]), &config), getRestPower(&config));
+            // falls bereits an ist, nichts machen
+            if(getElkoState(atoi(argv[1]), &config)==0){
+                // prüfen ob Spannungswandler genug Watt  für alles liefert
+                if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxOutputPower) {
+                    // Relais einschalten
+                    setBit(atoi(argv[1])-1, 0);
+                    //  elkoState in config.ini schreiben
+                    sprintf(command, "sh /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
+                    system(command);
+                    sleep(0.6);
+                }
+                else {
+                    // Nicht genug Watt verfügbar für neues Gerät
+                    printf("\e[0;31mDas Gerät benötigt %d Watt aber es sind nur %d Watt verfügbar! Andere Geräte ausschalten..!?\n", getDevicePower(atoi(argv[1]), &config), getRestPower(&config));
+                }
             }
         }
         else {
