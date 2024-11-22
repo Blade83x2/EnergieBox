@@ -312,6 +312,8 @@ int main(int argc, char**argv) {
         if(atoi(argv[2]) != getElkoState(atoi(argv[1]), &config)){ 
             // wenn eingeschaltet wird
             if(atoi(argv[2])==1) { 
+                // falls bereits an ist, nichts machen
+                if(getElkoState(atoi(argv[1]), &config)==0){
                     // prüfen ob DC Konverter genug Leistung hat
                     if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxPConverter) {
                          // Relais schalten 
@@ -327,16 +329,17 @@ int main(int argc, char**argv) {
                         printf("\e[0;31mDas Gerät benötigt %d Watt aber es sind nur %d Watt verfügbar! Andere Geräte ausschalten..!?\n", getDevicePower(atoi(argv[1]), &config), getRestPower(&config));
                         return 1;
                     }
-              }
-                else {
-                         // wenn ausgeschaltet wird
-                         // Relais ausschalten
-                         setBit(atoi(argv[1])-1, 1); // Relais ausschalten 
-                         //  elkoState in config.ini schreiben
-                         sprintf(command, "sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
-                         system(command);
-                         sleep(0.6);
-                         system("clear && 12V");
+                }
+            }
+            else {
+                // wenn ausgeschaltet wird
+                // Relais ausschalten
+                setBit(atoi(argv[1])-1, 1); // Relais ausschalten 
+                //  elkoState in config.ini schreiben
+                sprintf(command, "sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
+                system(command);
+                sleep(0.6);
+                system("clear && 12V");
               }
         }
     }
@@ -349,6 +352,8 @@ int main(int argc, char**argv) {
             sleep(atoi(argv[3]));
             // wenn eingeschaltet wird
             if(atoi(argv[2])==1) { 
+                // falls bereits an ist, nichts machen
+                if(getElkoState(atoi(argv[1]), &config)==0){
                     // prüfen ob DC Konverter  genug Leistung hat
                     if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxPConverter) {
                          // impuls für Elko 
@@ -364,14 +369,15 @@ int main(int argc, char**argv) {
                         return 1;
                     }
                 }
-                else {
-                         // wenn ausgeschaltet wird 
-                         //  elkoState in config.ini schreiben
-                         sprintf(command, "sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
-                         system(command);
-                         sleep(0.6);
-                         setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
-                }
+            }
+            else {
+                // wenn ausgeschaltet wird 
+                //  elkoState in config.ini schreiben
+                sprintf(command, "sh /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
+                system(command);
+                sleep(0.6);
+                setBit(atoi(argv[1])-1, 1); // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
+            }
         }
     }
     else {
