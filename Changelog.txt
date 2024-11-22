@@ -8,7 +8,6 @@ ________________________________________________________________________________
 PLANUNG für Version 5
 
  + Option für Zeitgesteuerten Anwendungsstart / stop hinzufügen
- + Powersafe Modus - Zweiter 24V=>12V Konverter wird nur bei bedarf zugeschaltet
  + PV Pannelen Erdung 
  + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen
  + Lüftersteuerung hinzufügen
@@ -16,10 +15,10 @@ PLANUNG für Version 5
  + FIX Beim booten an/aus Parameter: irgendwas validieren -> ergibt automatisch 0
 
  
- + Update Alle Verbraucher messen mit Labornetzteil und config Dateien aktualisieren.
+ 
   
  
- + FIX -> 12V & 230V -> Wenn Gerät schon an und versucht wird an zu schalten, keine Leistungsüberprüfung
+ 
  
 _______________________________________________________________________________________________________________________________________
 
@@ -31,6 +30,8 @@ von 20A auf 60A umgestellt. Jeder Schaltkreis kann jetzt beliebig mit Sicherunge
 Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können ohne Endwiderstände schon zu Störungen kommen.
 Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
 
+ [UPDATE] Alle Verbraucher wurden gemessen. Alle Leistungsangaben entsprechen jetzt dem realen Verbrauch.
+ [BUGFIX] 12V & 230V -> Wenn Gerät schon eingeschaltet war und versucht wurde es einzuschalten und nicht ausreichend Restleistung verfügbar war, keine Limit Benachrichtigung.
  [UPDATE] CronJob jede 3 Minuten für Daten vom Laderegler zu laden und um gegebenfalls aus dem Netz nach laden.
  [NEW] Programm Grid erstellt. Nun kann per Kommandozeile aus dem Öffentlichen Stromnetz nachgeladen werden.
  [BUGFIX] Defekten RPI4 Controller ausgetauscht
