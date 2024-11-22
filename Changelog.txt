@@ -12,20 +12,14 @@ PLANUNG für Version 5
  + PV Pannelen Erdung 
  + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen
  + Lüftersteuerung hinzufügen
-  
- 
- 
  + 16A Leitungsschutz hinzufügen (bessere Aufteilung)
- + 100A & 150A Sicherungen bestellen
- 
- + Gitarre mit Sonnenlicht austauschen
- + FIX -> 12V & 230V -> Wenn Gerät schon an und versucht wird an zu schalten, keine Leistungsüberprüfung
  + FIX Beim booten an/aus Parameter: irgendwas validieren -> ergibt automatisch 0
 
+ 
  + Update Alle Verbraucher messen mit Labornetzteil und config Dateien aktualisieren.
   
  
- 
+ + FIX -> 12V & 230V -> Wenn Gerät schon an und versucht wird an zu schalten, keine Leistungsüberprüfung
  
 _______________________________________________________________________________________________________________________________________
 

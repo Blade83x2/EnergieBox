@@ -266,6 +266,13 @@ int main(int argc, char**argv) {
         }
         // wenn eingeschaltet wird
         if(atoi(argv[2])==1) {
+            // falls bereits an ist, nichts machen
+            
+            if(getElkoState(atoi(argv[1]), &config)==1){
+                printf("is schon an");
+                
+            }
+            
             // prüfen ob genug power da ist
             if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxOutputPower) {
                 // Relais einschalten

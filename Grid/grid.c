@@ -166,7 +166,7 @@ int main(int argc, char *argv[]){
 				else 
                 {
                     setBit(0, 0); // Netzanschluss Relais einschalten 
-                    sleep(5);
+                    sleep(5); // Zeitabstand für Transformationsfeld aufzubauen
                     setBit(1, 0); // Batterie Relais einschalten 
 					sprintf(command, "touch /Energiebox/Grid/isLoading.lock");
 					system(command);            
