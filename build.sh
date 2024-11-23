@@ -132,7 +132,7 @@ fi
 cd ..
 stop_spinner $?
 rm -f makeResult.txt;
-echo -e "\n\nUpdate Git Repository...\n";
+echo -e "\n\nUpdate Git Repository...";
 git add -A
 echo -e "\n";
 git commit -m "$1"
