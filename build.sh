@@ -25,11 +25,11 @@ sleep 1
 start_spinner 'box@Energiebox:/Energiebox/230V:$ make'
 sleep 1
 cd /Energiebox/230V
-sudo make  > makeResult.txt;
+sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then
     stop_spinner 1
-    cat makeResult.txt;
+    cat /Energiebox/makeResult.txt;
     exit 1;
 fi
 stop_spinner $?
@@ -38,11 +38,11 @@ stop_spinner $?
 start_spinner 'box@Energiebox:/Energiebox/12V:$ make'
 sleep 1
 cd /Energiebox/12V
-sudo make  > makeResult.txt;
+sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then
     stop_spinner 1
-    cat makeResult.txt;
+    cat /Energiebox/makeResult.txt;
     exit 1;
 fi
 cd ..
@@ -52,11 +52,11 @@ stop_spinner $?
 start_spinner 'box@Energiebox:/Energiebox/h2o:$ make'
 sleep 1
 cd /Energiebox/h2o
-sudo make  > makeResult.txt;
+sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then
     stop_spinner 1
-    cat makeResult.txt;
+    cat /Energiebox/makeResult.txt;
     exit 1;
 fi
 cd ..
@@ -66,11 +66,11 @@ stop_spinner $?
 start_spinner 'box@Energiebox:/Energiebox/Shutdown:$ make'
 sleep 1
 cd /Energiebox/Shutdown
-sudo make  > makeResult.txt;
+sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then
     stop_spinner 1
-    cat makeResult.txt;
+    cat /Energiebox/makeResult.txt;
     exit 1;
 fi
 cd ..
@@ -80,11 +80,11 @@ stop_spinner $?
 start_spinner 'box@Energiebox:/Energiebox/Startup:$ make'
 sleep 1
 cd /Energiebox/Startup
-sudo make  > makeResult.txt;
+sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then
     stop_spinner 1
-    cat makeResult.txt;
+    cat /Energiebox/makeResult.txt;
     exit 1;
 fi
 cd ..
@@ -94,11 +94,11 @@ stop_spinner $?
 start_spinner 'box@Energiebox:/Energiebox/Grid:$ make'
 sleep 1
 cd /Energiebox/Grid
-sudo make  > makeResult.txt;
+sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then
     stop_spinner 1
-    cat makeResult.txt;
+    cat /Energiebox/makeResult.txt;
     exit 1;
 fi
 cd ..
@@ -108,11 +108,11 @@ stop_spinner $?
 start_spinner 'box@Energiebox:/Energiebox/gui:$ make'
 sleep 1;
 cd /Energiebox/gui
-sudo make  > makeResult.txt;
+sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then
     stop_spinner 1
-    cat makeResult.txt;
+    cat /Energiebox/makeResult.txt;
     exit 1;
 fi
 cd ..
@@ -122,16 +122,16 @@ stop_spinner $?
 start_spinner 'box@Energiebox:/Energiebox/Tracer:$ make'
 sleep 1;
 cd /Energiebox/Tracer
-sudo make  > makeResult.txt;
+sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then
     stop_spinner 1
-    cat makeResult.txt;
+    cat /Energiebox/makeResult.txt;
     exit 1;
 fi
 cd ..
 stop_spinner $?
-rm -f makeResult.txt;
+rm -f /Energiebox/makeResult.txt;
 echo -e "\n\nUpdate Git Repository...";
 git add -A
 echo -e "\n";
