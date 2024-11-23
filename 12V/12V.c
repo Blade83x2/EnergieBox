@@ -10,6 +10,7 @@
 #include <ctype.h>
 #include <signal.h>
 
+
 void sigfunc(int sig)
 {
     // https://wiki.ubuntuusers.de/Signale/

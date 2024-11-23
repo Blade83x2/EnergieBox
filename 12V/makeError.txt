@@ -1,0 +1,1 @@
+gcc -c 12V.c 					-lwiringPi -std=gnu99

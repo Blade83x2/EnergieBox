@@ -1,97 +1,161 @@
 #!/bin/bash
 scriptPath=$(cd $(dirname "$0"); pwd);
 source "$scriptPath/spinner.sh" || exit 1; 
+clear;
+echo -e "\n  _____                      _      ____            ";
+echo -e " | ____|_ __   ___ _ __ __ _(_) ___| __ )  _____  __";
+echo -e " |  _| | '_ \ / _ \ '__/ _\` | |/ _ \  _ \ / _ \ \/ /";
+echo -e " | |___| | | |  __/ | | (_| | |  __/ |_) | (_) >  < ";
+echo -e " |_____|_| |_|\___|_|  \__, |_|\___|____/ \___/_/\_\\";
+echo -e "                       |___/                        \n\n";
 
+echo -e " ***************************************************";
+echo -e " ***             BUILD PROJECT FILES             ***";
+echo -e " ***************************************************\n";
 if [ "$(id -u)" == "0" ]; then
-    echo "Script kann nur mit root Rechten aufgerufen werden!";
-    return 1;
+    echo -e "\n";
 else
-    echo -e "\n"
+    echo "Script kann nur mit root Rechten aufgerufen werden!";
+    exit 1;
 fi
-
-
-echo -e "\n"
-
-start_spinner 'cd /Energiebox'
 sleep 1
-cd /Energiebox
-echo -e "\n"
-stop_spinner $?
+echo -e "Starte Compiler...\n"
+sleep 1
 
-
-
-start_spinner 'cd /Energiebox/230V && sudo make'
+start_spinner 'box@Energiebox:/Energiebox/230V:$ make'
 sleep 1
 cd /Energiebox/230V
-sudo make  > /dev/null 2>&1
-cd ..
+sudo make  > makeResult.txt;
+result=$?;
+if [ "$result" -eq "2" ]; then
+    stop_spinner 1
+    cat makeResult.txt;
+    exit 1;
+fi
 stop_spinner $?
+
+
+start_spinner 'box@Energiebox:/Energiebox/12V:$ make'
 sleep 1
-start_spinner 'cd /Energiebox/12V && sudo make'
-
 cd /Energiebox/12V
-sudo make  > /dev/null 2>&1
+sudo make  > makeResult.txt;
+result=$?;
+if [ "$result" -eq "2" ]; then
+    stop_spinner 1
+    cat makeResult.txt;
+    exit 1;
+fi
 cd ..
 stop_spinner $?
 
-start_spinner 'cd /Energiebox/h2o && sudo make'
+
+start_spinner 'box@Energiebox:/Energiebox/h2o:$ make'
 sleep 1
 cd /Energiebox/h2o
-sudo make > /dev/null 2>&1
+sudo make  > makeResult.txt;
+result=$?;
+if [ "$result" -eq "2" ]; then
+    stop_spinner 1
+    cat makeResult.txt;
+    exit 1;
+fi
 cd ..
 stop_spinner $?
 
 
-start_spinner 'cd /Energiebox/Shutdown'
+start_spinner 'box@Energiebox:/Energiebox/Shutdown:$ make'
 sleep 1
 cd /Energiebox/Shutdown
-sudo make > /dev/null 2>&1
+sudo make  > makeResult.txt;
+result=$?;
+if [ "$result" -eq "2" ]; then
+    stop_spinner 1
+    cat makeResult.txt;
+    exit 1;
+fi
 cd ..
 stop_spinner $?
 
-start_spinner 'cd /Energiebox/Startup'
+
+start_spinner 'box@Energiebox:/Energiebox/Startup:$ make'
 sleep 1
 cd /Energiebox/Startup
-sudo make > /dev/null 2>&1
+sudo make  > makeResult.txt;
+result=$?;
+if [ "$result" -eq "2" ]; then
+    stop_spinner 1
+    cat makeResult.txt;
+    exit 1;
+fi
 cd ..
 stop_spinner $?
 
-start_spinner 'cd /Energiebox/Grid'
+
+start_spinner 'box@Energiebox:/Energiebox/Grid:$ make'
 sleep 1
 cd /Energiebox/Grid
-sudo make > /dev/null 2>&1
+sudo make  > makeResult.txt;
+result=$?;
+if [ "$result" -eq "2" ]; then
+    stop_spinner 1
+    cat makeResult.txt;
+    exit 1;
+fi
 cd ..
 stop_spinner $?
 
-start_spinner 'cd /Energiebox/gui'
+
+start_spinner 'box@Energiebox:/Energiebox/gui:$ make'
 sleep 1
 cd /Energiebox/gui
-sudo make > /dev/null 2>&1
+sudo make  > makeResult.txt;
+result=$?;
+if [ "$result" -eq "2" ]; then
+    stop_spinner 1
+    cat makeResult.txt;
+    exit 1;
+fi
 cd ..
 stop_spinner $?
 
-start_spinner 'cd /Energiebox/Tracer'
+
+start_spinner 'box@Energiebox:/Energiebox/Tracer:$ make'
 sleep 1
 cd /Energiebox/Tracer
-sudo make > /dev/null 2>&1
+sudo make  > makeResult.txt;
+result=$?;
+if [ "$result" -eq "2" ]; then
+    stop_spinner 1
+    cat makeResult.txt;
+    exit 1;
+fi
 cd ..
 stop_spinner $?
 
-
-start_spinner 'git add -A'
 sleep 1
-git add -A > /dev/null 2>&1
-stop_spinner $?
-
-start_spinner 'git commit -m "$1"'
+echo -e "\n\nUpdate Git Repository...\n"
 sleep 1
-git commit -m "$1" > /dev/null 2>&1
-stop_spinner $?
 
-start_spinner 'git push -u origin master'
+start_spinner 'box@Energiebox:$ git add -A'
 sleep 1
-git push -u origin master > /dev/null 2>&1
+git add -A  > makeResult.txt;
 stop_spinner $?
+cat makeResult.txt;
+
+start_spinner 'box@Energiebox:$ git commit -m "$1"'
+sleep 1
+git commit -m "$1" > makeResult.txt;
+stop_spinner $?
+cat makeResult.txt;
+
+start_spinner 'box@Energiebox:$ git push -u origin master'
+sleep 1
+git push -u origin master  > makeResult.txt;
+stop_spinner $?
+cat makeResult.txt;
+
+
+echo -e "\n";
 
 
 
