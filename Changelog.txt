@@ -16,7 +16,11 @@ PLANUNG für Version 5
 
  
  
-  
+ 
+ 
+ 
+  Makefile für jedes Programm angepasst
+  Kompilierungsprozess in build.sh mit Grafik & Spinner zusammen geführt
  
  
  
