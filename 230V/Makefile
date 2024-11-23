@@ -1,6 +1,26 @@
-mymcp23017:230V.o mymcp23017.o
-	gcc -Wall -o 230V 230V.o mymcp23017.o -lwiringPi -std=gnu99
-230V.o: 230V.c mymcp23017.h
-	gcc -Wall -c 230V.c -lwiringPi -std=gnu99
+#
+# Makefile für 230V 
+# Vendor: Johannes Krämer
+# Version: 1.0
+# Date: 22.11.2024
+#
+# https://www.c-howto.de/tutorial/makefiles/
+# https://www.c-howto.de/tutorial/makefiles/erweiterungen/
+
+OBJ 		= 230V.o mymcp23017.o iniparse.o
+COMPILER 	= gcc
+
+230V:		$(OBJ)
+			$(COMPILER) -o $@ $(OBJ)	-lwiringPi -std=gnu99
+
+230V.o: 		230V.c
+			$(COMPILER) -c 230V.c 					-lwiringPi -std=gnu99
+	
+mymcp23017.o: 	mymcp23017.c
+			$(COMPILER) -c mymcp23017.c				-lwiringPi -std=gnu99
+			
+iniparse.o: 	iniparse.c
+			$(COMPILER) -c iniparse.c				-std=gnu99
+			
 clean:
-	rm 230V.o mymcp23017.o 230V
+		rm -f $* $(OBJ)

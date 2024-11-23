@@ -5,21 +5,23 @@
  * Date: 15.05.2023
 */
 #include <stdio.h>
-#include <stdlib.h> // atoi()
-#include <wiringPi.h> // rasperry Pi
-#include <wiringPiI2C.h>  // rasperry Pi
-#include "mymcp23017.h" // PortExpander
-#include <unistd.h> // sleep()
+#include <stdlib.h>         // atoi()
+#include <wiringPi.h>       // rasperry Pi
+#include <wiringPiI2C.h>    // rasperry Pi
+#include "iniparse.h"       // INI Parse
+#include "mymcp23017.h"     // PortExpander
+#include <unistd.h>         // sleep()
 #include <string.h>
 #include <stdbool.h> 
 #include <ctype.h>
 #include <signal.h>
 
 
-// 12V Relais Nr. für Pumpe & Boosterpumpe
+
+// 12V Relais Nr. für Pumpe & Boosterpumpe ODER Ventil
 int pumpeRelaisNr = 16;
 
-// Filterleistung der Anlage in GPD
+// Filterleistung der Anlage in GPD                                                     ###############
 int gpd = 50;
 
 // Warnung ab x Liter Filterleistung (Für Filtertausch Information)
@@ -27,6 +29,15 @@ float warnLimitAbFilterMenge = 1000.f;
 
 // Dauer für 0,1 Liter Wasser zu filtern in Sekunden
 int filterZeitFuerNullKommaEinsLiterInSekunden;
+
+
+
+
+
+
+
+
+
 
 // Faktor Abwassermenge zu Filtermenge. Beispiel: 
 // Bei 1:2 (1 Liter gefiltertes Wasser und 2 Liter Abwasserproduktion) hier eine 2 eintragen
@@ -38,7 +49,7 @@ float maxLiterAbwasserKanister = 18.f;
 // Spülzeit/Reinigungszeit in Sekunden
 int reinigungszeitInSekunden = 150;
 
-// Liter Pro Galone
+// Liter Pro Galone                 ################
 float literProGalone = 3.7854f;
 
 // Liter Pro Tag  = literProGalone * gpd
@@ -53,8 +64,10 @@ char *filterMengeUnformated;
 // Filtermenge (wird von param1 überschrieben)
 float filterMenge = 0.f;
 
+
 // Filterlaufzeit in Sekunden (float)
 float filterLaufzeit = 0.f;
+
 
 // Filterlaufzeit in Sekunden (int)
 int filterLaufzeit_int;
@@ -69,14 +82,24 @@ float aktuellesGesameltesAbwasser = 0.f;
 float gesamteFilterMengeInLiter = 0.f;
 
 // System Kommandos String
-char command[100];
+char command[101];
 
 // h20 Struktur für INI Datei
 typedef struct { 
-    float aktuellesGesameltesAbwasser; float gesamteFilterMengeInLiter; int pumpeRelaisNr; int gpd; float warnLimitAbFilterMenge; 
-    int filterZeitFuerNullKommaEinsLiterInSekunden; int faktorGefiltertZuAbwasser; float maxLiterAbwasserKanister; int reinigungszeitInSekunden;
+    float aktuellesGesameltesAbwasser; 
+    float gesamteFilterMengeInLiter; 
+    int pumpeRelaisNr; 
+    int gpd; 
+    float warnLimitAbFilterMenge; 
+    int filterZeitFuerNullKommaEinsLiterInSekunden; 
+    int faktorGefiltertZuAbwasser; 
+    float maxLiterAbwasserKanister; 
+    int reinigungszeitInSekunden;
 } h2o_setup;
-typedef struct { h2o_setup h2o; } configuration;
+
+typedef struct { 
+    h2o_setup h2o; 
+} configuration;
 
 // Funktionen deklarieren
 static int handler(void* config, const char* section, const char* name, const char* value);

@@ -1,9 +1,6 @@
 #include <gtk/gtk.h>
 
-
 // https://www.youtube.com/watch?v=6dstft52Rbs&list=PL6A4216D6C8E00CFC&index=1
-
-
 
 
 void btnExit(GtkWidget *widget, gpointer data) {

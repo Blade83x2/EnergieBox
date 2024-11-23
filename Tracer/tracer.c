@@ -9,6 +9,7 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "mymcp23017.h"
+#include "iniparse.h"
 #include <unistd.h> // sleep()
 #include <string.h>
 #include <stdbool.h>
@@ -16,9 +17,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
-
-
-
 
 // MCP Setup
 typedef struct {

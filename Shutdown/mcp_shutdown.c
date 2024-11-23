@@ -2,12 +2,14 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "mymcp23017.h"
+#include "iniparse.h"
 #include <unistd.h>
 #include <time.h>
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
 #include <stdlib.h> // atoi()
+
 
 // MCP Setup
 typedef struct {
@@ -56,20 +58,20 @@ int main(int argc, char**argv) {
     /////////////////////
     // Konfiguration von 12V in config laden
     if (ini_parse("/Energiebox/12V/config.ini", handler12, &config) < 0) {
-        printf("Can't load '/Energiebox/12V/config.ini'\n");
-        return 1;
+        fprintf (stderr, "Can't load '/Energiebox/230V/config.ini\n") ;
+        exit (EXIT_FAILURE) ;
     }
     // Wirig PI prüfen
     if(wiringPiSetup()<0) {
-        printf("wiringPiSetup error!!!");
-        return -1;
+        fprintf (stderr, "wiringPiSetup error\n") ;
+        exit (EXIT_FAILURE) ;
     }
     // MCP  Portexpander
     mcp_begin(config.mcp.address);
     fd = wiringPiI2CSetup(MCP23017_ADDRESS | i2caddr);
     if(fd <0) {
-        printf("wiringPi I2C Setup error!!!");
-        return -1;
+        fprintf (stderr, "wiringPi I2C Setup error\n") ;
+        exit (EXIT_FAILURE) ;
     }
     // Register Bits
     mcp_initReg();
@@ -88,14 +90,20 @@ int main(int argc, char**argv) {
     ////////////////////
     // config Objekt überladen
     if (ini_parse("/Energiebox/230V/config.ini", handler230, &config) < 0) {
-        printf("Can't load '/Energiebox/230V/config.ini'\n");
-        return 1;
+        fprintf (stderr, "Can't load '/Energiebox/230V/config.ini\n") ;
+        exit (EXIT_FAILURE) ;
     }
+    // Wirig PI prüfen
+    if(wiringPiSetup()<0) {
+        fprintf (stderr, "wiringPiSetup error\n") ;
+        exit (EXIT_FAILURE) ;
+    }
+    // MCP  Portexpander
     mcp_begin(config.mcp.address);
     fd = wiringPiI2CSetup(MCP23017_ADDRESS | i2caddr);
     if(fd <0) {
-        printf("wiringPi I2C Setup error!!!");
-        return -1;
+        fprintf (stderr, "wiringPi I2C Setup error\n") ;
+        exit (EXIT_FAILURE) ;
     }
     mcp_initReg();
     // Alle als OUTPUT definieren und ausschalten
@@ -108,19 +116,26 @@ int main(int argc, char**argv) {
     }
     
 
+    
     ////////////////////
-    /////   GRID    ////
+    ///// GRID      ////
     ////////////////////
     // config Objekt überladen
     if (ini_parse("/Energiebox/Grid/config.ini", handlerGrid, &config) < 0) {
-        printf("Can't load '/Energiebox/Grid/config.ini'\n");
-        return 1;
+        fprintf (stderr, "Can't load '/Energiebox/Grid/config.ini\n") ;
+        exit (EXIT_FAILURE) ;
     }
+    // Wirig PI prüfen
+    if(wiringPiSetup()<0) {
+        fprintf (stderr, "wiringPiSetup error\n") ;
+        exit (EXIT_FAILURE) ;
+    }
+    // MCP  Portexpander
     mcp_begin(config.mcp.address);
     fd = wiringPiI2CSetup(MCP23017_ADDRESS | i2caddr);
     if(fd <0) {
-        printf("wiringPi I2C Setup error!!!");
-        return -1;
+        fprintf (stderr, "wiringPi I2C Setup error\n") ;
+        exit (EXIT_FAILURE) ;
     }
     mcp_initReg();
     // Alle als OUTPUT definieren und ausschalten
@@ -129,10 +144,7 @@ int main(int argc, char**argv) {
         mcp_digitalWrite(i, 1);
         sleep(0.1);
     }
-    
     sprintf(command, "rm -f /Energiebox/Grid/isLoading.lock");
     system(command);
-                
-                
     return 0;
 }

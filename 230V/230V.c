@@ -3,6 +3,7 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "mymcp23017.h"
+#include "iniparse.h"
 #include <unistd.h> // sleep()
 #include <string.h>
 #include <stdbool.h> 
@@ -20,9 +21,6 @@ int showHelp(char**argv, void* config);
 void getDataForConfigFile(int relais, void* config);
 char* readStdinLine();
 void replace_char (char *s, char find, char replace);
-
-
-
 
 // MCP Setup
 typedef struct {

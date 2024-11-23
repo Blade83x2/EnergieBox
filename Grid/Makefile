@@ -1,6 +1,26 @@
-mymcp23017:grid.o mymcp23017.o
-	gcc -Wall -o grid grid.o mymcp23017.o -lwiringPi -std=gnu99
-grid.o: grid.c mymcp23017.h
-	gcc -Wall -c grid.c -lwiringPi -std=gnu99
+#
+# Makefile für grid 
+# Vendor: Johannes Krämer
+# Version: 1.0
+# Date: 22.11.2024
+#
+# https://www.c-howto.de/tutorial/makefiles/
+# https://www.c-howto.de/tutorial/makefiles/erweiterungen/
+
+OBJ 		= grid.o mymcp23017.o iniparse.o
+COMPILER 	= gcc
+
+grid:		$(OBJ)
+			$(COMPILER) -o $@ $(OBJ)	-lwiringPi -std=gnu99
+
+grid.o: 		grid.c
+			$(COMPILER) -c grid.c 					-lwiringPi -std=gnu99
+	
+mymcp23017.o: 	mymcp23017.c
+			$(COMPILER) -c mymcp23017.c				-lwiringPi -std=gnu99
+			
+iniparse.o: 	iniparse.c
+			$(COMPILER) -c iniparse.c				-std=gnu99
+			
 clean:
-	rm grid.o mymcp23017.o 12V
+		rm -f $* $(OBJ)
