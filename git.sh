@@ -1,5 +1,6 @@
 #!/bin/bash
-source "$(pwd)/spinner.sh"
+source $(pwd)/spinner.sh
+
 #if [ `id -u` -ne 0 ] then 
  # echo "Script kann nur mit root Rechten aufgerufen werden!";
  # return 1;
