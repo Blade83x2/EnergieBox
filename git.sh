@@ -156,7 +156,7 @@ start_spinner 'box@Energiebox:$ git push -u origin master'
 sleep 1
 git push -u origin master  > makeResult.txt;
 stop_spinner $?
-sleep 1
+sleep 2
 cat makeResult.txt;
 
 

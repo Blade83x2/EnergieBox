@@ -1,1 +1,2 @@
-make: „12V“ ist bereits aktuell.
+gcc -c 12V.c 					-lwiringPi -std=gnu99
+gcc -o 12V 12V.o mymcp23017.o iniparse.o	-lwiringPi -std=gnu99
