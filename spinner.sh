@@ -1,32 +1,4 @@
 #!/bin/bash
-#
-# Do *NOT* call _spinner function directly.
-# Use {start,stop}_spinner wrapper functions
-
-# usage:
-#   1. source this script in your's
-#   2. start the spinner:
-#       start_spinner [display-message-here]
-#   3. run your command
-#   4. stop the spinner:
-#       stop_spinner [your command's exit status]
-#
-# Also see: test.sh
-
-
-
-# !/bin/bash
-#source "$(pwd)/spinner.sh"
-#start_spinner 'sleeping for 2 secs...'
-#sleep 2
-#stop_spinner $?
-#start_spinner 'copying non-existen files...'
-# use sleep to give spinner time to fork and run
-# because cp fails instantly
-#sleep 1
-#cp 'file1' 'file2' > /dev/null 2>&1
-#stop_spinner $?
-
 
 function _spinner() {
     # $1 start/stop
