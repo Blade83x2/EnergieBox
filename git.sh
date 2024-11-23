@@ -18,26 +18,20 @@ sleep 1
 cd /Energiebox
 stop_spinner $?
 
-start_spinner 'copying non-existen files...'
-sleep 3
-cp 'file1' 'file2' > /dev/null 2>&1
-stop_spinner $?
 
 
 start_spinner 'cd /Energiebox/230V && sudo make'
 sleep 1
 cd /Energiebox/230V
-sudo make &
+sudo make  > /dev/null 2>&1
 cd ..
-sleep 3
 stop_spinner $?
 sleep 1
 start_spinner 'cd /Energiebox/12V && sudo make'
 
 cd /Energiebox/12V
-sudo make &
+sudo make  > /dev/null 2>&1
 cd ..
-sleep 3
 stop_spinner $?
 
 start_spinner 'cd /Energiebox/h2o && sudo make'
@@ -86,17 +80,17 @@ stop_spinner $?
 
 start_spinner 'git add -A'
 sleep 1
-git add -A
+git add -A > /dev/null 2>&1
 stop_spinner $?
 
 start_spinner 'git commit -m "$1"'
 sleep 1
-git commit -m "$1"
+git commit -m "$1" > /dev/null 2>&1
 stop_spinner $?
 
 start_spinner 'git push -u origin master'
 sleep 1
-git push -u origin master
+git push -u origin master > /dev/null 2>&1
 stop_spinner $?
 
 
