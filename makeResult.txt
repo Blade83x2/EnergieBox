@@ -1,1 +1,0 @@
-Branch 'master' folgt nun Remote-Branch 'master' von 'origin'.

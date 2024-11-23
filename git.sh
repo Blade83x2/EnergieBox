@@ -131,6 +131,8 @@ if [ "$result" -eq "2" ]; then
 fi
 cd ..
 stop_spinner $?
+rm -f makeResult.txt;
+
 
 sleep 1;
 echo -e "\n\nUpdate Git Repository...\n";
@@ -143,11 +145,6 @@ git commit -m "$1";
 echo -e "\n";
 git push -u origin master
 echo -e "\n";
-rm -f makeResult.txt;
-
-
-
-
 
 
 
