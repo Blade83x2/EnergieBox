@@ -16,6 +16,7 @@ source "$scriptPath/spinner.sh" || exit 1;
 start_spinner 'cd /Energiebox'
 sleep 1
 cd /Energiebox
+echo -e "\n"
 stop_spinner $?
 
 
