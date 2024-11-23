@@ -1,6 +1,6 @@
 #!/bin/bash
 scriptPath=$(cd $(dirname "$0"); pwd);
-source "$scriptPath/spinner.sh" || exit 1; 
+source "$scriptPath/System/spinner.sh" || exit 1; 
 clear;
 echo -e "\n  _____                      _      ____            ";
 echo -e " | ____|_ __   ___ _ __ __ _(_) ___| __ )  _____  __";
