@@ -1,17 +1,16 @@
 #!/bin/bash
-
 scriptPath=$(cd $(dirname "$0"); pwd);
-
 source "$scriptPath/spinner.sh" || exit 1; 
 
+if [ "$(id -u)" == "0" ]; then
+    echo "Script kann nur mit root Rechten aufgerufen werden!";
+    return 1;
+else
+    echo -e "\n"
+fi
 
 
-#if [ `id -u` -ne 0 ] then 
- # echo "Script kann nur mit root Rechten aufgerufen werden!"
- # return 1
-#fi
-
-
+echo -e "\n"
 
 start_spinner 'cd /Energiebox'
 sleep 1
