@@ -24,24 +24,24 @@ cp 'file1' 'file2' > /dev/null 2>&1
 stop_spinner $?
 
 
-start_spinner 'cd /Energiebox/230V'
+start_spinner 'cd /Energiebox/230V && sudo make'
 sleep 1
 cd /Energiebox/230V
 sudo make  > /dev/null 2>&1
 cd ..
 stop_spinner $?
 
-start_spinner 'cd /Energiebox/12V'
+start_spinner 'cd /Energiebox/12V && sudo make'
 sleep 1
 cd /Energiebox/12V
-sudo make
+sudo make  > /dev/null 2>&1
 cd ..
 stop_spinner $?
 
-start_spinner 'cd /Energiebox/h2o'
+start_spinner 'cd /Energiebox/h2o && sudo make'
 sleep 1
 cd /Energiebox/h2o
-sudo make
+sudo make > /dev/null 2>&1
 cd ..
 stop_spinner $?
 
@@ -49,35 +49,35 @@ stop_spinner $?
 start_spinner 'cd /Energiebox/Shutdown'
 sleep 1
 cd /Energiebox/Shutdown
-sudo make
+sudo make > /dev/null 2>&1
 cd ..
 stop_spinner $?
 
 start_spinner 'cd /Energiebox/Startup'
 sleep 1
 cd /Energiebox/Startup
-sudo make
+sudo make > /dev/null 2>&1
 cd ..
 stop_spinner $?
 
 start_spinner 'cd /Energiebox/Grid'
 sleep 1
 cd /Energiebox/Grid
-sudo make
+sudo make > /dev/null 2>&1
 cd ..
 stop_spinner $?
 
 start_spinner 'cd /Energiebox/gui'
 sleep 1
 cd /Energiebox/gui
-sudo make
+sudo make > /dev/null 2>&1
 cd ..
 stop_spinner $?
 
 start_spinner 'cd /Energiebox/Tracer'
 sleep 1
 cd /Energiebox/Tracer
-sudo make
+sudo make > /dev/null 2>&1
 cd ..
 stop_spinner $?
 
