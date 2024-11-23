@@ -10,10 +10,8 @@
 #include <ctype.h>
 #include <signal.h>
 
-
 void sigfunc(int sig)
 {
-    jk
     // https://wiki.ubuntuusers.de/Signale/
     if(sig == SIGINT){ //Dies Signal wird an alle Prozesse geschickt wenn die Tasten-Kombination STRG-C gedrückt wurde.
         printf("\nalles aus machen : SIGINT");

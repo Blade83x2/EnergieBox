@@ -133,20 +133,14 @@ cd ..
 stop_spinner $?
 rm -f makeResult.txt;
 
-
-sleep 1;
 echo -e "\n\nUpdate Git Repository...\n";
-sleep 1;
-
 
 git add -A
 echo -e "\n";
-git commit -m "$1";
+git commit -m "$1"
 echo -e "\n";
 git push -u origin master
 echo -e "\n";
-
-
 
 # https://github.com/settings/tokens für Token auslesen
 # sudo git config --global credential.helper store
