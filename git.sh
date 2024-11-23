@@ -1,9 +1,14 @@
 #!/bin/bash
-source $(pwd)/spinner.sh
+
+scriptPath=$(cd $(dirname "$0"); pwd);
+
+source "$scriptPath/spinner.sh" || exit 1; 
+
+
 
 #if [ `id -u` -ne 0 ] then 
- # echo "Script kann nur mit root Rechten aufgerufen werden!";
- # return 1;
+ # echo "Script kann nur mit root Rechten aufgerufen werden!"
+ # return 1
 #fi
 
 

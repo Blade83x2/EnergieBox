@@ -1,7 +1,6 @@
 #!/bin/bash
-
-function _spinner() {
-    # $1 start/stop
+function _spinner {
+   # $1 start/stop
     #
     # on start: $2 display message
     # on stop : $2 process exit status
