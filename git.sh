@@ -140,18 +140,23 @@ start_spinner 'box@Energiebox:$ git add -A'
 sleep 1
 git add -A  > makeResult.txt;
 stop_spinner $?
+sleep 1
 cat makeResult.txt;
-
+echo -e "\n";
+sleep 1
 start_spinner 'box@Energiebox:$ git commit -m "$1"'
 sleep 1
 git commit -m "$1" > makeResult.txt;
 stop_spinner $?
+sleep 1
 cat makeResult.txt;
-
+echo -e "\n";
+sleep 1
 start_spinner 'box@Energiebox:$ git push -u origin master'
 sleep 1
 git push -u origin master  > makeResult.txt;
 stop_spinner $?
+sleep 1
 cat makeResult.txt;
 
 
