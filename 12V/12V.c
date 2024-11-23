@@ -262,6 +262,7 @@ int getRestPower(void * config) {
      return pconfig->mcp.maxPConverter - watt;
 }
 
+
 // Programmstart
 int main(int argc, char**argv) { 
     // Signale abfangen
