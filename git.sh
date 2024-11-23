@@ -106,7 +106,7 @@ stop_spinner $?
 
 
 start_spinner 'box@Energiebox:/Energiebox/gui:$ make'
-sleep 1
+sleep 1;
 cd /Energiebox/gui
 sudo make  > makeResult.txt;
 result=$?;
@@ -120,7 +120,7 @@ stop_spinner $?
 
 
 start_spinner 'box@Energiebox:/Energiebox/Tracer:$ make'
-sleep 1
+sleep 1;
 cd /Energiebox/Tracer
 sudo make  > makeResult.txt;
 result=$?;
@@ -132,35 +132,21 @@ fi
 cd ..
 stop_spinner $?
 
-sleep 1
-echo -e "\n\nUpdate Git Repository...\n"
-sleep 1
-
-start_spinner 'box@Energiebox:$ git add -A'
-sleep 1
-git add -A  > makeResult.txt;
-stop_spinner $?
-sleep 1
-cat makeResult.txt;
-echo -e "\n";
-sleep 1
-start_spinner 'box@Energiebox:$ git commit -m "$1"'
-sleep 1
-git commit -m "$1" > makeResult.txt;
-stop_spinner $?
-sleep 1
-cat makeResult.txt;
-echo -e "\n";
-sleep 1
-start_spinner 'box@Energiebox:$ git push -u origin master'
-sleep 1
-git push -u origin master  > makeResult.txt;
-stop_spinner $?
-sleep 2
-cat makeResult.txt;
+sleep 1;
+echo -e "\n\nUpdate Git Repository...\n";
+sleep 1;
 
 
+git add -A
 echo -e "\n";
+git commit -m "$1";
+echo -e "\n";
+git push -u origin master
+echo -e "\n";
+rm -f makeResult.txt;
+
+
+
 
 
 
