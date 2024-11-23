@@ -27,7 +27,7 @@ stop_spinner $?
 start_spinner 'cd /Energiebox/230V && sudo make'
 sleep 1
 cd /Energiebox/230V
-sudo make 
+sudo make &
 cd ..
 sleep 3
 stop_spinner $?
@@ -35,7 +35,7 @@ sleep 1
 start_spinner 'cd /Energiebox/12V && sudo make'
 
 cd /Energiebox/12V
-sudo make 
+sudo make &
 cd ..
 sleep 3
 stop_spinner $?
