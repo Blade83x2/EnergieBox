@@ -128,7 +128,7 @@ int main(int argc, char *argv[]){
                 break;  
             case 's':
                 if(!isNumeric(optarg) ){
-                    printf("\e[0;31m Der eingegebene Parameter ist keine Zahl!\n");
+                    printf("\n\e[0;31m Der eingegebene Parameter ist keine Zahl!\n\n");
                     return 1; 
                 }
                 sleep(atof(optarg));
@@ -143,15 +143,15 @@ int main(int argc, char *argv[]){
             case 'w': 
                 supplyLoadWattStunden = atof(optarg);
                 if(!isNumeric(optarg) ){
-                    printf("\e[0;31m Der eingegebene Parameter ist keine Zahl!\n");
+                    printf("\n\e[0;31m Der eingegebene Parameter ist keine Zahl!\n\n");
                     return 1; 
                 }
                 if(supplyLoadWattStunden < config.grid.supplyMinLoadWh){
-                    printf("\e[0;31m Der minimale Wert für -w beträgt %d\n", config.grid.supplyMinLoadWh);
+                    printf("\n\e[0;31m Der minimale Wert für -w beträgt %d\n", config.grid.supplyMinLoadWh);
                     return 1;
                 }
                 if(supplyLoadWattStunden > config.grid.supplyMaxLoadWh){
-                    printf("\e[0;31m Der maximale Wert für -w beträgt %d\n", config.grid.supplyMaxLoadWh);
+                    printf("\n\e[0;31m Der maximale Wert für -w beträgt %d\n", config.grid.supplyMaxLoadWh);
                     return 1;
                 }
                 printf("\n  Ladespannung (U):\t\t %2.2fV\n", supplyMaxVoltage);
