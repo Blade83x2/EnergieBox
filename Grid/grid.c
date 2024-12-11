@@ -162,7 +162,7 @@ int main(int argc, char *argv[]){
                 printf("  Ladezeit in Sekunden:\t\t%4.0f Sek\n\n", supplyLoadTimeSec);  
                 // prüfen ob bereits schon eine ladung am laufen ist
 				if (access("/Energiebox/Grid/isLoading.lock", F_OK) == 0) {
-                    printf("\e[0;31m Es wird bereits aus dem Netz geladen!\n");
+                    printf("\e[0;31m Es wird bereits aus dem Netz geladen!\n\n");
 				} 
 				else 
                 {
