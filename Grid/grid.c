@@ -147,11 +147,11 @@ int main(int argc, char *argv[]){
                     return 1; 
                 }
                 if(supplyLoadWattStunden < config.grid.supplyMinLoadWh){
-                    printf("\n\e[0;31m Der minimale Wert für -w beträgt %d\n", config.grid.supplyMinLoadWh);
+                    printf("\n\e[0;31m Der minimale Wert für -w beträgt %d\n\n", config.grid.supplyMinLoadWh);
                     return 1;
                 }
                 if(supplyLoadWattStunden > config.grid.supplyMaxLoadWh){
-                    printf("\n\e[0;31m Der maximale Wert für -w beträgt %d\n", config.grid.supplyMaxLoadWh);
+                    printf("\n\e[0;31m Der maximale Wert für -w beträgt %d\n\n", config.grid.supplyMaxLoadWh);
                     return 1;
                 }
                 printf("\n  Ladespannung (U):\t\t %2.2fV\n", supplyMaxVoltage);
@@ -178,7 +178,7 @@ int main(int argc, char *argv[]){
                 return 0;
                 break;  
             case ':':  
-                printf("Dieser Parameter benötigt einen Wert!\n");  
+                printf("\n\eDieser Parameter benötigt einen Wert!\n\n");  
                 return 1;
                 break;  
             case '?':  
