@@ -172,10 +172,10 @@ int main(int argc, char *argv[]){
                     sprintf(command, "touch /Energiebox/Grid/isLoading.lock");
 		    system(command);
                     // Selbst aufrufen mit Parameter -s sowie Ausschaltzeit in Sekunden
-                    sprintf(command, "%s -s %4.0f & ", argv[0], supplyLoadTimeSec);
+                    sprintf(command, "%s -s %4.0f &", argv[0], supplyLoadTimeSec);
 
 
- printf(" %s -s %4.0f &   ", argv[0], supplyLoadTimeSec);
+ 
 
 
 
