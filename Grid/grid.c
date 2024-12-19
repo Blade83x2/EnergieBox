@@ -161,18 +161,26 @@ int main(int argc, char *argv[]){
                 supplyLoadTimeSec = supplyLoadWattStunden / (supplyLoadPower/3600);
                 printf("  Ladezeit in Sekunden:\t\t %4.0f Sek\n\n", supplyLoadTimeSec);  
                 // prüfen ob bereits schon eine ladung am laufen ist
-				if (access("/Energiebox/Grid/isLoading.lock", F_OK) == 0) {
+		if (access("/Energiebox/Grid/isLoading.lock", F_OK) == 0) {
                     printf("\e[0;31m Es wird bereits aus dem Netz geladen!\n\n");
-				} 
-				else 
+		} 
+		else 
                 {
-                    setBit(0, 0); // Netzanschluss Relais einschalten 
+                    setBit(0, 0); // Netzanschluss Relais einschalten
                     sleep(5); // Zeitabstand für Transformationsfeld aufzubauen
-                    setBit(1, 0); // Batterie Relais einschalten 
-					sprintf(command, "touch /Energiebox/Grid/isLoading.lock");
-					system(command);            
+                    setBit(1, 0); // Batterie Relais einschalten
+                    sprintf(command, "touch /Energiebox/Grid/isLoading.lock");
+		    system(command);
                     // Selbst aufrufen mit Parameter -s sowie Ausschaltzeit in Sekunden
                     sprintf(command, "%s -s %4.0f & ", argv[0], supplyLoadTimeSec);
+
+
+ printf(" %s -s %4.0f &   ", argv[0], supplyLoadTimeSec);
+
+
+
+
+
                     system(command);
 				}
                 return 0;
