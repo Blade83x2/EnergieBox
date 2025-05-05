@@ -135,7 +135,7 @@ rm -f /Energiebox/makeResult.txt;
 
 
 if [[ -z $1 && -z $2 ]]; then
-	echo -e "\n\n...";
+	echo -e "\n\n";
 
 else
 	echo -e "\n\nUpdate Git Repository...";
