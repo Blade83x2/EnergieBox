@@ -11,13 +11,13 @@ PLANUNG für Version 5
  + PV Pannelen Erdung 
  + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen - SOFTWARE ANPASSEN
  + Lüftersteuerung hinzufügen
- + 16A Leitungsschutz hinzufügen (bessere Aufteilung)
  + FIX Beim booten an/aus Parameter: irgendwas validieren -> ergibt automatisch 0
- + Leitungsschutzschalter für gesamten 230V Kreislauf anpassen
+ + Alle Leitungsschutzschalter für gesamten 230V Kreislauf anpassen (Ceranfeld auf 20A, Rest auf 16A)
  + Raspberry 5 16GB verbauen
  + SSD verbauen 
  + Kolloid -> Beim Starten Produktionsabfrage aus Datenbank
  + Hauptsicherung auf 100A beschränken wegen Batterien
+
   
  
  
@@ -34,9 +34,9 @@ Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafisc
 
 
  [BUGFIX] Kabelbruch am Controller (SDA, SCL & Spannungsversorgung) repariert
- [NEW] CM2000 USB Anschluss verlegt für Elektrolyse
+ [NEW] CM2000 USB Anschluss in Küche verlegt für Elektrolyse
  [NEW] H2O Hex-Generator Kabel gelegt für Wasserstrukturierung nach Filterung
- [NEW] Standleitung in Küche verlegt für Licht zum Kochen
+ [NEW] Standleitung in Küche verlegt für Licht & Steckdose
  [UPDATE] Eigener Schaltkreis für Cerankochfeld verlegt
  [UPDATE] Eigener Schaltkreis für Backofen verlegt
  [UPDATE] Eigener Schaltkreis für Wasserkocher verlegt
