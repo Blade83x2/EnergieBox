@@ -9,18 +9,16 @@ PLANUNG für Version 5
 
  + Option für Zeitgesteuerten Anwendungsstart / stop hinzufügen
  + PV Pannelen Erdung 
- + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen
+ + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen - SOFTWARE ANPASSEN
  + Lüftersteuerung hinzufügen
  + 16A Leitungsschutz hinzufügen (bessere Aufteilung)
  + FIX Beim booten an/aus Parameter: irgendwas validieren -> ergibt automatisch 0
-
- 
- 
- 
- 
- 
-  Makefile für jedes Programm angepasst
-  Kompilierungsprozess in build.sh mit Grafik & Spinner zusammen geführt
+ + Leitungsschutzschalter für gesamten 230V Kreislauf anpassen
+ + Raspberry 5 16GB verbauen
+ + SSD verbauen 
+ + Kolloid -> Beim Starten Produktionsabfrage aus Datenbank
+ + Hauptsicherung auf 100A beschränken wegen Batterien
+  
  
  
  
@@ -34,6 +32,16 @@ von 20A auf 60A umgestellt. Jeder Schaltkreis kann jetzt beliebig mit Sicherunge
 Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können ohne Endwiderstände schon zu Störungen kommen.
 Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
 
+
+ [BUGFIX] Kabelbruch am Controller (SDA, SCL & Spannungsversorgung) repariert
+ [NEW] CM2000 USB Anschluss verlegt für Elektrolyse
+ [NEW] H2O Hex-Generator Kabel gelegt für Wasserstrukturierung nach Filterung
+ [NEW] Standleitung in Küche verlegt für Licht zum Kochen
+ [UPDATE] Eigener Schaltkreis für Cerankochfeld verlegt
+ [UPDATE] Eigener Schaltkreis für Backofen verlegt
+ [UPDATE] Eigener Schaltkreis für Wasserkocher verlegt
+ [BUGFIX] Alle Schukostecker haben jetzt ein Potenzialausgleich
+ [UPDATE] Makefile für jedes Programm angepasst. Kompilierungsprozess in build.sh mit Grafik & Spinner zusammen geführt
  [UPDATE] Alle Verbraucher wurden gemessen. Alle Leistungsangaben entsprechen jetzt dem realen Verbrauch.
  [BUGFIX] 12V & 230V -> Wenn Gerät schon eingeschaltet war und versucht wurde es einzuschalten und nicht ausreichend Restleistung verfügbar war, keine Limit Benachrichtigung.
  [UPDATE] CronJob jede 3 Minuten für Daten vom Laderegler zu laden und um gegebenfalls aus dem Netz nach laden.
@@ -42,7 +50,6 @@ Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafisc
  [UPDATE] Neue Cat7 abgeschirmte I²C Leitungen installiert. P82B715PM Expander instaliert für verbesserten Signaltransport
  [BUGFIX] Bilder in README.MD von 230V/ angepasst
  [NEW] Sinus Wave Generator an 12V Relais 7 installiert
- [UPDATE] Anschluss Skize für Controller erstellt
  [NEW] Modul für GRID-LOAD verbaut (Portexpander, Relais, 80A Relais & Relais für Ladegerät- Zuleitung)
  [BUGFIX] Potenzialausgleich Querschnitt für Inverter & Laderegler auf 16mm² erhöht
  [UPDATE] Unnötige 48V -> 24V Wandler entfernt

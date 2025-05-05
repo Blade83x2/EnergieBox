@@ -2,11 +2,15 @@
 
 Was macht dieses Programm?
 
-Dieses Programm dient zur Reinigung des Trinkwassers. Dabei wird Wasser aus einem Tank mit einer Pumpe sowie mit einer zusätzlichen Boosterpumpe
-in eine Osmose Filteranlage mit 7 Bar gepumpt. Da Osmose Anlagen sehr langsam filtern, ist es immer sehr Zeitintensiv. Dieses Programm steuert 
-den Filter und verhindert ein Überlaufen der Gefäße. Dabei wird die Benötigte Zeit beachtet sowie die Füllstände vom Abwassertank. Ebenso wird die Qualität
-des Filters überwacht. Bei dem Programmaufruf wird eine genaue Literanzahl übergeben die dann gefiltert wird. 
-Die Hilfe wird angezeigt wenn einfach nur <b>h2o</b> ohne Parameter aufgerufen wird.
+Dieses Programm dient zur Reinigung des Trinkwassers. Dabei wird Wasser entweder aus einem Tank mit einer Pumpe sowie mit einer zusätzlichen Boosterpumpe
+oder mit einem Elektrischen Ventil aus dem Hausanschluss in eine Osmose Filteranlage gepumpt. 
+Da Osmose Anlagen sehr langsam filtern, ist es immer sehr Zeitintensiv. 
+Dieses Programm steuert den Filter und verhindert ein Überlaufen der Gefäße. Dabei wird die Benötigte Zeit beachtet sowie die Füllstände vom Abwassertank falls das Wasser nicht
+am Hausanschluss entnommen wird. Ebenso wird die Qualität des Filters überwacht. 
+Nach der Filterung wird das gefilterte Wasser mit Frequenzen beschallt um eine Hexagonale Struktur herzustellen.
+Bei dem Programmaufruf wird eine genaue Literanzahl übergeben die dann gefiltert wird. 
+
+Die Hilfe wird angezeigt wenn einfach nur <b>h2o</b> ohne Parameter in der Konsole aufgerufen wird.
 
 <p align="center"> 
     <img src="img/start.png" style="width: 85%;" alt="h2o Hilfe">
@@ -59,7 +63,7 @@ Wenn die gesamte Anlage durchgespült werden soll, kann das mit dem folgenden Be
     <img src="img/clean.png" style="width: 85%;" alt="h2o Anlage durchspülen">
 </p>
 
-Nun kommen wir zum eigentlichen Filtervorgang. Die Filterung kann in 100ml Schritten eingestellt werden. Für Kommastellen immer Punkte (kein , ) benutzen. Um 100ml zu filtern,
+Nun kommen wir zum eigentlichen Filtervorgang. Die Filterung kann in 100ml Schritten eingestellt werden. Für Kommastellen Punkte oder Komma benutzen. Um 100ml zu filtern,
 wird der Befehl 
 
 

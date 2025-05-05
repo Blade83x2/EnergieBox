@@ -5,7 +5,7 @@
 programmName="Kolloid Station";
 programmVersion="1.6";
 heizplatteRelais=7;
-trafoRelais=8;
+trafoRelais=13;
 scriptPath=$(cd $(dirname "$0"); pwd);
 libsPath="$scriptPath/libs";
 soundPath="$scriptPath/sounds";
