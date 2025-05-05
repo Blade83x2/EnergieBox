@@ -149,3 +149,7 @@ fi
 
 # https://github.com/settings/tokens für Token auslesen
 # sudo git config --global credential.helper store
+# Usage without Git Commit
+#  sudo ./build.sh
+# with Git Commit
+#  sudo ./build.sh "Beschreibung der Änderung angeben!"
