@@ -132,13 +132,20 @@ fi
 cd ..
 stop_spinner $?
 rm -f /Energiebox/makeResult.txt;
-echo -e "\n\nUpdate Git Repository...";
-git add -A
-echo -e "\n";
-git commit -m "$1"
-echo -e "\n";
-git push -u origin master
-echo -e "\n";
+
+
+if [[ -z $1 && -z $2 ]]; then
+	echo -e "\n\n...";
+
+else
+	echo -e "\n\nUpdate Git Repository...";
+	git add -A
+	echo -e "\n";
+	git commit -m "$1"
+	echo -e "\n";
+	git push -u origin master
+	echo -e "\n";
+fi
 
 # https://github.com/settings/tokens für Token auslesen
 # sudo git config --global credential.helper store
