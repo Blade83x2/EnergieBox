@@ -1,0 +1,213 @@
+#!/bin/bash
+# Shopware5 Datenbank auslesen ob neue Bestellungen vorhanden sind
+
+# Prüfen, ob .mysql.cfg existiert
+if [[ ! -f ~/.mysql.cfg ]]; then
+  echo "Die Datei ~/.mysql.cfg existiert nicht."
+  echo "Bitte lege sie wie folgt an, um die MySQL-Zugangsdaten sicher zu speichern:"
+  echo
+  echo "1️) Erstelle die Datei:"
+  echo "    nano ~/.mysql.cfg"
+  echo
+  echo "2️) Füge folgenden Inhalt ein (ersetze die Platzhalter):"
+  echo
+  cat <<EOF
+[client]
+user=
+password=
+host=
+EOF
+  echo
+  echo "3️) Setze die richtigen Berechtigungen:"
+  echo "    chmod 600 ~/.mysql.cfg"
+  echo
+  exit 1
+fi
+
+DB_NAME="d03ae23f"
+
+
+# Funktion: Extrahiere rückwärts alle Zahlen von hinten bis zum ersten Nicht-Ziffern-Zeichen
+extract_trailing_digits() {
+  local input="$1"
+  local reversed="$(echo "$input" | rev)"
+  local digits=""
+  for (( i=0; i<${#reversed}; i++ )); do
+    char="${reversed:$i:1}"
+    if [[ "$char" =~ [0-9] ]]; then
+      digits="$char$digits"
+    else
+      break
+    fi
+  done
+  echo "$digits"
+}
+
+# Funktion: Extrahiere alle Buchstaben von vorne bis zur ersten Zahl
+extract_leading_letters() {
+  local input="$1"
+  local result=""
+  for (( i=0; i<${#input}; i++ )); do
+    char="${input:$i:1}"
+    if [[ "$char" =~ [A-Za-z] ]]; then
+      result+="$char"
+    else
+      break
+    fi
+  done
+  echo "$result"
+}
+
+# Funktion: Extrahiert erste Zahl nach Buchstaben
+extract_middle_number() {
+  local input="$1"
+  local length=${#input}
+  local found_digits=""
+  local in_digits=false
+  for (( i=0; i<length; i++ )); do
+    char="${input:$i:1}"
+    if [[ "$char" =~ [0-9] ]]; then
+      in_digits=true
+      found_digits+="$char"
+    elif $in_digits; then
+      # Wenn wir schon Ziffern sammeln und auf Buchstaben stoßen: abbrechen
+      break
+    fi
+  done
+  echo "$found_digits"
+}
+
+
+calculate_count() {
+  local input=$1
+  local sizes=(100 200 400 1000 2000)
+  declare -A result
+  IFS=$'\n' sizes_sorted=($(printf "%s\n" "${sizes[@]}" | sort -nr))
+  local remaining=$input
+  for ((i = 0; i < ${#sizes_sorted[@]}; i++)); do
+    local size=${sizes_sorted[$i]}
+    local count=$(( remaining / size ))
+    result["$size"]=$count
+    remaining=$(( remaining % size ))
+    # Letzte Schleife – prüfe Rest
+    if (( i == ${#sizes_sorted[@]} - 1 && remaining > 0 )); then
+      result["$size"]=$(( result["$size"] + 1 ))
+      remaining=0
+    fi
+  done
+  local res=""
+  for size in "${sizes_sorted[@]}"; do
+    res="$res,$size:${result[$size]}"
+  done
+  echo "$res"
+}
+
+SQL_QUERY="
+SELECT
+  o.ordertime AS ordertime,
+  o.id AS s_order_id,
+  o.ordernumber AS ordernumber,
+  o.userID AS userId,
+  d.articleordernumber AS articlenumber,
+  d.quantity AS menge
+FROM
+  s_order o
+LEFT JOIN
+  s_order_details d 
+ON 
+  o.id = d.orderID
+WHERE
+  o.status = 0
+ORDER BY 
+  o.ordertime ASC, 
+  d.id;
+"
+
+
+
+# Assoziatives Array zur Speicherung von "Element+PPM" => ml
+declare -A elementData
+
+# Funktion: Füge ml-Wert zu einem Element mit bestimmtem ppm-Wert hinzu
+add_ml() {
+  local element="$1"
+  local ppm="$2"
+  local ml="$3"
+  local key="${element}_${ppm}"
+  if [[ -v elementData["$key"] ]]; then
+    # Wenn Eintrag existiert, addiere ml
+    elementData["$key"]=$(( elementData["$key"] + ml ))
+  else
+    # Neuer Eintrag
+    elementData["$key"]=$ml
+  fi
+}
+
+
+
+declare -a ORDER_IDS=()
+
+# Daten einlesen und strukturieren
+while IFS=$'\t' read -r zeit id ordernumber userId articlenumber menge; do
+  add_ml $(extract_leading_letters "$articlenumber") $(extract_trailing_digits "$articlenumber") $(($(extract_middle_number "$articlenumber") * $menge))
+  if [[ ! " ${ORDER_IDS[*]} " =~ " ${id} " ]]; then
+    ORDER_IDS+=("$id")
+    eval "ORDER_DATA_${id}=('$zeit' '$ordernumber' '$userId')"
+    eval "ORDER_ARTICLES_${id}=()"
+  fi
+  eval "ORDER_ARTICLES_${id}+=(\"${articlenumber}|${menge}\")"
+  
+  
+  # hier array füttern für ids um nachher status bearbeitet zu schreiben
+  
+  
+  
+done < <(mysql --defaults-file=~/.mysql.cfg -D "$DB_NAME" -e "$SQL_QUERY" --batch --raw | tail -n +2)
+
+
+
+
+IFS=$'\n' sorted_order_ids=($(printf "%s\n" "${ORDER_IDS[@]}" | sort -n))
+unset IFS
+# Ausgabe:
+for key in "${!elementData[@]}"; do
+  IFS='_' read -r element ppm  <<< "$key"
+  ml="${elementData[$key]}"
+  echo -e "Es sind Bestellungen vorhanden!\nSollen diese jetzt produziert werden? (y/Y/j/J = Ja)"
+
+  # Einzelne Taste lesen
+  read -n1 -r eingabe
+  echo  # Zeilenumbruch nach Tastendruck
+  # Eingabe prüfen
+  if [[ "$eingabe" =~ ^[yYjJ]$ ]]; then
+    echo "Produktion wird gestartet..."
+    echo " -> $element | $ppm ppm | $ml ml" 
+    calcl=$(calculate_count "$ml" )
+    # IFS auf Komma setzen (Internal Field Separator)
+    IFS=',' read -ra teile <<< "${calcl:1}"
+    for teil in "${teile[@]}"; do
+      IFS=':' read -ra teiler <<< "$teil"
+      # Schleife über die einzelnen Teile
+      wert=0
+      mla=0
+      rounds=0
+      for teilf in "${teiler[@]}"; do
+        if (( wert == 0 )); then
+          mla=$(( mla + teilf ))
+        else
+          rounds=$(( rounds + teilf ))
+        fi
+        ((wert++))
+      done
+      for (( i=0; i<rounds; i++ )); do
+        kolloid -m $element -s $mla -p $ppm
+      done
+    done
+    
+    # hier datenbank updaten und auf s_order.status 5 (zur lieferung bereit) setzen
+    # aus echo ${ORDER_IDS[@]} lesen
+  else
+    exit 0;
+  fi
+done
+

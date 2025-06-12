@@ -9,7 +9,6 @@ trafoRelais=13;
 scriptPath=$(cd $(dirname "$0"); pwd);
 libsPath="$scriptPath/libs";
 soundPath="$scriptPath/sounds";
-invoiceDir="/home/$(whoami)/KolloidProduktion/$(date +"%Y")";
 trap ctrl_c INT;  # CTRL + C abfangen & Relais ausschalten #### FUNKTIONIERT NICHT IMMER ??!?!?!
 function ctrl_c() {
     230V $heizplatteRelais 0 1;
@@ -142,17 +141,13 @@ printf " > Taste drücken um fortzufahren oder beenden mit ctrl+c!";
 read -n 1 -s -r -p "";
 printf "\n\n";
 clear;
-OIFS=$IFS;
-IFS=','; # Delimeter auf , setzen
-for kunde in $kunde
-do
-    kundeTrim="$(echo -e "${kunde}" | sed -e 's/^[[:space:]]*//')";
-    [ ! -d "$invoiceDir" ] && mkdir -p "$invoiceDir";
-    echo "$(date +"%d.%m.%Y")|${size}ml|${metal^^}|(${ppm}PPM)|${kundeTrim^}" >> "$invoiceDir/$(date +"%m").txt";
-done
-IFS=$OIFS;
-unset OIFS;
 230V $heizplatteRelais 1 1;
+# Ist genügend Energie vorhanden? Andernfalls beenden
+status=$(230V $heizplatteRelais)
+if [[ "$status" -eq 0 ]]; then
+  exit 1;
+fi
+
 for number in $(seq 0 ${_endPlatte}) # Progress Bar anzeigen
 do
     sleep 1;

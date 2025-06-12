@@ -263,6 +263,7 @@ int getRestPower(void * config) {
 }
 
 
+
 // Programmstart
 int main(int argc, char**argv) { 
     // Signale abfangen

@@ -63,7 +63,7 @@ Wenn die gesamte Anlage durchgespült werden soll, kann das mit dem folgenden Be
     <img src="img/clean.png" style="width: 85%;" alt="h2o Anlage durchspülen">
 </p>
 
-Nun kommen wir zum eigentlichen Filtervorgang. Die Filterung kann in 100ml Schritten eingestellt werden. Für Kommastellen Punkte oder Komma benutzen. Um 100ml zu filtern,
+Nun kommen wir zum eigentlichen Filtervorgang. Die Filterung kann in 100ml Schritten eingestellt werden. Für Kommastellen Punkt oder Komma benutzen. Um 100ml zu filtern,
 wird der Befehl 
 
 

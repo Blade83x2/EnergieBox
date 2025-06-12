@@ -8,7 +8,7 @@ ________________________________________________________________________________
 PLANUNG für Version 5
 
  + Option für Zeitgesteuerten Anwendungsstart / stop hinzufügen
- + PV Pannelen Erdung 
+
  + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen - SOFTWARE ANPASSEN
  + Lüftersteuerung hinzufügen
  + FIX Beim booten an/aus Parameter: irgendwas validieren -> ergibt automatisch 0
@@ -19,7 +19,7 @@ PLANUNG für Version 5
  + Hauptsicherung auf 100A beschränken wegen Batterien
 
   
- 
+ + PV Pannelen Erdung 
  
  
 _______________________________________________________________________________________________________________________________________

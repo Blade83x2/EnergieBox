@@ -42,6 +42,7 @@ while getopts ":m:s:p:k:" startupParams; do
     case "${startupParams}" in
         m)
             metal=${OPTARG}
+            metal=$(echo "$metal" | tr 'A-Z' 'a-z')
             # Prüfen ob übergebener Wert für Metalauswahl in ${kolloidElementsArray} vorhanden ist
             if [[ ! " ${kolloidElementsArray[*]} " =~ " ${metal} " ]]; then
                 usage
@@ -143,18 +144,3 @@ if [ -z "${ppm}" ]; then # Wenn -p nicht übergeben worden ist
     done
 fi
 
-# Kunde
-if [ -z "${kunde}" ]; then # Wenn -k nicht übergeben worden ist
-    while true; do
-        echo -e "$Green";
-        echo -n " > Kunde Vorname Nachname: ";      
-        OIFS=$IFS;
-        IFS=','; # Delimeter auf , setzen
-        read read_kunde echo;
-        kunde=$read_kunde;
-        IFS=$OIFS;
-        unset OIFS;
-        echo -e "$ColorOff";
-        break;
-    done
-fi
