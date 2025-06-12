@@ -26,19 +26,18 @@ function usage() {
     -s,     size,       Dispersions Menge in ml [${kolloidWaterSizeArray[*]}]
     
     -p,     ppm,        Konzentration in PPM [1 ... 100]
-    
-    -k,     kunde,      Name des/der Kunden [optional, mehrere mit Koma trennen]
+
     
     -----------------------------------------------------------------------------
     
     Beispiel Aufruf für 100ml Gold mit 8PPM:
-    kolloid -m au -s 100 -p 8 -k "Johannes Krämer"
+    kolloid -m au -s 100 -p 8
     
 EOF
     exit 0;
 }
 
-while getopts ":m:s:p:k:" startupParams; do
+while getopts ":m:s:p:" startupParams; do
     case "${startupParams}" in
         m)
             metal=${OPTARG}
@@ -65,9 +64,6 @@ while getopts ":m:s:p:k:" startupParams; do
             if [ "$ppm" -le "0" ] || [[ "$ppm" -gt "100" ]]; then
                 usage
             fi
-            ;;
-        k)
-            kunde=${OPTARG}
             ;;
         *)
             usage
