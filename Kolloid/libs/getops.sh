@@ -37,7 +37,7 @@ EOF
     exit 0;
 }
 
-while getopts ":m:s:p:" startupParams; do
+while getopts ":m:s:p:h:" startupParams; do
     case "${startupParams}" in
         m)
             metal=${OPTARG}
@@ -64,6 +64,9 @@ while getopts ":m:s:p:" startupParams; do
             if [ "$ppm" -le "0" ] || [[ "$ppm" -gt "100" ]]; then
                 usage
             fi
+            ;;
+        h)
+            usage
             ;;
         *)
             usage

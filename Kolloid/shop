@@ -1,5 +1,27 @@
 #!/bin/bash
+# @Name:            Kolloid Station Shop Connector
+# @Copyright:       @2023 by Johannes a.d.F. K r ä m e r
+#
 # Shopware5 Datenbank auslesen ob neue Bestellungen vorhanden sind
+
+
+programmName="Kolloid Station Shop Connector";
+programmVersion="1.0";
+shopUrl="kolloidalesgoldkaufen.de"
+scriptPath=$(cd $(dirname "$0"); pwd);
+libsPath="$scriptPath/libs";
+source "$libsPath/functions.sh" || exit 1;
+DB_NAME="d03ae23f"
+
+
+# Prüfen ob kolloidalesgoldkaufen.de erreichbar ist, wenn nicht, 
+# wird davon ausgegangen das keine Internetverbindung da ist oder der Shop offline ist
+# Beispiel:
+if ! check_host_reachable "$shopUrl"; then
+    echo "Error: $0: Der Host $shopUrl ist nicht erreichbar! Datenbank kann nicht erreicht werden."
+    exit 0
+fi
+
 
 # Prüfen, ob .mysql.cfg existiert
 if [[ ! -f ~/.mysql.cfg ]]; then
@@ -24,83 +46,9 @@ EOF
   exit 1
 fi
 
-DB_NAME="d03ae23f"
 
 
-# Funktion: Extrahiere rückwärts alle Zahlen von hinten bis zum ersten Nicht-Ziffern-Zeichen
-extract_trailing_digits() {
-  local input="$1"
-  local reversed="$(echo "$input" | rev)"
-  local digits=""
-  for (( i=0; i<${#reversed}; i++ )); do
-    char="${reversed:$i:1}"
-    if [[ "$char" =~ [0-9] ]]; then
-      digits="$char$digits"
-    else
-      break
-    fi
-  done
-  echo "$digits"
-}
 
-# Funktion: Extrahiere alle Buchstaben von vorne bis zur ersten Zahl
-extract_leading_letters() {
-  local input="$1"
-  local result=""
-  for (( i=0; i<${#input}; i++ )); do
-    char="${input:$i:1}"
-    if [[ "$char" =~ [A-Za-z] ]]; then
-      result+="$char"
-    else
-      break
-    fi
-  done
-  echo "$result"
-}
-
-# Funktion: Extrahiert erste Zahl nach Buchstaben
-extract_middle_number() {
-  local input="$1"
-  local length=${#input}
-  local found_digits=""
-  local in_digits=false
-  for (( i=0; i<length; i++ )); do
-    char="${input:$i:1}"
-    if [[ "$char" =~ [0-9] ]]; then
-      in_digits=true
-      found_digits+="$char"
-    elif $in_digits; then
-      # Wenn wir schon Ziffern sammeln und auf Buchstaben stoßen: abbrechen
-      break
-    fi
-  done
-  echo "$found_digits"
-}
-
-
-calculate_count() {
-  local input=$1
-  local sizes=(100 200 400 1000 2000)
-  declare -A result
-  IFS=$'\n' sizes_sorted=($(printf "%s\n" "${sizes[@]}" | sort -nr))
-  local remaining=$input
-  for ((i = 0; i < ${#sizes_sorted[@]}; i++)); do
-    local size=${sizes_sorted[$i]}
-    local count=$(( remaining / size ))
-    result["$size"]=$count
-    remaining=$(( remaining % size ))
-    # Letzte Schleife – prüfe Rest
-    if (( i == ${#sizes_sorted[@]} - 1 && remaining > 0 )); then
-      result["$size"]=$(( result["$size"] + 1 ))
-      remaining=0
-    fi
-  done
-  local res=""
-  for size in "${sizes_sorted[@]}"; do
-    res="$res,$size:${result[$size]}"
-  done
-  echo "$res"
-}
 
 SQL_QUERY="
 SELECT
@@ -123,12 +71,11 @@ ORDER BY
   d.id;
 "
 
-
-
 # Assoziatives Array zur Speicherung von "Element+PPM" => ml
 declare -A elementData
 
-# Funktion: Füge ml-Wert zu einem Element mit bestimmtem ppm-Wert hinzu
+# Funktion: Füge ml-Wert zu einem Element 
+# mit bestimmtem ppm-Wert in einem Array hinzu
 add_ml() {
   local element="$1"
   local ppm="$2"
@@ -210,4 +157,3 @@ for key in "${!elementData[@]}"; do
     exit 0;
   fi
 done
-

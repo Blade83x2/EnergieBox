@@ -143,6 +143,10 @@ printf "\n\n";
 clear;
 230V $heizplatteRelais 1 1;
 # Ist genügend Energie vorhanden? Andernfalls beenden
+#
+#
+#
+#
 status=$(230V $heizplatteRelais)
 if [[ "$status" -eq 0 ]]; then
   exit 1;
