@@ -142,16 +142,13 @@ read -n 1 -s -r -p "";
 printf "\n\n";
 clear;
 230V $heizplatteRelais 1 1;
+sleep 1;
 # Ist genügend Energie vorhanden? Andernfalls beenden
-#
-#
-#
-#
 status=$(230V $heizplatteRelais)
 if [[ "$status" -eq 0 ]]; then
-  exit 1;
+    230V $trafoRelais 0 1;
+    exit 1;
 fi
-
 for number in $(seq 0 ${_endPlatte}) # Progress Bar anzeigen
 do
     sleep 1;
@@ -170,10 +167,28 @@ do
     printf "\e[1;31m > TRAFO WIRD GLEICH EINGESCHALTET !!!ACHTUNG LEBENSGEFAHR!!! \e[0m \n";
     $soundPath/enableTrafo;
     230V $trafoRelais 1 1;
+    sleep 1;
+    status=$(230V $trafoRelais)
+    if [[ "$status" -eq 0 ]]; then
+        230V $heizplatteRelais 0 1;
+        exit 1;
+    fi
     [ $size -gt 200 ] && 230V $heizplatteRelais 1 1; # Wenn Menge >= 200 dann immer Köcheln
+    sleep 1;
+    status=$(230V $heizplatteRelais)
+    if [[ "$status" -eq 0 ]]; then
+        230V $trafoRelais 0 1;
+        exit 1;
+    fi
     if [ $size -lt 1000 ]; then # Kleine Mengen mit vielen Runden
         if [ $(($r % 2)) == 0 ]; then  # jede zweite Runde Köcheln für 4 Minuten
             230V $heizplatteRelais 1 1;
+            sleep 1;
+            status=$(230V $heizplatteRelais)
+            if [[ "$status" -eq 0 ]]; then
+                230V $trafoRelais 0 1;
+                exit 1;
+            fi
             230V $heizplatteRelais 0 240 & disown;
         fi
     fi

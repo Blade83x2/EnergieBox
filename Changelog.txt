@@ -15,7 +15,7 @@ PLANUNG für Version 5
  + Alle Leitungsschutzschalter für gesamten 230V Kreislauf anpassen (Ceranfeld auf 20A, Rest auf 16A)
  + Raspberry 5 16GB verbauen
  + SSD verbauen 
- + Kolloid -> Beim Starten Produktionsabfrage aus Datenbank
+ + 
  + Hauptsicherung auf 100A beschränken wegen Batterien
 
   
@@ -32,10 +32,15 @@ von 20A auf 60A umgestellt. Jeder Schaltkreis kann jetzt beliebig mit Sicherunge
 Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können ohne Endwiderstände schon zu Störungen kommen.
 Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
 
+#################################
 
+ [NEW] Notaus Schalter verbaut für 10.000 Volt Trafo
+ [BUGFIX] Wenn z.B. die Maximale Last vom Inverter bei 95% liegt und kolloid gestartet wurde, wurden die Relais zwar nicht eingeschaltet, dass Programm lief aber durch
+ [NEW] Bei SSH Verbindung automatische Abfrage ob Bestellungen im Shoo sind mit sofortieger Produktionsmöglichkeit
  [UPDATE] Neuzugang von Bestellungen wird jetzt bei einer SSH Verbindung angezeigt.
  [BUGFIX] Kabelbruch am Controller (SDA, SCL & Spannungsversorgung) repariert
- [NEW] CM2000 USB Anschluss in Küche verlegt für Elektrolyse
+ [NEW] Dauerspannungsversorgung für CM2000 in Küche verlegt für Elektrolyse
+ [NEW] Dauerspannungsversorgung für Maximus20 in Küche verlegt für Elektrolyse
  [NEW] H2O Hex-Generator Kabel gelegt für Wasserstrukturierung nach Filterung
  [NEW] Standleitung in Küche verlegt für Licht & Steckdose
  [UPDATE] Eigener Schaltkreis für Cerankochfeld verlegt
