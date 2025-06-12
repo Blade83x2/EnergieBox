@@ -286,7 +286,7 @@ int main(int argc, char**argv) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
         printf("\n\e[0;30m\e[47m 12V\t> %dW\t Gerätename   \e[0m\n", getCurrentPower(&config));
         for(int x=1; x<=config.mcp.numberOfRelaisActive; x++) {
-              printf("\e[0;36m %d\t %d%s \t%s  \e[0m\n", x, (getDevicePower(x, &config)), "W", deviceNames[x-1] );
+              printf("\e[0;36m %d\t%s %d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config)==0)?"\e[0;31m":"\e[0;32m"),(getDevicePower(x, &config)), "W", deviceNames[x-1] );
         }
         printf("\n");
     }
