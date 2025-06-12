@@ -19,7 +19,7 @@ PLANUNG für Version 5
  + Hauptsicherung auf 100A beschränken wegen Batterien
 
   
- + PV Pannelen Erdung 
+ 
  
  
 _______________________________________________________________________________________________________________________________________
@@ -33,6 +33,7 @@ Portexpander wurde ermittelt. 50cm SDA & SCL Kabel können ohne Endwiderstände 
 Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafische Schnittstelle präsentieren. Das 1200 Ah Akkupack wurde ausgetauscht in 2 24V 100Ah Lithium Batterien.
 
 
+ [UPDATE] Neuzugang von Bestellungen wird jetzt bei einer SSH Verbindung angezeigt.
  [BUGFIX] Kabelbruch am Controller (SDA, SCL & Spannungsversorgung) repariert
  [NEW] CM2000 USB Anschluss in Küche verlegt für Elektrolyse
  [NEW] H2O Hex-Generator Kabel gelegt für Wasserstrukturierung nach Filterung
