@@ -263,6 +263,27 @@ int getRestPower(void * config) {
 }
 
 
+// Ermittelt den Ladezustand der Batterie
+int ladezustand_aus_datei(const char *dateiname) {
+    FILE *datei = fopen(dateiname, "r");
+    if (!datei) {
+        perror("Datei konnte nicht geöffnet werden");
+        return -1;
+    }
+    char zeile[256];
+    int wert = -1;
+    while (fgets(zeile, sizeof(zeile), datei)) {
+        if (strstr(zeile, "Batterie: Ladezustand in Prozent =")) {
+            // Versuche, den Wert aus der Zeile zu extrahieren
+            if (sscanf(zeile, "Batterie: Ladezustand in Prozent = %d%%", &wert) == 1) {
+                break;
+            }
+        }
+    }
+    fclose(datei);
+    return wert;
+}
+
 
 // Programmstart
 int main(int argc, char**argv) { 
@@ -283,11 +304,12 @@ int main(int argc, char**argv) {
     fd = wiringPiI2CSetup(MCP23017_ADDRESS | i2caddr);
     if(fd <0) { fprintf(stderr, "wiringPi I2C Setup error!!!"); return -1; }
     if(argc == 1) {
+        system("clear");
+        int ladezustand = ladezustand_aus_datei("/Energiebox/Tracer/tracer.txt");
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
-        printf("\n\e[30;47m ID      %dW    Gerätename             \e[0m\n", getCurrentPower(&config));
-        
+        printf("\n\e[30;47m ID      %4dW  12V Gerätename      %3d%    \e[0m\n", getCurrentPower(&config), ladezustand);
         for(int x=1; x<=config.mcp.numberOfRelaisActive; x++) {
-              printf("\033[1;97m %d\t%s %d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config)==0)?"\e[0;31m":"\e[0;32m"),(getDevicePower(x, &config)), "W", deviceNames[x-1] );
+              printf("\033[1;97m %2d---->%s %4d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config)==0)?"\e[0;31m":"\e[0;32m"),(getDevicePower(x, &config)), "W", deviceNames[x-1] );
         }
         printf("\n");
     }
