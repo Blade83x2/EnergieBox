@@ -349,9 +349,9 @@ Die Tastatur muss nach jedem Start aktiviert werden unter Startmenü >Universal 
 
 
 
-Damit jede 3 Minuten die Daten des Ladereglers ausgelesen werden können, tragen wir einen CronJob mit folgender Zeile ein:
+Damit jede 3 Minuten die Daten des Ladereglers ausgelesen werden können, tragen wir einen CronJob (nicht als Root) mit folgender Zeile ein:
 
-`sudo crontab -e`
+`crontab -e`
 
 Ganz unten fügen wir folgende Zeile hinzu:
 
