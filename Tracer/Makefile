@@ -6,33 +6,42 @@
 #
 # https://www.c-howto.de/tutorial/makefiles/
 # https://www.c-howto.de/tutorial/makefiles/erweiterungen/
+C_COMPILER   = gcc
+CPP_COMPILER = g++
+CFLAGS       = -std=gnu99 -lwiringPi
+CPPFLAGS     = -std=c++17
 
-CC      = gcc
-CFLAGS  = -std=gnu99
-LDFLAGS = -lwiringPi
+C_OBJ   = mymcp23017.o iniparse.o
+EPEVER_OBJ = epever.o PVStatus.o BatteryStatus.o StatusBlock.o
 
-# Dateien und Objekte für tracer
-TRACER_SRC   = tracer.c mymcp23017.c iniparse.c
-TRACER_OBJ   = $(TRACER_SRC:.c=.o)
+all: trace epever
 
-# Datei für batterie
-BATTERIE_SRC = batterie.c
-BATTERIE_OBJ = $(BATTERIE_SRC:.c=.o)
+trace: trace.o $(C_OBJ)
+	$(CPP_COMPILER) -o $@ trace.o $(C_OBJ) $(CFLAGS)
 
-.PHONY: all clean
+epever: $(EPEVER_OBJ)
+	$(CPP_COMPILER) -o $@ $(EPEVER_OBJ)
 
-all: tracer batterie
+mymcp23017.o: mymcp23017.c
+	$(C_COMPILER) -c $< $(CFLAGS)
 
-# Linken der Binaries
-tracer: $(TRACER_OBJ)
-	$(CC) -o $@ $^ $(LDFLAGS) $(CFLAGS)
+iniparse.o: iniparse.c
+	$(C_COMPILER) -c $< -std=gnu99
 
-batterie: $(BATTERIE_OBJ)
-	$(CC) -o $@ $^ $(CFLAGS)
+epever.o: epever.cpp
+	$(CPP_COMPILER) -c $< $(CPPFLAGS)
 
-# Kompilieren der .o Dateien (Pattern-Regel)
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+PVStatus.o: PVStatus.cpp PVStatus.hpp
+	$(CPP_COMPILER) -c $< $(CPPFLAGS)
+
+BatteryStatus.o: BatteryStatus.cpp BatteryStatus.hpp
+	$(CPP_COMPILER) -c $< $(CPPFLAGS)
+
+StatusBlock.o: StatusBlock.cpp StatusBlock.hpp
+	$(CPP_COMPILER) -c $< $(CPPFLAGS)
+
+trace.o: trace.cpp
+	$(CPP_COMPILER) -c $< $(CPPFLAGS)
 
 clean:
-	rm -f tracer batterie $(TRACER_OBJ) $(BATTERIE_OBJ)
+	rm -f *.o trace epever
