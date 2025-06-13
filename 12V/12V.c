@@ -305,9 +305,9 @@ int main(int argc, char**argv) {
     if(fd <0) { fprintf(stderr, "wiringPi I2C Setup error!!!"); return -1; }
     if(argc == 1) {
         system("clear");
-        int ladezustand = ladezustand_aus_datei("/Energiebox/Tracer/tracer.txt");
+//int ladezustand = ladezustand_aus_datei("/Energiebox/Tracer/tracer.txt");
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
-        printf("\n\e[30;47m ID      %4dW  12V Gerätename      %3d%    \e[0m\n", getCurrentPower(&config), ladezustand);
+        printf("\n\e[30;47m ID      %4dW  12V Gerätename      %3d%    \e[0m\n", getCurrentPower(&config), 85);
         for(int x=1; x<=config.mcp.numberOfRelaisActive; x++) {
               printf("\033[1;97m %2d---->%s %4d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config)==0)?"\e[0;31m":"\e[0;32m"),(getDevicePower(x, &config)), "W", deviceNames[x-1] );
         }
