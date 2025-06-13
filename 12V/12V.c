@@ -284,9 +284,10 @@ int main(int argc, char**argv) {
     if(fd <0) { fprintf(stderr, "wiringPi I2C Setup error!!!"); return -1; }
     if(argc == 1) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
-        printf("\n\e\033[1;97m ID\t> %dW\t Gerätename   \e[0m\n", getCurrentPower(&config));
+        printf("\n\e[30;47m ID      %dW    Gerätename             \e[0m\n", getCurrentPower(&config));
+        
         for(int x=1; x<=config.mcp.numberOfRelaisActive; x++) {
-              printf("\e\033[1;97m %d\t%s %d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config)==0)?"\e[0;31m":"\e[0;32m"),(getDevicePower(x, &config)), "W", deviceNames[x-1] );
+              printf("\033[1;97m %d\t%s %d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config)==0)?"\e[0;31m":"\e[0;32m"),(getDevicePower(x, &config)), "W", deviceNames[x-1] );
         }
         printf("\n");
     }
