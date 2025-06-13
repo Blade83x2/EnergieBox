@@ -7,20 +7,32 @@
 # https://www.c-howto.de/tutorial/makefiles/
 # https://www.c-howto.de/tutorial/makefiles/erweiterungen/
 
-OBJ 		= tracer.o mymcp23017.o iniparse.o
-COMPILER 	= gcc
+CC      = gcc
+CFLAGS  = -std=gnu99
+LDFLAGS = -lwiringPi
 
-tracer:		$(OBJ)
-			$(COMPILER) -o $@ $(OBJ)	-lwiringPi -std=gnu99
+# Dateien und Objekte für tracer
+TRACER_SRC   = tracer.c mymcp23017.c iniparse.c
+TRACER_OBJ   = $(TRACER_SRC:.c=.o)
 
-tracer.o: 		tracer.c
-			$(COMPILER) -c tracer.c 				-lwiringPi -std=gnu99
-	
-mymcp23017.o: 	mymcp23017.c
-			$(COMPILER) -c mymcp23017.c				-lwiringPi -std=gnu99
-			
-iniparse.o: 	iniparse.c
-			$(COMPILER) -c iniparse.c				-std=gnu99
-			
+# Datei für batterie
+BATTERIE_SRC = batterie.c
+BATTERIE_OBJ = $(BATTERIE_SRC:.c=.o)
+
+.PHONY: all clean
+
+all: tracer batterie
+
+# Linken der Binaries
+tracer: $(TRACER_OBJ)
+	$(CC) -o $@ $^ $(LDFLAGS) $(CFLAGS)
+
+batterie: $(BATTERIE_OBJ)
+	$(CC) -o $@ $^ $(CFLAGS)
+
+# Kompilieren der .o Dateien (Pattern-Regel)
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-		rm -f $* $(OBJ)
+	rm -f tracer batterie $(TRACER_OBJ) $(BATTERIE_OBJ)
