@@ -1,51 +1,96 @@
 #include "StatusBlock.hpp"
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <iomanip> // Für std::setprecision
 
-float StatusBlock::extractValue(const char* line) {
-    float val = 0.0f;
-    sscanf(line, "%*[^=]= %f", &val);
-    return val;
-}
+// Statische Variable zur Speicherung des Inhalts der Trace-Datei
+std::string StatusBlock::traceData;
 
-void StatusBlock::printBar(float value, float maxValue) const {
-    int width = WIDTH_BAR - 2;
-    int percent = static_cast<int>((value / maxValue) * 100);
-    if (percent > 100) percent = 100;
-    if (percent < 0) percent = 0;
-    int filled = (percent * width) / 100;
+/**
+ * @brief Extrahiert den numerischen Wert aus einer Zeile mit dem Format "Text = Zahl".
+ * 
+ * @param line Die Textzeile mit einem Gleichheitszeichen und einem Zahlenwert.
+ * @return float Der extrahierte Wert als float. Gibt 0.0f zurück, wenn keine Zahl gefunden werden kann.
+ */
+float StatusBlock::extractValue(const std::string& line) {
+    size_t pos = line.find('=');
+    if (pos == std::string::npos) return 0.0f;
 
-    std::cout << "[";
-    for (int i = 0; i < width; ++i) std::cout << (i < filled ? "█" : "░");
-    std::cout << "]";
-}
-
-void StatusBlock::printFloat(float value, const char* unit, bool color, bool rightJustified) const {
-    char buffer[32];
-    snprintf(buffer, sizeof(buffer), "%.2f%s", value, unit);
-    int len = strlen(buffer);
-    int padding = WIDTH_VALUE - len;
-    if (rightJustified) for (int i = 0; i < padding; ++i) std::cout << " ";
-
-    if (color) {
-        const char* colorCode = value < 20.0f ? "\033[1;31m" : "\033[1;32m";
-        std::cout << colorCode;
-    } else {
-        std::cout << "\033[1;37m";
+    std::string valStr = line.substr(pos + 1);
+    try {
+        return std::stof(valStr);
+    } catch (...) {
+        return 0.0f; // Rückfall bei fehlerhafter Umwandlung
     }
-
-    std::cout << buffer << "\033[0m";
 }
 
+/**
+ * @brief Lädt den Inhalt der gegebenen Datei in die statische traceData-Variable.
+ * 
+ * @param filename Pfad zur Datei (z. B. /Energiebox/Tracer/trace.txt).
+ * @return true Datei wurde erfolgreich gelesen.
+ * @return false Datei konnte nicht geöffnet werden.
+ */
+bool StatusBlock::loadTraceFile(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file.is_open()) return false;
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    traceData = buffer.str();
+
+    return true;
+}
+
+/**
+ * @brief Löscht den Terminalbildschirm mithilfe von ANSI-Escape-Codes.
+ *        Cursor wird danach auf Position (0, 0) gesetzt.
+ */
 void StatusBlock::clearScreen() {
     std::cout << "\033[2J\033[H";
 }
 
-void StatusBlock::printHeader(const char* title) {
-    std::cout << "\033[1;44;97m";
-    int len = strlen(title);
-    int leftPad = (TOTAL_WIDTH - len) / 2;
-    int rightPad = TOTAL_WIDTH - leftPad - len;
-    for (int i = 0; i < leftPad; ++i) std::cout << " ";
-    std::cout << title;
-    for (int i = 0; i < rightPad; ++i) std::cout << " ";
-    std::cout << "\033[0m\n\n";
+/**
+ * @brief Gibt einen Titelblock mit Gleichheitszeichen zur optischen Abgrenzung aus.
+ * 
+ * @param header Überschrift des folgenden Blocks (z. B. "PV Status").
+ */
+void StatusBlock::printHeader(const std::string& header) {
+    std::cout << "=== " << header << " ===\n\n";
+}
+
+/**
+ * @brief Gibt eine formatierte Gleitkommazahl mit Einheit aus.
+ * 
+ * @param value Der Wert.
+ * @param unit Einheit (z. B. "V", "kWh").
+ * @param showPercent true: zeigt den Wert mit Prozentzeichen und einer Nachkommastelle.
+ * @param showSpace true: hängt ein Leerzeichen nach der Einheit an.
+ */
+void StatusBlock::printFloat(float value, const char* unit, bool showPercent, bool showSpace) {
+    if (showPercent)
+        std::cout << std::fixed << std::setprecision(1) << value << "%";
+    else
+        std::cout << std::fixed << std::setprecision(2) << value << unit;
+
+    if (showSpace)
+        std::cout << " ";
+}
+
+/**
+ * @brief Gibt einen Balken aus, der den relativen Wert zu einem Maximalwert visualisiert.
+ * 
+ * @param value Aktueller Wert.
+ * @param maxValue Maximaler möglicher Wert (repräsentiert einen vollen Balken).
+ */
+void StatusBlock::printBar(float value, float maxValue) {
+    const int barWidth = 30;
+    int filled = static_cast<int>((value / maxValue) * barWidth);
+    if (filled < 0) filled = 0;
+    if (filled > barWidth) filled = barWidth;
+
+    std::cout << "[";
+    for (int i = 0; i < filled; i++) std::cout << "#";
+    for (int i = filled; i < barWidth; i++) std::cout << " ";
+    std::cout << "]";
 }

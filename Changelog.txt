@@ -34,6 +34,7 @@ Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafisc
 
 #################################
 
+ [NEW] Programm /Energiebox/Tracer/epever erstellt! Zeigt auf Konsole PV & Batterien Daten an
  [BUGFIX] Cronjob vom root User zum EPEVER konnte nicht ausgeführt werden. pymodbus Bibliothek war nicht geladen als root
  [NEW] 12V & 230V - Es ist nun möglich, Geräte automatisch Täglich ein/aus zu schalten. Einstellung in Konfiguration
  [BUGFIX] 12V & 230V Setup: Eingaben werden nun validiert. Eine Falscheingabe ist nicht mehr möglich.

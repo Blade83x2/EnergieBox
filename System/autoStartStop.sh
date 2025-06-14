@@ -32,11 +32,11 @@ read_and_control() {
         #echo "Relais $relais: autoStart=${autoStart[$relais]} autoStop=${autoStop[$relais]}"
         if [[ "$now" == "${autoStart[$relais]}" ]]; then
             #echo "=> Schalte Relais $relais AN ($ctrlProg $relais 1)"
-            $ctrlProg "$relais" 1 0
+            $ctrlProg $relais 1 1
         fi
         if [[ "$now" == "${autoStop[$relais]}" ]]; then
             #echo "=> Schalte Relais $relais AUS ($ctrlProg $relais 0)"
-            $ctrlProg "$relais" 0 0
+            $ctrlProg $relais 0 1
         fi
     done
 }
