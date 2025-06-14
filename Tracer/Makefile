@@ -1,5 +1,5 @@
 #
-# Makefile für tracer
+# Makefile für trace
 # Vendor: Johannes Krämer
 # Version: 1.0
 # Date: 22.11.2024

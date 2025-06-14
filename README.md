@@ -332,32 +332,21 @@ In diese Datei folgendes kopieren:
 
 Die Grafische Schnittstelle wird nun beim Starten geladen.
 
+----------
 
+Als nächstes installieren wir 2 Cronjobs. Der eine ist dazu da, jede Minute zu prüfen ob
+ein Gerät an oder aus geschaltet werden soll und der andere prüft jede 3 Minten die
+Batteriespannung und schaltet falls notwendig das Netzladegerät an.
 
-Um eine Virtuelle Tastatur auf dem Touchdisplay bei Berührung anzeigen zu lassen, installieren wir mit
-
-`sudo apt-get install onboard && sudo apt-get install at-spi2-core`
-
-die Entsprechenden Packete. Danach rufen wir über Startmenü > Preferences > Onboard Settings die
-Einstellungen auf. Unter General den Hacken bei Auto-show when editing text sowie
-Show when unlocking the screen setzen und speichern. Unter Window setzen wir Dock to screen edge.
-Unter Auto-show Hacken setzem bei Auto-show when editing text.
-Unter Layout wird Small gewählt und unter Theme DarkRoom. Zuletzt alles speichern.
-Die Tastatur muss nach jedem Start aktiviert werden unter Startmenü >Universal Access > Onboard
-
-
-
-
-
-Damit jede 3 Minuten die Daten des Ladereglers ausgelesen werden können, tragen wir einen CronJob (nicht als Root) mit folgender Zeile ein:
-
-`crontab -e`
+`sudo crontab -e`
 
 Ganz unten fügen wir folgende Zeile hinzu:
 
-`*/3 * * * * /Energiebox/Tracer/tracer > /dev/null &2>1`
+`*/3 * * * * cd /Energiebox/Tracer && ./trace 2>> /Energiebox/error.log`
+`* * * * * /Energiebox/System/autoStartStop.sh 2>> /Energiebox/error.log`
 
-Damit dies geschehen kann, muss der EP-EVER per RS-485 Adapter am USB Port des Raspberry's eingesteckt sein.
+
+Der EP-EVER muss per RS-485 Adapter am USB Port des Raspberry's eingesteckt sein.
 Im Python Script muss der verwendete USB Port eingetragen werden.  Um den Port zu ermitteln, kann die
 Differenz des Befehls
 
@@ -384,11 +373,11 @@ Den gleichen Eintrag ebenfalls in die client.py in Zeile 15 hinzufügen
 
 Zum Testen in der Konsole 
 
-`python3 /Energiebox/Tracer/readall.py > /Energiebox/Tracer/tracer.txt`
+`python3 /Energiebox/Tracer/readall.py > /Energiebox/Tracer/trace.txt`
 
 aufrufen. Mit 
 
-`cat /Energiebox/Tracer/tracer.txt`
+`cat /Energiebox/Tracer/trace.txt`
 
 sollten alle Ausgelesenen Daten angezeigt werden.
 

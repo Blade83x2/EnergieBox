@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <cstdio>
 #include <memory>
 #include <stdexcept>
@@ -6,9 +7,7 @@
 #include <array>
 #include <cstdlib>
 #include <cstring>
-
-// INI-Parsing (du kannst deine eigene Lösung hier integrieren)
-#include "iniparse.h" // wie gehabt, handler-Funktion bleibt in C
+#include "iniparse.h"
 
 struct MCPSetup {
     int address = 0;
@@ -50,6 +49,7 @@ private:
     const std::string configPath = "/Energiebox/Grid/config.ini";
     const std::string readallCmd = "python3 /Energiebox/Tracer/readall.py";
     const std::string voltagePrefix = "Batterie: Aktuelle Spannung in Volt = ";
+    const std::string outputPath = "/Energiebox/Tracer/trace.txt";
 
     bool loadConfig() {
         return ini_parse(configPath.c_str(), handler, &config) >= 0;
@@ -59,13 +59,12 @@ private:
         auto pos = line.find(voltagePrefix);
         if (pos != std::string::npos) {
             std::string valStr = line.substr(pos + voltagePrefix.size());
-            // valStr z.B. "51.42V\n"
             float voltage = 0.0f;
             if (sscanf(valStr.c_str(), "%fV", &voltage) == 1) {
                 return voltage;
             }
         }
-        return -1.0f; // Fehlerwert
+        return -1.0f;
     }
 
     void triggerLoad() {
@@ -92,15 +91,20 @@ public:
             return false;
         }
 
+        std::ofstream outfile(outputPath);
+        if (!outfile.is_open()) {
+            std::cerr << "Fehler: Konnte trace.txt nicht öffnen\n";
+            pclose(pipe);
+            return false;
+        }
+
         bool loadTriggered = false;
         while (fgets(buffer.data(), buffer.size(), pipe) != nullptr) {
             std::string line(buffer.data());
+            outfile << line;  // in Datei schreiben
+
             if (line.find(voltagePrefix) == 0) {
                 float voltage = parseVoltageLine(line);
-                if (voltage < 0) {
-                    std::cerr << "Warnung: Spannung konnte nicht geparst werden\n";
-                    break;
-                }
                 std::cout << "Aktuelle Batteriespannung: " << voltage << " V\n";
                 if (voltage < config.grid.battVoltageStartLoading) {
                     std::cout << "Niedrige Spannung erkannt, lade Grid...\n";
@@ -109,9 +113,10 @@ public:
                 } else {
                     std::cout << "Spannung ok, kein Laden notwendig.\n";
                 }
-                break;
             }
         }
+
+        outfile.close();
         pclose(pipe);
         return loadTriggered;
     }

@@ -7,7 +7,7 @@ ________________________________________________________________________________
 
 PLANUNG für Version 5
 
- + Option für Zeitgesteuerten Anwendungsstart / stop hinzufügen
+ 
 
  + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen - SOFTWARE ANPASSEN
  + Lüftersteuerung hinzufügen
@@ -34,7 +34,10 @@ Das Programm gui wird jetzt beim Start geladen und soll in Version 5 die Grafisc
 
 #################################
 
- [UPDATE] Listing von 12V und 230V farblich angepasst & die Einträge an/aus. Kein Verüccken mehr der Zeilen + Akkuzustand in Liste
+ [BUGFIX] Cronjob vom root User zum EPEVER konnte nicht ausgeführt werden. pymodbus Bibliothek war nicht geladen als root
+ [NEW] 12V & 230V - Es ist nun möglich, Geräte automatisch Täglich ein/aus zu schalten. Einstellung in Konfiguration
+ [BUGFIX] 12V & 230V Setup: Eingaben werden nun validiert. Eine Falscheingabe ist nicht mehr möglich.
+ [UPDATE] Listing von 12V und 230V farblich angepasst & die Einträge an/aus. Kein Verücken mehr der Zeilen + Akkuzustand in Liste
  [NEW] Notaus Schalter verbaut für 10.000 Volt Trafo
  [BUGFIX] Wenn z.B. die Maximale Last vom Inverter bei 95% liegt und kolloid gestartet wurde, wurden die Relais zwar nicht eingeschaltet, dass Programm lief aber durch
  [NEW] Bei SSH Verbindung automatische Abfrage ob Bestellungen im Shoo sind mit sofortieger Produktionsmöglichkeit
