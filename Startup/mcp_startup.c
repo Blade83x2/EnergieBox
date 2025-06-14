@@ -296,7 +296,7 @@ int main(int argc, char**argv) {
     for(int i = 0; i<config.mcp.numberOfRelaisActive; i++) {
         mcp_pinMode(i, 0);
         mcp_digitalWrite(i,1);
-        sprintf(command, "sh /Energiebox/12V/setIni.sh %d %d", (i+1), 0);
+        sprintf(command, "bash /Energiebox/12V/setIni.sh %d %d", (i+1), 0);
         system(command);
         sleep(0.1);
     }
@@ -322,7 +322,7 @@ int main(int argc, char**argv) {
                 // Relais einschalten
                 mcp_digitalWrite(f, 0);
                 // eltakostatus in config schreiben
-                sprintf(command, "sh /Energiebox/12V/setIni.sh %d %d", (f+1), 1);
+                sprintf(command, "bash /Energiebox/12V/setIni.sh %d %d", (f+1), 1);
                 system(command);
                 pMaxCurrent += devicePMax[f];
                 printf("Neuer Verbrauch aller Geräte derzeit: %d Watt\n", pMaxCurrent);
@@ -359,7 +359,7 @@ int main(int argc, char**argv) {
     for(int i = 0; i<config.mcp.numberOfRelaisActive; i++) {
         mcp_pinMode(i, 0);
         mcp_digitalWrite(i, 1);
-        sprintf(command, "sh /Energiebox/230V/setIni.sh %d %d", (i+1), 0);
+        sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", (i+1), 0);
         system(command);
         sleep(0.1);
     }
@@ -381,7 +381,7 @@ int main(int argc, char**argv) {
                 // Relais einschalten
                 mcp_digitalWrite(f, 0);
                 // eltakostatus in config schreiben
-                sprintf(command, "sh /Energiebox/230V/setIni.sh %d %d", (f+1), 1);
+                sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", (f+1), 1);
                 system(command);
                 sleep(0.2);
             }
