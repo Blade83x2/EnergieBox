@@ -43,7 +43,11 @@ Tab 230V
     <img src="img/tab_230V.png" style="width: 70%;" alt="Tab 230V" >
 </p>
 <br><br>
-
+Das Programm wird beim booten der Energiebox geladen und auf dem Display angezeigt.<br>
+Es kann lokal mit <code>ALT + F4</code> geschlossen werden. Über SSH kann es mit <br>
+<code>kill -9 $(pidof gui)</code> beendet werden.<br>
+<br>
+Zum Starten <code>gui</code> ausführen!
 
 
 <!--
