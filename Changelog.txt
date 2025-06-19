@@ -25,7 +25,7 @@ In dieser Version ist endlich das Grafische User Interface verfügbar. Beim boot
 Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die Ausgabe auf der Konsole von sämtlichen Programmen verbessert und optimiert. 
 Eine Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++.
 
-
+ [BUGFIX] Formatierte Ausgabe der Ladezeit in Grid/grid. Werte werden in Tabelle links und rechts ausgerichtet
  [NEW] Neue Bilder und Beschreibungen in Grid/README.MD
  [UPDATE] Neue Bilder und Beschreibungen in 230V/README.MD an Code Änderungen angepasst
  [UPDATE] Neue Bilder und Beschreibungen in 12V/README.MD an Code Änderungen angepasst
