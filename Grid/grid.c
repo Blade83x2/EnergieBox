@@ -45,15 +45,15 @@ char command[100];
 static int handler(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
     #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
-    if(MATCH("mcp", "address")) {  pconfig->mcp.address = atoi(value); }
-    else if(MATCH("mcp", "numberOfRelaisActive")) { pconfig->mcp.numberOfRelaisActive = atoi(value); }
-    else if(MATCH("grid", "supplyMaxCurrent")) { pconfig->grid.supplyMaxCurrent = atof(value); }
-    else if(MATCH("grid", "supplyMaxVoltage")) { pconfig->grid.supplyMaxVoltage = atof(value); }
-    else if(MATCH("grid", "supplyMinLoadWh")) { pconfig->grid.supplyMinLoadWh = atoi(value); }
-    else if(MATCH("grid", "supplyMaxLoadWh")) { pconfig->grid.supplyMaxLoadWh = atoi(value); }
-    else if(MATCH("grid", "battVoltageStartLoading")) { pconfig->grid.battVoltageStartLoading = atof(value); }
-    else if(MATCH("grid", "loadingCapacityWh")) { pconfig->grid.loadingCapacityWh = atoi(value); }
-    else { return 0; }
+    if     (MATCH("mcp", "address"))                    { pconfig->mcp.address = atoi(value); }
+    else if(MATCH("mcp", "numberOfRelaisActive"))       { pconfig->mcp.numberOfRelaisActive = atoi(value); }
+    else if(MATCH("grid", "supplyMaxCurrent"))          { pconfig->grid.supplyMaxCurrent = atof(value); }
+    else if(MATCH("grid", "supplyMaxVoltage"))          { pconfig->grid.supplyMaxVoltage = atof(value); }
+    else if(MATCH("grid", "supplyMinLoadWh"))           { pconfig->grid.supplyMinLoadWh = atoi(value); }
+    else if(MATCH("grid", "supplyMaxLoadWh"))           { pconfig->grid.supplyMaxLoadWh = atoi(value); }
+    else if(MATCH("grid", "battVoltageStartLoading"))   { pconfig->grid.battVoltageStartLoading = atof(value); }
+    else if(MATCH("grid", "loadingCapacityWh"))         { pconfig->grid.loadingCapacityWh = atoi(value); }
+    else                                                { return 0; }
     return 1;
 }
 
@@ -81,7 +81,7 @@ void setBit(int Port, int Status) {
 
 // Zeigt Hilfe auf Console an
 int showHelp(char**argv, void* config) {
-    printf("\n\e[0;31m Falsche Parameter! Beispiel:\n\n");
+    printf("\n\e[0;31m Beispiel:\n\n");
     printf("  %s -w 200\t\t[lädt 200 Wattstunden aus dem Netz in die Batterie]\n", argv[0]);
     printf("  %s -s 50\t\t[beendet den aktuellen Ladevorgang in 50 Sekunden]\n", argv[0]);
     printf("  %s -h\t\t[zeigt diese Hilfe an]\n\n\n", argv[0]);
