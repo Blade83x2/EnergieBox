@@ -1,7 +1,7 @@
 
 # 12V Steuerprogramm
 
-Dieses Programm schaltet maximal 16 Eltakos für 12Volt Stromkreise.
+Dieses Programm schaltet maximal 16 Eltakos für 12 Volt Stromkreise.
 Die Stromstärke beträgt derzeit 60 Ampere bei 12 Volt (720 Watt).
 Beim Einschalten eines Gerätes wird geprüft, ob die Notwendige 
 angefragte Last verfügbar ist um Überlasten abzufangen.
