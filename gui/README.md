@@ -24,7 +24,7 @@ Spannung versorgt wird und aktuell eingeschaltet ist. <br>
     <img src="img/tab_12V.png" style="width: 70%;" alt="Tab 12V" >
 </p>
 <br>
-Die Geräte können direkt von hier aus mit einem Tastendruck aus bzw. eingeschaltet werden wenn:<br>
+Die Geräte können direkt von hier aus mit einem Tastendruck aus bzw. eingeschaltet werden wenn:<br><br>
 <ul>
   <li>genügend Leistung zum Einschalten verfügbar ist</li>
   <li>die Relais Konfiguration einen Start aus der GUI erlaubt</li>
