@@ -29,7 +29,7 @@
 #include <iomanip>
 
 // Debug-Modus aktivieren/deaktivieren
-bool debug = true;
+bool debug = false;
 
 enum class LogLevel { DEBUG, INFO, WARN, ERROR };
 
