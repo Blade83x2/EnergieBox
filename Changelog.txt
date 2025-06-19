@@ -7,10 +7,12 @@ Energiebox Ver.5 #
 
  + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen - SOFTWARE ANPASSEN
  + Lüftersteuerung hinzufügen
- + Alle Leitungsschutzschalter für gesamten 230V Kreislauf anpassen (Ceranfeld auf 20A, Rest auf 16A)
- + Hauptsicherung auf 100A beschränken wegen Batterien
+ + Alle Leitungsschutzschalter für gesamten 230V Kreislauf einbauen (Ceranfeld auf 20A, Rest auf 16A)
+ + Hauptsicherung auf 125A beschränken wegen Batterien
 
-  startup -> mehr pause zwiwschen dem einschalten der relais
+
+ 
+  startup -> mehr pause zwischen dem einschalten der relais
   bilder und beschreibung anpassen in readme.md
   build mit in readme
   kill -9 $(pidof gui) bei build beenden und nach build wieder aufrufen
@@ -26,10 +28,11 @@ Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die A
 Eine Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++.
 
 
- [BUGFIX] Formatierte Ausgabe der Ladezeit in Grid/grid. Werte werden in Tabelle links und rechts ausgerichtet
- [NEW] Neue Bilder und Beschreibungen in Grid/README.MD
- [UPDATE] Neue Bilder und Beschreibungen in 230V/README.MD an Code Änderungen angepasst
- [UPDATE] Neue Bilder und Beschreibungen in 12V/README.MD an Code Änderungen angepasst
+[NEW] Neue Bilder und Beschreibungen in /Energiebox/gui/README.MD
+ [BUGFIX] Formatierte Ausgabe der Ladezeit in /Energiebox/Grid/grid. Werte werden in Tabelle links und rechts ausgerichtet
+ [NEW] Neue Bilder und Beschreibungen in /Energiebox/Grid/README.MD
+ [UPDATE] Neue Bilder und Beschreibungen in /Energiebox/230V/README.MD an Code Änderungen angepasst
+ [UPDATE] Neue Bilder und Beschreibungen in /Energiebox/12V/README.MD an Code Änderungen angepasst
  [UPDATE] Programm gui wurde mit GTK erstellt. Es hat 3 Tabs und nun können vom Display aus die Relais geschaltet werden!
 
 
