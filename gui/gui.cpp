@@ -29,7 +29,7 @@
 #include <iomanip>
 
 // Debug-Modus aktivieren/deaktivieren
-bool debug = true;
+bool debug = false;
 
 enum class LogLevel { DEBUG, INFO, WARN, ERROR };
 
@@ -38,10 +38,8 @@ void debugPrint(const std::string& strMsg, LogLevel level = LogLevel::DEBUG) {
         auto now = std::chrono::system_clock::now();
         std::time_t now_time = std::chrono::system_clock::to_time_t(now);
         std::tm* tm_time = std::localtime(&now_time);
-
         std::ostringstream logPrefix;
         logPrefix << std::put_time(tm_time, "%Y-%m-%d %H:%M:%S") << " ";
-
         switch (level) {
             case LogLevel::DEBUG: logPrefix << "[DEBUG] "; break;
             case LogLevel::INFO:  logPrefix << "[INFO ] "; break;
