@@ -7,7 +7,7 @@ Die Anwendung ist für Touchdisplays (800x480) optimiert und läuft als Vollbild
 Das Programm beinhaltet 3 Tabs: <br> <br>
 Auf dem ersten Tab werden live PV- und Batteriedaten angezeigt.  <br>
 Diese Daten werden jede 3 Minuten aktualisiert.  <br>
-Hierzu wird die <code>/Energiebox/Tracer/trace.txt</code> Datei ausgelesen.<br>
+Hierzu wird die Datei <code>/Energiebox/Tracer/trace.txt</code> ausgelesen.<br>
 <br>
 <p align="left"> 
     <img src="img/tab_energiebox.png" style="width: 70%;" alt="Tab Energiebox" >
@@ -15,7 +15,7 @@ Hierzu wird die <code>/Energiebox/Tracer/trace.txt</code> Datei ausgelesen.<br>
 <br><br>
 
 Auf dem zweiten und dritten Tab wird jeweils eine Geräteliste für die jeweiligen Programme 12V und 230V angezeigt. <br>
-Ein roter Eintrag bedeutet das dieses Gerät derzeit nicht eingeschaltet ist und grün zeigt das dieses Gerät gerade mit
+Ein roter Eintrag bedeutet das dieses Gerät derzeit ausgeschaltet ist und grün zeigt das dieses Gerät gerade mit
 Spannung versorgt wird und aktuell eingeschaltet ist. <br> 
 <br>
 <br>
@@ -24,7 +24,7 @@ Spannung versorgt wird und aktuell eingeschaltet ist. <br>
     <img src="img/tab_12V.png" style="width: 70%;" alt="Tab 12V" >
 </p>
 <br>
-Die Geräte können direkt von hier aus mit einem Tastendruck aus bzw. eingeschaltet werden wenn:
+Die Geräte können direkt von hier aus mit einem Tastendruck aus bzw. eingeschaltet werden wenn:<br>
 <ul>
   <li>genügend Leistung zum Einschalten verfügbar ist</li>
   <li>die Relais Konfiguration einen Start aus der GUI erlaubt</li>
