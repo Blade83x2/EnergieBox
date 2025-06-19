@@ -30,7 +30,7 @@ anderem Programm ausgelesen werden muss, kann dieser Wert z.B.
 
 Der Status des Relais ist nun in der Datei status.txt gespeichert!
 Falls ein Relais geschaltet werden soll, so kann das mit dem Befehl  
-<code>12V 4 1</code> bewerkstelligt werden. Die 4 steht für die Relais Nummer und die
+<code>12V 4 1</code> bewerkstelligt werden. Die 4 steht für die Relais ID und die
 1 für den gewünschten Zustand (Möglich: 0/1). Nach dem absetzen des Befehls wird wieder die Liste angezeigt!
 <br><br>
 <p align="left"> 
@@ -39,7 +39,7 @@ Falls ein Relais geschaltet werden soll, so kann das mit dem Befehl
 
 
 
-Möchten man dagegen das Relais 4 einschalten ohne das eine Ausgabe angezeigt wird, dann kann der Befehl
+Möchte man dagegen das Relais 4 einschalten ohne das eine Ausgabe angezeigt wird, dann kann der Befehl
 <code>12V 4 1 0</code> ausgeführt werden!
 <br><br>
 <p align="left"> 
@@ -49,7 +49,7 @@ Möchten man dagegen das Relais 4 einschalten ohne das eine Ausgabe angezeigt wi
 
 
 Um ein Relais einmalig per Befehl von einer Zeitschaltuhr steuern zu lassen, kann der Befehl <code>12V 4 0 300 & disown</code> verwendet 
-werden. In diesem Beispiel würde das Relais Nr. 4 ausgeschaltet werden nach 300 Sekunden. Die Parameter <code>& disown</code>
+werden. In diesem Beispiel würde das Relais mit der ID 4 ausgeschaltet werden nach 300 Sekunden. Die Parameter <code>& disown</code>
 können verwendet werden damit die Konsole wieder sofort verfügbar ist.
 <br><br>
 <p align="left"> 
@@ -59,7 +59,7 @@ können verwendet werden damit die Konsole wieder sofort verfügbar ist.
 
 Wenn ein Relais Eintrag verändert werden soll, z.B. Name, Leistungsaufnahme oder Automatisches Einschalten beim Starten
 der Anlage oder eine tägliche Zeitschaltung, dann kann der Befehl <code>12V -set 6</code> verwendet werden. 
-Hier würde jetzt das Relais Nr. 6 bearbeitet werden! Wenn der Name leer gelassen wird, werden alle Werte gelöscht.
+Hier würde jetzt das Relais mit der ID 6 bearbeitet werden! Wenn der Name leer gelassen wird, werden alle Werte gelöscht.
 Es sollte nicht vergessen werden das an der 12V Schalttaffel eine entsprechende Sicherung eingesetzt werden muss!
 <br><br>
 <p align="left"> 
@@ -67,7 +67,6 @@ Es sollte nicht vergessen werden das an der 12V Schalttaffel eine entsprechende 
 </p><br>
 
 
- ``` kjkjjj ```
 
 
 Eine kleine Hilfe gibt es auch. Ungültige Parameterübergabe oder das Aufrufen von <code>12V -h</code> lässt die Hilfe erscheinen!
