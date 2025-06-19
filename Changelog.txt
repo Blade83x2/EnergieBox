@@ -26,6 +26,7 @@ Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die A
 Eine Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++.
 
 
+ [UPDATE] Bilder und Text in 12V/README.MD an Änderungen angepasst
  [UPDATE] Programm gui wurde mit GTK erstellt. Es hat 3 Tabs und nun können vom Display aus die Relais geschaltet werden!
 
 

@@ -19,7 +19,7 @@ Listenansicht mit dem Befehl: `12V`<br><br>
 
 Falls ein Relais Status (0 oder 1) von einem Relais von einem
 anderem Programm ausgelesen werden muss, kann dieser Wert z.B. 
-über den | oder >> Operator übergeben werden:
+über den >> Operator übergeben werden:
 <br><br>
 <p align="left"> 
     <img src="img/statusRelais.png" style="width: 70%;" alt="Relais Status von Relais Nr. 4" >
@@ -67,7 +67,7 @@ Es sollte nicht vergessen werden das an der 12V Schalttaffel eine entsprechende 
 </p><br>
 
 
-
+ ``` kjkjjj ```
 
 
 Eine kleine Hilfe gibt es auch. Ungültige Parameterübergabe oder das Aufrufen von <code>12V -h</code> lässt die Hilfe erscheinen!
