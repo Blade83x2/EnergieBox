@@ -16,7 +16,7 @@ Die Eingabe des Befehls `grid -w 200` startet das Programm und lädt 200 Wattstu
 
 <br>
 <br>
-Die Eingabe des Befehls `grid -s 50` beendet das Programm in 50 Sekunden!<br><br>
+Die Eingabe des Befehls <code>grid -s 50</code> beendet das Programm in 50 Sekunden!<br><br>
 <p align="left"> 
     <img src="img/stopload.png" style="width: 70%;" alt="grid stop load" >
 </p>
