@@ -27,7 +27,7 @@ Falls ein Relais geschaltet werden soll, so kann das mit dem Befehl
 1 für den gewünschten Zustand (Möglich: 0/1). Nach dem absetzen des Befehls wird wieder die Liste angezeigt!
 <br><br>
 <p align="left"> 
-    <img src="img/set.png" style="width: 40%;" alt="Relais Status von Relais Nr. 4 einschalten" >
+    <img src="img/set.png" style="width: 70%;" alt="Relais Status von Relais Nr. 4 einschalten" >
 </p><br>
 
 
@@ -36,7 +36,7 @@ Möchten man dagegen das Relais 4 einschalten ohne das eine Ausgabe angezeigt wi
 <code>12V 4 1 0</code> ausgeführt werden!
 <br><br>
 <p align="left"> 
-    <img src="img/set_no_stdout.png" style="width: 40%;" alt="Relais Status von Relais Nr. 4 einschalten" >
+    <img src="img/set_no_stdout.png" style="width: 70%;" alt="Relais Status von Relais Nr. 4 einschalten" >
 </p><br>
 
 
