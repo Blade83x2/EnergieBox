@@ -173,11 +173,11 @@ int main(int argc, char *argv[]){
                 printf("  %-26s %8.2f W\n",  "Ladeleistung pro Stunde:", supplyLoadPower);
                 printf("  %-26s %8.2f W\n",  "Ladeleistung pro Sekunde:", supplyLoadPower / 3600);
                 supplyLoadTimeSec = supplyLoadWattStunden / (supplyLoadPower / 3600);
-                printf("  %-26s %6.0f Sek\n\n", "Errechnete Ladezeit:", supplyLoadTimeSec);
+                printf("  %-26s %6.0f \n", "Errechnete Ladezeit (Sek):", supplyLoadTimeSec);
                 char timeString[16];
                 formatSecondsToHMS((int)supplyLoadTimeSec, timeString, sizeof(timeString));
-                printf("  Entspricht: %s\n\n", timeString);
-                printf("  %-26s %8s\n", "Entspricht:", timeString);                                      
+                
+                printf("  %-26s %8s\n", "Entspricht (Zeit):", timeString);                                      
                                                                 
                                 
                 // prüfen ob bereits schon eine ladung am laufen ist
