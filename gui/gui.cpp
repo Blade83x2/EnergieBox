@@ -449,7 +449,9 @@ int main(int argc, char* argv[]) {
     
     
     debugPrint("Test", LogLevel::INFO);
-    
+    debugPrint("Test", LogLevel::DEBUG);
+    debugPrint("Test", LogLevel::WARN);
+    debugPrint("Test", LogLevel::ERROR);
     
     auto app = Gtk::Application::create(argc, argv, "de.cplusplus-development.gui");
     GUI window;
