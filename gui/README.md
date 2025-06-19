@@ -4,10 +4,12 @@ Dieses Programm stellt die grafische Benutzeroberfläche die bei dem booten der 
 Die Anwendung ist für Touchdisplays (800x480) optimiert und läuft als Vollbild-GUI auf dem Raspberry Pi.
 ---
 <br>
+## 🔧 Funktionen
 - **Das Programm beinhaltet 3 Tabs:**
   - **Energiebox:** Anzeige von PV- und Batteriedaten
   - **12V:** Steuerung und Leistungsüberwachung von 12V-Geräten
   - **230V:** Steuerung von 230V-Verbrauchern
+
 <br>
 <br>
 Auf dem ersten Tab werden live PV- und Batteriedaten angezeigt.  <br>
