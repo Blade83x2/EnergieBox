@@ -156,14 +156,14 @@ int main(int argc, char *argv[]){
                     printf("\n\e[0;31m Der maximale Wert für -w beträgt %d\n\n", config.grid.supplyMaxLoadWh);
                     return 1;
                 }
-                printf("\n\e[0;36m=== Ladeparameter ===\e[0m\n");
+                
                 printf("  %-35s %10.2f V\n",  "Ladespannung (U):", supplyMaxVoltage);
                 printf("  %-35s %10.2f A\n",  "Ladestrom (A):", supplyMaxCurrent);
                 printf("  %-35s %10.2f W\n",  "Ladeleistung pro Stunde:", supplyLoadPower);
                 printf("  %-35s %10.2f W\n",  "Ladeleistung pro Sekunde:", supplyLoadPower / 3600);
                 supplyLoadTimeSec = supplyLoadWattStunden / (supplyLoadPower / 3600);
-                printf("  %-35s %10.0f Sek\n", "Errechnete Ladezeit:", supplyLoadTimeSec);
-                printf("\e[0;36m========================\e[0m\n\n");             
+                printf("  %-30s %10.0f Sek\n", "Errechnete Ladezeit:", supplyLoadTimeSec);
+                         
                                                 
                                 
                 // prüfen ob bereits schon eine ladung am laufen ist
