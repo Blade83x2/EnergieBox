@@ -38,7 +38,7 @@ Installation benötigter Pakete      |
 sudo apt-get install build-essential libgtk-3-dev
 Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Installation verschiedener benötigter Pakete:
 
-`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install build-essential libgtk-3-dev ufw python3-dev python3-pip git manpages-de ufw kate krusader mat hwinfo -y && sudo pip install rpi.gpio libgtk-3-dev xterm pymodbus ping`
+`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install build-essential libgtk-3-dev ufw python3-dev python3-pip git manpages-de ufw kate krusader mat hwinfo -y && sudo pip install rpi.gpio libgtk-3-dev xterm libgtkmm-3.0-dev pymodbus ping`
 
 
 -------------------------------------
@@ -343,6 +343,7 @@ Batteriespannung und schaltet falls notwendig das Netzladegerät an.
 Ganz unten fügen wir folgende Zeile hinzu:
 
 `*/3 * * * * cd /Energiebox/Tracer && ./trace 2>> /Energiebox/error.log`
+
 `* * * * * /Energiebox/System/autoStartStop.sh 2>> /Energiebox/error.log`
 
 

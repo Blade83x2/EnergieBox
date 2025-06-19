@@ -5,24 +5,19 @@
 # Date: 22.11.2024
 #
 
-PROGRAMMNAME = gui
-SRC = $(PROGRAMMNAME).cpp
-OBJ = $(PROGRAMMNAME).o
-CC = gcc
+CXX = g++
+CXXFLAGS = -Wall -std=c++17 `pkg-config gtkmm-3.0 --cflags`
+LDFLAGS = `pkg-config gtkmm-3.0 --libs`
+TARGET = gui
+OBJ = gui.o
 
-CFLAGS = $(shell pkg-config --cflags gtk+-3.0)
-LIBS = $(shell pkg-config --libs gtk+-3.0)
+all: $(TARGET)
 
+$(TARGET): $(OBJ)
+	$(CXX) -o $@ $^ $(LDFLAGS)
 
-all: $(PROGRAMMNAME)
-
-$(PROGRAMMNAME): $(OBJ)
-	$(CC) $(OBJ) -o $(PROGRAMMNAME) $(LIBS)
-
-$(OBJ): $(SRC)
-	$(CC) -c $(SRC) -o $(OBJ) $(CFLAGS)
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 clean:
-	rm -f $(PROGRAMMNAME) $(OBJ)
-
-.PHONY: all clean
+	rm -f $(OBJ) $(TARGET)
