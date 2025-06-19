@@ -27,6 +27,7 @@ anderem Programm ausgelesen werden muss, kann dieser Wert z.B.
 
 
 
+
 Der Status des Relais ist nun in der Datei status.txt gespeichert!
 Falls ein Relais geschaltet werden soll, so kann das mit dem Befehl  
 <code>12V 4 1</code> bewerkstelligt werden. Die 4 steht für die Relais Nummer und die
