@@ -46,13 +46,7 @@ Tab 230V
 
 
 
-
-
-
-
-Eine grafische Steuerungsoberfläche für ein energieautarkes Smart Home-System auf Basis von Relaismodulen, Port-Expandern und einer Wasserstoff-/PV-Stromversorgung. 
-
-
+<!--
 ## 🔧 Funktionen
 
 - **Tab-basiertes Layout:**
@@ -65,3 +59,4 @@ Eine grafische Steuerungsoberfläche für ein energieautarkes Smart Home-System 
   - Aktualisierung der Beschriftung und Farbe der Buttons bei Änderungen
   - Tracer-Daten werden alle 3 Minuten neu geladen
 
+-->
