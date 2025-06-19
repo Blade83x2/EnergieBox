@@ -14,11 +14,11 @@ Die Eingabe des Befehls <code>grid -w 200</code> startet das Programm und lädt 
 </p>
 Damit diese Berechnungen zutreffend sind, müssen in der <code>/Energiebox/Grid/config.ini</code> Datei die Variablen 
 angepasst werden an die verfügbare Ladeleistung!
-<br>
+<br><br>
 <ul>
-    <li>supplyMaxCurrent</li>
-    <li>supplyMaxVoltage</li>
-    <li>battVoltageStartLoading</li>
+    <li>supplyMaxCurrent - Eingestellte Ampere am Ladegerät</li>
+    <li>supplyMaxVoltage - Eingestellte Spannung am Ladegerät beim Ladestart</li>
+    <li>battVoltageStartLoading - Batteriespannung wenn Ladegerät starten soll</li>
 </ul>
 
 
