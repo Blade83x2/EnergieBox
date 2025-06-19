@@ -169,7 +169,7 @@ int main(int argc, char *argv[]){
                 }
                 printf("\n  %-26s %8.2f V\n",  "Ladespannung (U):", supplyMaxVoltage);
                 printf("  %-26s %8.2f A\n",  "Ladestrom (A):", supplyMaxCurrent);
-                printf("  %-26s %4.0f Wh\n",  "Ladekapazität:", supplyLoadWattStunden);
+                printf("  %-26s %8.0f Wh\n",  "Ladekapazität:", supplyLoadWattStunden);
                 printf("  %-26s %8.2f W\n",  "Ladeleistung pro Sekunde:", supplyLoadPower / 3600);
                 printf("  %-26s %8.2f W\n",  "Ladeleistung pro Stunde:", supplyLoadPower);
                 supplyLoadTimeSec = supplyLoadWattStunden / (supplyLoadPower / 3600);
