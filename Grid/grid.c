@@ -86,11 +86,11 @@ int showHelp(char**argv, void* config) {
     printf("  %s -h\t\tZeigt diese Hilfe an\n", argv[0]);
     printf("\n Beispiel:\n");
     printf("  %s -w 200\t\tLädt 200 Wh in die Batterie\n", argv[0]);
-    printf("  %s -s 60\t\tStoppt Ladevorgang nach 60 Sekunden\n", argv[0]);
+    printf("  %s -s 60\t\tStoppt Ladevorgang in 60 Sekunden\n\n", argv[0]);
     return -1;
 }
 
-
+// Prüft ob str Numerisch ist
 bool isNumeric(const char *str) {
     while(*str != '\0') {
         if(*str < '0' || *str > '9')
@@ -100,7 +100,6 @@ bool isNumeric(const char *str) {
     return true;
 }
 
-
 // Gibt Zeitformat h:m:s zurück
 void formatSecondsToHMS(int seconds, char* buffer, size_t size) {
     int h = seconds / 3600;
@@ -108,8 +107,6 @@ void formatSecondsToHMS(int seconds, char* buffer, size_t size) {
     int s = seconds % 60;
     snprintf(buffer, size, "%02d:%02d:%02d", h, m, s);
 }
-
-
 
 // Programmstart
 int main(int argc, char *argv[]){ 
@@ -123,7 +120,6 @@ int main(int argc, char *argv[]){
         // Keine Parameterübergabe. Hilfe anzeigen
         return showHelp(argv, &config);
     }
-    
     float supplyMaxVoltage = 0.2f;
     supplyMaxVoltage = config.grid.supplyMaxVoltage;
     float supplyMaxCurrent = 0.2f;
@@ -132,7 +128,6 @@ int main(int argc, char *argv[]){
     supplyLoadPower = supplyMaxVoltage * supplyMaxCurrent;
     float supplyLoadTimeSec = 0.f;
     float supplyLoadWattStunden = 0.f;
-
     int opt; 
     while((opt = getopt(argc, argv, "hs:w:")) != -1)  {  
         switch(opt)  {  
