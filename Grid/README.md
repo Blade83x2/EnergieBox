@@ -2,6 +2,10 @@
 # grid Batterie- Netzladeprogramm
 
 Dieses Programm lädt die Batterien bei Bedarf mit Energie aus dem Festnetz auf.
+Hierzu wird zuerst das Ladegerät per Relais mit dem Netz verbunden und nach 5 Sekunden wird ein 
+weiteres 80 Ampere Relais geschaltet welches die Verbindung zwischen Ladegerät und Batterie herstellt!
+<br>
+<br>
 Zum Ladestart muss dem Programm über den Parameter <code>-w</code> eine Wattstunden Zahl übergeben
 werden. Sobald diese Energie geladen worden ist, schaltet es sich selbstständig wieder ab.
 <br>
