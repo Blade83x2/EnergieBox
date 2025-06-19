@@ -13,7 +13,7 @@ Energiebox Ver.5 #
   startup -> mehr pause zwiwschen dem einschalten der relais
   bilder und beschreibung anpassen in readme.md
   build mit in readme
-  gui bei build beenden und nach build wieder aufrufen
+  kill -9 $(pidof gui) bei build beenden und nach build wieder aufrufen
  
  
  
@@ -24,6 +24,7 @@ NEUERUNGEN in Version 5
 In dieser Version ist endlich das Grafische User Interface verfügbar. Beim booten der Energiebox wird es direkt geladen und auf dem installierten Touch- Display angezeigt.
 Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die Ausgabe auf der Konsole von sämtlichen Programmen verbessert und optimiert. 
 Eine Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++.
+
 
  [BUGFIX] Formatierte Ausgabe der Ladezeit in Grid/grid. Werte werden in Tabelle links und rechts ausgerichtet
  [NEW] Neue Bilder und Beschreibungen in Grid/README.MD
