@@ -9,7 +9,7 @@ Ein Timer zum schalten sowie eine Benutzerfreundliche Konfiguration
 der Endverbraucher ist ebenfalls implementiert!
 <br>
 <br>
-Die Eingabe des Befehls `12V` zeigt eine Liste an:<br><br>
+Listenansicht mit dem Befehl: `12V`<br><br>
 <p align="left"> 
     <img src="img/main.png" style="width: 70%;" alt="12V" >
 </p>
@@ -29,6 +29,20 @@ Falls ein Relais geschaltet werden soll, so kann das mit dem Befehl
 <p align="left"> 
     <img src="img/set.png" style="width: 40%;" alt="Relais Status von Relais Nr. 4 einschalten" >
 </p><br>
+
+
+
+Möchten man dagegen das Relais 4 einschalten ohne das eine Ausgabe angezeigt wird, dann kann der Befehl
+<code>12V 4 1 0</code> ausgeführt werden!
+<br><br>
+<p align="left"> 
+    <img src="img/set_no_stdout.png" style="width: 40%;" alt="Relais Status von Relais Nr. 4 einschalten" >
+</p><br>
+
+
+
+
+
 Um ein Relais von einer Zeitschaltuhr steuern zu lassem, kann der Befehl <code>12V 4 0 300 & disown</code> verwendet 
 werden. In diesem Beispiel würde das Relais Nr. 4 ausgeschaltet werden nach 300 Sekunden. Die Parameter <code>& disown</code>
 können verwendet werden damit die Konsole wieder sofort verfügbar ist.
