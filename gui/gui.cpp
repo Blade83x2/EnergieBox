@@ -235,7 +235,8 @@ private:
                         Gtk::MessageDialog dialog(*this, "Nicht genug Leistung", false, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK, true);
                         dialog.set_secondary_text("Dieses Relais kann nicht eingeschaltet werden, da nicht genug Leistung verfügbar ist.");
                         dialog.run();
-                        std::cout << "[GUI] Zuwenig Leistung für: Relais " << i << " (" << name << ")" << std::endl;
+                        
+                        debugPrint("Zuwenig Leistung für: Relais " + std::to_string(i) + " (" + name + ")", LogLevel::INFO);
                         return;
                     }
                 }
