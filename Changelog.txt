@@ -18,14 +18,18 @@ ________________________________________________________________________________
  + 
  + Hauptsicherung auf 100A beschränken wegen Batterien
 
+  startup -> mehr pause zwiwschen dem einschalten der relais
+  
+  build mit readme
+  
   
  
 NEUERUNGEN in Version 5
 
 Text schreiben....
 
-version in motd anpassen
--set anpassen auf gui
+
+
 bilder und beschreibung anpassen in readme.md
 
  [UPDATE] Programm gui wurde mit GTK erstellt. Es hat 3 Tabs und nun können vom Display aus die Relais geschaltet werden!

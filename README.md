@@ -158,7 +158,7 @@ aufrufen und alles was in dieser Datei steht wird ersetzt mit:
                 |  _| | '_ \ / _ \ '__/ _` | |/ _ \  _ \ / _ \ \/ /
                 | |___| | | |  __/ | | (_| | |  __/ |_) | (_) >  <
                 |_____|_| |_|\___|_|  \__, |_|\___|____/ \___/_/\_\
-                                      |___/ V 4.0 by Johannes Krämer
+                                      |___/ V 5.0 by Johannes Krämer
 
 
 Von Hier aus kann die gesamelte Sonnenenergie über Relais verteilt werden.
@@ -303,8 +303,6 @@ Dies geschieht mit folgendem Terminal Befehl:
 
 Wenn der Raspberry hoch gefahren wird, lassen wir eine Grafische Oberfläche starten damit per Tastendruck alles gesteuert werden kann.
 Dieser Schritt muss für jeden Benutzer separat gemacht werden wenn das Programm gestartet werden soll beim booten.
-
-PS: Dieses Programm ist noch nicht entwickelt!!!!
 
 
 Autostart Ordner erstellen (Zeigt Fehlermeldung wenn er bereits existiert)
