@@ -3,34 +3,27 @@ Energiebox Ver.5 #
 ##################
 
 
-_______________________________________________________________________________________________________________________________________
-
-
-
- 
+ TODO´s
 
  + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen - SOFTWARE ANPASSEN
  + Lüftersteuerung hinzufügen
- 
  + Alle Leitungsschutzschalter für gesamten 230V Kreislauf anpassen (Ceranfeld auf 20A, Rest auf 16A)
- + Raspberry 5 16GB verbauen
- + SSD verbauen 
- + 
  + Hauptsicherung auf 100A beschränken wegen Batterien
 
   startup -> mehr pause zwiwschen dem einschalten der relais
-  
-  build mit readme
-  
-  
+  bilder und beschreibung anpassen in readme.md
+  build mit in readme
+  gui bei build beenden und nach build wieder aufrufen
+ 
+ 
+_______________________________________________________________________________________________________________________________________
  
 NEUERUNGEN in Version 5
 
-Text schreiben....
+In dieser Version ist endlich das Grafische User Interface verfügbar. Beim booten der Energiebox wird es direkt geladen und auf dem installierten Touch- Display angezeigt.
+Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die Ausgabe auf der Konsole von sämtlichen Programmen verbessert und optimiert. 
+Eine Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++.
 
-
-
-bilder und beschreibung anpassen in readme.md
 
  [UPDATE] Programm gui wurde mit GTK erstellt. Es hat 3 Tabs und nun können vom Display aus die Relais geschaltet werden!
 
