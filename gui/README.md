@@ -5,22 +5,26 @@ Die Anwendung ist für Touchdisplays (800x480) optimiert und läuft als Vollbild
 ---
 <br>
 Das Programm beinhaltet 3 Tabs: <br> <br>
-Auf dem ersten Tab werden live PV- und Batteriedaten angezeigt. 
-Diese Daten werden jede 3 Minuten aktualisiert.
-
+Auf dem ersten Tab werden live PV- und Batteriedaten angezeigt.  <br>
+Diese Daten werden jede 3 Minuten aktualisiert. <br>
 <p align="left"> 
     <img src="img/tab_energiebox.png" style="width: 70%;" alt="Tab Energiebox" >
 </p>
 <br><br>
 
-Auf dem zweiten und dritten Tab wird jeweils eine Geräteliste für die jeweiligen Programme 12V und 230V angezeigt.
-
+Auf dem zweiten und dritten Tab wird jeweils eine Geräteliste für die jeweiligen Programme 12V und 230V angezeigt. <br>
+Ein roter Eintrag bedeutet das dieses Gerät derzeit nicht eingeschaltet ist und grün zeigt das dieses Gerät gerade mit
+Spannung versorgt wird und eingeschaltet ist.
 
 <br><br>
 12V
 <p align="left"> 
     <img src="img/tab_12V.png" style="width: 70%;" alt="Tab 12V" >
 </p>
+
+
+
+
 <br><br>
 230V
 <p align="left"> 
