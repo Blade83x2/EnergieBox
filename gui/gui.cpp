@@ -29,7 +29,7 @@
 #include <iomanip>
 
 // Debug-Modus aktivieren/deaktivieren
-bool debug = false;
+bool debug = true;
 
 enum class LogLevel { DEBUG, INFO, WARN, ERROR };
 
@@ -243,6 +243,7 @@ private:
                 std::string cmd = binaryPath + " " + std::to_string(i) + " " + std::to_string(neu ? 1 : 0) + " 0";
                 std::system(cmd.c_str());
                 std::cout << "[GUI] Schalte Relais " << i << " (" << name << ") auf " << (neu ? "AN" : "AUS") << std::endl;
+                
                 btn->override_background_color(Gdk::RGBA(neu ? "lightgreen" : "lightcoral"));
                 relais->aktiv = neu;
                 if (checkPower) relais12v_status_[i] = neu;
@@ -262,39 +263,39 @@ private:
         Gtk::Widget* tab_label_widget = notebook_.get_tab_label(*page);
         Gtk::Label* tab_label = dynamic_cast<Gtk::Label*>(tab_label_widget);
         std::string tabName = tab_label ? tab_label->get_text() : "<unbekannter Tab>";
-        std::cout << "[GUI] Tab gewechselt zu " << tabName << std::endl;
+        debugPrint("Tab gewechselt zu " + tabName, LogLevel::INFO);
         if (tabName == "12V") {
             if (!relais12V_timer_connection_.connected()) {
                 relais12V_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::refresh_relais12V_status), 10);
-                std::cout << "[GUI] Relais12V-Timer gestartet\n";
+                debugPrint("Relais12V-Timer gestartet", LogLevel::INFO);
             }
         } else {
             if (relais12V_timer_connection_.connected()) {
                 relais12V_timer_connection_.disconnect();
-                std::cout << "[GUI] Relais12V-Timer gestoppt\n";
+                debugPrint("Relais12V-Timer gestoppt", LogLevel::INFO);
             }
         }
         if (tabName == "230V") {
             if (!relais230V_timer_connection_.connected()) {
                 relais230V_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::refresh_relais230V_status), 10);
-                std::cout << "[GUI] Relais230V-Timer gestartet\n";
+                debugPrint("Relais230V-Timer gestartet", LogLevel::INFO);
             }
         } else {
             if (relais230V_timer_connection_.connected()) {
                 relais230V_timer_connection_.disconnect();
-                std::cout << "[GUI] Relais230V-Timer gestoppt\n";
+                debugPrint("Relais230V-Timer gestoppt", LogLevel::INFO);
             }
         }
         if (tabName == "Energiebox") {
             if (!energiebox_timer_connection_.connected()) {
                 energiebox_timer_connection_ =  Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::update_energiebox_tab), 180);
-                std::cout << "[GUI] Energiebox-Timer gestartet\n";
+                debugPrint("Energiebox-Timer gestartet", LogLevel::INFO);
                 update_energiebox_tab();
             }
         } else {
             if (energiebox_timer_connection_.connected()) {
                 energiebox_timer_connection_.disconnect();
-                std::cout << "[GUI] Energiebox-Timer gestoppt\n";
+                debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
             }
         }
     }
@@ -339,11 +340,10 @@ private:
         if (now - last_interaction_time_ >= 180) {
             if (notebook_.get_current_page() != 0) { // Wenn nicht schon Info-Tab
                 notebook_.set_current_page(0);
-                std::cout << "[GUI] 180 Sekunden Inaktivität – wechsle zum Info-Tab" << std::endl;
-                
+                debugPrint("180 Sekunden Inaktivität – wechsle zum Info-Tab", LogLevel::INFO);
             }
         }
-        std::cout << "[GUI] IDLETIME: " << now - last_interaction_time_ << std::endl;
+        
         return true; // Timer wiederholen
     }
 
@@ -352,7 +352,6 @@ private:
         Gtk::Grid* grid = Gtk::manage(new Gtk::Grid());
         grid->set_row_spacing(8);
         grid->set_column_spacing(50);
-        
         // Überschrift als fettes Label (links ausgerichtet, größer)
         auto* title = Gtk::manage(new Gtk::Label("<b>" + headline + "</b>"));
         title->set_use_markup(true);
@@ -375,7 +374,7 @@ private:
     // Liest die Datei /Energiebox/Tracer/trace.txt aus, parsed die Werte und aktualisiert den Info-Tab
     bool update_energiebox_tab() {
         std::ifstream file("/Energiebox/Tracer/trace.txt");
-        std::cout << "[GUI] Lese /Energiebox/Tracer/trace.txt" << std::endl;
+        debugPrint("Lese /Energiebox/Tracer/trace.txt", LogLevel::INFO);
         if (!file) {
             std::cerr << "Fehler beim Öffnen der Datei /Energiebox/Tracer/trace.txt" << std::endl;
             return true; // Timer soll weitermachen
@@ -446,15 +445,8 @@ private:
 
 // Einstiegspunkt der Anwendung
 int main(int argc, char* argv[]) {
-    
-    
-    debugPrint("Test", LogLevel::INFO);
-    debugPrint("Test", LogLevel::DEBUG);
-    debugPrint("Test", LogLevel::WARN);
-    debugPrint("Test", LogLevel::ERROR);
-    
     auto app = Gtk::Application::create(argc, argv, "de.cplusplus-development.gui");
     GUI window;
     return app->run(window);
-    std::cout << "[GUI] Programm gestartet" << std::endl;
+    debugPrint("Programm gestartet", LogLevel::INFO);
 }
