@@ -84,7 +84,7 @@ int showHelp(char**argv, void* config) {
     printf("\n  %s -w <Wh>\t\tLädt <Wh> Wattstunden aus dem Netz\n", argv[0]);
     printf("  %s -s <Sek>\t\tBeendet den Ladevorgang in <Sek> Sekunden\n", argv[0]);
     printf("  %s -h\t\tZeigt diese Hilfe an\n", argv[0]);
-    printf("\nBeispiel:\n");
+    printf("\n Beispiel:\n");
     printf("  %s -w 200\t\tLädt 200 Wh in die Batterie\n", argv[0]);
     printf("  %s -s 60\t\tStoppt Ladevorgang nach 60 Sekunden\n", argv[0]);
     return -1;
