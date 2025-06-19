@@ -1,4 +1,3 @@
-
 # 230V Steuerprogramm
 
 Dieses Programm schaltet maximal 16 Eltakos für 230 Volt Stromkreise.
@@ -7,7 +6,7 @@ Beim Einschalten eines Gerätes wird geprüft, ob die Notwendige
 angefragte Last verfügbar ist um Überlasten abzufangen.
 Ein Timer zum schalten sowie eine Benutzerfreundliche Konfiguration
 der Endverbraucher ist ebenfalls implementiert!
-<br>
+---
 <br>
 Listenansicht mit dem Befehl: `230V`<br><br>
 <p align="left"> 
@@ -23,11 +22,6 @@ anderem Programm ausgelesen werden muss, kann dieser Wert z.B.
 <p align="left"> 
     <img src="img/statusRelais.png" style="width: 70%;" alt="Relais Status von Relais ID 4" >
 </p><br>
-
-
-
-
-
 
 
 
