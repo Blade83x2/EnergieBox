@@ -4,7 +4,12 @@ Dieses Programm stellt die grafische Benutzeroberfläche die bei dem booten der 
 Die Anwendung ist für Touchdisplays (800x480) optimiert und läuft als Vollbild-GUI auf dem Raspberry Pi.
 ---
 <br>
-Das Programm beinhaltet 3 Tabs: <br> <br>
+- **Das Programm beinhaltet 3 Tabs:**
+  - **Energiebox:** Anzeige von PV- und Batteriedaten
+  - **12V:** Steuerung und Leistungsüberwachung von 12V-Geräten
+  - **230V:** Steuerung von 230V-Verbrauchern
+<br>
+<br>
 Auf dem ersten Tab werden live PV- und Batteriedaten angezeigt.  <br>
 Diese Daten werden jede 3 Minuten aktualisiert.  <br>
 Hierzu wird die Datei <code>/Energiebox/Tracer/trace.txt</code> ausgelesen.<br>
@@ -36,10 +41,7 @@ die mit 4000 Watt eingetragen sind, dann kann in diesem Moment kein weiteres Ger
 eingeschaltet werden welches mehr als 1000 Watt benötigt. In diesem Fall wird vom Programm<br>
 eine Meldung ausgegeben die besagt das nicht genügend Leistung vorhanden ist.<br>
 Um dieses Gerät trotzdem einzuschalten, müssen vorher andere Geräte ausgeschaltet werden!<br>
-
-
-
-
+<br>
 <br>
 Tab 230V
 <p align="left"> 
@@ -53,15 +55,9 @@ Tab 230V
 
 
 
-Eine grafische Steuerungsoberfläche für ein energieautarkes Smart Home-System auf Basis von Relaismodulen, Port-Expandern und einer Wasserstoff-/PV-Stromversorgung. 
-
 
 ## 🔧 Funktionen
 
-- **Tab-basiertes Layout:**
-  - **Energiebox:** Anzeige von PV- und Batteriedaten aus `trace.txt`
-  - **12V:** Steuerung und Leistungsüberwachung von 12V-Geräten mit Leistungslimit
-  - **230V:** Steuerung von 230V-Verbrauchern mit Gesamtleistungsgrenze
 
 - **Automatische Aktualisierung:**
   - Relaisstatus wird alle 10 Sekunden aus `config.ini` aktualisiert
