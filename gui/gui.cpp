@@ -242,7 +242,8 @@ private:
                 // Schaltbefehl ausführen
                 std::string cmd = binaryPath + " " + std::to_string(i) + " " + std::to_string(neu ? 1 : 0) + " 0";
                 std::system(cmd.c_str());
-                std::cout << "[GUI] Schalte Relais " << i << " (" << name << ") auf " << (neu ? "AN" : "AUS") << std::endl;
+               
+                debugPrint("Schalte " + name + " auf " + (neu ? "AN" : "AUS"), LogLevel::INFO);
                 
                 btn->override_background_color(Gdk::RGBA(neu ? "lightgreen" : "lightcoral"));
                 relais->aktiv = neu;
