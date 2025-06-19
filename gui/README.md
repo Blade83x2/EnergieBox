@@ -30,11 +30,12 @@ Die Geräte können direkt von hier aus mit einem Tastendruck aus bzw. eingescha
   <li>die Relais Konfiguration einen Start aus der GUI erlaubt</li>
 </ul>
 <br>
-Wenn z.B. in der Konfiguration von 230V eingetragen wurde, dass der 230 Volt Inverter eine Dauerleistung von 
-5000 Watt leistet und derzeit Geräte in der Liste aktiviert sind die mit 4000 Watt eingetragen sind, dann
-kann in diesem Moment kein weiteres Gerät eingeschaltet werden welches mehr als 1000 Watt benötigt. 
-In diesem Fall wird vom Programm eine Meldung ausgegeben die besagt das nicht genügend Leistung vorhanden ist.
-Um dieses Gerät trotzdem einzuschalten, müssen vorher andere Geräte ausgeschaltet werden!
+Wenn z.B. in der Konfiguration von 230V eingetragen wurde, dass der 230 Volt Inverter<br>
+eine Dauerleistung von 5000 Watt leistet und derzeit Geräte in der Liste aktiviert sind<br>
+die mit 4000 Watt eingetragen sind, dann kann in diesem Moment kein weiteres Gerät<br>
+eingeschaltet werden welches mehr als 1000 Watt benötigt. In diesem Fall wird vom Programm<br>
+eine Meldung ausgegeben die besagt das nicht genügend Leistung vorhanden ist.<br>
+Um dieses Gerät trotzdem einzuschalten, müssen vorher andere Geräte ausgeschaltet werden!<br>
 
 
 
