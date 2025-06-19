@@ -24,7 +24,8 @@ angepasst werden an die verfügbare Ladeleistung!
     <li>supplyMaxVoltage - Angezeigte Spannung am Ladegerät beim Ladestart</li>
     <li>battVoltageStartLoading - Batteriespannung wenn Ladegerät starten soll</li>
 </ul>
-
+<br>
+Das Programm berechnet aus diesen Daten die Ladezeit in Sekunden!
 
 
 
