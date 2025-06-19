@@ -165,9 +165,8 @@ int main(int argc, char *argv[]){
                 }
                 if(supplyLoadWattStunden > config.grid.supplyMaxLoadWh){
                     printf("\n\e[0;31m Der maximale Wert für -w beträgt %d\n\n", config.grid.supplyMaxLoadWh);
-                    return 1;
+                  //  return 1;
                 }
-                
                 printf("\n  %-26s %8.2f V\n",  "Ladespannung (U):", supplyMaxVoltage);
                 printf("  %-26s %8.2f A\n",  "Ladestrom (A):", supplyMaxCurrent);
                 printf("  %-26s %8.2f W\n",  "Ladeleistung pro Stunde:", supplyLoadPower);
@@ -176,10 +175,7 @@ int main(int argc, char *argv[]){
                 printf("  %-26s %10.0f \n", "Errechnete Ladezeit (Sek):", supplyLoadTimeSec);
                 char timeString[16];
                 formatSecondsToHMS((int)supplyLoadTimeSec, timeString, sizeof(timeString));
-                
-                printf("  %-26s %10s\n", "Entspricht (Zeit):", timeString);                                      
-                                                                
-                                
+                printf("  %-26s %10s\n\n", "Entspricht (Zeit):", timeString);                                                   
                 // prüfen ob bereits schon eine ladung am laufen ist
                 if (access("/Energiebox/Grid/isLoading.lock", F_OK) == 0) {
                     printf("\e[0;31m Es wird bereits aus dem Netz geladen!\n\n");
