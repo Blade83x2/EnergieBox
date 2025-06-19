@@ -21,7 +21,7 @@ anderem Programm ausgelesen werden muss, kann dieser Wert z.B.
 über den >> Operator übergeben werden:
 <br><br>
 <p align="left"> 
-    <img src="img/statusRelais.png" style="width: 70%;" alt="Relais Status von Relais Nr. 4" >
+    <img src="img/statusRelais.png" style="width: 70%;" alt="Relais Status von Relais ID 4" >
 </p><br>
 
 
@@ -37,7 +37,7 @@ Falls ein Relais geschaltet werden soll, so kann das mit dem Befehl
 1 für den gewünschten Zustand (Möglich: 0/1). Nach dem absetzen des Befehls wird wieder die Liste angezeigt!
 <br><br>
 <p align="left"> 
-    <img src="img/set.png" style="width: 70%;" alt="Relais Status von Relais Nr. 4 einschalten" >
+    <img src="img/set.png" style="width: 70%;" alt="Relais Status von Relais ID 4 einschalten" >
 </p><br>
 
 
@@ -49,7 +49,7 @@ Möchte man dagegen das Relais 4 einschalten ohne das eine Ausgabe angezeigt wir
 <code>230V 4 1 0</code> ausgeführt werden!
 <br><br>
 <p align="left"> 
-    <img src="img/set_no_stdout.png" style="width: 70%;" alt="Relais Status von Relais Nr. 4 einschalten" >
+    <img src="img/set_no_stdout.png" style="width: 70%;" alt="Relais Status von Relais ID 4 einschalten" >
 </p><br>
 
 
@@ -68,7 +68,7 @@ werden. In diesem Beispiel würde das Relais mit der ID 4 ausgeschaltet werden n
 können verwendet werden damit die Konsole wieder sofort verfügbar ist.
 <br><br>
 <p align="left"> 
-    <img src="img/set_time.png" style="width: 70%;" alt="Relais Status von Relais Nr. 4 nach 300 Sekunden ausschalten" >
+    <img src="img/set_time.png" style="width: 70%;" alt="Relais Status von Relais ID 4 nach 300 Sekunden ausschalten" >
 </p><br>
 
 
