@@ -1,15 +1,15 @@
 
 # 230V Steuerprogramm
 
-Dieses Programm schaltet maximal 16 Eltakos für 12 Volt Stromkreise.
-Die Stromstärke beträgt derzeit 60 Ampere bei 12 Volt (720 Watt).
+Dieses Programm schaltet maximal 16 Eltakos für 230 Volt Stromkreise.
+Die maximale Leistungsabnahme beträgt derzeit 5000 Watt.
 Beim Einschalten eines Gerätes wird geprüft, ob die Notwendige 
 angefragte Last verfügbar ist um Überlasten abzufangen.
 Ein Timer zum schalten sowie eine Benutzerfreundliche Konfiguration
 der Endverbraucher ist ebenfalls implementiert!
 <br>
 <br>
-Listenansicht mit dem Befehl: `12V`<br><br>
+Listenansicht mit dem Befehl: `230V`<br><br>
 <p align="left"> 
     <img src="img/main.png" style="width: 70%;" alt="230V" >
 </p>
@@ -71,8 +71,7 @@ können verwendet werden damit die Konsole wieder sofort verfügbar ist.
     <img src="img/set_time.png" style="width: 70%;" alt="Relais Status von Relais ID 4 nach 300 Sekunden ausschalten" >
 </p><br>
 
-
-Wenn ein Relais Eintrag verändert werden soll, z.B. Name, Leistungsaufnahme oder Automatisches Einschalten beim Starten
+Wenn ein Relais Eintrag verändert werden soll, z.B. Name, Leistungsaufnahme oder Automatisches Einschalten beim Starten 
 der Anlage oder eine tägliche Zeitschaltung, dann kann der Befehl <code>230V -set 6</code> verwendet werden. 
 Hier würde jetzt das Relais mit der ID 6 bearbeitet werden! Wenn der Name leer gelassen wird, werden alle Werte gelöscht.
 <br><br>
@@ -92,9 +91,6 @@ Eine kleine Hilfe gibt es auch. Ungültige Parameterübergabe oder das Aufrufen 
 
 
 
-
-
-
 Falls Programm Variablen angepasst werden müssen, kann das über <code>nano /Energiebox/230V/config.ini</code> realisiert werden.
 In dieser Datei muss der Hexadezimalwert als Adresse vom Port Expander vergeben werden. Dieser setzt sich zusammen aus der
 gesetzten Jumper Konfiguration auf dem Expander selber. Jede Adresse darf nur einmal pro I²C Kanal vergeben sein.
@@ -103,16 +99,5 @@ Für maxOutputPower muss die Maximale Ausgangsleistung des Inverters in Watt ang
 <p align="left"> 
     <img src="img/config.png" style="width: 70%;" alt="230V config.ini anpassen" >
 </p><br>
-
-
-
-
-
-
-
-
-
-
-
 
 
