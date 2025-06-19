@@ -177,7 +177,7 @@ int main(int argc, char *argv[]){
                 char timeString[16];
                 formatSecondsToHMS((int)supplyLoadTimeSec, timeString, sizeof(timeString));
                 
-                printf("  %-26s %8s\n", "Entspricht (Zeit):", timeString);                                      
+                printf("  %-26s %10s\n", "Entspricht (Zeit):", timeString);                                      
                                                                 
                                 
                 // prüfen ob bereits schon eine ladung am laufen ist
