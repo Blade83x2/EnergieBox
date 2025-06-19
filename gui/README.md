@@ -16,7 +16,7 @@ Hierzu wird die Datei <code>/Energiebox/Tracer/trace.txt</code> ausgelesen.<br>
 Auf dem zweiten und dritten Tab wird jeweils eine Geräteliste für die jeweiligen Programme<br>
 12V und 230V angezeigt.<br>
 Ein roter Eintrag bedeutet das dieses Gerät derzeit ausgeschaltet<br>
-ist und grün zeigt das dieses Gerät gerade mit Spannung versorgt wird und aktuell eingeschaltet ist. <br> 
+ist und grün zeigt das dieses Gerät gerade mit Spannung versorgt wird und eingeschaltet ist. <br> 
 <br>
 <br>
 Tab 12V
@@ -29,6 +29,15 @@ Die Geräte können direkt von hier aus mit einem Tastendruck aus bzw. eingescha
   <li>genügend Leistung zum Einschalten verfügbar ist</li>
   <li>die Relais Konfiguration einen Start aus der GUI erlaubt</li>
 </ul>
+<br>
+Wenn z.B. in der Konfiguration von 230V eingetragen wurde, dass der 230 Volt Inverter eine Dauerleistung von 
+5000 Watt leistet und derzeit Geräte in der Liste aktiviert sind die mit 4000 Watt eingetragen sind, dann
+kann in diesem Moment kein weiteres Gerät eingeschaltet werden welches mehr als 1000 Watt benötigt. 
+In diesem Fall wird vom Programm eine Meldung ausgegeben 
+
+
+
+
 <br>
 Tab 230V
 <p align="left"> 
