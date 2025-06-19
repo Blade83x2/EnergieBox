@@ -1,12 +1,13 @@
 # gui Grafische Benutzeroberfläche 
 
-Dieses Programm stellt die grafische Benutzeroberfläche die bei dem booten der Energiebox geladen wird, zur Verfügung.
+Dieses Programm stellt die grafische Benutzeroberfläche die bei dem booten der Energiebox gestartet wird, zur Verfügung.
 Die Anwendung ist für Touchdisplays (800x480) optimiert und läuft als Vollbild-GUI auf dem Raspberry Pi.
 ---
 <br>
 Das Programm beinhaltet 3 Tabs: <br> <br>
 Auf dem ersten Tab werden live PV- und Batteriedaten angezeigt.  <br>
 Diese Daten werden jede 3 Minuten aktualisiert. <br>
+<br>
 <p align="left"> 
     <img src="img/tab_energiebox.png" style="width: 70%;" alt="Tab Energiebox" >
 </p>
@@ -14,18 +15,18 @@ Diese Daten werden jede 3 Minuten aktualisiert. <br>
 
 Auf dem zweiten und dritten Tab wird jeweils eine Geräteliste für die jeweiligen Programme 12V und 230V angezeigt. <br>
 Ein roter Eintrag bedeutet das dieses Gerät derzeit nicht eingeschaltet ist und grün zeigt das dieses Gerät gerade mit
-Spannung versorgt wird und eingeschaltet ist.
+Spannung versorgt wird und aktuell eingeschaltet ist. <br> 
+<br>
+Die Geräte können direkt von hier aus mit einem Tastendruck an bzw. aus geschaltet werden.
 
-<br><br>
+<br>
+<br>
 12V
 <p align="left"> 
     <img src="img/tab_12V.png" style="width: 70%;" alt="Tab 12V" >
 </p>
-
-
-
-
-<br><br>
+<br>
+<br>
 230V
 <p align="left"> 
     <img src="img/tab_230V.png" style="width: 70%;" alt="Tab 230V" >
