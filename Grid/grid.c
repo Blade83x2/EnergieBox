@@ -59,24 +59,12 @@ static int handler(void* config, const char* section, const char* name, const ch
 
 // Schreibt Bit für Relaiszustand
 void setBit(int Port, int Status) {
-    int Get_Port, PIN;
-    if (Port > -1 && Port < 8) {
-        Get_Port = mcp_readRegister(0x12);
-        PIN = Port;
-    } else {
-        Get_Port = mcp_readRegister(0x13);
-        PIN = Port % 8;
-    }
-    if (Status == 1) {
-        Get_Port |= (1 << PIN);
-    } else {
-        Get_Port &= (~(1 << PIN));
-    }
-    if (Port > -1 && Port < 8) {
-        mcp_writeRegister( 0x12, Get_Port);
-    } else {
-        mcp_writeRegister(0x13, Get_Port);
-    }
+    if (Port < 0 || Port > 15) return;
+    uint8_t reg = (Port < 8) ? 0x12 : 0x13;
+    int PIN = (Port < 8) ? Port : (Port % 8);
+    int Get_Port = mcp_readRegister(reg);
+    Get_Port = (Status == 1) ? (Get_Port | (1 << PIN)) : (Get_Port & ~(1 << PIN));
+    mcp_writeRegister((Port > -1 && Port < 8) ? 0x12 : 0x13, Get_Port);
 }
 
 // Zeigt Hilfe auf Console an
