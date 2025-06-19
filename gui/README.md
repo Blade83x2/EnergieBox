@@ -13,13 +13,12 @@ Hierzu wird die Datei <code>/Energiebox/Tracer/trace.txt</code> ausgelesen.<br>
     <img src="img/tab_energiebox.png" style="width: 70%;" alt="Tab Energiebox" >
 </p>
 <br><br>
-
-Auf dem zweiten und dritten Tab wird jeweils eine Geräteliste für die jeweiligen Programme 12V und 230V angezeigt. <br>
-Ein roter Eintrag bedeutet das dieses Gerät derzeit ausgeschaltet ist und grün zeigt das dieses Gerät gerade mit
-Spannung versorgt wird und aktuell eingeschaltet ist. <br> 
+Auf dem zweiten und dritten Tab wird jeweils eine Geräteliste für die jeweiligen Programme<br>
+12V und 230V angezeigt. Ein roter Eintrag bedeutet das dieses Gerät derzeit ausgeschaltet<br>
+ist und grün zeigt das dieses Gerät gerade mit Spannung versorgt wird und aktuell eingeschaltet ist. <br> 
 <br>
 <br>
-12V
+Tab 12V
 <p align="left"> 
     <img src="img/tab_12V.png" style="width: 70%;" alt="Tab 12V" >
 </p>
@@ -30,7 +29,7 @@ Die Geräte können direkt von hier aus mit einem Tastendruck aus bzw. eingescha
   <li>die Relais Konfiguration einen Start aus der GUI erlaubt</li>
 </ul>
 <br>
-230V
+Tab 230V
 <p align="left"> 
     <img src="img/tab_230V.png" style="width: 70%;" alt="Tab 230V" >
 </p>
