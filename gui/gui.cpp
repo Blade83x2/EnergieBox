@@ -26,6 +26,32 @@
 #include <cstdlib>
 #include <map>
 #include <ctime>
+#include <iomanip>
+
+// Debug-Modus aktivieren/deaktivieren
+bool debug = true;
+
+enum class LogLevel { DEBUG, INFO, WARN, ERROR };
+
+void debugPrint(const std::string& strMsg, LogLevel level = LogLevel::DEBUG) {
+    if (debug || level != LogLevel::DEBUG) {
+        auto now = std::chrono::system_clock::now();
+        std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+        std::tm* tm_time = std::localtime(&now_time);
+
+        std::ostringstream logPrefix;
+        logPrefix << std::put_time(tm_time, "%Y-%m-%d %H:%M:%S") << " ";
+
+        switch (level) {
+            case LogLevel::DEBUG: logPrefix << "[DEBUG] "; break;
+            case LogLevel::INFO:  logPrefix << "[INFO ] "; break;
+            case LogLevel::WARN:  logPrefix << "[WARN ] "; break;
+            case LogLevel::ERROR: logPrefix << "[ERROR] "; break;
+        }
+        std::cout << logPrefix.str() << strMsg << std::endl;
+    }
+}
+
 
 // Struktur für Informationen zu einem einzelnen Relais
 struct RelaisInfo {
@@ -41,6 +67,12 @@ class IniReader {
 public:
     explicit IniReader(const std::string& path) {
         std::ifstream file(path);
+        
+        
+        
+        
+        
+        
         std::cout << "[GUI] Lese Datei: " << path << std::endl;
         if (!file) {
             std::cerr << "Fehler beim Öffnen der INI: " << path << std::endl;
@@ -414,6 +446,11 @@ private:
 
 // Einstiegspunkt der Anwendung
 int main(int argc, char* argv[]) {
+    
+    
+    debugPrint("Test", LogLevel::INFO);
+    
+    
     auto app = Gtk::Application::create(argc, argv, "de.cplusplus-development.gui");
     GUI window;
     return app->run(window);
