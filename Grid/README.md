@@ -17,14 +17,14 @@ angepasst werden an die verfügbare Ladeleistung!
 <br><br>
 <ul>
     <li>supplyMaxCurrent - Eingestellte Ampere am Ladegerät</li>
-    <li>supplyMaxVoltage - Eingestellte Spannung am Ladegerät beim Ladestart</li>
+    <li>supplyMaxVoltage - Angezeigte Spannung am Ladegerät beim Ladestart</li>
     <li>battVoltageStartLoading - Batteriespannung wenn Ladegerät starten soll</li>
 </ul>
 
 
 
 
-<br><br>
+<br>
 
 
 
