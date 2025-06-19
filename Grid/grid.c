@@ -100,6 +100,17 @@ bool isNumeric(const char *str) {
     return true;
 }
 
+
+// Gibt Zeitformat h:m:s zurück
+void formatSecondsToHMS(int seconds, char* buffer, size_t size) {
+    int h = seconds / 3600;
+    int m = (seconds % 3600) / 60;
+    int s = seconds % 60;
+    snprintf(buffer, size, "%02d:%02d:%02d", h, m, s);
+}
+
+
+
 // Programmstart
 int main(int argc, char *argv[]){ 
     configuration config;
@@ -163,8 +174,11 @@ int main(int argc, char *argv[]){
                 printf("  %-26s %8.2f W\n",  "Ladeleistung pro Sekunde:", supplyLoadPower / 3600);
                 supplyLoadTimeSec = supplyLoadWattStunden / (supplyLoadPower / 3600);
                 printf("  %-26s %6.0f Sek\n\n", "Errechnete Ladezeit:", supplyLoadTimeSec);
-                         
-                                                
+                char timeString[16];
+                formatSecondsToHMS((int)supplyLoadTimeSec, timeString, sizeof(timeString));
+                printf("  Entspricht: %s\n\n", timeString);
+                                                        
+                                                                
                                 
                 // prüfen ob bereits schon eine ladung am laufen ist
                 if (access("/Energiebox/Grid/isLoading.lock", F_OK) == 0) {
