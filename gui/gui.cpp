@@ -34,7 +34,7 @@ bool debug = true;
 enum class LogLevel { DEBUG, INFO, WARN, ERROR };
 
 void debugPrint(const std::string& strMsg, LogLevel level = LogLevel::DEBUG) {
-    if (debug || level != LogLevel::DEBUG) {
+    if (debug) {
         auto now = std::chrono::system_clock::now();
         std::time_t now_time = std::chrono::system_clock::to_time_t(now);
         std::tm* tm_time = std::localtime(&now_time);
