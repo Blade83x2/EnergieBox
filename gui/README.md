@@ -6,7 +6,8 @@ Die Anwendung ist für Touchdisplays (800x480) optimiert und läuft als Vollbild
 <br>
 Das Programm beinhaltet 3 Tabs: <br> <br>
 Auf dem ersten Tab werden live PV- und Batteriedaten angezeigt.  <br>
-Diese Daten werden jede 3 Minuten aktualisiert. <br>
+Diese Daten werden jede 3 Minuten aktualisiert. Hierzu wird die <code>/Energiebox/Tracer/trace.txt</code> Datei 
+ausgelesen.<br>
 <br>
 <p align="left"> 
     <img src="img/tab_energiebox.png" style="width: 70%;" alt="Tab Energiebox" >
