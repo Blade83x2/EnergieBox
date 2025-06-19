@@ -14,7 +14,8 @@ Hierzu wird die Datei <code>/Energiebox/Tracer/trace.txt</code> ausgelesen.<br>
 </p>
 <br><br>
 Auf dem zweiten und dritten Tab wird jeweils eine Geräteliste für die jeweiligen Programme<br>
-12V und 230V angezeigt. Ein roter Eintrag bedeutet das dieses Gerät derzeit ausgeschaltet<br>
+12V und 230V angezeigt.<br>
+Ein roter Eintrag bedeutet das dieses Gerät derzeit ausgeschaltet<br>
 ist und grün zeigt das dieses Gerät gerade mit Spannung versorgt wird und aktuell eingeschaltet ist. <br> 
 <br>
 <br>
