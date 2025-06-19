@@ -33,7 +33,8 @@ Die Geräte können direkt von hier aus mit einem Tastendruck aus bzw. eingescha
 Wenn z.B. in der Konfiguration von 230V eingetragen wurde, dass der 230 Volt Inverter eine Dauerleistung von 
 5000 Watt leistet und derzeit Geräte in der Liste aktiviert sind die mit 4000 Watt eingetragen sind, dann
 kann in diesem Moment kein weiteres Gerät eingeschaltet werden welches mehr als 1000 Watt benötigt. 
-In diesem Fall wird vom Programm eine Meldung ausgegeben 
+In diesem Fall wird vom Programm eine Meldung ausgegeben die besagt das nicht genügend Leistung vorhanden ist.
+Um dieses Gerät trotzdem einzuschalten, müssen vorher andere Geräte ausgeschaltet werden!
 
 
 
