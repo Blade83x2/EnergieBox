@@ -1,5 +1,5 @@
 
-# grid Festnetz Batterieladeprogramm
+# grid Festnetz Batterie- Ladeprogramm
 
 Dieses Programm lädt die Batterien bei Bedarf mit Energie aus dem Festnetz auf.
 Hierzu wird zuerst das Ladegerät per Relais mit dem Festnetz verbunden und nach 5 Sekunden wird ein 
