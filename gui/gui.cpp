@@ -72,7 +72,7 @@ public:
         
         
         
-        
+        debugPrint("Lese Datei: " + path, LogLevel::INFO);
         std::cout << "[GUI] Lese Datei: " << path << std::endl;
         if (!file) {
             std::cerr << "Fehler beim Öffnen der INI: " << path << std::endl;
@@ -194,14 +194,13 @@ private:
             auto* relais = new RelaisInfo{i, name, isAktiv, btn};
             relais->handler = btn->signal_clicked().connect([=]() mutable {
                 last_interaction_time_ = std::time(nullptr); // Timer zurücksetzen bei Klick
-                std::cout << "[GUI] Button gedrückt: Relais " << i << " (" << name << "), Timer neu gestartet." << std::endl;
+                debugPrint("Button gedrückt: Relais: " + std::to_string(i) + " (" + name + ")", LogLevel::INFO);
                 IniReader ini(configPath);
                 std::string canStart = ini.get(sektion + "/canStartFromGui", "1");
                 if (canStart != "1") {
                     Gtk::MessageDialog dialog(*this, "Schaltung nicht erlaubt", false, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK, true);
                     dialog.set_secondary_text("Dieses Relais kann nicht über die GUI geschaltet werden.");
                     dialog.run();
-                    std::cout << "[GUI] Zugriff verweigert: " << name << " (Relais " << i << ")" << std::endl;
                     debugPrint("Zugriff verweigert: " + name, LogLevel::INFO);
                     return;
                 }
