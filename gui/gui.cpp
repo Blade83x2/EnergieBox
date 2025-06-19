@@ -67,13 +67,7 @@ class IniReader {
 public:
     explicit IniReader(const std::string& path) {
         std::ifstream file(path);
-        
-        
-        
-        
-        
         debugPrint("Lese Datei: " + path, LogLevel::INFO);
-        std::cout << "[GUI] Lese Datei: " << path << std::endl;
         if (!file) {
             std::cerr << "Fehler beim Öffnen der INI: " << path << std::endl;
             return;
