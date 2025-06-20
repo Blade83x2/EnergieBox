@@ -1,0 +1,37 @@
+#
+# Makefile für h2o 
+# Vendor: Johannes Krämer
+# Version: 1.0
+# Date: 22.11.2024
+#
+# https://www.c-howto.de/tutorial/makefiles/
+# https://www.c-howto.de/tutorial/makefiles/erweiterungen/
+
+# Compiler und Flags
+CXX = g++
+CXXFLAGS = -Wall -std=c++17
+CFLAGS = -std=gnu99
+LDFLAGS = -lwiringPi
+
+# Quell- und Objektdateien
+CPP_SOURCES = h2o_test.cpp H2OSetupManager.cpp H2OFilterManager.cpp DebugLogger.cpp
+C_SOURCES = iniparse.c mymcp23017.c
+OBJS = $(CPP_SOURCES:.cpp=.o) $(C_SOURCES:.c=.o)
+
+# Zielprogramm
+TARGET = h2o_test
+
+# Standardziel
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CXX) -o $@ $^ $(LDFLAGS)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $<
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $<
+
+clean:
+	rm -f $(OBJS) $(TARGET)

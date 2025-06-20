@@ -47,7 +47,7 @@ Das Programm wird beim booten der Energiebox geladen und auf dem Display angezei
 Es kann lokal mit <code>ALT + F4</code> geschlossen werden. Über SSH kann es mit <br>
 <code>kill -9 $(pidof gui)</code> beendet werden.<br>
 <br>
-Zum Starten <code>gui</code> ausführen!
+Zum Starten <code>gui &</code> ausführen!
 
 
 <!--

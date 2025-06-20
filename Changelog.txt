@@ -17,7 +17,7 @@ Energiebox Ver.5 #
   build mit in readme
   kill -9 $(pidof gui) bei build beenden und nach build wieder aufrufen
  
- 
+  [UPDATE] h2o konvertiert in C++. Setup Daten werden jetzt validiert. Option Tank/Ventil sowie Relais Abfrage für Frequenzgerät hinzugefügt
  
 _______________________________________________________________________________________________________________________________________
  
@@ -28,7 +28,7 @@ Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die A
 Eine Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++.
 
 
-[NEW] Neue Bilder und Beschreibungen in /Energiebox/gui/README.MD
+ [NEW] Neue Bilder und Beschreibungen in /Energiebox/gui/README.MD
  [BUGFIX] Formatierte Ausgabe der Ladezeit in /Energiebox/Grid/grid. Werte werden in Tabelle links und rechts ausgerichtet
  [NEW] Neue Bilder und Beschreibungen in /Energiebox/Grid/README.MD
  [UPDATE] Neue Bilder und Beschreibungen in /Energiebox/230V/README.MD an Code Änderungen angepasst
