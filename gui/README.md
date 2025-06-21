@@ -73,13 +73,14 @@ anzuzeigen, kann der folgende Befehl genutzt werden:<br>
 <code>gui --window</code><br>
 <br>
 
+### 🔧 Programm Parameterjhk
 
-
+jkgjhg
 
 ## 🔧 Programm Parameter
 
-Bei falscher Benutzung der Programm Parameter wird eine Hilfe angezeigt Hier kann eingesehen werden welche<br>
-Parameter verfügbar sind und wozu sie genutzt werden!
+Bei falscher Benutzung der Programm Parameter wird eine Hilfe angezeigt.<br>
+Hier kann eingesehen werden welche Parameter verfügbar sind und wozu sie genutzt werden!
 <br>
 <br>
 <p align="left"> 
