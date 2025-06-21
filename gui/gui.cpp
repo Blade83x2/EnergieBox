@@ -518,7 +518,7 @@ private:
                 auto* soc_bar = Gtk::manage(new Gtk::ProgressBar());
                 soc_bar->set_show_text(false);
                 soc_bar->set_valign(Gtk::ALIGN_CENTER);
-                soc_bar->set_hexpand(true);
+                soc_bar->set_hexpand(false);
                 soc_bar->set_margin_top(0);
                 soc_bar->set_margin_bottom(0);
                 soc_bar->get_style_context()->add_class("soc-bar");

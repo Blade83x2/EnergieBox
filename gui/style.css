@@ -95,7 +95,7 @@ notebook tab:checked {
 }
 
 .data-value-red {
-  color: #750501;
+  color: #ff0000;
 }
 .data-value-orange {
   color: #FF7F50;
@@ -128,18 +128,30 @@ notebook tab:checked {
   border: 0px;
 }
 .soc-bar progress {
-  min-height: 1px;
-}
-.soc-bar-low {
-  background: #ff0000;
-}
-.soc-bar-middle {
-  background: #FF7F50;
-}
-.soc-bar-high {
-  background: #0000ff;
+  min-height: 0px;
 }
 
+.soc-bar-low {
+  
+}
+.soc-bar-low progress {
+  background: #ff0000;
+  min-height: 5px;
+}
+.soc-bar-middle {
+  
+}
+.soc-bar-middle progress {
+  background: #FF7F50;
+  min-height: 5px;
+}
+.soc-bar-high {
+  
+}
+.soc-bar-high progress {
+  background: #01520e;
+  min-height: 5px;
+}
 
 
 
