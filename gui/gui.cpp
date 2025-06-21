@@ -488,7 +488,7 @@ private:
         int row = 1;
         for (const auto& [label, value] : data) {
             if(label == "SOC"){
-                // SOC ausgeben 
+                // Die SOC Ausgabe wird je nach Ladezustand Farblich ausgegeben. Ausserdem wird eine Progressbar darunter angezeigt (2 colums!)
                 auto* label_widget = Gtk::manage(new Gtk::Label(label + " (%)"));
                 label_widget->get_style_context()->add_class("data-label");
                 label_widget->set_halign(Gtk::ALIGN_START);
@@ -525,10 +525,10 @@ private:
                 if (battpercentInt >= 0 && battpercentInt <= 25) {
                     soc_bar->get_style_context()->add_class("soc-bar-low");
                 }
-                else if (battpercentInt > 25 && battpercentInt <= 60) {
+                else if (battpercentInt > 25 && battpercentInt <= 55) {
                     soc_bar->get_style_context()->add_class("soc-bar-middle");
                 }
-                else if (battpercentInt > 60 && battpercentInt <= 100) {
+                else if (battpercentInt > 55 && battpercentInt <= 100) {
                     soc_bar->get_style_context()->add_class("soc-bar-high");
                 }
                 soc_bar->set_fraction(soc / 100.0f);              
@@ -536,24 +536,11 @@ private:
                 grid->attach(*soc_bar, 0, ++row, 2, 1);
             }
             else {
-                
-                
-
-                
                 // normale ausgabe
                 auto* label_widget = Gtk::manage(new Gtk::Label(label));
                 label_widget->get_style_context()->add_class("data-label");
                 label_widget->set_halign(Gtk::ALIGN_START);
-                
-                
-            //    if(label == "Tagesertrag (P)"){
-                
-                    label_widget->set_hexpand(true);
-                
-                
-            //    }
-                
-                
+                label_widget->set_hexpand(true);
                 auto* value_widget = Gtk::manage(new Gtk::Label(value));
                 value_widget->get_style_context()->add_class("data-value");
                 // Rote Farbe bestimmen für Werte die derzeit auf 0 stehen
@@ -576,7 +563,7 @@ private:
         return grid;
     }
 
-    // Liest die Datei /Energiebox/Tracer/trace.txt aus, parsed die Werte und aktualisiert den Info-Tab
+    // Liest die Datei /Energiebox/Tracer/trace.txt aus, parsed die Werte und aktualisiert den Energietab
     bool update_energiebox_tab() {
         const std::string filepath = "/Energiebox/Tracer/trace.txt";
         const int max_attempts = 3;
@@ -656,8 +643,6 @@ private:
         energiebox_data_container_->show_all();
         return true;
     }
-
-
     Gtk::Notebook notebook_;       // Tab-Widget
     Gtk::Box* energiebox_data_container_ = nullptr; // Container für Energiebox-Daten
     time_t last_interaction_time_; // Zeitstempel letzter Nutzer-Interaktion
