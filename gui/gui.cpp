@@ -546,12 +546,12 @@ private:
                 label_widget->set_halign(Gtk::ALIGN_START);
                 
                 
-                if(label == "Tagesertrag (P)"){
+            //    if(label == "Tagesertrag (P)"){
                 
                     label_widget->set_hexpand(true);
                 
                 
-                }
+            //    }
                 
                 
                 auto* value_widget = Gtk::manage(new Gtk::Label(value));
