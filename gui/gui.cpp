@@ -670,7 +670,7 @@ int main(int argc, char* argv[]) {
     option_group.add_entry(entry_window, window_mode);
 
     Glib::OptionContext context;
-    context.set_summary("Grafischces User Interface Programm der Energiebox.\nDient zur Anzeige und Steuerung der Relais- Schaltungen\ndie an 3 Portexpandern angeschlossen sind.");
+    context.set_summary("Grafisches User Interface Programm der Energiebox.\nDient zur Anzeige und Steuerung der Relais- Schaltungen\ndie an 3 Portexpender angeschlossen sind.");
     context.set_main_group(option_group);
     try {
         context.parse(argc, argv);

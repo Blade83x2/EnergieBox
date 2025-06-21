@@ -46,7 +46,7 @@ Tab 230V
 </p>
 <br><br>
 Das Programm wird beim booten der Energiebox automatisch geladen und auf dem Display angezeigt.<br>
-Es kann vom Raspberry aus lokal mit der Tastenkombination <code>ALT + F4</code> oder mit dem Befehk<br>
+Es kann vom Raspberry aus lokal mit der Tastenkombination <code>ALT + F4</code> oder mit dem Befehl<br>
 <code>kill -9 $(pidof gui)</code>geschlossen werden.<br>
 <br>
 
@@ -69,23 +69,17 @@ nicht bereits lokal auf der Energiebox läuft. Um es vom entferntem Client zu be
 <br>
 genutzt werden. Um das Programm auf der Energiebox zu starten und über X11Forwarding auf dem Client PC<br>
 anzuzeigen, kann der folgende Befehl genutzt werden:<br>
+<br>
 <code>gui --window</code><br>
-
+<br>
 
 
 
 
 ## 🔧 Programm Parameter
 
-
-
-- **Tab-basiertes Layout:**
-  - **Energiebox:** Anzeige von PV- und Batteriedaten aus `trace.txt`
-  - **12V:** Steuerung und Leistungsüberwachung von 12V-Geräten mit Leistungslimit
-  - **230V:** Steuerung von 230V-Verbrauchern mit Gesamtleistungsgrenze
-
-
-<br>
+Bei falscher Benutzung der Programm Parameter wird eine Hilfe angezeigt Hier kann eingesehen werden welche<br>
+Parameter verfügbar sind und wozu sie genutzt werden!
 <br>
 <br>
 <p align="left"> 
