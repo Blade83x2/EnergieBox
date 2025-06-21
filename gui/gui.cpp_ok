@@ -19,7 +19,6 @@
 #include <gtkmm/stylecontext.h>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/separator.h>
-#include <gtkmm/progressbar.h>
 #include <glibmm/main.h>
 #include <iostream>
 #include <fstream>
@@ -509,84 +508,43 @@ private:
         grid->set_row_spacing(8);
         grid->set_column_spacing(50);
         grid->get_style_context()->add_class("data-table");
+        
         // Überschrift als fettes Label (links ausgerichtet, größer)
         auto* title = Gtk::manage(new Gtk::Label(headline));
         title->get_style_context()->add_class("data-title");
         title->set_halign(Gtk::ALIGN_START);
-        title->set_margin_bottom(10);
+        title->set_margin_bottom(15);
         grid->attach(*title, 0, 0, 2, 1);
-        std::string percent;
-        std::string zeroValue;;
+        
         int row = 1;
         for (const auto& [label, value] : data) {
-            if(label == "SOC"){
-                // SOC ausgeben 
-                auto* label_widget = Gtk::manage(new Gtk::Label(label + " (%)"));
-                label_widget->get_style_context()->add_class("data-label");
-                label_widget->set_halign(Gtk::ALIGN_START);
-                auto* value_widget = Gtk::manage(new Gtk::Label(value));
-                value_widget->get_style_context()->add_class("data-value");
-                value_widget->set_halign(Gtk::ALIGN_END);
-                grid->attach(*label_widget, 0, row, 1, 1);
-                grid->attach(*value_widget, 1, row, 1, 1);
-                // darunter progressbar anzeigen von batterie ladezustand. gradiant farbverlauf verwenden
-                percent = value;
-                percent.pop_back();
-                float soc = std::stof(percent);
-                // SOC-ProgressBar erstellen
-                auto* soc_bar = Gtk::manage(new Gtk::ProgressBar());
-                soc_bar->set_show_text(false);
-                soc_bar->set_valign(Gtk::ALIGN_CENTER);
-                soc_bar->set_hexpand(true);
-                soc_bar->set_margin_top(0);
-                soc_bar->set_margin_bottom(0);
-                soc_bar->get_style_context()->add_class("soc-bar");
-                soc_bar->set_fraction(soc / 100.0f);              
-                // progressbar in 2 spalten laden
-                grid->attach(*soc_bar, 0, ++row, 2, 1);
-            }
-            else {
-                // normale ausgabe
-                auto* label_widget = Gtk::manage(new Gtk::Label(label));
-                label_widget->get_style_context()->add_class("data-label");
-                label_widget->set_halign(Gtk::ALIGN_START);
-                auto* value_widget = Gtk::manage(new Gtk::Label(value));
-                value_widget->get_style_context()->add_class("data-value");
-                // Rote Farbe bestimmen für Werte die derzeit auf 0 stehen
-                zeroValue = value;
-                zeroValue.pop_back();
-                if(zeroValue == "0.0"){
-                    value_widget->get_style_context()->remove_class("data-value-green");
-                    value_widget->get_style_context()->add_class("data-value-red");
-                }
-                else {
-                    value_widget->get_style_context()->remove_class("data-value-red");
-                    value_widget->get_style_context()->add_class("data-value-green");
-                }
-                value_widget->set_halign(Gtk::ALIGN_END);
-                grid->attach(*label_widget, 0, row, 1, 1);
-                grid->attach(*value_widget, 1, row, 1, 1);
-                ++row; 
-            }
+            auto* label_widget = Gtk::manage(new Gtk::Label(label));
+            label_widget->get_style_context()->add_class("data-label");
+            label_widget->set_halign(Gtk::ALIGN_START);
+            
+            auto* value_widget = Gtk::manage(new Gtk::Label(value));
+            value_widget->get_style_context()->add_class("data-value");
+            value_widget->set_halign(Gtk::ALIGN_END);
+            
+            grid->attach(*label_widget, 0, row, 1, 1);
+            grid->attach(*value_widget, 1, row, 1, 1);
+            ++row;
         }
         return grid;
     }
 
     // Liest die Datei /Energiebox/Tracer/trace.txt aus, parsed die Werte und aktualisiert den Info-Tab
     bool update_energiebox_tab() {
-        
-        
         std::ifstream file("/Energiebox/Tracer/trace.txt");
         debugPrint("Lese /Energiebox/Tracer/trace.txt", LogLevel::INFO);
         if (!file) {
             std::cerr << "Fehler beim Öffnen der Datei /Energiebox/Tracer/trace.txt" << std::endl;
             return true; // Timer soll weitermachen
         }
+        
         // Map zum Speichern der ausgelesenen Werte (Schlüssel: String davor, Wert inkl. Einheit dahinter)
         std::map<std::string, std::string> values;
         std::string line;
-        
-        
         while (std::getline(file, line)) {
             auto pos = line.find('=');
             if (pos == std::string::npos) continue;
@@ -599,22 +557,20 @@ private:
             val.erase(val.find_last_not_of(" \t\r\n") + 1);
             values[key] = val;
         }
-    
-
         
         // Daten für PV Tabelle
         std::vector<std::pair<std::string, std::string>> pv_data = {
-            {"Spannung (U)    ", values["PV Array: Aktuelle Spannung in Volt"]},
-            {"Ampere (I)", values["PV Array: Aktueller Strom in Ampere"]},
-            {"Leistung (P)", values["PV Array: Aktuelle Leistung in Watt"]},
+            {"Spannung    ", values["PV Array: Aktuelle Spannung in Volt"]},
+            {"Ampere", values["PV Array: Aktueller Strom in Ampere"]},
+            {"Leistung", values["PV Array: Aktuelle Leistung in Watt"]},
             {"Heute total", values["PV Array: Generierte Energie heute"]}
         };
         
         // Daten für Batterie Tabelle
         std::vector<std::pair<std::string, std::string>> battery_data = {
-            {"Spannung (U)    ", values["Batterie: Aktuelle Spannung in Volt"]},
-            {"Ampere (I)", values["Batterie: Derzeitiger Ladestrom in Ampere"]},
-            {"Leistung (P)", values["Batterie: Derzeitige Ladeleistung in Watt"]},
+            {"Spannung    ", values["Batterie: Aktuelle Spannung in Volt"]},
+            {"Ampere", values["Batterie: Derzeitiger Ladestrom in Ampere"]},
+            {"Leistung", values["Batterie: Derzeitige Ladeleistung in Watt"]},
             {"SOC", values["Batterie: Ladezustand in Prozent"]}
         };
         
@@ -625,18 +581,18 @@ private:
         }
         
         // Neue Tabellen erstellen und hinzufügen
-        auto* pv_table = create_data_table(pv_data, "🌞 PV MPPT Status");
-        auto* battery_table = create_data_table(battery_data, "🔋 Batterie Ladestatus");
+        auto* pv_table = create_data_table(pv_data, "🌞 PV Eingang");
+        auto* battery_table = create_data_table(battery_data, "🔋 Batterie Status");
+        
         pv_table->set_margin_start(0);
         pv_table->set_margin_end(20);
         battery_table->set_margin_start(20);
         battery_table->set_margin_end(0);
+        
         energiebox_data_container_->pack_start(*pv_table, Gtk::PACK_EXPAND_WIDGET);
         energiebox_data_container_->pack_start(*battery_table, Gtk::PACK_EXPAND_WIDGET);
+        
         energiebox_data_container_->show_all();
-        
-        
-        
         return true; // Timer soll weiterlaufen
     }
 
@@ -674,8 +630,7 @@ int main(int argc, char* argv[]) {
     context.set_main_group(option_group);
     try {
         context.parse(argc, argv);
-    } 
-    catch (const Glib::Error& ex) {
+    } catch (const Glib::Error& ex) {
         std::cerr << "Fehler beim Parsen der Optionen: " << ex.what() << std::endl;
         return 1;
     }
@@ -684,8 +639,7 @@ int main(int argc, char* argv[]) {
     GUI window;
     if (window_mode) {
         window.set_default_size(800, 480);
-    } 
-    else {
+    } else {
         window.fullscreen();
     }
     return app->run(window);

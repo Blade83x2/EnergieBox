@@ -38,7 +38,7 @@ Installation benötigter Pakete      |
 sudo apt-get install build-essential libgtk-3-dev
 Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Installation verschiedener benötigter Pakete:
 
-`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install build-essential libgtk-3-dev ufw python3-dev python3-pip git manpages-de ufw kate krusader mat hwinfo -y && sudo pip install rpi.gpio libgtk-3-dev xterm libgtkmm-3.0-dev pymodbus ping`
+`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install build-essential libgtk-3-dev ufw python3-dev python3-pip git manpages-de ufw kate krusader mat hwinfo -y && sudo pip install rpi.gpio libgtk-3-dev xterm libgtkmm-3.0-dev pymodbus ping fonts-noto-color-emoji`
 
 
 -------------------------------------
@@ -139,8 +139,17 @@ und ersetzen es mit:
 
 `PermitRootLogin yes`
 
+Dann suchen wir:
+
+`#X11Forwarding no`
+
+und ersetzen es mit: 
+
+`X11Forwarding yes`
+
 
 Speichern können wir wieder mit der Tastenkombination Strg + x.
+
 
 Der Benutzer root hat bislang kein Passwort. Dieses setzen wir mit
 
@@ -175,7 +184,7 @@ Das Programm h2o filtert Wasser, kolloid stellt Kolloidale Dispersionen her!
                               |  |                             |  |
        Relais Nr. 1 bis 16__  |  |      Relais Nr. 1 bis 16__  |  |
                             | |  |                           | |  |
-                   $~/  12V 1 1 90                  $~/ 230V 1 1 90       
+                   ~/$  12V 1 1 90                  ~/$ 230V 1 1 90       
      
 Diese Änderung kann ebenfalls wieder mit der Tastenkombination 
 Strg + x gespeichert werden. Nun tippen wir auf der Konsole den Befehl 

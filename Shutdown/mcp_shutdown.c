@@ -57,7 +57,7 @@ int main(int argc, char**argv) {
         mcp_digitalWrite(i,1);
         sprintf(command, "bash /Energiebox/12V/setIni.sh %d %d", (i+1), 0);
         system(command);
-        sleep(0.1);
+        sleep(0.7);
     }
     ////////////////////
     ///// 230 Volt  ////
@@ -82,7 +82,7 @@ int main(int argc, char**argv) {
         mcp_digitalWrite(i, 1);
         sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", (i+1), 0);
         system(command);
-        sleep(0.1);
+        sleep(0.7);
     }
     ////////////////////
     ///// GRID      ////
@@ -105,7 +105,7 @@ int main(int argc, char**argv) {
     for(int i = 0; i<config.mcp.numberOfRelaisActive; i++) {
         mcp_pinMode(i, 0);
         mcp_digitalWrite(i, 1);
-        sleep(0.1);
+        sleep(0.7);
     }
     system("rm -f /Energiebox/Grid/isLoading.lock");
     return 0;

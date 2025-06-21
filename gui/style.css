@@ -1,0 +1,133 @@
+/* Allgemeine Schrift */
+* {
+  font-family: 'Liberation Sans', sans-serif;
+}
+
+/* Notebook Tabs */
+notebook tab {
+  background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+  border: 1px solid #c0c0c0;
+  border-radius: 8px 8px 0 0;
+  padding: 8px 16px;
+  margin: 2px;
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+notebook tab:checked {
+  background: linear-gradient(to bottom, #4a90e2, #357abd);
+  color: white;
+}
+
+/* Relais-Buttons mit runden Ecken */
+.relais-button {
+  font-family: Arial, sans-serif;
+  font-size: 12pt;
+  font-weight: bold;
+  min-height: 40px;
+  border-radius: 12px;
+  color: #000000;
+  transition: all 0.2s ease;
+}
+
+/* Aktive/Inaktive Relais-Farben */
+.relais-active {
+  background: linear-gradient(to right, rgba(0,255,0,0.15), rgba(0,100,0,0.1));
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+}
+
+.relais-inactive {
+  background: linear-gradient(to right, rgba(255,0,0,0.15), rgba(100,0,0,0.1));
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+}
+
+/* Box für Schaltflächen */
+.schalt-boxen {
+  background: linear-gradient(to right, #EBEBEB, #DEEBEB);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.4);
+}
+
+/* Willkommensbox */
+.welcome-box {
+  background: linear-gradient(to right, #EBEBEB, #DEEBEB);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.4);
+}
+
+/* Willkommensnachricht */
+.welcome-title {
+  font-size: 24pt;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.welcome-subtitle {
+  font-size: 16pt;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Daten-Tabellen */
+.data-table {
+  background: linear-gradient(to right, #EBEBEB, #DEEBEB);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+}
+
+.data-title {
+  font-size: 18pt;
+  font-weight: bold;
+  color: #495057;
+}
+
+.data-label {
+  font-size: 14pt;
+  color: #6c757d;
+}
+
+.data-value {
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.data-value-red {
+  color: #750501;
+}
+
+.data-value-green {
+  color: #01520e;
+}
+
+
+/* Status-Leiste */
+.status-bar {
+  background: linear-gradient(to right, #2c3e50, #34495e);
+  color: white;
+  padding: 8px 15px;
+  border-top: 2px solid #3498db;
+}
+
+.status-text {
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+/* Bilddarstellung */
+.logo {
+  margin-left: 10px;
+}
+
+.soc-bar {
+  min-height: 2px;
+  border-radius: 1px;
+  
+}
+
+.soc-bar progress {
+  min-height: 1px;
+   background: linear-gradient(to right, #ff0000, #00ff00);
+}

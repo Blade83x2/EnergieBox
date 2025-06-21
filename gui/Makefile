@@ -2,7 +2,7 @@
 # Makefile für gui 
 # Vendor: Johannes Krämer
 # Version: 1.0
-# Date: 22.11.2024
+# Date: 21.06.2025
 #
 
 CXX = g++

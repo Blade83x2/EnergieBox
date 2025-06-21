@@ -183,6 +183,7 @@ int main(int argc, char**argv) {
         sleep(0.1);
     }
     // Autostart Einträge aktivieren für 230V
+    
     for(int f=0; f<config.mcp.numberOfRelaisActive; f++){
         // wenn autostart aktiviert ist, 
         if( strcmp(deviceActiveOnStart[f],"true") == 0){
@@ -193,7 +194,6 @@ int main(int argc, char**argv) {
                 if(getBit(w+1) == 1) {
                     pMaxCurrent += devicePMax[w];
                 }
-                sleep(0.1);
             }
             // Wenn zusätzliche Leistung + aktuelle Leistung kleiner oder gleich maximal Abgabe Leistung in Watt
             if((pMaxCurrent + devicePMax[f]) <= config.mcp.maxOutputPower){
@@ -202,7 +202,7 @@ int main(int argc, char**argv) {
                 // eltakostatus in config schreiben
                 sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", (f+1), 1);
                 system(command);
-                sleep(0.2);
+                sleep(0.7);
             }
             else {
                 printf("\e[0;31m%s benötigt %d Watt. Derzeit maximal verfügbar: %d Watt!\n", deviceNames[f], devicePMax[f], config.mcp.maxOutputPower-pMaxCurrent);
