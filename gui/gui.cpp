@@ -482,7 +482,8 @@ private:
         title->set_margin_bottom(10);
         grid->attach(*title, 0, 0, 2, 1);
         std::string percent;
-        std::string zeroValue;;
+        std::string zeroValue;
+     //   std::string zeroValueKwh;
         int row = 1;
         for (const auto& [label, value] : data) {
             if(label == "SOC"){
@@ -521,7 +522,7 @@ private:
                 // Rote Farbe bestimmen für Werte die derzeit auf 0 stehen
                 zeroValue = value;
                 zeroValue.pop_back();
-                if(zeroValue == "0.0"){
+                if(zeroValue == "0.0" || value == "0.0kWh"){
                     value_widget->get_style_context()->remove_class("data-value-green");
                     value_widget->get_style_context()->add_class("data-value-red");
                 }
@@ -592,7 +593,7 @@ private:
             {"Spannung (U)", values["PV Array: Aktuelle Spannung in Volt"]},
             {"Ampere (I)",  values["PV Array: Aktueller Strom in Ampere"]},
             {"Leistung (P)", values["PV Array: Aktuelle Leistung in Watt"]},
-            {"Heute total", values["PV Array: Generierte Energie heute"]}
+            {"Heute total (P)", values["PV Array: Generierte Energie heute"]}
         };
         // Batterie Daten
         std::vector<std::pair<std::string, std::string>> battery_data = {
