@@ -1,12 +1,14 @@
 # Grafische Benutzeroberfläche & Status Monitoring
 
-Dieses Programm stellt die grafische Benutzeroberfläche die bei dem booten der Energiebox gestartet wird,<br>
-zur Verfügung. Die Anwendung ist für Touchdisplays (800x480) optimiert und läuft als Vollbild-GUI auf dem Raspberry Pi.
+Dieses Programm stellt die grafische Benutzeroberfläche die bei dem booten der Energiebox gestartet wird, zur Verfügung.
+Die Anwendung ist für Touchdisplays (800x480) optimiert und läuft als Vollbild-GUI auf dem Raspberry Pi.
 
 <br>
 Das Programm beinhaltet 3 Tabs: <br> <br>
 Auf dem ersten Tab werden live MPPT Daten sowie Batterie- Ladedaten angezeigt.  <br>
 Diese Anzeige wird jede 3 Minuten aktualisiert.  <br>
+
+<br>
 <p align="left"> 
     <img src="img/tab_energiebox.png" style="width: 70%;" alt="Tab Energiebox" >
 </p>
@@ -43,7 +45,8 @@ Tab 230V
 </p>
 <br><br>
 Das Programm wird beim booten der Energiebox automatisch geladen und auf dem Display angezeigt.<br>
-Es kann vom Raspberry aus lokal mit <code>ALT + F4</code> geschlossen werden.<br>
+Es kann vom Raspberry aus lokal mit der Tastenkombination <code>ALT + F4</code> oder mit dem Befehk<br>
+<code>kill -9 $(pidof gui)</code>geschlossen werden.<br>
 <br>
 
 ## Fernsteuerung & System Monitoring über SSH:<br>
@@ -54,17 +57,16 @@ MPPT & Batterie Daten. Die Relais können ebenfalls bedient werden!<br>
 
 
 Um das Programm von einem entfernten Rechner zu starten, muss eine SSH Verbindung zur Energiebox<br>
-hergestellt werden!<br>
-Achtung: `X11Forwarding yes` muss auf der Energiebox aktiviert sein und der Client muss den ssh Befehl<br>
-mit dem Parameter -X starten! Beispiel:<p>
-<code>ssh -X box@10.0.0.2</code> oder <br>
-<code>ssh -X -p2222 box@home.cplusplus-development.de</code></p>
-Nachdem diese Verbindung aufgebaut worden ist, muss zuerst sichergestellt werden. dass das Program <code>gui</code><br>
-nicht bereits lokal auf der Energiebox läuft. Um es vom entferntem Client zu beenden, kann der Befehl:<br>
-<code>kill -9 $(pidof gui) > /dev/null 2> /dev/null</code> <br>
-genutzt werden. Um das Programm auf der Energiebox zu starten und über X11Forwarding auf dem Client PC<br>
-anzuzeigen, kann der folgende Befehl genutzt werden:<br>
-<code>gui --window</code><br>
+hergestellt werden! Achtung: `X11Forwarding` muss auf der Energiebox erlaubt sein und der ssh Befehl<br>
+muss mit dem Parameter -X gestartet werden! Beispiel:<p>
+<code>ssh -X box@10.0.0.2</code></p>
+
+
+
+
+
+<code>kill -9 $(pidof gui)</code> beendet werden.<br>
+<br>
 
 
 
