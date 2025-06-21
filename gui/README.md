@@ -19,8 +19,8 @@ Tab Energiebox
 <br><br>
 Auf dem zweiten und dritten Tab wird jeweils eine Geräteliste für die jeweiligen Programme<br>
 12V und 230V angezeigt.<br><br>
-Ein roter Eintrag bedeutet das dieses Gerät derzeit ausgeschaltet<br>
-ist und grün zeigt das dieses Gerät gerade mit Spannung versorgt wird und eingeschaltet ist. <br> 
+Ein roter Eintrag bedeutet das dieses Gerät derzeit ausgeschaltet ist und grün zeigt,<br>
+dass dieses Gerät gerade mit Spannung versorgt wird und eingeschaltet ist.<br> 
 <br>
 <br>
 Tab 12V
@@ -28,8 +28,8 @@ Tab 12V
     <img src="img/tab_12V.png" style="width: 70%;" alt="Tab 12V" >
 </p>
 <br>
-Die Geräte können direkt von hier aus mit einem Tastendruck aus bzw. eingeschaltet werden wenn:<br>
-<br>
+Die Geräte können direkt von hier aus mit einem Tastendruck aus bzw. eingeschaltet werden,<br>
+wenn:<br>
 <ul>
   <li>genügend Leistung zum Einschalten verfügbar ist</li>
   <li>die Relais Konfiguration einen Start aus der GUI erlaubt</li>

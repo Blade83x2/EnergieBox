@@ -6,6 +6,13 @@
  * 
  * Um das Programm auf dem Raspberry zu beenden, kann folgender Befehl verwendet werden:
  * kill -9 $(pidof gui)
+ * 
+ * 
+ * TODO:
+ * Fehler Abfangen Routine einbauen (wenn trace.txt gerade neu geschrieben wird)
+(gui:14014): glibmm-ERROR **: 20:54:02.548:
+unhandled exception (type std::exception) in signal handler:
+what: stof
 */
 #include <gtkmm/application.h>
 #include <gtkmm/window.h>
@@ -31,17 +38,12 @@
 #include <ctime>
 #include <iomanip>
 #include <chrono>
-
-
 #include <glibmm/optioncontext.h>
 #include <glibmm/optiongroup.h>
 
-
 // Debug-Modus aktivieren/deaktivieren
 bool debug = false;
-
 enum class LogLevel { DEBUG, INFO, WARN, ERROR };
-
 void debugPrint(const std::string& strMsg, LogLevel level = LogLevel::DEBUG) {
     if (debug) {
         auto now = std::chrono::system_clock::now();
@@ -115,40 +117,30 @@ public:
     GUI() {
         set_title("⚡ Energiebox");
         set_icon_from_file("/Energiebox/gui/icon.png");
-       
         // Hauptcontainer für Notebook und Status-Leiste
         main_box_.set_orientation(Gtk::ORIENTATION_VERTICAL);
-        
         // Ränder für das Notebook (Tabs) setzen
         notebook_.set_margin_top(10);
         notebook_.set_margin_bottom(10);
         notebook_.set_margin_start(10);
         notebook_.set_margin_end(10);
-        
         // Tabs hinzufügen: Energiebox, 12V, 230V
         notebook_.append_page(build_energiebox_tab(), "💻 Energiebox");
         notebook_.append_page(build_tab_12v(), "⚡ 12V");
         notebook_.append_page(build_tab_230v(), "⚡ 230V");
-        
         main_box_.pack_start(notebook_, Gtk::PACK_EXPAND_WIDGET);
-        
         // Status-Leiste erstellen
         create_status_bar();
         main_box_.pack_end(status_box_, Gtk::PACK_SHRINK);
-        
         add(main_box_); // Hauptcontainer dem Fenster hinzufügen
         apply_css(); // Schriftgröße etc. anpassen
-        
         // Event-Handler für Tab-Wechsel, um Timer zurückzusetzen
         notebook_.signal_switch_page().connect(sigc::mem_fun(*this, &GUI::on_tab_switched));
-        
         // Timer: nach 30 Sekunden Inaktivität automatisch auf Info-Tab wechseln
         last_interaction_time_ = std::time(nullptr);
         Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::check_idle_time), 10);
-        
         // Timer für Uhrzeit-Update
         Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::update_time), 1);
-        
         // Erstmal Energiebox-Tab direkt aktualisieren und füllen
         show_all_children();
     }
@@ -161,13 +153,13 @@ private:
     sigc::connection relais12V_timer_connection_;
     sigc::connection relais230V_timer_connection_;
     sigc::connection energiebox_timer_connection_;  
-    
     // CSS aus Datei laden
     void apply_css() {
         auto css_provider = Gtk::CssProvider::create();
         try {
             css_provider->load_from_path("/Energiebox/gui/style.css"); 
-        } catch (const Glib::Error& ex) {
+        } 
+        catch (const Glib::Error& ex) {
             debugPrint("Fehler beim Laden der CSS-Datei:  " + ex.what(), LogLevel::ERROR);
             return;
         }
@@ -223,12 +215,10 @@ private:
     Gtk::Widget& build_tab_12v() {
         return build_tab("/Energiebox/12V/config.ini", "/Energiebox/12V/12V", true, "12V");
     }
-
     // 230V Tab erstellen (ohne Controller-Verbrauch)
     Gtk::Widget& build_tab_230v() {
         return build_tab("/Energiebox/230V/config.ini", "/Energiebox/230V/230V", false, "230V");
     }
-
     // Generische Funktion für Relais-Tabs
     Gtk::Grid& build_tab(const std::string& configPath, const std::string& binaryPath, bool checkPower, const std::string& tabType) {
         auto* main_container = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 15));
@@ -236,7 +226,6 @@ private:
         main_container->set_margin_bottom(15);
         main_container->set_margin_start(15);
         main_container->set_margin_end(15);
-        
         // Header mit Titel und Bild
         auto* header = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 20));
         header->set_hexpand(true); // maximale Breite verwenden
@@ -257,27 +246,21 @@ private:
         grid->set_row_spacing(10);
         grid->set_column_spacing(5);
         grid->set_halign(Gtk::ALIGN_CENTER);
-        
         IniReader ini(configPath);
         int anzahl = std::stoi(ini.get("mcp/numberOfRelaisActive", "0"));
         const int spalten = 4;
         const int max_zeilen = 4;
         if (anzahl > spalten * max_zeilen) anzahl = spalten * max_zeilen;
-        
         for (int i = 1; i <= anzahl; ++i) {
             std::string sektion = "Relais " + std::to_string(i);
             std::string name = ini.get(sektion + "/name", "Relais " + std::to_string(i));
             bool isAktiv = ini.get(sektion + "/eltakoState", "0") == "1";
-            
             Gtk::Button* btn = Gtk::manage(new Gtk::Button(name));
             btn->set_hexpand(true);
             btn->set_size_request(180, 50);
-            
-
             // CSS-Klassen für Styling
             btn->get_style_context()->add_class("relais-button");
             btn->get_style_context()->add_class(isAktiv ? "relais-active" : "relais-inactive");
-            
             if (checkPower) {
                 relais12v_buttons_[i] = btn;
                 relais12v_status_[i] = isAktiv;
@@ -285,12 +268,10 @@ private:
                 relais230v_buttons_[i] = btn;
                 relais230v_status_[i] = isAktiv;
             }
-            
             auto* relais = new RelaisInfo{i, name, isAktiv, btn};
             relais->handler = btn->signal_clicked().connect([=]() mutable {
                 last_interaction_time_ = std::time(nullptr); // Timer zurücksetzen bei Klick
                 debugPrint("Button gedrückt: Relais: " + std::to_string(i) + " (" + name + ")", LogLevel::INFO);
-                
                 IniReader ini(configPath);
                 std::string canStart = ini.get(sektion + "/canStartFromGui", "1");
                 if (canStart != "1") {
@@ -300,9 +281,7 @@ private:
                     debugPrint("Zugriff verweigert: " + name, LogLevel::INFO);
                     return;
                 }
-                
                 bool neu = !relais->aktiv;
-                
                 // Leistungsprüfung
                 if (neu && checkPower) {
                     int maxPower = std::stoi(ini.get("mcp/maxPConverter", "0")) - std::stoi(ini.get("mcp/maxPMicroController", "0"));
@@ -337,29 +316,23 @@ private:
                         return;
                     }
                 }
-                
                 // Schaltbefehl ausführen
                 std::string cmd = binaryPath + " " + std::to_string(i) + " " + std::to_string(neu ? 1 : 0) + " 0";
                 std::system(cmd.c_str());
                 system_status_label_.set_text("💬 System: Schalte " + name + " auf " + (neu ? "AN" : "AUS"));
                 debugPrint("Schalte " + name + " auf " + (neu ? "AN" : "AUS"), LogLevel::INFO);
-                
                 // CSS-Klassen aktualisieren
                 btn->get_style_context()->remove_class(neu ? "relais-inactive" : "relais-active");
                 btn->get_style_context()->add_class(neu ? "relais-active" : "relais-inactive");
-                
                 relais->aktiv = neu;
                 if (checkPower) relais12v_status_[i] = neu;
                 else relais230v_status_[i] = neu;
             });
-
             int zeile = (i - 1) / spalten;
             int spalte = (i - 1) % spalten;
             grid->attach(*btn, spalte, zeile, 1, 1);
         }
-        
         main_container->pack_start(*grid, Gtk::PACK_EXPAND_WIDGET);
-        
         // Wrapper für Grid zurückgeben (Hack für Kompatibilität)
         auto* wrapper = Gtk::manage(new Gtk::Grid());
         wrapper->attach(*main_container, 0, 0, 1, 1);
@@ -370,20 +343,16 @@ private:
     void create_status_bar() {
         status_box_.get_style_context()->add_class("status-bar");
         status_box_.set_spacing(20);
-        
         // System Status
         system_status_label_.set_text("💬 System: Betriebsbereit");
         system_status_label_.get_style_context()->add_class("status-text");
         system_status_label_.set_halign(Gtk::ALIGN_START);
-        
         // Trennlinie
         auto* separator = Gtk::manage(new Gtk::Separator(Gtk::ORIENTATION_VERTICAL));
-        
         // Uhrzeit
         time_label_.get_style_context()->add_class("status-text");
         time_label_.set_halign(Gtk::ALIGN_END);
         update_time(); // Initial setzen
-        
         status_box_.pack_start(system_status_label_, Gtk::PACK_SHRINK);
         status_box_.pack_start(*separator, Gtk::PACK_SHRINK);
         status_box_.pack_end(time_label_, Gtk::PACK_SHRINK);
@@ -394,11 +363,9 @@ private:
         auto now = std::chrono::system_clock::now();
         std::time_t now_time = std::chrono::system_clock::to_time_t(now);
         std::tm* tm_time = std::localtime(&now_time);
-        
         std::ostringstream timeStream;
         timeStream << std::put_time(tm_time, "%H:%M:%S | %d.%m.%Y");
         time_label_.set_text(timeStream.str());
-        
         return true; // Timer wiederholen
     }
 
@@ -409,7 +376,6 @@ private:
         Gtk::Label* tab_label = dynamic_cast<Gtk::Label*>(tab_label_widget);
         std::string tabName = tab_label ? tab_label->get_text() : "<unbekannter Tab>";
         debugPrint("Tab gewechselt zu " + tabName, LogLevel::INFO);
-        
         // Status aktualisieren
         if (tabName.find("12V") != std::string::npos) {
             system_status_label_.set_text("💬 System: 12V Steuerung aktiv");
@@ -417,26 +383,26 @@ private:
                 relais12V_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::refresh_relais12V_status), 10);
                 debugPrint("Relais12V-Timer gestartet", LogLevel::INFO);
             }
-        } else {
+        } 
+        else {
             if (relais12V_timer_connection_.connected()) {
                 relais12V_timer_connection_.disconnect();
                 debugPrint("Relais12V-Timer gestoppt", LogLevel::INFO);
             }
         }
-        
         if (tabName.find("230V") != std::string::npos) {
             system_status_label_.set_text("💬 System: 230V Steuerung aktiv");
             if (!relais230V_timer_connection_.connected()) {
                 relais230V_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::refresh_relais230V_status), 10);
                 debugPrint("Relais230V-Timer gestartet", LogLevel::INFO);
             }
-        } else {
+        } 
+        else {
             if (relais230V_timer_connection_.connected()) {
                 relais230V_timer_connection_.disconnect();
                 debugPrint("Relais230V-Timer gestoppt", LogLevel::INFO);
             }
         }
-        
         if (tabName.find("Energiebox") != std::string::npos) {
             system_status_label_.set_text("💬 System: Energiebox Überwachung aktiv");
             if (!energiebox_timer_connection_.connected()) {
@@ -499,7 +465,6 @@ private:
                 debugPrint("180 Sekunden Inaktivität – wechsle zum Info-Tab", LogLevel::INFO);
             }
         }
-        
         return true; // Timer wiederholen
     }
 
