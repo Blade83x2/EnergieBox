@@ -1,12 +1,14 @@
 # Grafische Benutzeroberfläche & Status Monitoring
 
-Dieses Programm stellt die grafische Benutzeroberfläche die bei dem booten der Energiebox gestartet wird,<br>
-zur Verfügung. Die Anwendung ist für Touchdisplays (800x480) optimiert und läuft als Vollbild-GUI auf dem Raspberry Pi.
-
+Dieses Programm stellt Funktionen wie das Schalten von Geräten oder System- Monitoring über eine grafische Benutzeroberfläche<br>
+zur Verfügung. Die Anwendung ist für Touchdisplays (800x480) optimiert und läuft als Vollbild- Anwendung auf dem Raspberry.<br>
+<br>
+MPPT Laderegler- Daten sowie Informationen über den Batterie- Zustand werden jede 3 Minuten aktualisiert.<br>
+Die Schaltzustände werden jede 10 Sekunden überprüft und gegebenfalls aktualisiert!<br>
+<br>
 <br>
 Das Programm beinhaltet 3 Tabs: <br> <br>
 Auf dem ersten Tab werden live MPPT Daten sowie Batterie- Ladedaten angezeigt.  <br>
-Diese Anzeige wird jede 3 Minuten aktualisiert.  <br>
 <br>
 <br>
 Tab Energiebox
