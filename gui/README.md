@@ -1,14 +1,15 @@
 # Grafische Benutzeroberfläche & Status Monitoring
 
-Dieses Programm stellt die grafische Benutzeroberfläche die bei dem booten der Energiebox gestartet wird, zur Verfügung.
-Die Anwendung ist für Touchdisplays (800x480) optimiert und läuft als Vollbild-GUI auf dem Raspberry Pi.
+Dieses Programm stellt die grafische Benutzeroberfläche die bei dem booten der Energiebox gestartet wird,<br>
+zur Verfügung. Die Anwendung ist für Touchdisplays (800x480) optimiert und läuft als Vollbild-GUI auf dem Raspberry Pi.
 
 <br>
 Das Programm beinhaltet 3 Tabs: <br> <br>
 Auf dem ersten Tab werden live MPPT Daten sowie Batterie- Ladedaten angezeigt.  <br>
 Diese Anzeige wird jede 3 Minuten aktualisiert.  <br>
-
 <br>
+<br>
+Tab Energiebox
 <p align="left"> 
     <img src="img/tab_energiebox.png" style="width: 70%;" alt="Tab Energiebox" >
 </p>
@@ -24,7 +25,7 @@ Tab 12V
     <img src="img/tab_12V.png" style="width: 70%;" alt="Tab 12V" >
 </p>
 <br>
-Die Geräte können direkt von hier aus mit einem Tastendruck aus bzw. eingeschaltet werden wenn:
+Die Geräte können direkt von hier aus mit einem Tastendruck aus bzw. eingeschaltet werden wenn:<br>
 <br>
 <ul>
   <li>genügend Leistung zum Einschalten verfügbar ist</li>
@@ -57,34 +58,38 @@ MPPT & Batterie Daten. Die Relais können ebenfalls bedient werden!<br>
 
 
 Um das Programm von einem entfernten Rechner zu starten, muss eine SSH Verbindung zur Energiebox<br>
-hergestellt werden! Achtung: `X11Forwarding` muss auf der Energiebox erlaubt sein und der ssh Befehl<br>
-muss mit dem Parameter -X gestartet werden! Beispiel:<p>
-<code>ssh -X box@10.0.0.2</code></p>
-
-
-
-
-
-<code>kill -9 $(pidof gui)</code> beendet werden.<br>
+hergestellt werden!<br><br>
+Achtung: `X11Forwarding yes` muss auf der Energiebox aktiviert sein und der Client muss den ssh Befehl<br>
+mit dem Parameter -X starten! Beispiel:<p>
+<code>ssh -X box@10.0.0.2</code> oder <br>
+<code>ssh -X -p2222 box@home.cplusplus-development.de</code></p>
+Nachdem diese Verbindung aufgebaut worden ist, muss zuerst sichergestellt werden. dass das Program <code>gui</code><br>
+nicht bereits lokal auf der Energiebox läuft. Um es vom entferntem Client zu beenden, kann der Befehl:<br>
+<br><code>kill -9 $(pidof gui) > /dev/null 2> /dev/null</code><br>
 <br>
+genutzt werden. Um das Programm auf der Energiebox zu starten und über X11Forwarding auf dem Client PC<br>
+anzuzeigen, kann der folgende Befehl genutzt werden:<br>
+<code>gui --window</code><br>
 
 
 
 
-Zum Starten des Programms <code>gui</code> ausführen!
 
-
-<!--
 ## 🔧 Programm Parameter
+
+
 
 - **Tab-basiertes Layout:**
   - **Energiebox:** Anzeige von PV- und Batteriedaten aus `trace.txt`
   - **12V:** Steuerung und Leistungsüberwachung von 12V-Geräten mit Leistungslimit
   - **230V:** Steuerung von 230V-Verbrauchern mit Gesamtleistungsgrenze
 
-- **Automatische Aktualisierung:**
-  - Relaisstatus wird alle 10 Sekunden aus `config.ini` aktualisiert
-  - Aktualisierung der Beschriftung und Farbe der Buttons bei Änderungen
-  - Tracer-Daten werden alle 3 Minuten neu geladen
 
--->
+<br>
+<br>
+<br>
+<p align="left"> 
+    <img src="img/help.png" style="width: 70%;" alt="gui --help" >
+</p>
+
+
