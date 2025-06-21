@@ -1,5 +1,5 @@
 
-# ENERGIEBOX Ver. 4 für Raspberry PI 4 32Bit
+# ENERGIEBOX Ver. 5 für Raspberry PI 4 32Bit
 
 ### @Copyright 2023 by Johannes a.d.F. K r ä m e r
 

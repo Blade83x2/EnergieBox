@@ -17,6 +17,10 @@ Energiebox Ver.5 #
   build mit in readme
   kill -9 $(pidof gui) bei build beenden und nach build wieder aufrufen
  
+ BUILD.MD erstellen
+ 
+ 
+ 
   [UPDATE] h2o konvertiert in C++. Setup Daten werden jetzt validiert. Option Tank/Ventil sowie Relais Abfrage für Frequenzgerät hinzugefügt
  
 _______________________________________________________________________________________________________________________________________
@@ -27,13 +31,13 @@ In dieser Version ist endlich das Grafische User Interface verfügbar. Beim boot
 Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die Ausgabe auf der Konsole von sämtlichen Programmen verbessert und optimiert. 
 Eine Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++.
 
-
+ [UPDATE] gui zeigt auf der Startseite formatierte Daten vom EPEVER an
  [NEW] Neue Bilder und Beschreibungen in /Energiebox/gui/README.MD
  [BUGFIX] Formatierte Ausgabe der Ladezeit in /Energiebox/Grid/grid. Werte werden in Tabelle links und rechts ausgerichtet
  [NEW] Neue Bilder und Beschreibungen in /Energiebox/Grid/README.MD
  [UPDATE] Neue Bilder und Beschreibungen in /Energiebox/230V/README.MD an Code Änderungen angepasst
  [UPDATE] Neue Bilder und Beschreibungen in /Energiebox/12V/README.MD an Code Änderungen angepasst
- [UPDATE] Programm gui wurde mit GTK erstellt. Es hat 3 Tabs und nun können vom Display aus die Relais geschaltet werden!
+ [NEW] Programm gui wurde mit GTK erstellt. Es hat 3 Tabs und nun können vom Display aus die Relais geschaltet werden!
 
 
 NEUERUNGEN in Version 4
