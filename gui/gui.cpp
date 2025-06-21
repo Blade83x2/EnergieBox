@@ -483,7 +483,8 @@ private:
         grid->attach(*title, 0, 0, 2, 1);
         std::string percent;
         std::string zeroValue;
-     //   std::string zeroValueKwh;
+        std::string battpercentStr;
+        int battpercentInt = 0;
         int row = 1;
         for (const auto& [label, value] : data) {
             if(label == "SOC"){
@@ -493,6 +494,16 @@ private:
                 label_widget->set_halign(Gtk::ALIGN_START);
                 auto* value_widget = Gtk::manage(new Gtk::Label(value));
                 value_widget->get_style_context()->add_class("data-value");
+                // Farbe für Prozentangabe SOC
+                battpercentStr = value;
+                battpercentStr.pop_back();
+                battpercentInt = std::stoi(battpercentStr);
+                if (battpercentInt >= 0 && battpercentInt <= 20) {
+                
+                    value_widget->get_style_context()->add_class("data-value-red");
+                    
+                }
+                
                 value_widget->set_halign(Gtk::ALIGN_END);
                 grid->attach(*label_widget, 0, row, 1, 1);
                 grid->attach(*value_widget, 1, row, 1, 1);
