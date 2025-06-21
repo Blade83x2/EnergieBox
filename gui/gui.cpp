@@ -593,7 +593,7 @@ private:
             {"Spannung (U)", values["PV Array: Aktuelle Spannung in Volt"]},
             {"Ampere (I)",  values["PV Array: Aktueller Strom in Ampere"]},
             {"Leistung (P)", values["PV Array: Aktuelle Leistung in Watt"]},
-            {"Heute total (P)", values["PV Array: Generierte Energie heute"]}
+            {"Tagesertrag (P)", values["PV Array: Generierte Energie heute"]}
         };
         // Batterie Daten
         std::vector<std::pair<std::string, std::string>> battery_data = {
