@@ -1,3 +1,11 @@
+/*
+ *  Lädt Grid config.ini
+ *  Ruft python3 /Energiebox/Tracer/readall.py auf
+ *  Öfnet /Energiebox/Tracer/trace.txt
+ * 
+ * 
+ * 
+ */ 
 #include <iostream>
 #include <fstream>
 #include <cstdio>
@@ -27,6 +35,21 @@ struct Configuration {
     MCPSetup mcp;
     GridSetup grid;
 };
+
+
+void schreibe_zeile_in_datei(const std::string& dateipfad, const std::string& textzeile) {
+    std::ofstream datei(dateipfad, std::ios::app);  // std::ios::app = an Datei anhängen
+    if (datei.is_open()) {
+        datei << textzeile << std::endl;
+        datei.close();
+    } else {
+        std::cerr << "Fehler: Konnte Datei nicht öffnen: " << dateipfad << std::endl;
+    }
+}
+
+
+
+
 
 static int handler(void* config, const char* section, const char* name, const char* value) {
     Configuration* pconfig = static_cast<Configuration*>(config);
@@ -90,33 +113,49 @@ public:
             std::cerr << "Fehler: Konnte readall.py nicht ausführen\n";
             return false;
         }
+        
+        char buffer2[256];
+        bool hasContent = false;
 
-        std::ofstream outfile(outputPath);
-        if (!outfile.is_open()) {
-            std::cerr << "Fehler: Konnte trace.txt nicht öffnen\n";
-            pclose(pipe);
-            return false;
+        // Lies die erste Zeile oder Teil davon
+        if (fgets(buffer2, sizeof(buffer2), pipe) != nullptr) {
+            hasContent = true;
         }
 
         bool loadTriggered = false;
-        while (fgets(buffer.data(), buffer.size(), pipe) != nullptr) {
-            std::string line(buffer.data());
-            outfile << line;  // in Datei schreiben
+        if(hasContent){
+            std::ofstream outfile(outputPath);
+            if (!outfile.is_open()) {
+                std::cerr << "Fehler: Konnte trace.txt nicht öffnen\n";
+                pclose(pipe);
+                return false;
+            }
+            
+            while (fgets(buffer.data(), buffer.size(), pipe) != nullptr) {
+                std::string line(buffer.data());
+                outfile << line;  // in Datei schreiben
 
-            if (line.find(voltagePrefix) == 0) {
-                float voltage = parseVoltageLine(line);
-                std::cout << "Aktuelle Batteriespannung: " << voltage << " V\n";
-                if (voltage < config.grid.battVoltageStartLoading) {
-                    std::cout << "Niedrige Spannung erkannt, lade Grid...\n";
-                    triggerLoad();
-                    loadTriggered = true;
-                } else {
-                    std::cout << "Spannung ok, kein Laden notwendig.\n";
+                if (line.find(voltagePrefix) == 0) {
+                    float voltage = parseVoltageLine(line);
+                    std::cout << "Aktuelle Batteriespannung: " << voltage << " V\n";
+                    if (voltage < config.grid.battVoltageStartLoading) {
+                        std::cout << "Niedrige Spannung erkannt, lade Grid...\n";
+                        triggerLoad();
+                        loadTriggered = true;
+                    } else {
+                        std::cout << "Spannung ok, kein Laden notwendig.\n";
+                    }
                 }
             }
+            outfile.close();
+        }
+        else {
+            std::cerr << "Fehler: Konnte readall.py nicht ausführen! Port und Baudrate prüfen!\n";
+            schreibe_zeile_in_datei("/Energiebox/error.log", "Fehler: Konnte readall.py nicht ausführen! Port und Baudrate prüfen!");
+
         }
 
-        outfile.close();
+        
         pclose(pipe);
         return loadTriggered;
     }
