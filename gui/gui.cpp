@@ -522,6 +522,15 @@ private:
                 soc_bar->set_margin_top(0);
                 soc_bar->set_margin_bottom(0);
                 soc_bar->get_style_context()->add_class("soc-bar");
+                if (battpercentInt >= 0 && battpercentInt <= 25) {
+                    soc_bar->get_style_context()->add_class("soc-bar-low");
+                }
+                else if (battpercentInt > 25 && battpercentInt <= 60) {
+                    soc_bar->get_style_context()->add_class("soc-bar-middle");
+                }
+                else if (battpercentInt > 60 && battpercentInt <= 100) {
+                    soc_bar->get_style_context()->add_class("soc-bar-high");
+                }
                 soc_bar->set_fraction(soc / 100.0f);              
                 // progressbar in 2 spalten laden
                 grid->attach(*soc_bar, 0, ++row, 2, 1);

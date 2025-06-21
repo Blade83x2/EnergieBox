@@ -98,7 +98,7 @@ notebook tab:checked {
   color: #750501;
 }
 .data-value-orange {
-  color: #FF8C00;
+  color: #FF7F50;
 }
 .data-value-green {
   color: #01520e;
@@ -110,7 +110,7 @@ notebook tab:checked {
   background: linear-gradient(to right, #2c3e50, #34495e);
   color: white;
   padding: 8px 15px;
-  border-top: 2px solid #3498db;
+  border-top: 2px solid #000;
 }
 
 .status-text {
@@ -123,13 +123,27 @@ notebook tab:checked {
   margin-left: 10px;
 }
 
+/* Batterie Progressbar */
 .soc-bar {
-  min-height: 2px;
-  border-radius: 1px;
-  
+  border: 0px;
 }
-
 .soc-bar progress {
   min-height: 1px;
-   background: linear-gradient(to right, #ff0000, #00ff00);
 }
+.soc-bar-low {
+  background: #ff0000;
+}
+.soc-bar-middle {
+  background: #FF7F50;
+}
+.soc-bar-high {
+  background: #0000ff;
+}
+
+
+
+
+
+
+
+
