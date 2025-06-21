@@ -518,7 +518,7 @@ private:
                 auto* soc_bar = Gtk::manage(new Gtk::ProgressBar());
                 soc_bar->set_show_text(false);
                 soc_bar->set_valign(Gtk::ALIGN_CENTER);
-                soc_bar->set_hexpand(false);
+                soc_bar->set_hexpand(true);
                 soc_bar->set_margin_top(0);
                 soc_bar->set_margin_bottom(0);
                 soc_bar->get_style_context()->add_class("soc-bar");
@@ -536,10 +536,24 @@ private:
                 grid->attach(*soc_bar, 0, ++row, 2, 1);
             }
             else {
+                
+                
+
+                
                 // normale ausgabe
                 auto* label_widget = Gtk::manage(new Gtk::Label(label));
                 label_widget->get_style_context()->add_class("data-label");
                 label_widget->set_halign(Gtk::ALIGN_START);
+                
+                
+                if(label == "Tagesertrag (P)"){
+                
+                    label_widget->set_hexpand(true);
+                
+                
+                }
+                
+                
                 auto* value_widget = Gtk::manage(new Gtk::Label(value));
                 value_widget->get_style_context()->add_class("data-value");
                 // Rote Farbe bestimmen für Werte die derzeit auf 0 stehen
