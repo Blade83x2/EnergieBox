@@ -73,9 +73,6 @@ anzuzeigen, kann der folgende Befehl genutzt werden:<br>
 <code>gui --window</code><br>
 <br>
 
-### 🔧 Programm Parameterjhk
-
-jkgjhg
 
 ## 🔧 Programm Parameter
 
