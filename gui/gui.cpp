@@ -38,6 +38,7 @@ what: stof
 #include <ctime>
 #include <iomanip>
 #include <chrono>
+#include <thread>
 #include <glibmm/optioncontext.h>
 #include <glibmm/optiongroup.h>
 
@@ -539,57 +540,73 @@ private:
 
     // Liest die Datei /Energiebox/Tracer/trace.txt aus, parsed die Werte und aktualisiert den Info-Tab
     bool update_energiebox_tab() {
-        
-        
-        std::ifstream file("/Energiebox/Tracer/trace.txt");
-        debugPrint("Lese /Energiebox/Tracer/trace.txt", LogLevel::INFO);
-        if (!file) {
-            std::cerr << "Fehler beim Öffnen der Datei /Energiebox/Tracer/trace.txt" << std::endl;
-            return true; // Timer soll weitermachen
-        }
-        // Map zum Speichern der ausgelesenen Werte (Schlüssel: String davor, Wert inkl. Einheit dahinter)
+        const std::string filepath = "/Energiebox/Tracer/trace.txt";
+        const int max_attempts = 3;
+        const int retry_delay_seconds = 3;
         std::map<std::string, std::string> values;
-        std::string line;
-        
-        
-        while (std::getline(file, line)) {
-            auto pos = line.find('=');
-            if (pos == std::string::npos) continue;
-            std::string key = line.substr(0, pos);
-            std::string val = line.substr(pos + 1);
-            // Entferne führende und folgende Leerzeichen bei key und val
-            key.erase(0, key.find_first_not_of(" \t\r\n"));
-            key.erase(key.find_last_not_of(" \t\r\n") + 1);
-            val.erase(0, val.find_first_not_of(" \t\r\n"));
-            val.erase(val.find_last_not_of(" \t\r\n") + 1);
-            values[key] = val;
+        bool success = false;
+        for (int attempt = 1; attempt <= max_attempts; ++attempt) {
+            debugPrint("Lese Datei /Energiebox/Tracer/trace.txt", LogLevel::INFO);
+            std::ifstream file(filepath);
+            if (file) {
+                std::string line;
+                while (std::getline(file, line)) {
+                    auto pos = line.find('=');
+                    if (pos == std::string::npos) continue;
+                    std::string key = line.substr(0, pos);
+                    std::string val = line.substr(pos + 1);
+                    key.erase(0, key.find_first_not_of(" \t\r\n"));
+                    key.erase(key.find_last_not_of(" \t\r\n") + 1);
+                    val.erase(0, val.find_first_not_of(" \t\r\n"));
+                    val.erase(val.find_last_not_of(" \t\r\n") + 1);
+                    values[key] = val;
+                }
+                // Falls Werte erfolgreich gelesen wurden
+                if (!values.empty()) {
+                    success = true;
+                    if (attempt > 1) {
+                        debugPrint("Konnte Fehlerhafte Datei /Energiebox/Tracer/trace.txt im " + std::to_string(attempt) + " Versuch lesen", LogLevel::INFO);
+                    }
+                    break;
+                }
+            }
+            // Kein Erfolg – wenn letzter Versuch, abbrechen
+            if (attempt < max_attempts) {
+                debugPrint("Kann Datei /Energiebox/Tracer/trace.txt nicht lesen – warte " + std::to_string(retry_delay_seconds) + " Sekunden... Versuch: " + std::to_string(attempt), LogLevel::WARN);
+                std::this_thread::sleep_for(std::chrono::seconds(retry_delay_seconds));
+            }
         }
-    
-
-        
-        // Daten für PV Tabelle
+        if (!success) {
+            //std::cerr << "Fehler: Konnte Datei /Energiebox/Tracer/trace.txt nach " + std::to_string(max_attempts) + " Versuchen nicht erfolgreich lesen." << std::endl;
+            debugPrint("Konnte Datei /Energiebox/Tracer/trace.txt nach " + std::to_string(max_attempts) + " Versuchen nicht erfolgreich lesen.", LogLevel::ERROR);
+            // boxen ausblenden
+            auto children = energiebox_data_container_->get_children();
+            for (auto* child : children) {
+                energiebox_data_container_->remove(*child);
+            }
+            energiebox_data_container_->show_all();
+            return true; // Timer soll trotzdem weiterlaufen
+        }
+        // PV Daten
         std::vector<std::pair<std::string, std::string>> pv_data = {
-            {"Spannung (U)    ", values["PV Array: Aktuelle Spannung in Volt"]},
-            {"Ampere (I)", values["PV Array: Aktueller Strom in Ampere"]},
+            {"Spannung (U)", values["PV Array: Aktuelle Spannung in Volt"]},
+            {"Ampere (I)",  values["PV Array: Aktueller Strom in Ampere"]},
             {"Leistung (P)", values["PV Array: Aktuelle Leistung in Watt"]},
             {"Heute total", values["PV Array: Generierte Energie heute"]}
         };
-        
-        // Daten für Batterie Tabelle
+        // Batterie Daten
         std::vector<std::pair<std::string, std::string>> battery_data = {
-            {"Spannung (U)    ", values["Batterie: Aktuelle Spannung in Volt"]},
-            {"Ampere (I)", values["Batterie: Derzeitiger Ladestrom in Ampere"]},
+            {"Spannung (U)", values["Batterie: Aktuelle Spannung in Volt"]},
+            {"Ampere (I)",  values["Batterie: Derzeitiger Ladestrom in Ampere"]},
             {"Leistung (P)", values["Batterie: Derzeitige Ladeleistung in Watt"]},
             {"SOC", values["Batterie: Ladezustand in Prozent"]}
         };
-        
-        // Alten Inhalt entfernen falls vorhanden
+        // Bestehende GUI-Widgets entfernen
         auto children = energiebox_data_container_->get_children();
         for (auto* child : children) {
             energiebox_data_container_->remove(*child);
         }
-        
-        // Neue Tabellen erstellen und hinzufügen
+        // Neue Tabellen erstellen
         auto* pv_table = create_data_table(pv_data, "🌞 PV MPPT Status");
         auto* battery_table = create_data_table(battery_data, "🔋 Batterie Ladestatus");
         pv_table->set_margin_start(0);
@@ -599,11 +616,9 @@ private:
         energiebox_data_container_->pack_start(*pv_table, Gtk::PACK_EXPAND_WIDGET);
         energiebox_data_container_->pack_start(*battery_table, Gtk::PACK_EXPAND_WIDGET);
         energiebox_data_container_->show_all();
-        
-        
-        
-        return true; // Timer soll weiterlaufen
+        return true;
     }
+
 
     Gtk::Notebook notebook_;       // Tab-Widget
     Gtk::Box* energiebox_data_container_ = nullptr; // Container für Energiebox-Daten
