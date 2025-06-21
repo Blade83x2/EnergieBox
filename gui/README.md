@@ -1,7 +1,8 @@
 # Grafische Benutzeroberfläche & Status Monitoring
 
-Dieses Programm stellt Funktionen wie das Schalten von Geräten oder System- Monitoring über eine grafische Benutzeroberfläche<br>
-zur Verfügung. Die Anwendung ist für Touchdisplays (800x480) optimiert und läuft als Vollbild- Anwendung auf dem Raspberry.<br>
+Dieses Programm stellt Funktionen wie das Schalten von Geräten oder System- Monitoring über eine grafische<br>
+Benutzeroberfläche zur Verfügung. Die Anwendung ist für Touchdisplays (800x480) optimiert und läuft als<br>
+Vollbild- Anwendung auf dem Raspberry.<br>
 <br>
 MPPT Laderegler- Daten sowie Informationen über den Batterie- Zustand werden jede 3 Minuten aktualisiert.<br>
 Die Schaltzustände werden jede 10 Sekunden überprüft und gegebenfalls aktualisiert!<br>
@@ -36,10 +37,10 @@ Die Geräte können direkt von hier aus mit einem Tastendruck aus bzw. eingescha
 <br>
 Wenn z.B. in der Konfiguration von 230V eingetragen wurde, dass der 230 Volt Inverter<br>
 eine Dauerleistung von 5000 Watt leistet und derzeit Geräte in der Liste aktiviert sind<br>
-die mit einem Verbrauch von 4000 Watt eingetragen sind, dann kann in diesem Moment kein weiteres Gerät<br>
-eingeschaltet werden welches mehr als 1000 Watt benötigt. In diesem Fall wird vom Programm<br>
-eine Meldung ausgegeben die besagt das nicht genügend Leistung vorhanden ist.<br>
-Um dieses Gerät trotzdem einzuschalten, müssen vorher andere Geräte ausgeschaltet werden!<br>
+die mit einem Verbrauch von 4000 Watt eingetragen sind, dann kann in diesem Moment kein<br>
+weiteres Gerät eingeschaltet werden welches mehr als 1000 Watt benötigt. In diesem Fall<br>
+wird vom Programm eine Meldung ausgegeben die besagt das nicht genügend Leistung vorhanden ist.<br>
+Um dieses Gerät trotzdem einzuschalten, müssen dann vorher andere Geräte ausgeschaltet werden!<br>
 <br>
 <br>
 Tab 230V
