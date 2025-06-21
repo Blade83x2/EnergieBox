@@ -97,7 +97,9 @@ notebook tab:checked {
 .data-value-red {
   color: #750501;
 }
-
+.data-value-orange {
+  color: #FF8C00;
+}
 .data-value-green {
   color: #01520e;
 }

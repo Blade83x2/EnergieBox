@@ -498,12 +498,15 @@ private:
                 battpercentStr = value;
                 battpercentStr.pop_back();
                 battpercentInt = std::stoi(battpercentStr);
-                if (battpercentInt >= 0 && battpercentInt <= 20) {
-                
+                if (battpercentInt >= 0 && battpercentInt <= 25) {
                     value_widget->get_style_context()->add_class("data-value-red");
-                    
                 }
-                
+                else if (battpercentInt > 25 && battpercentInt <= 60) {
+                    value_widget->get_style_context()->add_class("data-value-orange");
+                }
+                else if (battpercentInt > 60 && battpercentInt <= 100) {
+                    value_widget->get_style_context()->add_class("data-value-green");
+                }
                 value_widget->set_halign(Gtk::ALIGN_END);
                 grid->attach(*label_widget, 0, row, 1, 1);
                 grid->attach(*value_widget, 1, row, 1, 1);
