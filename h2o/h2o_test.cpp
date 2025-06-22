@@ -7,6 +7,7 @@
 
 
 #include <iostream>
+#include "config.h"
 #include "H2OSetupManager.h"
 #include "H2OFilterManager.h"
 #include <iomanip>
@@ -21,7 +22,6 @@
 #include "iniparse.h"
 #include "mymcp23017.h"
 #include "DebugLogger.h"
-#include "config.h"
 
 using namespace std;
 
@@ -91,14 +91,6 @@ void showHelp() {
 )" << endl;
 }
 
-void printStatistik() {
-    cout << "\n--- Statistik ---\n";
-    cout << "Gefilterte Gesamtmenge: " << fixed << setprecision(2) << config.filter.filter_total_liter << " Liter\n";
-    cout << "Abwasser gesamt: " << fixed << setprecision(2) << config.tank.abwassertank_total_liter << " Liter\n";
-    cout << "Max. Abwassertank: " << fixed << setprecision(2) << config.tank.abwassertank_groesse << " Liter\n";
-    cout << "Warnlimit Filtermenge: " << fixed << setprecision(2) << config.filter.filter_max_menge_filtern << " Liter\n";
-}
-
 
 int main(int argc, char* argv[]) {
     DebugLogger::setEnabled(true);
@@ -134,11 +126,12 @@ int main(int argc, char* argv[]) {
         filter.leereAbwassertank();
     }
     else if (param == "-setup") {
-        H2OSetupManager setup;
+        H2OSetupManager setup(config);
         setup.runSetup();
     }
     else if (param == "-stats") {
-        printStatistik();
+        H2OFilterManager filter(config);
+        filter.printStatistik();
     }
     else {
         // Versuchen, Parameter als Zahl (Filtermenge) zu interpretieren

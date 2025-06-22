@@ -4,12 +4,12 @@ Energiebox Ver.5 #
 
 
  TODO´s
-
+ + Kaufen: Batterie Balancer HA12L-2S24V (2*24V) (LED Display) EUR 45,00/Stk.
  + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen - SOFTWARE ANPASSEN
  + Lüftersteuerung hinzufügen
  + Alle Leitungsschutzschalter für gesamten 230V Kreislauf einbauen (Ceranfeld auf 20A, Rest auf 16A)
  + Hauptsicherung auf 125A beschränken wegen Batterien
-
+ + EPEVER Setup https://www.youtube.com/watch?v=XjJsfhmdI9g
 
  
   startup -> mehr pause zwischen dem einschalten der relais

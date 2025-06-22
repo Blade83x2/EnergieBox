@@ -1,3 +1,4 @@
+#include "H2OFilterManager.h"
 #include "H2OSetupManager.h"
 #include <iostream>
 #include <cstdio>
@@ -7,10 +8,15 @@
 #include "config.h"
 #include <limits>
 
-extern Configuration config;
+
+H2OSetupManager::H2OSetupManager(Configuration& configRef) : config(configRef) {}
+
+
+
 extern int handler(void* user, const char* section, const char* name, const char* value);
 
 void H2OSetupManager::runSetup() {
+    
     DebugLogger::setEnabled(true);
     if (ini_parse("/Energiebox/h2o/config.ini", handler, &config) < 0) {
         DebugLogger::log("Can't load '/Energiebox/h2o/config.ini", DebugLogger::ERROR);
@@ -79,7 +85,7 @@ void H2OSetupManager::runSetup() {
                                             } else {
                                                 // gültige Eingabe von filter_verhaeltnis
                                                 while (true) {
-                                                    std::cout << "-> Wieviele Sekunden sollen bei einer Spüllung gespült werden?: ";
+                                                    std::cout << "-> Wieviele Sekunden sollen bei einer Spülung gespült werden?: ";
                                                     std::cin >> filter_clean_time;
                                                     if (std::cin.fail() || filter_clean_time < 1 || filter_clean_time > 1800 ) {
                                                         std::cin.clear(); // Fehlerstatus zurücksetzen
@@ -110,6 +116,9 @@ void H2OSetupManager::runSetup() {
                                                                         }
                                                                     } 
                                                                 }
+                                                                double literZiel = 0.1;     // gewünschte Literanzahl
+                                                                H2OFilterManager filter(config);
+                                                                filter_zeit_100ml = filter.filterDauerInSekunden(literZiel, static_cast<double>(filter_gpd));
                                                                 sprintf(command, "bash /Energiebox/h2o/setIni2.sh %d %d %d %d %d %d %d %f %d %d %f", ventil_pumpe, hex_generator, filter_gpd, filter_max_menge_filtern, filter_verhaeltnis, filter_clean_time, filter_zeit_100ml, filter_total_liter, abwassertank_vorhanden,abwassertank_groesse, abwassertank_total_liter  );
                                                                 system(command);
                                                                 //std::cout << "\n" << command << "\n\n";
