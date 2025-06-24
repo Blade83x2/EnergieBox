@@ -146,8 +146,7 @@ class BatteryController {
         std::array<char, 256> buffer;
         FILE *pipe = popen(readallCmd.c_str(), "r");
         if (!pipe) {
-            std::cerr << "/Energiebox/Tracer/trace: Fehler: \"Konnte python3 "
-                      << "/Energiebox/Tracer/readall.py\" nicht ausführen\n";
+            std::cerr << "/Energiebox/Tracer/trace: Fehler: \"Konnte python3 /Energiebox/Tracer/readall.py\" nicht ausführen\n";
             return false;
         }
         std::ofstream outfile(outputPath);
@@ -192,8 +191,7 @@ class BatteryController {
         }
         outfile.close();
         pclose(pipe);
-        speichereInDatenbank(pv_volt, pv_ampere, pv_power, batt_volt, batt_ampere, batt_power,
-                             batt_soc, generated_power, grid_load_active);
+        speichereInDatenbank(pv_volt, pv_ampere, pv_power, batt_volt, batt_ampere, batt_power, batt_soc, generated_power, grid_load_active);
         return loadTriggered;
     }
 };
@@ -203,5 +201,6 @@ int main() {
     if (!controller.run()) {
         return EXIT_FAILURE;
     }
+
     return EXIT_SUCCESS;
 }
