@@ -1,10 +1,10 @@
 # https://clang.llvm.org/docs/ClangFormatStyleOptions.html
 # Stil-Basis: LLVM Google Chromium Mozilla WebKit Microsoft GNU
-BasedOnStyle: GNU
+BasedOnStyle: LLVM
 IndentWidth: 4      # Einrückung mit 4 Leerzeichen
 TabWidth: 4         # Tabulatoren zählen als 4 Leerzeichen
 UseTab: Never       # Never|Always 
-BreakBeforeBraces: Stroustrup   # Allman / Attach / Linux / Stroustrup / Mozilla 
+BreakBeforeBraces: Attach   # Allman / Attach / Linux / Stroustrup / Mozilla 
 ColumnLimit: 0    # 80, 100, 0 (kein Limit)	Maximale Zeilenlänge
 AllowShortIfStatementsOnASingleLine: true   # if/else immer mit Blockklammern umbrechen
 AllowShortLoopsOnASingleLine: true          # true | false Einzeilige for/while Schleifen

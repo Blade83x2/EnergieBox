@@ -14,9 +14,7 @@ std::string StatusBlock::traceData;
  * @return float Der extrahierte Wert als float. Gibt 0.0f zurück, wenn keine Zahl gefunden werden
  * kann.
  */
-float
-StatusBlock::extractValue(const std::string &line)
-{
+float StatusBlock::extractValue(const std::string &line) {
     size_t pos = line.find('=');
     if(pos == std::string::npos)
         return 0.0f;
@@ -24,8 +22,7 @@ StatusBlock::extractValue(const std::string &line)
     std::string valStr = line.substr(pos + 1);
     try {
         return std::stof(valStr);
-    }
-    catch(...) {
+    } catch(...) {
         return 0.0f;  // Rückfall bei fehlerhafter Umwandlung
     }
 }
@@ -37,9 +34,7 @@ StatusBlock::extractValue(const std::string &line)
  * @return true Datei wurde erfolgreich gelesen.
  * @return false Datei konnte nicht geöffnet werden.
  */
-bool
-StatusBlock::loadTraceFile(const std::string &filename)
-{
+bool StatusBlock::loadTraceFile(const std::string &filename) {
     std::ifstream file(filename);
     if(!file.is_open())
         return false;
@@ -54,9 +49,7 @@ StatusBlock::loadTraceFile(const std::string &filename)
  * @brief Löscht den Terminalbildschirm mithilfe von ANSI-Escape-Codes.
  *        Cursor wird danach auf Position (0, 0) gesetzt.
  */
-void
-StatusBlock::clearScreen()
-{
+void StatusBlock::clearScreen() {
     std::cout << "\033[2J\033[H";
 }
 
@@ -65,9 +58,7 @@ StatusBlock::clearScreen()
  *
  * @param header Überschrift des folgenden Blocks (z. B. "PV Status").
  */
-void
-StatusBlock::printHeader(const std::string &header)
-{
+void StatusBlock::printHeader(const std::string &header) {
     std::cout << "=== " << header << " ===\n\n";
 }
 
@@ -79,9 +70,7 @@ StatusBlock::printHeader(const std::string &header)
  * @param showPercent true: zeigt den Wert mit Prozentzeichen und einer Nachkommastelle.
  * @param showSpace true: hängt ein Leerzeichen nach der Einheit an.
  */
-void
-StatusBlock::printFloat(float value, const char *unit, bool showPercent, bool showSpace)
-{
+void StatusBlock::printFloat(float value, const char *unit, bool showPercent, bool showSpace) {
     if(showPercent)
         std::cout << std::fixed << std::setprecision(1) << value << "%";
     else
@@ -97,9 +86,7 @@ StatusBlock::printFloat(float value, const char *unit, bool showPercent, bool sh
  * @param value Aktueller Wert.
  * @param maxValue Maximaler möglicher Wert (repräsentiert einen vollen Balken).
  */
-void
-StatusBlock::printBar(float value, float maxValue)
-{
+void StatusBlock::printBar(float value, float maxValue) {
     const int barWidth = 30;
     int filled = static_cast<int>((value / maxValue) * barWidth);
     if(filled < 0)

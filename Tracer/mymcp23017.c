@@ -17,8 +17,7 @@ int fd;
  * Bit number associated to a give Pin
  */
 uint8_t
-mcp_bitForPin(uint8_t pin)
-{
+mcp_bitForPin(uint8_t pin) {
     return pin % 8;
 }
 
@@ -26,8 +25,7 @@ mcp_bitForPin(uint8_t pin)
  * Register address, port dependent, for a given PIN
  */
 uint8_t
-mcp_regForPin(uint8_t pin, uint8_t portAaddr, uint8_t portBaddr)
-{
+mcp_regForPin(uint8_t pin, uint8_t portAaddr, uint8_t portBaddr) {
     return (pin < 8) ? portAaddr : portBaddr;
 }
 
@@ -35,17 +33,14 @@ mcp_regForPin(uint8_t pin, uint8_t portAaddr, uint8_t portBaddr)
  * Reads a given register
  */
 uint8_t
-mcp_readRegister(uint8_t regAddr)
-{
+mcp_readRegister(uint8_t regAddr) {
     return wiringPiI2CReadReg8(fd, regAddr);
 }
 
 /**
  * Writes a given register
  */
-void
-mcp_writeRegister(uint8_t regAddr, uint8_t regValue)
-{
+void mcp_writeRegister(uint8_t regAddr, uint8_t regValue) {
     wiringPiI2CWriteReg8(fd, regAddr, regValue);
 }
 
@@ -54,9 +49,7 @@ mcp_writeRegister(uint8_t regAddr, uint8_t regValue)
  * - Reads the current register value
  * - Writes the new register value
  */
-void
-mcp_updateRegisterBit(uint8_t pin, uint8_t pValue, uint8_t portAaddr, uint8_t portBaddr)
-{
+void mcp_updateRegisterBit(uint8_t pin, uint8_t pValue, uint8_t portAaddr, uint8_t portBaddr) {
     uint8_t regValue;
     uint8_t regAddr = mcp_regForPin(pin, portAaddr, portBaddr);
     uint8_t bit = mcp_bitForPin(pin);
@@ -69,9 +62,7 @@ mcp_updateRegisterBit(uint8_t pin, uint8_t pValue, uint8_t portAaddr, uint8_t po
 /**
  * Initializes the MCP23017 given its HW selected address, see datasheet for Address selection.
  */
-void
-mcp_begin(uint8_t addr)
-{
+void mcp_begin(uint8_t addr) {
     if(addr > 7) {
         addr = 7;
     }
@@ -81,16 +72,13 @@ mcp_begin(uint8_t addr)
 /**
  * This init the reg value, change the value to the default
  */
-void
-mcp_initReg(void)
-{
+void mcp_initReg(void) {
     // set defaults!
     // all inputs on port A and B
     for(int addr = 0; addr < 22; addr++) {
         if((addr == 0) || (addr == 1)) {
             wiringPiI2CWriteReg8(fd, addr, 0xff);
-        }
-        else {
+        } else {
             wiringPiI2CWriteReg8(fd, addr, 0x00);
         }
     }
@@ -100,9 +88,7 @@ mcp_initReg(void)
  * Sets the pin mode to either INPUT or OUTPUT
  * 0 means output, 1 means input
  */
-void
-mcp_pinMode(uint8_t p, uint8_t d)
-{
+void mcp_pinMode(uint8_t p, uint8_t d) {
     mcp_updateRegisterBit(p, d, MCP23017_IODIRA, MCP23017_IODIRB);
 }
 
@@ -110,8 +96,7 @@ mcp_pinMode(uint8_t p, uint8_t d)
  * Reads all 16 pins (port A and B) into a single 16 bits variable.
  */
 uint16_t
-mcp_readGPIOAB(void)
-{
+mcp_readGPIOAB(void) {
     uint16_t ba = 0;
     uint8_t a;
     // read the current GPIO output latches
@@ -131,14 +116,12 @@ mcp_readGPIOAB(void)
  * Parameter b should be 0 for GPIOA, and 1 for GPIOB.
  */
 uint8_t
-mcp_readGPIO(uint8_t b)
-{
+mcp_readGPIO(uint8_t b) {
     // read the current GPIO output latches
     uint8_t reg_data;
     if(b == 0) {
         reg_data = wiringPiI2CReadReg8(fd, MCP23017_GPIOA);
-    }
-    else {
+    } else {
         reg_data = wiringPiI2CReadReg8(fd, MCP23017_GPIOB);
     }
     return reg_data;
@@ -148,18 +131,14 @@ mcp_readGPIO(uint8_t b)
  * Writes all the pins in one go. This method is very useful if you are implementing a multiplexed
  * matrix and want to get a decent refresh rate.
  */
-void
-mcp_writeGPIOAB(uint16_t ba)
-{
-    uint8_t reg_data[2] = { ba & 0xFF, ba >> 8 };
+void mcp_writeGPIOAB(uint16_t ba) {
+    uint8_t reg_data[2] = {ba & 0xFF, ba >> 8};
     wiringPiI2CWriteReg8(fd, MCP23017_GPIOA, reg_data[0]);
     // theoretically, the register addr is MCP23017_GPIOA is also OK!
     wiringPiI2CWriteReg8(fd, MCP23017_GPIOB, reg_data[1]);
 }
 
-void
-mcp_digitalWrite(uint8_t pin, uint8_t d)
-{
+void mcp_digitalWrite(uint8_t pin, uint8_t d) {
     uint8_t gpio;
     uint8_t bit = mcp_bitForPin(pin);
     // read the current GPIO output latches
@@ -172,15 +151,12 @@ mcp_digitalWrite(uint8_t pin, uint8_t d)
     mcp_writeRegister(regAddr, gpio);
 }
 
-void
-mcp_pullUp(uint8_t p, uint8_t d)
-{
+void mcp_pullUp(uint8_t p, uint8_t d) {
     mcp_updateRegisterBit(p, d, MCP23017_GPPUA, MCP23017_GPPUB);
 }
 
 uint8_t
-mcp_digitalRead(uint8_t pin)
-{
+mcp_digitalRead(uint8_t pin) {
     uint8_t bit = mcp_bitForPin(pin);
     uint8_t regAddr = mcp_regForPin(pin, MCP23017_GPIOA, MCP23017_GPIOB);
     return (mcp_readRegister(regAddr) >> bit) & 0x1;
@@ -195,9 +171,7 @@ mcp_digitalRead(uint8_t pin)
  * If you are connecting the INTA/B pin to arduino 2/3, you should configure the interupt handling
  * as FALLING with the default configuration.
  */
-void
-mcp_setupInterrupts(uint8_t mirroring, uint8_t openDrain, uint8_t polarity)
-{
+void mcp_setupInterrupts(uint8_t mirroring, uint8_t openDrain, uint8_t polarity) {
     // configure the port A
     uint8_t ioconfValue = mcp_readRegister(MCP23017_IOCONA);
     bitWrite(ioconfValue, 6, mirroring);
@@ -219,9 +193,7 @@ mcp_setupInterrupts(uint8_t mirroring, uint8_t openDrain, uint8_t polarity)
  * that caused the interrupt or you read the port itself. Check the datasheet can be confusing.
  *
  */
-void
-mcp_setupInterruptPin(uint8_t pin, uint8_t mode)
-{
+void mcp_setupInterruptPin(uint8_t pin, uint8_t mode) {
     // set the pin interrupt control (0 means change, 1 means compare against given value);
     mcp_updateRegisterBit(pin, mode, MCP23017_INTCONA, MCP23017_INTCONB);
     // if the mode is not CHANGE, we need to set up a default value, different value triggers
@@ -234,8 +206,7 @@ mcp_setupInterruptPin(uint8_t pin, uint8_t mode)
 }
 
 uint8_t
-mcp_getLastInterruptPin(void)
-{
+mcp_getLastInterruptPin(void) {
     uint8_t intf;
     // try port A
     intf = mcp_readRegister(MCP23017_INTFA);
@@ -256,8 +227,7 @@ mcp_getLastInterruptPin(void)
 }
 
 uint8_t
-mcp_getLastInterruptPinValue(void)
-{
+mcp_getLastInterruptPinValue(void) {
     uint8_t intPin = mcp_getLastInterruptPin();
     if(intPin != MCP23017_INT_ERR) {
         uint8_t intcapreg = mcp_regForPin(intPin, MCP23017_INTCAPA, MCP23017_INTCAPB);

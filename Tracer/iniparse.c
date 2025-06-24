@@ -31,8 +31,7 @@ typedef struct
 
 /* Strip whitespace chars off end of given string, in place. Return s. */
 static char *
-rstrip(char *s)
-{
+rstrip(char *s) {
     char *p = s + strlen(s);
     while(p > s && isspace((unsigned char)(*--p)))
         *p = '\0';
@@ -41,8 +40,7 @@ rstrip(char *s)
 
 /* Return pointer to first non-whitespace char in given string. */
 static char *
-lskip(const char *s)
-{
+lskip(const char *s) {
     while(*s && isspace((unsigned char)(*s)))
         s++;
     return (char *)s;
@@ -52,12 +50,10 @@ lskip(const char *s)
    or pointer to NUL at end of string if neither found. Inline comment must
    be prefixed by a whitespace character to register as a comment. */
 static char *
-find_chars_or_comment(const char *s, const char *chars)
-{
+find_chars_or_comment(const char *s, const char *chars) {
 #if INI_ALLOW_INLINE_COMMENTS
     int was_space = 0;
-    while(*s && (!chars || !strchr(chars, *s))
-          && !(was_space && strchr(INI_INLINE_COMMENT_PREFIXES, *s))) {
+    while(*s && (!chars || !strchr(chars, *s)) && !(was_space && strchr(INI_INLINE_COMMENT_PREFIXES, *s))) {
         was_space = isspace((unsigned char)(*s));
         s++;
     }
@@ -72,8 +68,7 @@ find_chars_or_comment(const char *s, const char *chars)
 /* Similar to strncpy, but ensures dest (size bytes) is
    NUL-terminated, and doesn't pad with NULs. */
 static char *
-strncpy0(char *dest, const char *src, size_t size)
-{
+strncpy0(char *dest, const char *src, size_t size) {
     /* Could use strncpy internally, but it causes gcc warnings (see issue #91) */
     size_t i;
     for(i = 0; i < size - 1 && src[i]; i++)
@@ -83,9 +78,7 @@ strncpy0(char *dest, const char *src, size_t size)
 }
 
 /* See documentation in header file. */
-int
-ini_parse_stream(ini_reader reader, void *stream, ini_handler handler, void *user)
-{
+int ini_parse_stream(ini_reader reader, void *stream, ini_handler handler, void *user) {
     /* Uses a fair bit of stack (use heap instead if you need to) */
 #if INI_USE_STACK
     char line[INI_MAX_LINE];
@@ -147,8 +140,7 @@ ini_parse_stream(ini_reader reader, void *stream, ini_handler handler, void *use
 
         start = line;
 #if INI_ALLOW_BOM
-        if(lineno == 1 && (unsigned char)start[0] == 0xEF && (unsigned char)start[1] == 0xBB
-           && (unsigned char)start[2] == 0xBF) {
+        if(lineno == 1 && (unsigned char)start[0] == 0xEF && (unsigned char)start[1] == 0xBB && (unsigned char)start[2] == 0xBF) {
             start += 3;
         }
 #endif
@@ -176,13 +168,11 @@ ini_parse_stream(ini_reader reader, void *stream, ini_handler handler, void *use
                 if(!HANDLER(user, section, NULL, NULL) && !error)
                     error = lineno;
 #endif
-            }
-            else if(!error) {
+            } else if(!error) {
                 /* No ']' found on section line */
                 error = lineno;
             }
-        }
-        else if(*start) {
+        } else if(*start) {
             /* Not a comment, must be a name[=:]value pair */
             end = find_chars_or_comment(start, "=:");
             if(*end == '=' || *end == ':') {
@@ -201,8 +191,7 @@ ini_parse_stream(ini_reader reader, void *stream, ini_handler handler, void *use
                 strncpy0(prev_name, name, sizeof(prev_name));
                 if(!HANDLER(user, section, name, value) && !error)
                     error = lineno;
-            }
-            else if(!error) {
+            } else if(!error) {
                 /* No '=' or ':' found on name[=:]value line */
 #if INI_ALLOW_NO_VALUE
                 *end = '\0';
@@ -229,16 +218,12 @@ ini_parse_stream(ini_reader reader, void *stream, ini_handler handler, void *use
 }
 
 /* See documentation in header file. */
-int
-ini_parse_file(FILE *file, ini_handler handler, void *user)
-{
+int ini_parse_file(FILE *file, ini_handler handler, void *user) {
     return ini_parse_stream((ini_reader)fgets, file, handler, user);
 }
 
 /* See documentation in header file. */
-int
-ini_parse(const char *filename, ini_handler handler, void *user)
-{
+int ini_parse(const char *filename, ini_handler handler, void *user) {
     FILE *file;
     int error;
 
@@ -253,8 +238,7 @@ ini_parse(const char *filename, ini_handler handler, void *user)
 /* An ini_reader function to read the next line from a string buffer. This
    is the fgets() equivalent used by ini_parse_string(). */
 static char *
-ini_reader_string(char *str, int num, void *stream)
-{
+ini_reader_string(char *str, int num, void *stream) {
     ini_parse_string_ctx *ctx = (ini_parse_string_ctx *)stream;
     const char *ctx_ptr = ctx->ptr;
     size_t ctx_num_left = ctx->num_left;
@@ -280,9 +264,7 @@ ini_reader_string(char *str, int num, void *stream)
 }
 
 /* See documentation in header file. */
-int
-ini_parse_string(const char *string, ini_handler handler, void *user)
-{
+int ini_parse_string(const char *string, ini_handler handler, void *user) {
     ini_parse_string_ctx ctx;
 
     ctx.ptr = string;

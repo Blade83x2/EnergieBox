@@ -88,11 +88,11 @@ format: .clang-format
 .clang-format:
 	@echo "# https://clang.llvm.org/docs/ClangFormatStyleOptions.html"   > .clang-format
 	@echo "# Stil-Basis: LLVM Google Chromium Mozilla WebKit Microsoft GNU"   >> .clang-format
-	@echo "BasedOnStyle: GNU"                           >> .clang-format
+	@echo "BasedOnStyle: LLVM"                           >> .clang-format
 	@echo "IndentWidth: 4      # Einrückung mit 4 Leerzeichen" >> .clang-format
 	@echo "TabWidth: 4         # Tabulatoren zählen als 4 Leerzeichen" >> .clang-format
 	@echo "UseTab: Never       # Never|Always " >> .clang-format
-	@echo "BreakBeforeBraces: Stroustrup   # Allman / Attach / Linux / Stroustrup / Mozilla " >> .clang-format
+	@echo "BreakBeforeBraces: Attach   # Allman / Attach / Linux / Stroustrup / Mozilla " >> .clang-format
 	@echo "ColumnLimit: 0    # 80, 100, 0 (kein Limit)	Maximale Zeilenlänge" >> .clang-format
 	@echo "AllowShortIfStatementsOnASingleLine: true   # if/else immer mit Blockklammern umbrechen" >> .clang-format
 	@echo "AllowShortLoopsOnASingleLine: true          # true | false Einzeilige for/while Schleifen" >> .clang-format

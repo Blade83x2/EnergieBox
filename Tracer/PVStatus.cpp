@@ -20,9 +20,7 @@
  * @return true Immer true, da aktuell keine Fehlerbehandlung für fehlende Daten erfolgt.
  */
 
-bool
-PVStatus::update()
-{
+bool PVStatus::update() {
     voltage = 0.0f;
     current = 0.0f;
     power = 0.0f;
@@ -65,9 +63,7 @@ PVStatus::update()
  * - Fester Breite
  * - ASCII-Fortschrittsbalken (bei V, A, W)
  */
-void
-PVStatus::draw() const
-{
+void PVStatus::draw() const {
     printHeader("PV Status");
 
     // Spannung

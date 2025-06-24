@@ -5,9 +5,7 @@
 #include <sstream>
 #include <string>
 
-bool
-BatteryStatus::update()
-{
+bool BatteryStatus::update() {
     soc = 0.0f;
     voltage = 0.0f;
 
@@ -22,9 +20,7 @@ BatteryStatus::update()
     return true;
 }
 
-void
-BatteryStatus::draw() const
-{
+void BatteryStatus::draw() const {
     printHeader("Batterie Status");
 
     std::cout.width(WIDTH_LABEL);

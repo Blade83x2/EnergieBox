@@ -5,18 +5,14 @@
 #include <string>
 #include <thread>
 
-void
-printUsage()
-{
+void printUsage() {
     std::cout << "Nutzung: epever [Option]\n"
               << "Optionen:\n"
               << "  -l, --loop      Wiederholt die Anzeige alle 60 Sekunden\n"
               << "  -h, --help      Zeigt diese Hilfe an\n";
 }
 
-int
-main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     bool loop = false;
 
     // Parameter checken .
@@ -25,11 +21,9 @@ main(int argc, char *argv[])
         if(arg == "--help" || arg == "-h") {
             printUsage();
             return 0;
-        }
-        else if(arg == "--loop" || arg == "-l") {
+        } else if(arg == "--loop" || arg == "-l") {
             loop = true;
-        }
-        else {
+        } else {
             std::cerr << "Unbekannte Option: " << arg << "\n\n";
             printUsage();
             return 1;
