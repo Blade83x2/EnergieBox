@@ -142,6 +142,7 @@ class BatteryController {
 
   public:
     bool run() {
+        std::cout << "test ";
         if (!loadConfig()) {
             std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte Config nicht laden: "
                       << configPath << "\n";
