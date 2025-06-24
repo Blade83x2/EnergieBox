@@ -31,7 +31,7 @@ struct GridSetup {
     float battVoltageStartLoading = 0.0f;
     int loadingCapacityWh = 0;
 };
-
+// Strukt
 struct Configuration {
     MCPSetup mcp;
     GridSetup grid;
@@ -45,8 +45,7 @@ schreibe_zeile_in_datei(const std::string &dateipfad, const std::string &textzei
         datei << textzeile << std::endl;
     }
     else {
-        std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte Datei nicht öffnen: " << dateipfad
-                  << std::endl;
+        std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte Datei nicht öffnen: " << dateipfad << std::endl;
     }
 }
 
