@@ -9,6 +9,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 
+
 // Funktionen vordeklarieren
 static int handler(void* config, const char* section, const char* name, const char* value);
 int getElkoState(int relais, void* config);
