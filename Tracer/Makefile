@@ -16,7 +16,7 @@ CPP_COMPILER = g++
 GROUP        = energiebox
 
 CFLAGS       = -std=gnu99 -Wall -lwiringPi -lmysqlclient
-CPPFLAGS     = -std=c++17 -Wall
+CPPFLAGS     = -std=c++17 -Wall -lwiringPi -lmysqlclient
 
 # Build-Info
 BUILD_DATE := $(shell date +%Y-%m-%d)

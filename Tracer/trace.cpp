@@ -17,12 +17,12 @@
 #include <stdexcept>
 #include <string>
 #include <unistd.h>  // für access() und F_OK
-
+// Strukt
 struct MCPSetup {
     int address = 0;
     int numberOfRelaisActive = 0;
 };
-
+// Strukt
 struct GridSetup {
     float supplyMaxCurrent = 0.0f;
     float supplyMaxVoltage = 0.0f;
@@ -83,7 +83,6 @@ class BatteryController {
     loadConfig() {
         return ini_parse(configPath.c_str(), handler, &config) >= 0;
     }
-
     float
     parseVoltageLine(const std::string &line) {
         auto pos = line.find(voltagePrefix);
@@ -146,8 +145,7 @@ class BatteryController {
         std::array<char, 256> buffer;
         FILE *pipe = popen(readallCmd.c_str(), "r");
         if(!pipe) {
-            std::cerr << "/Energiebox/Tracer/trace: Fehler: \"Konnte python3 "
-                         "/Energiebox/Tracer/readall.py\" nicht ausführen\n";
+            std::cerr << "/Energiebox/Tracer/trace: Fehler: \"Konnte python3 /Energiebox/Tracer/readall.py\" nicht ausführen\n";
             return false;
         }
         std::ofstream outfile(outputPath);
