@@ -139,7 +139,7 @@ stop_spinner $?
 start_spinner 'box@Energiebox:/Energiebox/Tracer:$ make'
 sleep 1;
 cd /Energiebox/Tracer
-sudo make clean
+sudo make clean  > /dev/null
 sudo make format  > /dev/null
 sudo make  > /Energiebox/makeResult.txt;
 result=$?;
