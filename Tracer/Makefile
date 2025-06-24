@@ -8,7 +8,7 @@
 # https://www.c-howto.de/tutorial/makefiles/erweiterungen/
 C_COMPILER   = gcc
 CPP_COMPILER = g++
-CFLAGS       = -std=gnu99 -lwiringPi
+CFLAGS       = -std=gnu99 -lwiringPi -lmysqlclient
 CPPFLAGS     = -std=c++17
 
 C_OBJ   = mymcp23017.o iniparse.o

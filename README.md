@@ -24,43 +24,67 @@ Ein 7" Touchdisplay sollte ebenfalls angeschlossen und eingerichtet sein.
 ## Installationsanweisung:
 
 1) Installation benötigter Pakete & Energiebox
+
 2) Raspi Konfiguration
+
 3) Startup & Shutdown Service
+
 4) PATH Variablen setzen
+
 5) DynDNS Einrichtung für Mobile App Zugriff
+
 6) Firewall einstellen
+
 7) HTTP, HTTPS, MySQL + PHPmyAdmin installation
 
 
 -------------------------------------
 Installation benötigter Pakete      |
 -------------------------------------
-sudo apt-get install build-essential libgtk-3-dev
+
 Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Installation verschiedener benötigter Pakete:
 
-`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install build-essential libgtk-3-dev ufw python3-dev python3-pip git manpages-de ufw kate krusader mat hwinfo -y && sudo pip install rpi.gpio libgtk-3-dev xterm libgtkmm-3.0-dev pymodbus ping fonts-noto-color-emoji`
+`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install build-essential libgtk-3-dev ufw python3-dev python3-pip git manpages-de ufw kate krusader mat hwinfo apt install mariadb-server libmariadb-dev-compat libmariadb-dev fonts-noto-color-emoji libgtk-3-dev xterm libgtkmm-3.0-dev iputils-ping -y`
+
+Sowie:
+
+`sudo pip install rpi.gpio pymodbus`
 
 
 -------------------------------------
 Installation Energiebox             |
 -------------------------------------
 
-Die Energiebox können Sie per ZIP Download herunterladen und sollte unbedingt nach /Energiebox kopieren werden
-oder Sie installieren es bequem mit git clone direkt an die richtige Stelle:
+
+Die Energiebox können Sie per git clone direkt an die richtige Stelle installieren:
  
-`sudo git clone https://github.com/Blade83x2/EnergieBox.git /Energiebox && sudo chmod -R 755 /Energiebox && cd /Energiebox/WiringPi && sudo ./build && cd .. && cd /Energiebox/230V && sudo make && cd /Energiebox/12V && sudo make && cd /Energiebox/h2o && sudo make && cd /Energiebox/Shutdown && sudo make && cd /Energiebox/Startup && sudo make`
+`sudo git clone https://github.com/Blade83x2/EnergieBox.git /Energiebox && sudo chmod -R 755 /Energiebox && cd /Energiebox/WiringPi && sudo ./build && cd .. && sudo ./build.sh`
 
-Mit den folgenden Zeilen werden die Berechtigungen auf die Dateien und Ordner gesetzt:
 
-`sudo chmod 777 /Energiebox/12V/ && sudo chmod 755 /Energiebox/12V/12V && sudo chmod 755 /Energiebox/12V/12V.c && sudo chmod 766 /Energiebox/12V/12V.o && sudo chmod 666 /Energiebox/12V/config.ini && sudo chmod 744 /Energiebox/12V/Makefile && sudo chmod 755 /Energiebox/12V/mymcp23017.c && sudo chmod 755 /Energiebox/12V/mymcp23017.h && sudo chmod 755 /Energiebox/12V/mymcp23017.o && sudo chmod 755 /Energiebox/12V/setConfig.sh && sudo chmod 755 /Energiebox/12V/setIni.sh`
+Danach wird die MySQL Datenbank die gerade installiert worden ist, abgesichert. Hierzu den folgenden Befehl verwenden:
 
-`sudo chmod 777 /Energiebox/230V/ && sudo chmod 755 /Energiebox/230V/230V && sudo chmod 755 /Energiebox/230V/230V.c && sudo chmod 766 /Energiebox/230V/230V.o && sudo chmod 666 /Energiebox/230V/config.ini && sudo chmod 744 /Energiebox/230V/Makefile && sudo chmod 755 /Energiebox/230V/mymcp23017.c && sudo chmod 755 /Energiebox/230V/mymcp23017.h && sudo chmod 755 /Energiebox/230V/mymcp23017.o && sudo chmod 755 /Energiebox/230V/setConfig.sh && sudo chmod 755 /Energiebox/230V/setIni.sh` 
+`sudo mysql_secure_installation`
 
-`sudo chmod 777 /Energiebox/h2o/ && sudo chmod 666 /Energiebox/h2o/config.ini && sudo chmod 755 /Energiebox/h2o/h2o && sudo chmod 755 /Energiebox/h2o/setIni.sh && sudo chmod 755 /Energiebox/h2o/h2o.c && sudo chmod 755 /Energiebox/h2o/h2o.o  && sudo chmod 744 /Energiebox/h2o/Makefile`
+Es muss ein Root Passwort vergeben werden. Dann den anonymous User löschen sowie den Remote Login für root 
+deaktivieren und die test Datenbank löschen. Anschliessend noch die Privilegien neu laden.
 
-`sudo chmod 777 /Energiebox/img/ && sudo chmod 777 /Energiebox/Kolloid/ && sudo chmod 777 /Energiebox/gui/ && sudo chmod 777 /Energiebox/Grid/`
 
- 
+Mit dem folgenden Befehl wird eine Datei ausgeführt, die die Berechtigungen für die Ordner und Dateien festlegt:
+
+`sudo /Energiebox/System/setup_permissions.sh`
+
+
+Als nächstes wird die Datenbank eingerichtet für die Energiebox. Diese ist dafür notwendig um MPPT Daten 
+sowie Netzladungen zu protokollieren. Hierzu folgendes Script aufrufen und den Anweisungen folgen:
+
+`sudo /Energiebox/System/setup_db.sh`
+
+Nach dem Datenbank Setup kann geprüft werden ob sie mit den Daten erreichbar ist. Natürlich gibt es noch keine Einträge in der Datenbank!
+
+`watch -n 1 "sudo mysql --defaults-file=/home/$(whoami)/.mysql_energiebox.cfg -e \"SELECT * FROM messwerte;\" energiebox"`
+
+
+
 -------------------------------------
 Raspi Konfiguration                 |
 -------------------------------------
@@ -79,11 +103,11 @@ zu
 `pi ALL=(ALL) PASSWD: ALL`
 
 
-Danach wählen wir einen anderen Benutzernamen um die Sicherheit zu erhöhen. Hierfür geben wird
+Danach wählen wir einen anderen Benutzernamen um die Sicherheit zu erhöhen. Hierfür geben wir
 
 `sudo rename-user`
 
-ein und starten den Raspberry dann neu. Nach dem Hochfahren kommt eine Grafische Oberfläche wo der
+ein und starten den Raspberry danach neu. Nach dem Hochfahren kommt eine Grafische Oberfläche wo der
 Benutzer geändert werden kann. Wir haben uns für den Benutzer `box` entschieden!
 
 Als nächstes wird der Raspberry konfiguriert damit die Hardware entsprechend zusammen Arbeiten kann.
@@ -189,7 +213,7 @@ Das Programm h2o filtert Wasser, kolloid stellt Kolloidale Dispersionen her!
 Diese Änderung kann ebenfalls wieder mit der Tastenkombination 
 Strg + x gespeichert werden. Nun tippen wir auf der Konsole den Befehl 
 
-`sudo nano ~/.bashrc`
+`nano ~/.bashrc`
 
 ein und fügen ganz unten am Ende der Datei folgendes ein:
 
@@ -206,7 +230,7 @@ Auch diese Aktion wird wieder mit Strg + x gespeichert.
 
 Nun prüfen wir noch kurz, ob alle 3 Port Expander (0x22, 0x26 und 0x27) angezeigt werden unter dem Befehl:
 
-`sudo i2cdetect -y 1`
+`i2cdetect -y 1`
 
 Sollte das der Fall sein, sollte die Ausgabe so aussehen:
 
@@ -349,7 +373,7 @@ Batteriespannung und schaltet falls notwendig das Netzladegerät an.
 
 Ganz unten fügen wir folgende Zeile hinzu:
 
-`*/3 * * * * cd /Energiebox/Tracer && ./trace 2>> /Energiebox/error.log`
+`*/1 * * * * cd /Energiebox/Tracer && ./trace 2>> /Energiebox/error.log`
 
 `* * * * * /Energiebox/System/autoStartStop.sh 2>> /Energiebox/error.log`
 
@@ -375,6 +399,8 @@ und in der Zeile 12 unter Port die Geräteadresse eintragen
 
 Den gleichen Eintrag ebenfalls in die client.py in Zeile 15 hinzufügen
 
+`cd pyepsolartracer && sudo nano client.py`
+
 <p align="center"> 
     <img src="img/usbportclient.png" style="width: 85%;" alt="USB Port Adresse Client" >
 </p>
@@ -396,7 +422,7 @@ sollten alle Ausgelesenen Daten angezeigt werden.
 PATH Variablen                      |
 -------------------------------------  
 
-Nun bearbeiten wir noch die Systemsprache sowie die PATH Variablen. Dies dient dazu,
+Nun bearbeiten wir noch die PATH Variablen. Dies dient dazu,
 das alle Programme die im Ordner /Energiebox/* gespeichert sind
 von überall zugänglich sind. Dazu öffnen wir wieder ein Terminal
 und tippen den folgenden Befehl ein:
@@ -417,15 +443,6 @@ wieder ab mit Strg + x:
 `PATH=$PATH:/Energiebox/gui`
 
 `PATH=$PATH:/Energiebox/Grid`
-
-`export LANGUAGE=de_DE.UTF-8`
-
-`export LC_ALL=de_DE.UTF-8`
-
-`export LANG=de_DE.UTF-8`
-
-`export LC_TYPE=de_DE.UTF-8`
-
 
 
 -------------------------------------
@@ -454,8 +471,7 @@ und mit Strg + x abspeichern. Nun sollte der Rechner Neugestartet werden mit
 `sudo reboot`
 
 
-Im Router/Gateway wurde der Port 2222 freigegeben und intern auf Port 22 des Raspbbery umgeleitet
-
+Im Router/Gateway sollte der Port 2222 freigegeben werden und intern auf Port 22 des Raspbbery umgeleitet werden.
 
 
 
@@ -473,7 +489,6 @@ Um diesen Key mit dem Raspberry zu Verbinden folgendes Ausführen:
 (Port, Username & DynDNS entsprechend anpassen!)
 
 `ssh-copy-id -p 2222 box@home.cplusplus-development.de`
-
 
 
 
@@ -499,6 +514,7 @@ Zum Konfigurieren kopieren wir eine Vorgegebene Datei und verändern die Kopie
 `enabled = true`
 
 einfügen. Danach speichern.
+Aktivieren mit:
 
 `sudo systemctl enable fail2ban && sudo systemctl start fail2ban`
 
@@ -506,21 +522,12 @@ Testen: Wenn falsche Daten bei einer SSH Verbindung eingegeben worden sind, zeig
 nicht mehr "Permission denied" sondern "Connection refused" an!
 
 
-
-Automatische Sicherheitsupdates installieren
-
-`sudo dpkg-reconfigure --priority=low unattended-upgrades`
-
-Im neuen Fenster Ja wählen
-
-
-
 -------------------------------------
  Webserver installation             |
 ------------------------------------- 
 
 Damit der Raspberry im Netzwerk als Server verfügbar ist, installieren
-wir noch Apache2, PHP, MySQL und phpmyadmin sowie ein SSL Zertifikat
+wir noch Apache2, PHP und phpmyadmin sowie ein SSL Zertifikat
 
  `sudo apt install apache2 -y`
 
@@ -532,11 +539,9 @@ wir noch Apache2, PHP, MySQL und phpmyadmin sowie ein SSL Zertifikat
 
  `sudo ufw allow 443`
 
- `sudo apt install mariadb-server php-mysql -y`
+ `sudo apt install php-mysql -y`
 
  `sudo service apache2 restart`
-
- `sudo mysql_secure_installation`
 
  `sudo apt install phpmyadmin -y`
 
