@@ -139,6 +139,8 @@ stop_spinner $?
 start_spinner 'box@Energiebox:/Energiebox/Tracer:$ make'
 sleep 1;
 cd /Energiebox/Tracer
+sudo make clean
+sudo make format
 sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then

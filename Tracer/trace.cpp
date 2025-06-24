@@ -103,9 +103,12 @@ class BatteryController
 	Configuration config;
 	const std::string configPath = "/Energiebox/Grid/config.ini";
 	const std::string readallCmd = "python3 /Energiebox/Tracer/readall.py";
+
 	const std::string voltagePrefix = "Batterie: Aktuelle Spannung in Volt = ";
+
 	const std::string outputPath = "/Energiebox/Tracer/trace.txt";
 	bool loadConfig() { return ini_parse( configPath.c_str(), handler, &config ) >= 0; }
+
 	float parseVoltageLine( const std::string &line )
 	{
 		auto pos = line.find( voltagePrefix );
