@@ -454,7 +454,7 @@ class GUI : public Gtk::Window {
             system_status_label_.set_text("💬 System: Monitoring aktiv");
             if (!energiebox_timer_connection_.connected()) {
                 energiebox_timer_connection_ = Glib::signal_timeout().connect_seconds(
-                    sigc::mem_fun(*this, &GUI::update_energiebox_tab), 62);
+                    sigc::mem_fun(*this, &GUI::update_energiebox_tab), 63);
                 debugPrint("Energiebox-Timer gestartet", LogLevel::INFO);
                 update_energiebox_tab();
             }
