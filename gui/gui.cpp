@@ -125,6 +125,10 @@ class IniReader {
 class GUI : public Gtk::Window {
   public:
     GUI() {
+        if (true) {
+
+            int test = 4;
+        }
         set_title("⚡ Energiebox");
         set_icon_from_file("/Energiebox/gui/icon.png");
         // Hauptcontainer für Notebook und Status-Leiste
@@ -288,8 +292,7 @@ class GUI : public Gtk::Window {
                 std::string canStart = ini.get(sektion + "/canStartFromGui", "1");
                 if (canStart != "1") {
                     Gtk::MessageDialog dialog(*this, "Schaltung nicht erlaubt", false, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK, true);
-                    dialog.set_secondary_text(
-                        "Dieses Relais kann nicht über die GUI geschaltet werden.");
+                    dialog.set_secondary_text("Dieses Relais kann nicht über die GUI geschaltet werden.");
                     dialog.run();
                     debugPrint("Zugriff verweigert: " + name, LogLevel::INFO);
                     return;
@@ -333,10 +336,8 @@ class GUI : public Gtk::Window {
                         return;
                     }
                 }
-
                 // Schaltbefehl ausführen
-                std::string cmd = binaryPath + " " + std::to_string(i) + " " +
-                                  std::to_string(neu ? 1 : 0) + " 0";
+                std::string cmd = binaryPath + " " + std::to_string(i) + " " + std::to_string(neu ? 1 : 0) + " 0";
                 std::system(cmd.c_str());
                 system_status_label_.set_text("💬 System: Schalte " + name + " auf " + (neu ? "AN" : "AUS"));
                 debugPrint("Schalte " + name + " auf " + (neu ? "AN" : "AUS"), LogLevel::INFO);
@@ -441,8 +442,7 @@ class GUI : public Gtk::Window {
         for (auto &[nr, btn] : relais12v_buttons_) {
             bool isAktiv =
                 ini12v.get("Relais " + std::to_string(nr) + "/eltakoState", "0") == "1";
-            std::string neuerName = ini12v.get("Relais " + std::to_string(nr) + "/name",
-                                               "Relais " + std::to_string(nr));
+            std::string neuerName = ini12v.get("Relais " + std::to_string(nr) + "/name", "Relais " + std::to_string(nr));
             if (isAktiv != relais12v_status_[nr]) {
                 relais12v_status_[nr] = isAktiv;
                 btn->get_style_context()->remove_class(isAktiv ? "relais-inactive" : "relais-active");
@@ -462,8 +462,7 @@ class GUI : public Gtk::Window {
         for (auto &[nr, btn] : relais230v_buttons_) {
             bool isAktiv =
                 ini230v.get("Relais " + std::to_string(nr) + "/eltakoState", "0") == "1";
-            std::string neuerName = ini230v.get("Relais " + std::to_string(nr) + "/name",
-                                                "Relais " + std::to_string(nr));
+            std::string neuerName = ini230v.get("Relais " + std::to_string(nr) + "/name", "Relais " + std::to_string(nr));
             if (isAktiv != relais230v_status_[nr]) {
                 relais230v_status_[nr] = isAktiv;
                 btn->get_style_context()->remove_class(isAktiv ? "relais-inactive" : "relais-active");
@@ -616,8 +615,7 @@ class GUI : public Gtk::Window {
             }
             // Kein Erfolg – wenn letzter Versuch, abbrechen
             if (attempt < max_attempts) {
-                debugPrint("Kann Datei /Energiebox/Tracer/trace.txt nicht lesen – warte " + std::to_string(retry_delay_seconds) + " Sekunden... Versuch: " + std::to_string(attempt),
-                           LogLevel::WARN);
+                debugPrint("Kann Datei /Energiebox/Tracer/trace.txt nicht lesen – warte " + std::to_string(retry_delay_seconds) + " Sekunden... Versuch: " + std::to_string(attempt), LogLevel::WARN);
                 std::this_thread::sleep_for(std::chrono::seconds(retry_delay_seconds));
             }
         }

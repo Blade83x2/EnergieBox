@@ -128,6 +128,7 @@ cd /Energiebox/gui
 sudo make clean  > /dev/null
 sudo make format  > /dev/null
 sudo make  > /Energiebox/makeResult.txt;
+
 result=$?;
 if [ "$result" -eq "2" ]; then
     stop_spinner 1
