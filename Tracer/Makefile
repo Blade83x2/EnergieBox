@@ -73,10 +73,6 @@ uninstall:
 clean:
 	rm -f *.o $(TARGETS) .clang-format
 
-# Code-Formatierung
-FORMATTER = clang-format
-SRC := $(shell find . -type f \( -name "*.c" -o -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \))
-
 # ==== Code-Formatierung ====
 FORMATTER = clang-format
 SRC := $(shell find . -type f \( -name "*.c" -o -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \))

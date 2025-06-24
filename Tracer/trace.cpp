@@ -103,8 +103,7 @@ class BatteryController {
         if(ret == -1) {
             std::cerr << "/Energiebox/Tracer/trace: Fehler beim Starten des Grid Programm\n";
         } else {
-            std::cout << "Grid-Ladevorgang gestartet (" << config.grid.loadingCapacityWh
-                      << " Wh)\n";
+            std::cout << "Grid-Ladevorgang gestartet (" << config.grid.loadingCapacityWh << " Wh)\n";
         }
     }
     void
@@ -120,7 +119,8 @@ class BatteryController {
                 std::string sql = "INSERT INTO messwerte (timestamp, pv_volt, pv_ampere, pv_power, "
                                   "batt_volt, batt_ampere, batt_power, batt_soc, generated_power, "
                                   "grid_load_active) VALUES (" +
-                                  std::to_string(timestamp) + ", " + std::to_string(pv_volt) + ", " + std::to_string(pv_ampere) + ", " + std::to_string(pv_power) + ", " + std::to_string(batt_volt) + ", " + std::to_string(batt_ampere) + ", " + std::to_string(batt_power) + ", " + std::to_string(batt_soc) + ", " + std::to_string(generated_power) + ", " + std::to_string(grid_load_active) + ")";
+                                  std::to_string(timestamp) + ", " + std::to_string(pv_volt) + ", " + std::to_string(pv_ampere) + ", " + std::to_string(pv_power) + ", " + std::to_string(batt_volt) + ", " + std::to_string(batt_ampere) + ", " + std::to_string(batt_power) +
+                                  ", " + std::to_string(batt_soc) + ", " + std::to_string(generated_power) + ", " + std::to_string(grid_load_active) + ")";
                 if(mysql_query(conn, sql.c_str())) {
                     std::cerr << "/Energiebox/Tracer/trace: MySQL INSERT fehlgeschlagen: " << mysql_error(conn) << "\n";
                 } else {
@@ -128,8 +128,7 @@ class BatteryController {
                 }
                 mysql_close(conn);
             } else {
-                std::cerr << "/Energiebox/Tracer/trace: MySQL-Verbindung fehlgeschlagen: "
-                          << mysql_error(conn) << "\n";
+                std::cerr << "/Energiebox/Tracer/trace: MySQL-Verbindung fehlgeschlagen: " << mysql_error(conn) << "\n";
                 mysql_close(conn);
             }
         } else {
@@ -141,8 +140,7 @@ class BatteryController {
     bool
     run() {
         if(!loadConfig()) {
-            std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte Config nicht laden: "
-                      << configPath << "\n";
+            std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte Config nicht laden: " << configPath << "\n";
             return false;
         }
         std::array<char, 256> buffer;
@@ -155,9 +153,8 @@ class BatteryController {
         std::ofstream outfile(outputPath);
         if(!outfile.is_open()) {
             std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte trace.txt nicht öffnen\n";
-            schreibe_zeile_in_datei("/Energiebox/error.log",
-                                    "/Energiebox/Tracer/trace: Fehler: Konnte "
-                                    "/Energiebox/Tracer/trace.txt nicht öffnen!");
+            schreibe_zeile_in_datei("/Energiebox/error.log", "/Energiebox/Tracer/trace: Fehler: Konnte "
+                                                             "/Energiebox/Tracer/trace.txt nicht öffnen!");
             pclose(pipe);
             return false;
         }
@@ -196,15 +193,7 @@ class BatteryController {
         }
         outfile.close();
         pclose(pipe);
-        speichereInDatenbank(pv_volt,
-                             pv_ampere,
-                             pv_power,
-                             batt_volt,
-                             batt_ampere,
-                             batt_power,
-                             batt_soc,
-                             generated_power,
-                             grid_load_active);
+        speichereInDatenbank(pv_volt, pv_ampere, pv_power, batt_volt, batt_ampere, batt_power, batt_soc, generated_power, grid_load_active);
         return loadTriggered;
     }
 };
