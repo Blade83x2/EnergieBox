@@ -7,10 +7,7 @@
 
 void printUsage()
 {
-	std::cout << "Nutzung: epever [Option]\n"
-			  << "Optionen:\n"
-			  << "  -l, --loop      Wiederholt die Anzeige alle 2 Sekunden\n"
-			  << "  -h, --help      Zeigt diese Hilfe an\n";
+	std::cout << "Nutzung: epever [Option]\n" << "Optionen:\n" << "  -l, --loop      Wiederholt die Anzeige alle 2 Sekunden\n"  << "  -h, --help      Zeigt diese Hilfe an\n";
 }
 
 int main( int argc, char *argv[] )
