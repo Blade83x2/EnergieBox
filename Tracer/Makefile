@@ -71,9 +71,13 @@ uninstall:
 
 # Clean
 clean:
-	rm -f *.o $(TARGETS)
+	rm -f *.o $(TARGETS) .clang-format
 
 # Code-Formatierung
+FORMATTER = clang-format
+SRC := $(shell find . -type f \( -name "*.c" -o -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \))
+
+# ==== Code-Formatierung ====
 FORMATTER = clang-format
 SRC := $(shell find . -type f \( -name "*.c" -o -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \))
 
@@ -84,20 +88,20 @@ format: .clang-format
 .clang-format:
 	@echo "# https://clang.llvm.org/docs/ClangFormatStyleOptions.html"   > .clang-format
 	@echo "# Stil-Basis: LLVM Google Chromium Mozilla WebKit Microsoft GNU"   >> .clang-format
-	@echo "BasedOnStyle: LLVM"                           >> .clang-format
+	@echo "BasedOnStyle: GNU"                           >> .clang-format
 	@echo "IndentWidth: 4      # Einrückung mit 4 Leerzeichen" >> .clang-format
 	@echo "TabWidth: 4         # Tabulatoren zählen als 4 Leerzeichen" >> .clang-format
 	@echo "UseTab: Never       # Never|Always " >> .clang-format
-	@echo "BreakBeforeBraces: Allman   # Allman / Attach / Linux / Stroustrup / Mozilla " >> .clang-format
+	@echo "BreakBeforeBraces: Stroustrup   # Allman / Attach / Linux / Stroustrup / Mozilla " >> .clang-format
 	@echo "ColumnLimit: 0    # 80, 100, 0 (kein Limit)	Maximale Zeilenlänge" >> .clang-format
 	@echo "AllowShortIfStatementsOnASingleLine: true   # if/else immer mit Blockklammern umbrechen" >> .clang-format
-	@echo "AllowShortLoopsOnASingleLine: false          # true | false Einzeilige for/while Schleifen" >> .clang-format
+	@echo "AllowShortLoopsOnASingleLine: true          # true | false Einzeilige for/while Schleifen" >> .clang-format
 	@echo "AllowShortFunctionsOnASingleLine: Inline     # None / Inline / All  sehr kurze Funktionen dürfen einzeilig bleiben" >> .clang-format
-	@echo "KeepEmptyLinesAtTheStartOfBlocks: true       # keine leeren Zeilen direkt nach {" >> .clang-format
+	@echo "KeepEmptyLinesAtTheStartOfBlocks: false       # keine leeren Zeilen direkt nach {" >> .clang-format
 	@echo "SpacesBeforeTrailingComments: 2               # 2 Anzahl Leerzeichen vor Endkommentaren //" >> .clang-format
 	@echo "SpaceAfterCStyleCast: false                    # true | false Leerzeichen nach C-Cast: (int) x" >> .clang-format
-	@echo "SpaceBeforeParens: ControlStatements          # Never | ControlStatement  Leerzeichen vor ( bei if, while, for" >> .clang-format
+	@echo "SpaceBeforeParens: Never          # Never | ControlStatement  Leerzeichen vor ( bei if, while, for" >> .clang-format
 	@echo "SpacesInParentheses: false          # true/false	Leerzeichen innerhalb von ()" >> .clang-format
 	@echo "BinPackArguments: true  # true/false	Argumente in Funktionsaufrufen auf eine Zeile packen" >> .clang-format
 	@echo "BinPackParameters: true # true/false	Gleiches für Funktionsdefinitionen" >> .clang-format
-	@echo "SortIncludes: true       # true/false	Automatisch #includes sortieren" >> .clang-format
+	@echo "SortIncludes: false       # true/false	Automatisch #includes sortieren" >> .clang-format

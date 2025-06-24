@@ -1,8 +1,8 @@
 #include "StatusBlock.hpp"
 #include <fstream>
-#include <sstream>
+#include <iomanip>  // Für std::setprecision
 #include <iostream>
-#include <iomanip>	// Für std::setprecision
+#include <sstream>
 
 // Statische Variable zur Speicherung des Inhalts der Trace-Datei
 std::string StatusBlock::traceData;
@@ -14,21 +14,20 @@ std::string StatusBlock::traceData;
  * @return float Der extrahierte Wert als float. Gibt 0.0f zurück, wenn keine Zahl gefunden werden
  * kann.
  */
-float StatusBlock::extractValue( const std::string &line )
+float
+StatusBlock::extractValue(const std::string &line)
 {
-	size_t pos = line.find( '=' );
-	if ( pos == std::string::npos )
-		return 0.0f;
+    size_t pos = line.find('=');
+    if(pos == std::string::npos)
+        return 0.0f;
 
-	std::string valStr = line.substr( pos + 1 );
-	try
-	{
-		return std::stof( valStr );
-	}
-	catch ( ... )
-	{
-		return 0.0f;  // Rückfall bei fehlerhafter Umwandlung
-	}
+    std::string valStr = line.substr(pos + 1);
+    try {
+        return std::stof(valStr);
+    }
+    catch(...) {
+        return 0.0f;  // Rückfall bei fehlerhafter Umwandlung
+    }
 }
 
 /**
@@ -38,25 +37,27 @@ float StatusBlock::extractValue( const std::string &line )
  * @return true Datei wurde erfolgreich gelesen.
  * @return false Datei konnte nicht geöffnet werden.
  */
-bool StatusBlock::loadTraceFile( const std::string &filename )
+bool
+StatusBlock::loadTraceFile(const std::string &filename)
 {
-	std::ifstream file( filename );
-	if ( !file.is_open() )
-		return false;
-	std::stringstream buffer;
-	buffer << file.rdbuf();
-	traceData = buffer.str();
+    std::ifstream file(filename);
+    if(!file.is_open())
+        return false;
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    traceData = buffer.str();
 
-	return true;
+    return true;
 }
 
 /**
  * @brief Löscht den Terminalbildschirm mithilfe von ANSI-Escape-Codes.
  *        Cursor wird danach auf Position (0, 0) gesetzt.
  */
-void StatusBlock::clearScreen()
+void
+StatusBlock::clearScreen()
 {
-	std::cout << "\033[2J\033[H";
+    std::cout << "\033[2J\033[H";
 }
 
 /**
@@ -64,9 +65,10 @@ void StatusBlock::clearScreen()
  *
  * @param header Überschrift des folgenden Blocks (z. B. "PV Status").
  */
-void StatusBlock::printHeader( const std::string &header )
+void
+StatusBlock::printHeader(const std::string &header)
 {
-	std::cout << "=== " << header << " ===\n\n";
+    std::cout << "=== " << header << " ===\n\n";
 }
 
 /**
@@ -77,15 +79,16 @@ void StatusBlock::printHeader( const std::string &header )
  * @param showPercent true: zeigt den Wert mit Prozentzeichen und einer Nachkommastelle.
  * @param showSpace true: hängt ein Leerzeichen nach der Einheit an.
  */
-void StatusBlock::printFloat( float value, const char *unit, bool showPercent, bool showSpace )
+void
+StatusBlock::printFloat(float value, const char *unit, bool showPercent, bool showSpace)
 {
-	if ( showPercent )
-		std::cout << std::fixed << std::setprecision( 1 ) << value << "%";
-	else
-		std::cout << std::fixed << std::setprecision( 2 ) << value << unit;
+    if(showPercent)
+        std::cout << std::fixed << std::setprecision(1) << value << "%";
+    else
+        std::cout << std::fixed << std::setprecision(2) << value << unit;
 
-	if ( showSpace )
-		std::cout << " ";
+    if(showSpace)
+        std::cout << " ";
 }
 
 /**
@@ -94,19 +97,20 @@ void StatusBlock::printFloat( float value, const char *unit, bool showPercent, b
  * @param value Aktueller Wert.
  * @param maxValue Maximaler möglicher Wert (repräsentiert einen vollen Balken).
  */
-void StatusBlock::printBar( float value, float maxValue )
+void
+StatusBlock::printBar(float value, float maxValue)
 {
-	const int barWidth = 30;
-	int filled = static_cast<int>( ( value / maxValue ) * barWidth );
-	if ( filled < 0 )
-		filled = 0;
-	if ( filled > barWidth )
-		filled = barWidth;
+    const int barWidth = 30;
+    int filled = static_cast<int>((value / maxValue) * barWidth);
+    if(filled < 0)
+        filled = 0;
+    if(filled > barWidth)
+        filled = barWidth;
 
-	std::cout << "[";
-	for ( int i = 0; i < filled; i++ )
-		std::cout << "#";
-	for ( int i = filled; i < barWidth; i++ )
-		std::cout << " ";
-	std::cout << "]";
+    std::cout << "[";
+    for(int i = 0; i < filled; i++)
+        std::cout << "#";
+    for(int i = filled; i < barWidth; i++)
+        std::cout << " ";
+    std::cout << "]";
 }
