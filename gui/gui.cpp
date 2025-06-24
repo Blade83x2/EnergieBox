@@ -38,10 +38,12 @@
 
 // Debug-Modus aktivieren/deaktivieren
 bool debug = false;
-enum class LogLevel { DEBUG,
-                      INFO,
-                      WARN,
-                      ERROR };
+enum class LogLevel {
+    DEBUG,
+    INFO,
+    WARN,
+    ERROR
+};
 
 void debugPrint(const std::string &strMsg, LogLevel level = LogLevel::DEBUG) {
     if (debug) {
@@ -87,7 +89,6 @@ class IniReader {
             std::cerr << "Fehler beim Öffnen der INI: " << path << std::endl;
             return;
         }
-
         std::string line;
         std::string currentSection;
         while (std::getline(file, line)) {
@@ -125,10 +126,6 @@ class IniReader {
 class GUI : public Gtk::Window {
   public:
     GUI() {
-        if (true) {
-
-            int test = 4;
-        }
         set_title("⚡ Energiebox");
         set_icon_from_file("/Energiebox/gui/icon.png");
         // Hauptcontainer für Notebook und Status-Leiste
