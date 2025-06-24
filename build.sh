@@ -154,16 +154,16 @@ rm -f /Energiebox/makeResult.txt;
 
 
 if [[ -z $1 && -z $2 ]]; then
-	echo -e "\n\n";
+    echo -e "\n\n";
 
 else
-	echo -e "\n\nUpdate Git Repository...";
-	git add -A
-	echo -e "\n";
-	git commit -m "$1"
-	echo -e "\n";
-	git push -u origin master
-	echo -e "\n";
+    echo -e "\n\nUpdate Git Repository...";
+    git add -A
+    echo -e "\n";
+    git commit -m "$1"
+    echo -e "\n";
+    git push -u origin master
+    echo -e "\n";
 fi
 
 # https://github.com/settings/tokens für Token auslesen

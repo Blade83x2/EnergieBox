@@ -73,15 +73,18 @@ handler(void *config, const char *section, const char *name, const char *value) 
     return 1;
 }
 
-class BatteryController {
+class BatteryController
+{
   private:
+      
     Configuration config;
     const std::string configPath = "/Energiebox/Grid/config.ini";
     const std::string readallCmd = "python3 /Energiebox/Tracer/readall.py";
     const std::string voltagePrefix = "Batterie: Aktuelle Spannung in Volt = ";
     const std::string outputPath = "/Energiebox/Tracer/trace.txt";
     bool
-    loadConfig() {
+    loadConfig()
+    {
         return ini_parse(configPath.c_str(), handler, &config) >= 0;
     }
     float
