@@ -2,7 +2,7 @@
  *  Ruft python3 /Energiebox/Tracer/readall.py auf und liest die MPPT-Daten aus.
  *  Prüft, ob die Batterie eine Mindestspannung hat, und startet ggf. das Netzladeprogramm.
  *  Speichert die ausgelesenen Daten in eine MySQL-Datenbank und in trace.txt.
- *
+ * test
  */
 
 #include "iniparse.h"
@@ -99,13 +99,10 @@ class BatteryController {
         if (ret == -1) {
             std::cerr << "/Energiebox/Tracer/trace: Fehler beim Starten des Grid Programm\n";
         } else {
-            std::cout << "Grid-Ladevorgang gestartet (" << config.grid.loadingCapacityWh
-                      << " Wh)\n";
+            std::cout << "Grid-Ladevorgang gestartet (" << config.grid.loadingCapacityWh << " Wh)\n";
         }
     }
-    void speichereInDatenbank(float pv_volt, float pv_ampere, float pv_power, float batt_volt,
-                              float batt_ampere, float batt_power, int batt_soc,
-                              float generated_power, int grid_load_active) {
+    void speichereInDatenbank(float pv_volt, float pv_ampere, float pv_power, float batt_volt, float batt_ampere, float batt_power, int batt_soc, float generated_power, int grid_load_active) {
         MYSQL *conn = mysql_init(nullptr);
         if (!conn) {
             std::cerr << "/Energiebox/Tracer/trace: MySQL-Init fehlgeschlagen\n";
@@ -124,8 +121,7 @@ class BatteryController {
                     std::to_string(batt_power) + ", " + std::to_string(batt_soc) + ", " +
                     std::to_string(generated_power) + ", " + std::to_string(grid_load_active) + ")";
                 if (mysql_query(conn, sql.c_str())) {
-                    std::cerr << "/Energiebox/Tracer/trace: MySQL INSERT fehlgeschlagen: "
-                              << mysql_error(conn) << "\n";
+                    std::cerr << "/Energiebox/Tracer/trace: MySQL INSERT fehlgeschlagen: " << mysql_error(conn) << "\n";
                 } else {
                     std::cout << "Messwerte erfolgreich gespeichert.\n";
                 }
