@@ -66,32 +66,25 @@ uninstall:
 
 clean:
 	rm -f $(OBJ) $(TARGET)
-	@echo "$(GREEN)Build-Dateien gelöscht.$(NC)"
+	rm -f .clang-format
+	@echo "$(GREEN)Build-Dateien entfernt.$(NC)"
 
-# === Code-Formatierung mit clang-format ===
+# === Code-Formatierung ===
 FORMATTER = clang-format
-SRC := $(shell find . -type f \( -name "*.cpp" -o -name "*.hpp" \))
+SRC := $(shell find . -type f \( -name "*.cpp" -o -name "*.hpp" -o -name "*.h" -o -name "*.c" \))
 
 format: .clang-format
-	@echo "→ Formatierung mit clang-format..."
+	@echo "→ Formatiere Quellcode mit clang-format..."
 	$(FORMATTER) -i $(SRC)
 
 .clang-format:
-	@echo "# https://clang.llvm.org/docs/ClangFormatStyleOptions.html"   > .clang-format
-	@echo "BasedOnStyle: LLVM"                                          >> .clang-format
-	@echo "IndentWidth: 4      # Einrückung mit 4 Leerzeichen"          >> .clang-format
-	@echo "TabWidth: 4         # Tabulatoren zählen als 4 Leerzeichen"  >> .clang-format
-	@echo "UseTab: Always       # Never|Always "                        >> .clang-format
-	@echo "BreakBeforeBraces: Allman   # Allman / Attach / Linux / Stroustrup / Mozilla " >> .clang-format
-	@echo "ColumnLimit: 100    # Maximale Zeilenlänge"                   >> .clang-format
-	@echo "AllowShortIfStatementsOnASingleLine: false"                   >> .clang-format
-	@echo "AllowShortLoopsOnASingleLine: false"                          >> .clang-format
-	@echo "AllowShortFunctionsOnASingleLine: Inline"                     >> .clang-format
-	@echo "KeepEmptyLinesAtTheStartOfBlocks: false"                      >> .clang-format
-	@echo "SpacesBeforeTrailingComments: 2"                             >> .clang-format
-	@echo "SpaceAfterCStyleCast: true"                                  >> .clang-format
-	@echo "SpaceBeforeParens: ControlStatements"                        >> .clang-format
-	@echo "SpacesInParentheses: true"                                   >> .clang-format
-	@echo "BinPackArguments: false"                                     >> .clang-format
-	@echo "BinPackParameters: false"                                    >> .clang-format
-	@echo "SortIncludes: false"                                         >> .clang-format
+	@echo "BasedOnStyle: LLVM"                        > .clang-format
+	@echo "IndentWidth: 4"                           >> .clang-format
+	@echo "TabWidth: 4"                              >> .clang-format
+	@echo "UseTab: Never"                            >> .clang-format
+	@echo "BreakBeforeBraces: Attach"                >> .clang-format
+	@echo "BinPackParameters: true"                  >> .clang-format
+	@echo "BinPackArguments: true"                   >> .clang-format
+	@echo "ColumnLimit: 0"                           >> .clang-format
+	@echo "AllowShortFunctionsOnASingleLine: Inline" >> .clang-format
+	@echo "SortIncludes: false"                      >> .clang-format

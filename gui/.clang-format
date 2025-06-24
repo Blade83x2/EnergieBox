@@ -1,18 +1,10 @@
-# https://clang.llvm.org/docs/ClangFormatStyleOptions.html
 BasedOnStyle: LLVM
-IndentWidth: 4      # Einrückung mit 4 Leerzeichen
-TabWidth: 4         # Tabulatoren zählen als 4 Leerzeichen
-UseTab: Always       # Never|Always 
-BreakBeforeBraces: Allman   # Allman / Attach / Linux / Stroustrup / Mozilla 
-ColumnLimit: 100    # Maximale Zeilenlänge
-AllowShortIfStatementsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+BreakBeforeBraces: Attach
+BinPackParameters: true
+BinPackArguments: true
+ColumnLimit: 0
 AllowShortFunctionsOnASingleLine: Inline
-KeepEmptyLinesAtTheStartOfBlocks: false
-SpacesBeforeTrailingComments: 2
-SpaceAfterCStyleCast: true
-SpaceBeforeParens: ControlStatements
-SpacesInParentheses: true
-BinPackArguments: false
-BinPackParameters: false
 SortIncludes: false

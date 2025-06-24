@@ -142,7 +142,6 @@ class BatteryController {
 
   public:
     bool run() {
-        std::cout << "test ";
         if (!loadConfig()) {
             std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte Config nicht laden: "
                       << configPath << "\n";
@@ -152,15 +151,13 @@ class BatteryController {
         FILE *pipe = popen(readallCmd.c_str(), "r");
         if (!pipe) {
             std::cerr << "/Energiebox/Tracer/trace: Fehler: \"Konnte python3 "
-                         "/Energiebox/Tracer/readall.py\" nicht ausführen\n";
+                      << "/Energiebox/Tracer/readall.py\" nicht ausführen\n";
             return false;
         }
         std::ofstream outfile(outputPath);
         if (!outfile.is_open()) {
             std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte trace.txt nicht öffnen\n";
-            schreibe_zeile_in_datei("/Energiebox/error.log",
-                                    "/Energiebox/Tracer/trace: Fehler: Konnte "
-                                    "/Energiebox/Tracer/trace.txt nicht öffnen!");
+            schreibe_zeile_in_datei("/Energiebox/error.log", "/Energiebox/Tracer/trace: Fehler: Konnte /Energiebox/Tracer/trace.txt nicht öffnen!");
             pclose(pipe);
             return false;
         }
