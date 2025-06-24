@@ -230,10 +230,7 @@ class GUI : public Gtk::Window {
         return build_tab("/Energiebox/230V/config.ini", "/Energiebox/230V/230V", false, "230V");
     }
     // Generische Funktion für Relais-Tabs
-    Gtk::Grid &build_tab(const std::string &configPath,
-                         const std::string &binaryPath,
-                         bool checkPower,
-                         const std::string &tabType) {
+    Gtk::Grid &build_tab(const std::string &configPath, const std::string &binaryPath, bool checkPower, const std::string &tabType) {
         auto *main_container = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 15));
         main_container->set_margin_top(15);
         main_container->set_margin_bottom(15);
@@ -286,16 +283,11 @@ class GUI : public Gtk::Window {
             auto *relais = new RelaisInfo{i, name, isAktiv, btn};
             relais->handler = btn->signal_clicked().connect([=]() mutable {
                 last_interaction_time_ = std::time(nullptr); // Timer zurücksetzen bei Klick
-                debugPrint("Button gedrückt: Relais: " + std::to_string(i) + " (" + name + ")",
-                           LogLevel::INFO);
+                debugPrint("Button gedrückt: Relais: " + std::to_string(i) + " (" + name + ")", LogLevel::INFO);
                 IniReader ini(configPath);
                 std::string canStart = ini.get(sektion + "/canStartFromGui", "1");
                 if (canStart != "1") {
-                    Gtk::MessageDialog dialog(*this,
-                                              "Schaltung nicht erlaubt",
-                                              false,
-                                              Gtk::MESSAGE_WARNING,
-                                              Gtk::BUTTONS_OK, true);
+                    Gtk::MessageDialog dialog(*this, "Schaltung nicht erlaubt", false, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK, true);
                     dialog.set_secondary_text(
                         "Dieses Relais kann nicht über die GUI geschaltet werden.");
                     dialog.run();
@@ -305,8 +297,7 @@ class GUI : public Gtk::Window {
                 bool neu = !relais->aktiv;
                 // Leistungsprüfung
                 if (neu && checkPower) {
-                    int maxPower = std::stoi(ini.get("mcp/maxPConverter", "0")) -
-                                   std::stoi(ini.get("mcp/maxPMicroController", "0"));
+                    int maxPower = std::stoi(ini.get("mcp/maxPConverter", "0")) - std::stoi(ini.get("mcp/maxPMicroController", "0"));
                     int usedPower = 0;
                     for (int j = 1; j <= anzahl; ++j) {
                         if (j == i)
@@ -318,18 +309,10 @@ class GUI : public Gtk::Window {
                     }
                     int needed = std::stoi(ini.get(sektion + "/pMax", "0"));
                     if (needed > (maxPower - usedPower)) {
-                        Gtk::MessageDialog dialog(*this,
-                                                  "Nicht genug Leistung",
-                                                  false,
-                                                  Gtk::MESSAGE_WARNING,
-                                                  Gtk::BUTTONS_OK,
-                                                  true);
-                        dialog.set_secondary_text("Dieses Relais kann nicht eingeschaltet werden, "
-                                                  "da nicht genug Leistung verfügbar ist.");
+                        Gtk::MessageDialog dialog(*this, "Nicht genug Leistung", false, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK, true);
+                        dialog.set_secondary_text("Dieses Relais kann nicht eingeschaltet werden, da nicht genug Leistung verfügbar ist.");
                         dialog.run();
-                        debugPrint("Zuwenig Leistung für: Relais " + std::to_string(i) + " (" +
-                                       name + ")",
-                                   LogLevel::INFO);
+                        debugPrint("Zuwenig Leistung für: Relais " + std::to_string(i) + " (" + name + ")", LogLevel::INFO);
                         return;
                     }
                 } else if (neu && !checkPower) {
@@ -338,25 +321,15 @@ class GUI : public Gtk::Window {
                     for (int j = 1; j <= anzahl; ++j) {
                         if (j == i)
                             continue;
-                        if (ini.get("Relais " + std::to_string(j) + "/eltakoState", "0") ==
-                            "1")
-                            usedPower += std::stoi(
-                                ini.get("Relais " + std::to_string(j) + "/pMax", "0"));
+                        if (ini.get("Relais " + std::to_string(j) + "/eltakoState", "0") == "1")
+                            usedPower += std::stoi(ini.get("Relais " + std::to_string(j) + "/pMax", "0"));
                     }
                     int needed = std::stoi(ini.get(sektion + "/pMax", "0"));
                     if (needed > (maxPower - usedPower)) {
-                        Gtk::MessageDialog dialog(*this,
-                                                  "Nicht genug Leistung",
-                                                  false,
-                                                  Gtk::MESSAGE_WARNING,
-                                                  Gtk::BUTTONS_OK,
-                                                  true);
-                        dialog.set_secondary_text("Dieses Relais kann nicht eingeschaltet werden, "
-                                                  "da nicht genug Leistung verfügbar ist.");
+                        Gtk::MessageDialog dialog(*this, "Nicht genug Leistung", false, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK, true);
+                        dialog.set_secondary_text("Dieses Relais kann nicht eingeschaltet werden, da nicht genug Leistung verfügbar ist.");
                         dialog.run();
-                        debugPrint("Zuwenig Leistung für: Relais " + std::to_string(i) + " (" +
-                                       name + ")",
-                                   LogLevel::INFO);
+                        debugPrint("Zuwenig Leistung für: Relais " + std::to_string(i) + " (" + name + ")", LogLevel::INFO);
                         return;
                     }
                 }
@@ -426,8 +399,7 @@ class GUI : public Gtk::Window {
         if (tabName.find("12V") != std::string::npos) {
             system_status_label_.set_text("💬 System: 12V Steuerung aktiv");
             if (!relais12V_timer_connection_.connected()) {
-                relais12V_timer_connection_ = Glib::signal_timeout().connect_seconds(
-                    sigc::mem_fun(*this, &GUI::refresh_relais12V_status), 10);
+                relais12V_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::refresh_relais12V_status), 10);
                 debugPrint("Relais12V-Timer gestartet", LogLevel::INFO);
             }
         } else {
@@ -439,8 +411,7 @@ class GUI : public Gtk::Window {
         if (tabName.find("230V") != std::string::npos) {
             system_status_label_.set_text("💬 System: 230V Steuerung aktiv");
             if (!relais230V_timer_connection_.connected()) {
-                relais230V_timer_connection_ = Glib::signal_timeout().connect_seconds(
-                    sigc::mem_fun(*this, &GUI::refresh_relais230V_status), 10);
+                relais230V_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::refresh_relais230V_status), 10);
                 debugPrint("Relais230V-Timer gestartet", LogLevel::INFO);
             }
         } else {
@@ -452,8 +423,7 @@ class GUI : public Gtk::Window {
         if (tabName.find("Energiebox") != std::string::npos) {
             system_status_label_.set_text("💬 System: Monitoring aktiv");
             if (!energiebox_timer_connection_.connected()) {
-                energiebox_timer_connection_ = Glib::signal_timeout().connect_seconds(
-                    sigc::mem_fun(*this, &GUI::update_energiebox_tab), 62);
+                energiebox_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::update_energiebox_tab), 63);
                 debugPrint("Energiebox-Timer gestartet", LogLevel::INFO);
                 update_energiebox_tab();
             }
@@ -475,10 +445,8 @@ class GUI : public Gtk::Window {
                                                "Relais " + std::to_string(nr));
             if (isAktiv != relais12v_status_[nr]) {
                 relais12v_status_[nr] = isAktiv;
-                btn->get_style_context()->remove_class(isAktiv ? "relais-inactive"
-                                                               : "relais-active");
-                btn->get_style_context()->add_class(isAktiv ? "relais-active"
-                                                            : "relais-inactive");
+                btn->get_style_context()->remove_class(isAktiv ? "relais-inactive" : "relais-active");
+                btn->get_style_context()->add_class(isAktiv ? "relais-active" : "relais-inactive");
             }
             // Button-Beschriftung ggf. aktualisieren
             if (btn->get_label() != neuerName) {
@@ -498,10 +466,8 @@ class GUI : public Gtk::Window {
                                                 "Relais " + std::to_string(nr));
             if (isAktiv != relais230v_status_[nr]) {
                 relais230v_status_[nr] = isAktiv;
-                btn->get_style_context()->remove_class(isAktiv ? "relais-inactive"
-                                                               : "relais-active");
-                btn->get_style_context()->add_class(isAktiv ? "relais-active"
-                                                            : "relais-inactive");
+                btn->get_style_context()->remove_class(isAktiv ? "relais-inactive" : "relais-active");
+                btn->get_style_context()->add_class(isAktiv ? "relais-active" : "relais-inactive");
             }
             // Button-Beschriftung ggf. aktualisieren
             if (btn->get_label() != neuerName) {
@@ -643,28 +609,20 @@ class GUI : public Gtk::Window {
                 if (!values.empty()) {
                     success = true;
                     if (attempt > 1) {
-                        debugPrint("Konnte Fehlerhafte Datei /Energiebox/Tracer/trace.txt im " +
-                                       std::to_string(attempt) + " Versuch lesen",
-                                   LogLevel::INFO);
+                        debugPrint("Konnte Fehlerhafte Datei /Energiebox/Tracer/trace.txt im " + std::to_string(attempt) + " Versuch lesen", LogLevel::INFO);
                     }
                     break;
                 }
             }
             // Kein Erfolg – wenn letzter Versuch, abbrechen
             if (attempt < max_attempts) {
-                debugPrint("Kann Datei /Energiebox/Tracer/trace.txt nicht lesen – warte " +
-                               std::to_string(retry_delay_seconds) +
-                               " Sekunden... Versuch: " + std::to_string(attempt),
+                debugPrint("Kann Datei /Energiebox/Tracer/trace.txt nicht lesen – warte " + std::to_string(retry_delay_seconds) + " Sekunden... Versuch: " + std::to_string(attempt),
                            LogLevel::WARN);
                 std::this_thread::sleep_for(std::chrono::seconds(retry_delay_seconds));
             }
         }
         if (!success) {
-            // std::cerr << "Fehler: Konnte Datei /Energiebox/Tracer/trace.txt nach " +
-            // std::to_string(max_attempts) + " Versuchen nicht erfolgreich lesen." << std::endl;
-            debugPrint("Konnte Datei /Energiebox/Tracer/trace.txt nach " +
-                           std::to_string(max_attempts) + " Versuchen nicht erfolgreich lesen.",
-                       LogLevel::ERROR);
+            debugPrint("Konnte Datei /Energiebox/Tracer/trace.txt nach " + std::to_string(max_attempts) + " Versuchen nicht erfolgreich lesen.", LogLevel::ERROR);
             // boxen ausblenden
             auto children = energiebox_data_container_->get_children();
             for (auto *child : children) {
@@ -731,9 +689,7 @@ int main(int argc, char *argv[]) {
     option_group.add_entry(entry_window, window_mode);
 
     Glib::OptionContext context;
-    context.set_summary(
-        "Grafisches User Interface Programm der Energiebox.\nDient zur Anzeige und Steuerung der "
-        "Relais- Schaltungen\ndie an 3 Portexpender angeschlossen sind.");
+    context.set_summary("Grafisches User Interface Programm der Energiebox.\nDient zur Anzeige und Steuerung der Relais- Schaltungen\ndie an 3 Portexpender angeschlossen sind.");
     context.set_main_group(option_group);
     try {
         context.parse(argc, argv);
