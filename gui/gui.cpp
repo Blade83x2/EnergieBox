@@ -22,12 +22,12 @@
 #include <gtkmm/separator.h>
 #include <gtkmm/progressbar.h>
 #include <glibmm/main.h>
-#include <iostream>
-#include <fstream>
 #include <sstream>
 #include <vector>
 #include <string>
 #include <cstdlib>
+#include <iostream>
+#include <fstream>
 #include <map>
 #include <ctime>
 #include <iomanip>
@@ -295,8 +295,7 @@ class GUI : public Gtk::Window {
                                               "Schaltung nicht erlaubt",
                                               false,
                                               Gtk::MESSAGE_WARNING,
-                                              Gtk::BUTTONS_OK,
-                                              true);
+                                              Gtk::BUTTONS_OK, true);
                     dialog.set_secondary_text(
                         "Dieses Relais kann nicht über die GUI geschaltet werden.");
                     dialog.run();
@@ -361,12 +360,12 @@ class GUI : public Gtk::Window {
                         return;
                     }
                 }
+
                 // Schaltbefehl ausführen
                 std::string cmd = binaryPath + " " + std::to_string(i) + " " +
                                   std::to_string(neu ? 1 : 0) + " 0";
                 std::system(cmd.c_str());
-                system_status_label_.set_text("💬 System: Schalte " + name + " auf " +
-                                              (neu ? "AN" : "AUS"));
+                system_status_label_.set_text("💬 System: Schalte " + name + " auf " + (neu ? "AN" : "AUS"));
                 debugPrint("Schalte " + name + " auf " + (neu ? "AN" : "AUS"), LogLevel::INFO);
                 // CSS-Klassen aktualisieren
                 btn->get_style_context()->remove_class(neu ? "relais-inactive" : "relais-active");
