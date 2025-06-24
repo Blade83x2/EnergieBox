@@ -23,4 +23,4 @@ struct Configuration {
     H2OTank tank;
 };
 
-#endif // CONFIG_H
+#endif  // CONFIG_H

@@ -10,24 +10,19 @@
 #include "iniparse.h"
 #include "DebugLogger.h"
 #include "config.h"
-#include <iomanip> // für std::setw, std::fixed, std::setprecision
+#include <iomanip>  // für std::setw, std::fixed, std::setprecision
 #include <sstream>
 #include <algorithm>
 #include <vector>
 
-
 class H2OSetupManager {
-
-public:
+   public:
     H2OSetupManager(Configuration& configRef);
-    
+
     void runSetup();
-    
-    
-private:
+
+   private:
     Configuration& config;
     char command[256];
-
-    
 };
-#endif // H2OSETUPMANAGER_H
+#endif  // H2OSETUPMANAGER_H
