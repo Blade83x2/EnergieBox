@@ -155,8 +155,7 @@ class BatteryController
         std::ofstream outfile(outputPath);
         if(!outfile.is_open()) {
             std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte trace.txt nicht öffnen\n";
-            schreibe_zeile_in_datei("/Energiebox/error.log", "/Energiebox/Tracer/trace: Fehler: Konnte "
-                                                             "/Energiebox/Tracer/trace.txt nicht öffnen!");
+            schreibe_zeile_in_datei("/Energiebox/error.log", "/Energiebox/Tracer/trace: Fehler: Konnte /Energiebox/Tracer/trace.txt nicht öffnen!");
             pclose(pipe);
             return false;
         }
