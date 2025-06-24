@@ -56,9 +56,41 @@ Installation Energiebox             |
 -------------------------------------
 
 
-Die Energiebox können Sie per git clone direkt an die richtige Stelle installieren:
+Zuerst wird dem Benutzer root ein Passwort vergeben. Dieses setzen wir mit:
+
+`sudo passwd root`
+
+
+Danach wählen wir einen anderen Benutzernamen für den Standart User pi um die Sicherheit zu erhöhen. Hierfür geben wir
+
+`sudo rename-user`
+
+ein und starten den Raspberry danach neu. Nach dem Neustart kommt eine Grafische Oberfläche wo der
+Benutzer geändert werden kann. Wir haben uns für den Benutzer `box` entschieden!
+Nun ist der Raspberry bereit für die Installation der Software!
+
+
+Die Energiebox kann per git clone direkt an die richtige Stelle installiert werden:
  
-`sudo git clone https://github.com/Blade83x2/EnergieBox.git /Energiebox && sudo chmod -R 755 /Energiebox && cd /Energiebox/WiringPi && sudo ./build && cd .. && sudo ./build.sh`
+`sudo git clone https://github.com/Blade83x2/EnergieBox.git /Energiebox && sudo chmod -R 770 /Energiebox`
+
+
+Zunächst erstellen wir die Gruppe energiebox und weisen diese dem Hauptverzeichnis zu:
+
+`sudo groupadd energiebox && sudo chgrp -R energiebox /Energiebox`
+
+Danach werden die 2 Benuter root sowie box dieser Gruppe hinzugefügt:
+
+`sudo usermod -aG energiebox root && sudo usermod -aG energiebox box && newgrp energiebox`
+
+
+Als nächstes wird das Script für die Datei & Ordnerberechtigung ausgeführt. Es wird während dem Ablauf das root Passwort abgefragt!
+
+`cd /Energiebox/System && sudo chmod u+x setup_permissions.sh && bash setup_permissions.sh`
+
+Projekt Daten kompilieren:
+
+`cd /Energiebox/WiringPi && sudo ./build && cd .. && sudo ./build.sh`
 
 
 Danach wird die MySQL Datenbank die gerade installiert worden ist, abgesichert. Hierzu den folgenden Befehl verwenden:
@@ -103,12 +135,6 @@ zu
 `pi ALL=(ALL) PASSWD: ALL`
 
 
-Danach wählen wir einen anderen Benutzernamen um die Sicherheit zu erhöhen. Hierfür geben wir
-
-`sudo rename-user`
-
-ein und starten den Raspberry danach neu. Nach dem Hochfahren kommt eine Grafische Oberfläche wo der
-Benutzer geändert werden kann. Wir haben uns für den Benutzer `box` entschieden!
 
 Als nächstes wird der Raspberry konfiguriert damit die Hardware entsprechend zusammen Arbeiten kann.
 WLAN sowie Bluetooth werden ausgeschaltet und das System bekommt einen festen Kabelanschluss für die
@@ -175,9 +201,6 @@ und ersetzen es mit:
 Speichern können wir wieder mit der Tastenkombination Strg + x.
 
 
-Der Benutzer root hat bislang kein Passwort. Dieses setzen wir mit
-
-`sudo passwd root`
 
 
 Nun Verändern wir das was gesehen wird nach dem SSH Login:

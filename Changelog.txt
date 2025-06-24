@@ -31,6 +31,10 @@ In dieser Version ist endlich das Grafische User Interface verfügbar. Beim boot
 Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die Ausgabe auf der Konsole von sämtlichen Programmen verbessert und optimiert. 
 Eine Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++.
 
+ [NEW] Gruppe energiebox erstellt
+ [UPDATE] setup_permissions.sh Script erstellt welches die Berechtigungen herstellt nach einem git clone
+ [UPDATE] Datei und Ordnerberechtigungen gesetzt.
+ [NEW] MySQL Datenbank hinzugefügt. Bei jedem Abruf von den Laderegler Statistiken wird jetzt alles in eine Datenbank gespeichert
  [UPDATE] gui zeigt auf der Startseite formatierte Daten vom EPEVER an
  [NEW] Neue Bilder und Beschreibungen in /Energiebox/gui/README.MD
  [BUGFIX] Formatierte Ausgabe der Ladezeit in /Energiebox/Grid/grid. Werte werden in Tabelle links und rechts ausgerichtet
