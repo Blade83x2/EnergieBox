@@ -285,8 +285,7 @@ class GUI : public Gtk::Window {
                     int usedPower = 0;
                     for (int j = 1; j <= anzahl; ++j) {
                         if (j == i) continue;
-                        if (ini.get("Relais " + std::to_string(j) + "/eltakoState", "0") == "1")
-                            usedPower += std::stoi(ini.get("Relais " + std::to_string(j) + "/pMax", "0"));
+                        if (ini.get("Relais " + std::to_string(j) + "/eltakoState", "0") == "1") usedPower += std::stoi(ini.get("Relais " + std::to_string(j) + "/pMax", "0"));
                     }
                     int needed = std::stoi(ini.get(sektion + "/pMax", "0"));
                     if (needed > (maxPower - usedPower)) {
@@ -301,8 +300,7 @@ class GUI : public Gtk::Window {
                     int usedPower = 0;
                     for (int j = 1; j <= anzahl; ++j) {
                         if (j == i) continue;
-                        if (ini.get("Relais " + std::to_string(j) + "/eltakoState", "0") == "1")
-                            usedPower += std::stoi(ini.get("Relais " + std::to_string(j) + "/pMax", "0"));
+                        if (ini.get("Relais " + std::to_string(j) + "/eltakoState", "0") == "1") usedPower += std::stoi(ini.get("Relais " + std::to_string(j) + "/pMax", "0"));
                     }
                     int needed = std::stoi(ini.get(sektion + "/pMax", "0"));
                     if (needed > (maxPower - usedPower)) {
@@ -595,8 +593,7 @@ class GUI : public Gtk::Window {
             }
         }
         if (!success) {
-            debugPrint("Konnte Datei /Energiebox/Tracer/trace.txt nach " + std::to_string(max_attempts) + " Versuchen nicht erfolgreich lesen.",
-                       LogLevel::ERROR);
+            debugPrint("Konnte Datei /Energiebox/Tracer/trace.txt nach " + std::to_string(max_attempts) + " Versuchen nicht erfolgreich lesen.", LogLevel::ERROR);
             // boxen ausblenden
             auto children = energiebox_data_container_->get_children();
             for (auto *child : children) {
@@ -661,9 +658,7 @@ int main(int argc, char *argv[]) {
     option_group.add_entry(entry_window, window_mode);
 
     Glib::OptionContext context;
-    context.set_summary(
-        "Grafisches User Interface Programm der Energiebox.\nDient zur Anzeige und Steuerung der Relais- "
-        "Schaltungen\ndie an 3 Portexpender angeschlossen sind.");
+    context.set_summary("Grafisches User Interface Programm der Energiebox.\nDient zur Anzeige und Steuerung der Relais- Schaltungen\ndie an 3 Portexpender angeschlossen sind.");
     context.set_main_group(option_group);
     try {
         context.parse(argc, argv);

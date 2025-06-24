@@ -66,6 +66,8 @@ stop_spinner $?
 start_spinner 'box@Energiebox:/Energiebox/Shutdown:$ make'
 sleep 1
 cd /Energiebox/Shutdown
+sudo make clean  > /dev/null
+sudo make format  > /dev/null
 sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then
@@ -80,6 +82,8 @@ stop_spinner $?
 start_spinner 'box@Energiebox:/Energiebox/Startup:$ make'
 sleep 1
 cd /Energiebox/Startup
+sudo make clean  > /dev/null
+sudo make format  > /dev/null
 sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then

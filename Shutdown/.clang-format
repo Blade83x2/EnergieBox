@@ -1,15 +1,20 @@
-BasedOnStyle: LLVM
+
 IndentWidth: 4
 TabWidth: 4
 UseTab: Never
 BreakBeforeBraces: Attach
 BinPackParameters: true
 BinPackArguments: true
-ColumnLimit: 0
+
 AllowShortFunctionsOnASingleLine: Inline
 SortIncludes: false
 PenaltyBreakString: 1000000
 PenaltyBreakBeforeFirstCallParameter: 1000000
 PenaltyBreakAssignment: 1000000
 PenaltyBreakFirstLessLess: 1000000
+
+
+
+BasedOnStyle: Google
 AllowShortEnumsOnASingleLine: true
+ColumnLimit: 180

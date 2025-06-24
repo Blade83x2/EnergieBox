@@ -74,10 +74,10 @@ void PVStatus::draw() const {
     {
         std::ostringstream oss;
         oss << std::fixed << std::setprecision(2) << voltage << "V";
-        std::cout.width(8); // feste Spaltenbreite
+        std::cout.width(8);  // feste Spaltenbreite
         std::cout << std::left << oss.str();
     }
-    printBar(voltage, 150.0f); // Max: 150V
+    printBar(voltage, 150.0f);  // Max: 150V
     std::cout << "\n";
 
     // Strom
@@ -91,7 +91,7 @@ void PVStatus::draw() const {
         std::cout.width(8);
         std::cout << std::left << oss.str();
     }
-    printBar(current, 100.0f); // Max: 100A
+    printBar(current, 100.0f);  // Max: 100A
     std::cout << "\n";
 
     // Leistung
@@ -105,7 +105,7 @@ void PVStatus::draw() const {
         std::cout.width(8);
         std::cout << std::left << oss.str();
     }
-    printBar(power, 5000.0f); // Max: 5kW
+    printBar(power, 5000.0f);  // Max: 5kW
     std::cout << "\n";
 
     // Energie heute

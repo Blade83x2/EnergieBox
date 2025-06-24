@@ -16,7 +16,7 @@
 #include <mysql/mysql.h>
 #include <stdexcept>
 #include <string>
-#include <unistd.h> // für access() und F_OK
+#include <unistd.h>  // für access() und F_OK
 // Strukt
 struct MCPSetup {
     int address = 0;
@@ -72,7 +72,7 @@ static int handler(void *config, const char *section, const char *name, const ch
 }
 
 class BatteryController {
-  private:
+   private:
     Configuration config;
     const std::string configPath = "/Energiebox/Grid/config.ini";
     const std::string readallCmd = "python3 /Energiebox/Tracer/readall.py";
@@ -99,7 +99,8 @@ class BatteryController {
             std::cout << "Grid-Ladevorgang gestartet (" << config.grid.loadingCapacityWh << " Wh)\n";
         }
     }
-    void speichereInDatenbank(float pv_volt, float pv_ampere, float pv_power, float batt_volt, float batt_ampere, float batt_power, int batt_soc, float generated_power, int grid_load_active) {
+    void speichereInDatenbank(float pv_volt, float pv_ampere, float pv_power, float batt_volt, float batt_ampere, float batt_power, int batt_soc, float generated_power,
+                              int grid_load_active) {
         MYSQL *conn = mysql_init(nullptr);
         if (!conn) {
             std::cerr << "/Energiebox/Tracer/trace: MySQL-Init fehlgeschlagen\n";
@@ -120,8 +121,7 @@ class BatteryController {
                 }
                 mysql_close(conn);
             } else {
-                std::cerr << "/Energiebox/Tracer/trace: MySQL-Verbindung fehlgeschlagen: "
-                          << mysql_error(conn) << "\n";
+                std::cerr << "/Energiebox/Tracer/trace: MySQL-Verbindung fehlgeschlagen: " << mysql_error(conn) << "\n";
                 mysql_close(conn);
             }
         } else {
@@ -129,11 +129,10 @@ class BatteryController {
         }
     }
 
-  public:
+   public:
     bool run() {
         if (!loadConfig()) {
-            std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte Config nicht laden: "
-                      << configPath << "\n";
+            std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte Config nicht laden: " << configPath << "\n";
             return false;
         }
         std::array<char, 256> buffer;
@@ -194,6 +193,5 @@ int main() {
     if (!controller.run()) {
         return EXIT_FAILURE;
     }
-
     return EXIT_SUCCESS;
 }

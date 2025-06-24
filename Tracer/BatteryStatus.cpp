@@ -29,7 +29,7 @@ void BatteryStatus::draw() const {
     {
         std::ostringstream oss;
         oss << std::fixed << std::setprecision(2) << soc << "%";
-        std::cout.width(8); // feste Breite
+        std::cout.width(8);  // feste Breite
         std::cout << std::left << oss.str();
     }
     printBar(soc, 100.0f);

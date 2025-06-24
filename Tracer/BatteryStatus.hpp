@@ -5,7 +5,7 @@ class BatteryStatus : public StatusBlock {
     float soc = 0.0f;
     float voltage = 0.0f;
 
-  public:
+   public:
     bool update() override;
     void draw() const override;
 };

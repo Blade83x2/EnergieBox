@@ -7,7 +7,7 @@ class PVStatus : public StatusBlock {
     float power = 0.0f;
     float generatedToday = 0.0f;
 
-  public:
+   public:
     bool update() override;
     void draw() const override;
 };

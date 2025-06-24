@@ -2,10 +2,10 @@
 #include <string>
 
 class StatusBlock {
-  protected:
+   protected:
     float extractValue(const std::string &line);
 
-  public:
+   public:
     virtual bool update() = 0;
     virtual void draw() const = 0;
 
@@ -18,8 +18,7 @@ class StatusBlock {
     // Hilfsfunktionen für Ausgabe und Terminalsteuerung
     static void clearScreen();
     static void printHeader(const std::string &header);
-    static void printFloat(float value, const char *unit, bool showPercent = false,
-                           bool showSpace = true);
+    static void printFloat(float value, const char *unit, bool showPercent = false, bool showSpace = true);
     static void printBar(float value, float maxValue);
 
     // Breite für Labels (für Ausrichtung)
