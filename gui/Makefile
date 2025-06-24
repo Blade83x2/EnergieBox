@@ -1,8 +1,8 @@
 #
 # Makefile für gui 
 # Vendor: Johannes Krämer
-# Version: 1.0
-# Date: 21.06.2025
+# Version: 1.1
+# Date: 24.06.2025
 #
 
 CXX = g++
@@ -15,9 +15,11 @@ all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	$(CXX) -o $@ $^ $(LDFLAGS)
+	chmod 550 $@
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	chmod 600 $@
 
 clean:
 	rm -f $(OBJ) $(TARGET)
