@@ -1,47 +1,95 @@
-#
-# Makefile für trace
+# Makefile für BatteryController
 # Vendor: Johannes Krämer
 # Version: 1.0
-# Date: 22.11.2024
+# Date: 24.06.2025
 #
-# https://www.c-howto.de/tutorial/makefiles/
-# https://www.c-howto.de/tutorial/makefiles/erweiterungen/
-C_COMPILER   = gcc
-CPP_COMPILER = g++
-CFLAGS       = -std=gnu99 -lwiringPi -lmysqlclient
-CPPFLAGS     = -std=c++17
+# Funktionen:
+# - Build mit Rechte- und Gruppensetzung
+# - automatische Build-Info
+# - Code-Formatierung via clang-format
+# - Install und Uninstall
 
-C_OBJ   = mymcp23017.o iniparse.o
-EPEVER_OBJ = epever.o PVStatus.o BatteryStatus.o StatusBlock.o
+CXX            = g++
+CC             = gcc
+CXXFLAGS       = -Wall -std=c++17 -lmysqlclient -lwiringPi
+CFLAGS         = -Wall -std=gnu99 -lwiringPi
+TARGET         = trace
+OBJ            = trace.o iniparse.o
+INSTALL_DIR    = /usr/local/bin
+INSTALL_GROUP  = energiebox
 
-all: trace epever
+# Farben für Ausgaben
+GREEN          = \033[1;32m
+RED            = \033[1;31m
+NC             = \033[0m
 
-trace: trace.o $(C_OBJ)
-	$(CPP_COMPILER) -o $@ trace.o $(C_OBJ) $(CFLAGS)
+# Build-Info
+BUILD_DATE     := $(shell date +%Y-%m-%d)
+BUILD_VERSION  := 1.0
+CXXFLAGS       += -DBUILD_DATE=\"$(BUILD_DATE)\" -DBUILD_VERSION=\"$(BUILD_VERSION)\"
+CFLAGS         += -DBUILD_DATE=\"$(BUILD_DATE)\" -DBUILD_VERSION=\"$(BUILD_VERSION)\"
 
-epever: $(EPEVER_OBJ)
-	$(CPP_COMPILER) -o $@ $(EPEVER_OBJ)
+# Default-Ziel
+all: $(TARGET)
 
-mymcp23017.o: mymcp23017.c
-	$(C_COMPILER) -c $< $(CFLAGS)
+$(TARGET): $(OBJ)
+	$(CXX) -o $@ $^ $(CXXFLAGS)
+	chmod 550 $@
+	chgrp $(INSTALL_GROUP) $@
+	@echo "$(GREEN)Binary $@ erstellt mit Rechten 550 und Gruppe $(INSTALL_GROUP).$(NC)"
 
-iniparse.o: iniparse.c
-	$(C_COMPILER) -c $< -std=gnu99
+%.o: %.cpp
+	$(CXX) -c $< -o $@ $(CXXFLAGS)
+	chmod 600 $@
+	chgrp $(INSTALL_GROUP) $@
+	@echo "$(GREEN)Object $@ erstellt mit Rechten 600 und Gruppe $(INSTALL_GROUP).$(NC)"
 
-epever.o: epever.cpp
-	$(CPP_COMPILER) -c $< $(CPPFLAGS)
+%.o: %.c
+	$(CC) -c $< -o $@ $(CFLAGS)
+	chmod 600 $@
+	chgrp $(INSTALL_GROUP) $@
+	@echo "$(GREEN)Object $@ erstellt mit Rechten 600 und Gruppe $(INSTALL_GROUP).$(NC)"
 
-PVStatus.o: PVStatus.cpp PVStatus.hpp
-	$(CPP_COMPILER) -c $< $(CPPFLAGS)
+install: $(TARGET)
+	@if getent group $(INSTALL_GROUP) > /dev/null; then \
+		echo "$(GREEN)Gruppe '$(INSTALL_GROUP)' existiert.$(NC)"; \
+	else \
+		echo "$(RED)Gruppe '$(INSTALL_GROUP)' fehlt!$(NC)"; \
+		echo "$(RED)Bitte anlegen mit: sudo groupadd $(INSTALL_GROUP)$(NC)"; \
+		exit 1; \
+	fi
+	@echo "Installiere $@ nach $(INSTALL_DIR)..."
+	install -g $(INSTALL_GROUP) -m 550 $(TARGET) $(INSTALL_DIR)/$(TARGET)
+	@echo "$(GREEN)Installiert als $(INSTALL_DIR)/$(TARGET).$(NC)"
 
-BatteryStatus.o: BatteryStatus.cpp BatteryStatus.hpp
-	$(CPP_COMPILER) -c $< $(CPPFLAGS)
-
-StatusBlock.o: StatusBlock.cpp StatusBlock.hpp
-	$(CPP_COMPILER) -c $< $(CPPFLAGS)
-
-trace.o: trace.cpp
-	$(CPP_COMPILER) -c $< $(CPPFLAGS)
+uninstall:
+	@if [ -f $(INSTALL_DIR)/$(TARGET) ]; then \
+		rm -f $(INSTALL_DIR)/$(TARGET); \
+		echo "$(GREEN)Erfolgreich entfernt.$(NC)"; \
+	else \
+		echo "$(RED)Keine Datei zum Entfernen gefunden.$(NC)"; \
+	fi
 
 clean:
-	rm -f *.o trace epever
+	rm -f $(OBJ) $(TARGET)
+	@echo "$(GREEN)Build-Dateien entfernt.$(NC)"
+
+# === Code-Formatierung ===
+FORMATTER = clang-format
+SRC := $(shell find . -type f \( -name "*.cpp" -o -name "*.hpp" -o -name "*.h" -o -name "*.c" \))
+
+format: .clang-format
+	@echo "→ Formatiere Quellcode mit clang-format..."
+	$(FORMATTER) -i $(SRC)
+
+.clang-format:
+	@echo "BasedOnStyle: LLVM"                         > .clang-format
+	@echo "IndentWidth: 4"                            >> .clang-format
+	@echo "TabWidth: 4"                               >> .clang-format
+	@echo "UseTab: Always"                            >> .clang-format
+	@echo "BreakBeforeBraces: Attach"                >> .clang-format
+	@echo "BinPackParameters: true"                  >> .clang-format
+	@echo "BinPackArguments: true"                   >> .clang-format
+	@echo "ColumnLimit: 100"                         >> .clang-format
+	@echo "AllowShortFunctionsOnASingleLine: Inline" >> .clang-format
+	@echo "SortIncludes: false"                      >> .clang-format
