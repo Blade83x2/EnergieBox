@@ -11,7 +11,7 @@ CFLAGS      = -std=gnu99
 
 230V: $(OBJ)
 	$(COMPILER) -o $@ $(OBJ) -lwiringPi $(CFLAGS)
-	chmod 660 $@  # Setze Berechtigung für Binary
+	chmod 550 $@  # Setze Berechtigung für Binary
 
 230V.o: 230V.c
 	$(COMPILER) -c 230V.c -lwiringPi $(CFLAGS)
