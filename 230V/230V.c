@@ -1,23 +1,23 @@
 #include <stdio.h>
-#include <stdlib.h> // atoi()
+#include <stdlib.h>  // atoi()
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "mymcp23017.h"
 #include "iniparse.h"
-#include <unistd.h> // sleep()
+#include <unistd.h>  // sleep()
 #include <string.h>
-#include <stdbool.h> 
+#include <stdbool.h>
 #include <ctype.h>
 
 static int handler(void* config, const char* section, const char* name, const char* value);
 int getElkoState(int relais, void* config);
-int getRestPower(void * config);
-int getCurrentPower(void * config);
-int getDevicePower(int relais, void * config);
+int getRestPower(void* config);
+int getCurrentPower(void* config);
+int getDevicePower(int relais, void* config);
 void setBit(int Port, int Status);
 int getBit(int Port);
 bool checkMainParameter(char* paramName, int number, void* config);
-int showHelp(char**argv, void* config);
+int showHelp(char** argv, void* config);
 char* readStdinLine();
 char* Trim(char* str);
 void getDataForConfigFile(int relais, void* config);
@@ -60,22 +60,33 @@ int deviceEltakoState[16][1];
 
 static int handler(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
-    #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
-    if      (MATCH("system", "traceTxtFilePath"))               { pconfig->system.traceTxtFilePath = strdup(value); }
-    else if (MATCH("mcp", "address"))                           { pconfig->mcp.address = atoi(value); }
-    else if (MATCH("mcp", "numberOfRelaisActive"))              { pconfig->mcp.numberOfRelaisActive = atoi(value); }
-    else if (MATCH("mcp", "maxOutputPower"))                    { pconfig->mcp.maxOutputPower = atoi(value);}
-    else if (MATCH("mcp", "maxPMicroController"))               { pconfig->mcp.maxPMicroController = atoi(value);}
-    else {
+#define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
+    if (MATCH("system", "traceTxtFilePath")) {
+        pconfig->system.traceTxtFilePath = strdup(value);
+    } else if (MATCH("mcp", "address")) {
+        pconfig->mcp.address = atoi(value);
+    } else if (MATCH("mcp", "numberOfRelaisActive")) {
+        pconfig->mcp.numberOfRelaisActive = atoi(value);
+    } else if (MATCH("mcp", "maxOutputPower")) {
+        pconfig->mcp.maxOutputPower = atoi(value);
+    } else if (MATCH("mcp", "maxPMicroController")) {
+        pconfig->mcp.maxPMicroController = atoi(value);
+    } else {
         int relaisNum = 0;
         if (sscanf(section, "Relais %d", &relaisNum) == 1) {
             if (relaisNum >= 1 && relaisNum <= 16) {
                 int idx = relaisNum - 1;
-                if (strcmp(name, "name") == 0)                  { strcpy(deviceNames[idx], strdup(value)); }
-                else if (strcmp(name, "activateOnStart") == 0)  { strcpy(deviceActiveOnStart[idx], value); }
-                else if (strcmp(name, "eltakoState") == 0)      { pconfig->r[idx].eltakoState = atoi(value); }
-                else if (strcmp(name, "pMax") == 0)             { pconfig->r[idx].pMax = atoi(value); }
-                else { return 0; }
+                if (strcmp(name, "name") == 0) {
+                    strcpy(deviceNames[idx], strdup(value));
+                } else if (strcmp(name, "activateOnStart") == 0) {
+                    strcpy(deviceActiveOnStart[idx], value);
+                } else if (strcmp(name, "eltakoState") == 0) {
+                    pconfig->r[idx].eltakoState = atoi(value);
+                } else if (strcmp(name, "pMax") == 0) {
+                    pconfig->r[idx].pMax = atoi(value);
+                } else {
+                    return 0;
+                }
                 return 1;
             }
         }
@@ -93,32 +104,29 @@ int getElkoState(int relais, void* config) {
 }
 
 // Gibt verfügbaren Watt Restwert zurück
-int getRestPower(void * config) {
+int getRestPower(void* config) {
     configuration* pconfig = (configuration*)config;
     int watt = 0;
     for (int i = 0; i < 16; i++)
-        if (pconfig->r[i].eltakoState == 1)
-            watt += pconfig->r[i].pMax;
+        if (pconfig->r[i].eltakoState == 1) watt += pconfig->r[i].pMax;
     return pconfig->mcp.maxOutputPower - watt;
 }
 
 // Gibt gesamten Watt Verbrauch zurück
-int getCurrentPower(void * config) {
+int getCurrentPower(void* config) {
     configuration* pconfig = (configuration*)config;
     int watt = 0;
-    for (int i = 0; i < 16; i++) 
-        if (pconfig->r[i].eltakoState == 1) 
-            watt += pconfig->r[i].pMax;
+    for (int i = 0; i < 16; i++)
+        if (pconfig->r[i].eltakoState == 1) watt += pconfig->r[i].pMax;
     return watt;
 }
 
 // Gibt benötigte Watt vom Gerät zurück
-int getDevicePower(int relais, void * config) {
+int getDevicePower(int relais, void* config) {
     configuration* pconfig = (configuration*)config;
     if (relais < 1 || relais > 16) return 0;
     return pconfig->r[relais - 1].pMax;
 }
-
 
 // Ermittelt den Ladezustand der Batterie (wird aus txt Datei gelesen)
 int get_battery_percentage(const char* filepath) {
@@ -139,111 +147,117 @@ int get_battery_percentage(const char* filepath) {
         }
     }
     fclose(file);
-    return -1; // Nicht gefunden
+    return -1;  // Nicht gefunden
 }
 
 // Programmstart
-int main(int argc, char**argv) {
+int main(int argc, char** argv) {
     configuration config;
-    if (ini_parse("/Energiebox/230V/config.ini", handler, &config) < 0) { printf("Can't load '/Energiebox/230V/config.ini'\n"); return 1; }
-    if(wiringPiSetup()<0) { printf("wiringPiSetup error!!!"); return -1; }
+    if (ini_parse("/Energiebox/230V/config.ini", handler, &config) < 0) {
+        printf("Can't load '/Energiebox/230V/config.ini'\n");
+        return 1;
+    }
+    if (wiringPiSetup() < 0) {
+        printf("wiringPiSetup error!!!");
+        return -1;
+    }
     mcp_begin(config.mcp.address);
     fd = wiringPiI2CSetup(MCP23017_ADDRESS | i2caddr);
-    if(fd <0) { printf("wiringPi I2C Setup error!!!"); return -1; }
+    if (fd < 0) {
+        printf("wiringPi I2C Setup error!!!");
+        return -1;
+    }
     // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
-    if(argc == 1) {
+    if (argc == 1) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
-        //system("clear");
+        // system("clear");
         int ladezustand = get_battery_percentage(config.system.traceTxtFilePath);
         printf("\n\e[30;47m ID      %4dW  230V Gerätename     %3d%    \e[0m\n", getCurrentPower(&config), ladezustand);
-        for(int x=1; x<=config.mcp.numberOfRelaisActive; x++) {
-              printf("\033[1;97m %2d---->%s %4d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config)==0)?"\e[0;31m":"\e[0;32m"),(getDevicePower(x, &config)), "W", deviceNames[x-1] );
+        for (int x = 1; x <= config.mcp.numberOfRelaisActive; x++) {
+            printf("\033[1;97m %2d---->%s %4d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config) == 0) ? "\e[0;31m" : "\e[0;32m"), (getDevicePower(x, &config)), "W",
+                   deviceNames[x - 1]);
         }
         printf("\n");
-    }
-    else if(argc == 2) { // Nur Relais Nummer übergeben,
-	// wenn relaisNummer nicht valide 
-        if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config)) {
+    } else if (argc == 2) {  // Nur Relais Nummer übergeben,
+                             // wenn relaisNummer nicht valide
+        if (!checkMainParameter("relaisNumber", atoi(argv[1]), &config)) {
             return showHelp(argv, &config);
         }
-        printf("%d", getElkoState(atoi(argv[1]), &config)); // Nur Relais Nr. übergeben. config.ini auslesen und int auf console printen
-    }
-    else if(argc == 3) {
+        printf("%d", getElkoState(atoi(argv[1]), &config));  // Nur Relais Nr. übergeben. config.ini auslesen und int auf console printen
+    } else if (argc == 3) {
         // Wenn Konfiguration aufgerufen wird z.B. mit 230V -set 3
-        if (strcmp(argv[1], "-set") == 0)  {
-            if (   atoi(argv[2]) > 0    && atoi(argv[2]) <= config.mcp.numberOfRelaisActive) 
-            {
+        if (strcmp(argv[1], "-set") == 0) {
+            if (atoi(argv[2]) > 0 && atoi(argv[2]) <= config.mcp.numberOfRelaisActive) {
                 // Abfrage für neue Daten starten, speichern und Liste anzeigen
                 getDataForConfigFile(atoi(argv[2]), &config);
                 return 0;
             }
         }
-        if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config)) { return showHelp(argv, &config); }
+        if (!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config)) {
+            return showHelp(argv, &config);
+        }
         // wenn eingeschaltet wird
-        if(atoi(argv[2])==1) {
+        if (atoi(argv[2]) == 1) {
             // falls bereits an ist, nichts machen
-            if(getElkoState(atoi(argv[1]), &config)==0){
+            if (getElkoState(atoi(argv[1]), &config) == 0) {
                 // prüfen ob genug power da ist
-                if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxOutputPower) {
+                if (getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxOutputPower) {
                     // Relais einschalten
-                    setBit(atoi(argv[1])-1, 0);
+                    setBit(atoi(argv[1]) - 1, 0);
                     //  elkoState in config.ini schreiben
                     sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
                     system(command);
                     sleep(0.6);
                     system("clear && 230V");
                     exit;
-                }
-                else {
+                } else {
                     // Nicht genug Watt verfügbar für neues Gerät
                     printf("\e[0;31mDas Gerät benötigt %d Watt aber es sind nur %d Watt verfügbar!\n", getDevicePower(atoi(argv[1]), &config), getRestPower(&config));
                 }
             }
-        }
-        else {
+        } else {
             // wenn ausgeschaltet wird
             // Relais ausschalten
-            setBit(atoi(argv[1])-1, 1);
+            setBit(atoi(argv[1]) - 1, 1);
             //  elkoState in config.ini schreiben
             sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
             system(command);
             sleep(0.6);
             system("clear && 230V");
         }
-    }
-    else if(argc == 4) {
-        if(!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config) || !checkMainParameter("relaisTime", atoi(argv[3]), &config )) { return showHelp(argv, &config); } 
+    } else if (argc == 4) {
+        if (!checkMainParameter("relaisNumber", atoi(argv[1]), &config) || !checkMainParameter("relaisZustand", atoi(argv[2]), &config) ||
+            !checkMainParameter("relaisTime", atoi(argv[3]), &config)) {
+            return showHelp(argv, &config);
+        }
         sleep(atoi(argv[3]));
         // wenn eingeschaltet wird
-        if(atoi(argv[2])==1) {
+        if (atoi(argv[2]) == 1) {
             // falls bereits an ist, nichts machen
-            if(getElkoState(atoi(argv[1]), &config)==0){
+            if (getElkoState(atoi(argv[1]), &config) == 0) {
                 // prüfen ob Spannungswandler genug Watt  für alles liefert
-                if(getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxOutputPower) {
+                if (getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxOutputPower) {
                     // Relais einschalten
-                    setBit(atoi(argv[1])-1, 0);
+                    setBit(atoi(argv[1]) - 1, 0);
                     //  elkoState in config.ini schreiben
                     sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
                     system(command);
                     sleep(0.6);
-                }
-                else {
+                } else {
                     // Nicht genug Watt verfügbar für neues Gerät
                     printf("\e[0;31mDas Gerät benötigt %d Watt aber es sind nur %d Watt verfügbar!\n", getDevicePower(atoi(argv[1]), &config), getRestPower(&config));
                 }
             }
-        }
-        else {
+        } else {
             // wenn ausgeschaltet wird
             // Relais ausschalten
-            setBit(atoi(argv[1])-1, 1);
+            setBit(atoi(argv[1]) - 1, 1);
             //  elkoState in config.ini schreiben
             sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
             system(command);
             sleep(0.6);
         }
-    }
-    else {
+    } else {
         return showHelp(argv, &config);
     }
     return 0;
@@ -271,18 +285,15 @@ int getBit(int Port) {
 // Prüft ob Parameter richtige Syntax hat
 bool checkMainParameter(char* paramName, int number, void* config) {
     configuration* pconfig = (configuration*)config;
-    if (strcmp(paramName, "relaisNumber") == 0)  {
-        if ( number < 1 || number > pconfig->mcp.numberOfRelaisActive )  return false;
-    } 
-    else if (strcmp(paramName, "relaisZustand") == 0) {
-        if ( number < 0 || number > 1 )  return false;
-    } 
-    else if (strcmp(paramName, "relaisTime") == 0) {
-        if ( number < 0 || number > 86400 )  return false;
-    } 
+    if (strcmp(paramName, "relaisNumber") == 0) {
+        if (number < 1 || number > pconfig->mcp.numberOfRelaisActive) return false;
+    } else if (strcmp(paramName, "relaisZustand") == 0) {
+        if (number < 0 || number > 1) return false;
+    } else if (strcmp(paramName, "relaisTime") == 0) {
+        if (number < 0 || number > 86400) return false;
+    }
     return true;
 }
-
 
 #define MAX_INPUT_LEN 256
 
@@ -348,10 +359,10 @@ int isValidTime(const char* timeStr) {
     if (timeStr == NULL) return 0;
     if (strlen(timeStr) != 5) return 0;
     if (timeStr[2] != ':') return 0;
-    if (!isdigit(timeStr[0]) || !isdigit(timeStr[1])) return 0;// HH
+    if (!isdigit(timeStr[0]) || !isdigit(timeStr[1])) return 0;  // HH
     if (!isdigit(timeStr[3]) || !isdigit(timeStr[4])) return 0;  // MM
-    int hh = (timeStr[0]-'0')*10 + (timeStr[1]-'0');
-    int mm = (timeStr[3]-'0')*10 + (timeStr[4]-'0');
+    int hh = (timeStr[0] - '0') * 10 + (timeStr[1] - '0');
+    int mm = (timeStr[3] - '0') * 10 + (timeStr[4] - '0');
     if (hh < 0 || hh > 23) return 0;
     if (mm < 0 || mm > 59) return 0;
     return 1;
@@ -362,12 +373,12 @@ void getDataForConfigFile(int relais, void* config) {
     configuration* pconfig = (configuration*)config;
     system("clear");
     printf("Gerätekonfiguration für Relais Nr. -> %d bearbeiten:\n\n", relais);
-    char *strname = NULL;
-    char *strpMax = NULL;
-    char *stractivateOnStart = NULL;
-    char *autoStart = NULL;
-    char *autoStop = NULL;
-    char *canStartFromGui = NULL;
+    char* strname = NULL;
+    char* strpMax = NULL;
+    char* stractivateOnStart = NULL;
+    char* autoStart = NULL;
+    char* autoStop = NULL;
+    char* canStartFromGui = NULL;
     while (1) {
         printf(" -> Bezeichnung (leer = deaktiviert): ");
         char* input = readStdinLine();
@@ -380,13 +391,11 @@ void getDataForConfigFile(int relais, void* config) {
             autoStart = strdup("-");
             autoStop = strdup("-");
             break;
-        }
-        else if (!isValidName(trimmed)) {
+        } else if (!isValidName(trimmed)) {
             printf("    Ungültig! Erlaubt sind: 1-20 Zeichen,\n    Leerzeichen, (a-zA-Z0-9),_+-,.ßäöüÄÖÜ\n");
             free(input);
             continue;
-        }
-        else {
+        } else {
             strname = strdup(trimmed);
             free(input);
             break;
@@ -422,13 +431,11 @@ void getDataForConfigFile(int relais, void* config) {
                 autoStop = strdup("-");
                 free(input);
                 break;
-            }
-            else if (!isValidTime(trimmed)) {
+            } else if (!isValidTime(trimmed)) {
                 printf("    Ungültiges Zeitformat! Bitte HH:MM im\n    24h-Format eingeben (z.B. 22:10)!\n");
                 free(input);
                 continue;
-            }
-            else {
+            } else {
                 autoStart = strdup(trimmed);
                 free(input);
                 while (1) {
@@ -439,18 +446,15 @@ void getDataForConfigFile(int relais, void* config) {
                         printf("    Bitte eine gültige Uhrzeit\n    eingeben (nicht leer)!\n");
                         free(input2);
                         continue;
-                    }
-                    else if (!isValidTime(trimmed2)) {
+                    } else if (!isValidTime(trimmed2)) {
                         printf("    Ungültiges Zeitformat! Bitte\n    HH:MM im 24h-Format eingeben (z.B. 06:30)!\n");
                         free(input2);
                         continue;
-                    }
-                    else if (strcmp(autoStart, trimmed2) == 0) {
+                    } else if (strcmp(autoStart, trimmed2) == 0) {
                         printf("    Einschalt- und Ausschaltzeit\n    dürfen nicht gleich sein!\n");
                         free(input2);
                         continue;
-                    }
-                    else {
+                    } else {
                         autoStop = strdup(trimmed2);
                         free(input2);
                         break;
@@ -467,7 +471,8 @@ void getDataForConfigFile(int relais, void* config) {
         free(input3);
     }
     char command[256];
-    snprintf(command, sizeof(command), "bash /Energiebox/230V/setConfig.sh %d '%s' '%s' '%s' '%s' '%s' '%s'", relais, strname, stractivateOnStart, strpMax, autoStart, autoStop, canStartFromGui);
+    snprintf(command, sizeof(command), "bash /Energiebox/230V/setConfig.sh %d '%s' '%s' '%s' '%s' '%s' '%s'", relais, strname, stractivateOnStart, strpMax, autoStart, autoStop,
+             canStartFromGui);
     system(command);
     free(strname);
     free(strpMax);

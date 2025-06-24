@@ -25,6 +25,8 @@ sleep 1
 start_spinner 'box@Energiebox:/Energiebox/230V:$ make'
 sleep 1
 cd /Energiebox/230V
+sudo make clean  > /dev/null
+sudo make format  > /dev/null
 sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then
@@ -38,6 +40,8 @@ stop_spinner $?
 start_spinner 'box@Energiebox:/Energiebox/12V:$ make'
 sleep 1
 cd /Energiebox/12V
+sudo make clean  > /dev/null
+sudo make format  > /dev/null
 sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then
@@ -100,6 +104,8 @@ stop_spinner $?
 start_spinner 'box@Energiebox:/Energiebox/Kolloid/sounds:$ make'
 sleep 1
 cd /Energiebox/Kolloid/sounds
+sudo make clean  > /dev/null
+sudo make format  > /dev/null
 sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then
@@ -117,6 +123,8 @@ stop_spinner $?
 start_spinner 'box@Energiebox:/Energiebox/Grid:$ make'
 sleep 1
 cd /Energiebox/Grid
+sudo make clean  > /dev/null
+sudo make format  > /dev/null
 sudo make  > /Energiebox/makeResult.txt;
 result=$?;
 if [ "$result" -eq "2" ]; then

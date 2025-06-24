@@ -38,8 +38,6 @@ char command[100];
 
 int main(int argc, char **argv) {
     configuration config;
-    int test;
-    test = 4;
     /////////////////////
     //// 12 Volt  ///////
     /////////////////////

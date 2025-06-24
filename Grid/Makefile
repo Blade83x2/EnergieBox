@@ -28,3 +28,11 @@ iniparse.o: 	iniparse.c
 
 clean:
 		rm -f grid $(OBJ)
+
+# ==== Code-Formatierung ====
+FORMATTER = clang-format
+SRC := $(shell find . -type f \( -name "*.c" -o -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \))
+
+format: .clang-format
+	@echo "→ Formatierung mit clang-format..."
+	$(FORMATTER) -i $(SRC)
