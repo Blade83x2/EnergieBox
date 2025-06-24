@@ -36,7 +36,7 @@ extern "C" {
 /* Typedef for prototype of handler function. */
 #if INI_HANDLER_LINENO
 typedef int (*ini_handler)(void *user, const char *section, const char *name, const char *value,
-						   int lineno);
+                           int lineno);
 #else
 typedef int (*ini_handler)(void *user, const char *section, const char *name, const char *value);
 #endif

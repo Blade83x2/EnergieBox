@@ -14,7 +14,7 @@ CC             = gcc
 CXXFLAGS       = -Wall -std=c++17 -lmysqlclient -lwiringPi
 CFLAGS         = -Wall -std=gnu99 -lwiringPi
 TARGET         = trace
-OBJ            = trace.o iniparse.o
+OBJ            = trace.o iniparse.o mymcp23017.o
 INSTALL_DIR    = /usr/local/bin
 INSTALL_GROUP  = energiebox
 
@@ -72,6 +72,7 @@ uninstall:
 
 clean:
 	rm -f $(OBJ) $(TARGET)
+	rm -f .clang-format
 	@echo "$(GREEN)Build-Dateien entfernt.$(NC)"
 
 # === Code-Formatierung ===
@@ -83,13 +84,13 @@ format: .clang-format
 	$(FORMATTER) -i $(SRC)
 
 .clang-format:
-	@echo "BasedOnStyle: LLVM"                         > .clang-format
-	@echo "IndentWidth: 4"                            >> .clang-format
-	@echo "TabWidth: 4"                               >> .clang-format
-	@echo "UseTab: Always"                            >> .clang-format
+	@echo "BasedOnStyle: LLVM"                        > .clang-format
+	@echo "IndentWidth: 4"                           >> .clang-format
+	@echo "TabWidth: 4"                              >> .clang-format
+	@echo "UseTab: Never"                            >> .clang-format
 	@echo "BreakBeforeBraces: Attach"                >> .clang-format
 	@echo "BinPackParameters: true"                  >> .clang-format
 	@echo "BinPackArguments: true"                   >> .clang-format
-	@echo "ColumnLimit: 100"                         >> .clang-format
+	@echo "ColumnLimit: 0"                           >> .clang-format
 	@echo "AllowShortFunctionsOnASingleLine: Inline" >> .clang-format
 	@echo "SortIncludes: false"                      >> .clang-format
