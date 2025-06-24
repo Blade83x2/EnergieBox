@@ -108,13 +108,7 @@ class BatteryController {
         }
     }
     void
-    speichereInDatenbank(float pv_volt,
-                         float pv_ampere,
-                         float pv_power,
-                         float batt_volt,
-                         float batt_ampere,
-                         float batt_power, int batt_soc, float generated_power,
-                         int grid_load_active) {
+    speichereInDatenbank(float pv_volt, float pv_ampere, float pv_power, float batt_volt, float batt_ampere, float batt_power, int batt_soc, float generated_power, int grid_load_active) {
         MYSQL *conn = mysql_init(nullptr);
         if(!conn) {
             std::cerr << "/Energiebox/Tracer/trace: MySQL-Init fehlgeschlagen\n";
@@ -128,8 +122,7 @@ class BatteryController {
                                   "grid_load_active) VALUES (" +
                                   std::to_string(timestamp) + ", " + std::to_string(pv_volt) + ", " + std::to_string(pv_ampere) + ", " + std::to_string(pv_power) + ", " + std::to_string(batt_volt) + ", " + std::to_string(batt_ampere) + ", " + std::to_string(batt_power) + ", " + std::to_string(batt_soc) + ", " + std::to_string(generated_power) + ", " + std::to_string(grid_load_active) + ")";
                 if(mysql_query(conn, sql.c_str())) {
-                    std::cerr << "/Energiebox/Tracer/trace: MySQL INSERT fehlgeschlagen: "
-                              << mysql_error(conn) << "\n";
+                    std::cerr << "/Energiebox/Tracer/trace: MySQL INSERT fehlgeschlagen: " << mysql_error(conn) << "\n";
                 } else {
                     std::cout << "Messwerte erfolgreich gespeichert.\n";
                 }
