@@ -38,7 +38,7 @@
 
 // Debug-Modus aktivieren/deaktivieren
 bool debug = false;
-enum class LogLevel { DEBUG, INFO, WARN, ERROR, TEST };
+enum class LogLevel { DEBUG, INFO, WARN, ERROR };
 
 void debugPrint(const std::string &strMsg, LogLevel level = LogLevel::DEBUG) {
     if (debug) {
