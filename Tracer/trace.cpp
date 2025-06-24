@@ -20,6 +20,8 @@
 #include <unistd.h> // für access() und F_OK
 // Strukt
 
+int test;
+
 struct MCPSetup {
     int address = 0;
     int numberOfRelaisActive = 0;
@@ -93,8 +95,7 @@ class BatteryController {
         return -1.0f;
     }
     void triggerLoad() {
-        std::string cmd =
-            "/Energiebox/Grid/grid -w " + std::to_string(config.grid.loadingCapacityWh) + " &";
+        std::string cmd = "/Energiebox/Grid/grid -w " + std::to_string(config.grid.loadingCapacityWh) + " &";
         int ret = system(cmd.c_str());
         if (ret == -1) {
             std::cerr << "/Energiebox/Tracer/trace: Fehler beim Starten des Grid Programm\n";
@@ -138,6 +139,7 @@ class BatteryController {
 
   public:
     bool run() {
+        test = 5;
         if (!loadConfig()) {
             std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte Config nicht laden: "
                       << configPath << "\n";
