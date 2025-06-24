@@ -10,7 +10,7 @@ printUsage()
 {
     std::cout << "Nutzung: epever [Option]\n"
               << "Optionen:\n"
-              << "  -l, --loop      Wiederholt die Anzeige alle 2 Sekunden\n"
+              << "  -l, --loop      Wiederholt die Anzeige alle 60 Sekunden\n"
               << "  -h, --help      Zeigt diese Hilfe an\n";
 }
 
@@ -52,7 +52,7 @@ main(int argc, char *argv[])
         pv.draw();
         battery.draw();
         if(loop) {
-            std::this_thread::sleep_for(std::chrono::seconds(180));
+            std::this_thread::sleep_for(std::chrono::seconds(61));
         }
     } while(loop);
     return 0;
