@@ -39,7 +39,7 @@ all: $(TARGETS)
 # Link-Regeln mit Rechte- und Gruppensetzung
 trace: trace.o $(C_OBJ)
 	$(CPP_COMPILER) -o $@ trace.o $(C_OBJ) $(CPPFLAGS) -lwiringPi -lmysqlclient
-	chmod 660 $@
+	chmod 550 $@
 	chgrp $(GROUP) $@
 
 epever: $(EPEVER_OBJ)

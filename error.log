@@ -16,3 +16,6 @@
 /bin/sh: 1: ./trace: not found
 /bin/sh: 1: ./trace: not found
 /bin/sh: 1: ./trace: not found
+/bin/sh: 1: ./trace: Permission denied
+/bin/sh: 1: ./trace: Permission denied
+/bin/sh: 1: ./trace: not found
