@@ -7,12 +7,6 @@
  * Um das Programm auf dem Raspberry zu beenden, kann folgender Befehl verwendet werden:
  * kill -9 $(pidof gui)
  *
- *
- * TODO:
- * Fehler Abfangen Routine einbauen (wenn trace.txt gerade neu geschrieben wird)
-(gui:14014): glibmm-ERROR **: 20:54:02.548:
-unhandled exception (type std::exception) in signal handler:
-what: stof
 */
 #include <gtkmm/application.h>
 #include <gtkmm/window.h>
@@ -44,12 +38,11 @@ what: stof
 
 // Debug-Modus aktivieren/deaktivieren
 bool debug = false;
-enum class LogLevel {
-    DEBUG,
-    INFO,
-    WARN,
-    ERROR
-};
+enum class LogLevel { DEBUG,
+                      INFO,
+                      WARN,
+                      ERROR };
+
 void debugPrint(const std::string &strMsg, LogLevel level = LogLevel::DEBUG) {
     if (debug) {
         auto now = std::chrono::system_clock::now();
@@ -94,6 +87,7 @@ class IniReader {
             std::cerr << "Fehler beim Öffnen der INI: " << path << std::endl;
             return;
         }
+
         std::string line;
         std::string currentSection;
         while (std::getline(file, line)) {
