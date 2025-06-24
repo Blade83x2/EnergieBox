@@ -1,26 +1,29 @@
 #
 # Makefile für 12V 
 # Vendor: Johannes Krämer
-# Version: 1.0
-# Date: 22.11.2024
+# Version: 1.1
+# Date: 24.06.2025
 #
-# https://www.c-howto.de/tutorial/makefiles/
-# https://www.c-howto.de/tutorial/makefiles/erweiterungen/
 
-OBJ 		= 12V.o mymcp23017.o iniparse.o
-COMPILER 	= gcc
+OBJ         = 12V.o mymcp23017.o iniparse.o
+COMPILER    = gcc
+CFLAGS      = -std=gnu99
 
-12V:		$(OBJ)
-			$(COMPILER) -o $@ $(OBJ)	-lwiringPi -std=gnu99
+12V: $(OBJ)
+	$(COMPILER) -o $@ $(OBJ) -lwiringPi $(CFLAGS)
+	chmod 660 $@  # Setze Berechtigung für Binary
 
-12V.o: 		12V.c
-			$(COMPILER) -c 12V.c 					-lwiringPi -std=gnu99
-	
-mymcp23017.o: 	mymcp23017.c
-			$(COMPILER) -c mymcp23017.c				-lwiringPi -std=gnu99
-			
-iniparse.o: 	iniparse.c
-			$(COMPILER) -c iniparse.c				-std=gnu99
-			
+12V.o: 12V.c
+	$(COMPILER) -c 12V.c -lwiringPi $(CFLAGS)
+	chmod 600 $@  # Setze Berechtigung für Objektdatei
+
+mymcp23017.o: mymcp23017.c
+	$(COMPILER) -c mymcp23017.c -lwiringPi $(CFLAGS)
+	chmod 600 $@  # Setze Berechtigung für Objektdatei
+
+iniparse.o: iniparse.c
+	$(COMPILER) -c iniparse.c $(CFLAGS)
+	chmod 600 $@  # Setze Berechtigung für Objektdatei
+
 clean:
-		rm -f $* $(OBJ)
+	rm -f 12V $(OBJ)
