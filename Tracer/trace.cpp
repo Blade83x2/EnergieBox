@@ -19,7 +19,6 @@
 #include <string>
 #include <unistd.h> // für access() und F_OK
 // Strukt
-
 struct MCPSetup {
     int address = 0;
     int numberOfRelaisActive = 0;
@@ -97,7 +96,6 @@ class BatteryController {
         int ret = system(cmd.c_str());
         if (ret == -1) {
             std::cerr << "/Energiebox/Tracer/trace: Fehler beim Starten des Grid Programm\n";
-            std::cerr << "/Energiebox/Tracer/trace: Fehler bei gh jhgk jhg kjhg öhkljhg jhg kjhg kjhg kjhg kjhg kjg jkg kjhg kjhg kjh gkjh gkjh gkjh kjhg kjhg jh gkjh gkjh gkjhg kjh kjh kjh kjh kjh kjh m Starten des Grid Programm\n";
         } else {
             std::cout << "Grid-Ladevorgang gestartet (" << config.grid.loadingCapacityWh << " Wh)\n";
         }
@@ -112,13 +110,9 @@ class BatteryController {
             if (mysql_real_connect(conn, nullptr, nullptr, nullptr, nullptr, 0, nullptr, 0)) {
                 unsigned int timestamp = static_cast<unsigned int>(std::time(nullptr));
                 std::string sql =
-                    "INSERT INTO messwerte (timestamp, pv_volt, pv_ampere, pv_power, "
-                    "batt_volt, batt_ampere, batt_power, batt_soc, generated_power, "
-                    "grid_load_active) VALUES (" +
-                    std::to_string(timestamp) + ", " + std::to_string(pv_volt) + ", " +
-                    std::to_string(pv_ampere) + ", " + std::to_string(pv_power) + ", " +
-                    std::to_string(batt_volt) + ", " + std::to_string(batt_ampere) + ", " +
-                    std::to_string(batt_power) + ", " + std::to_string(batt_soc) + ", " +
+                    "INSERT INTO messwerte (timestamp, pv_volt, pv_ampere, pv_power, batt_volt, batt_ampere, batt_power, batt_soc, generated_power, grid_load_active) VALUES (" +
+                    std::to_string(timestamp) + ", " + std::to_string(pv_volt) + ", " + std::to_string(pv_ampere) + ", " + std::to_string(pv_power) + ", " +
+                    std::to_string(batt_volt) + ", " + std::to_string(batt_ampere) + ", " + std::to_string(batt_power) + ", " + std::to_string(batt_soc) + ", " +
                     std::to_string(generated_power) + ", " + std::to_string(grid_load_active) + ")";
                 if (mysql_query(conn, sql.c_str())) {
                     std::cerr << "/Energiebox/Tracer/trace: MySQL INSERT fehlgeschlagen: " << mysql_error(conn) << "\n";
