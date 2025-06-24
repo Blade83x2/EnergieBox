@@ -2,6 +2,7 @@
  *  Ruft python3 /Energiebox/Tracer/readall.py auf und liest die MPPT-Daten aus.
  *  Prüft, ob die Batterie eine Mindestspannung hat, und startet ggf. das Netzladeprogramm.
  *  Speichert die ausgelesenen Daten in eine MySQL-Datenbank und in trace.txt.
+ * 
  */
 
 #include "iniparse.h"
