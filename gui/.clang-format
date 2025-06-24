@@ -12,3 +12,4 @@ PenaltyBreakString: 1000000
 PenaltyBreakBeforeFirstCallParameter: 1000000
 PenaltyBreakAssignment: 1000000
 PenaltyBreakFirstLessLess: 1000000
+AllowShortEnumsOnASingleLine: true

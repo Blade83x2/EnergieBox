@@ -1,18 +1,15 @@
-# Automatisch generierte Formatierungsregeln für C/C++
-# Stil-Basis: LLVM – angepasst auf Allman-Stil und Einrückung mit Leerzeichen
 BasedOnStyle: LLVM
-IndentWidth: 4      # Einrückung mit 4 Leerzeichen
-TabWidth: 4         # Tabulatoren zählen als 4 Leerzeichen
-UseTab: Always       # Never|Always 
-BreakBeforeBraces: Allman   # Klammern bei Funktionen und Kontrollstrukturen in neuer Zeile
-ColumnLimit: 100    # Max. Breite einer Zeile (z. B. für SSH-Terminals)
-AllowShortIfStatementsOnASingleLine: false   # if/else immer mit Blockklammern umbrechen
-AllowShortLoopsOnASingleLine: false          # auch while/for nicht einzeilig
-AllowShortFunctionsOnASingleLine: Inline     # sehr kurze Funktionen dürfen einzeilig bleiben
-KeepEmptyLinesAtTheStartOfBlocks: false       # keine leeren Zeilen direkt nach {
-SpacesBeforeTrailingComments: 2               # Zwei Leerzeichen vor Endkommentaren
-SpaceAfterCStyleCast: true                    # Leerzeichen nach C-Cast: (int) x
-SpaceBeforeParens: ControlStatements          # Leerzeichen vor Klammern bei if/while/for
-BinPackArguments: false  # Argumente nicht automatisch zusammenquetschen
-BinPackParameters: false # Parameter auch nicht – für bessere Lesbarkeit
-SortIncludes: false       # Includes nicht automatisch alphabetisch sortieren
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+BreakBeforeBraces: Attach
+BinPackParameters: true
+BinPackArguments: true
+ColumnLimit: 0
+AllowShortFunctionsOnASingleLine: Inline
+SortIncludes: false
+PenaltyBreakString: 1000000
+PenaltyBreakBeforeFirstCallParameter: 1000000
+PenaltyBreakAssignment: 1000000
+PenaltyBreakFirstLessLess: 1000000
+AllowShortEnumsOnASingleLine: true
