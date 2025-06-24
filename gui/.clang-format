@@ -17,4 +17,4 @@ PenaltyBreakFirstLessLess: 1000000
 
 BasedOnStyle: Google
 AllowShortEnumsOnASingleLine: true
-ColumnLimit: 120
+ColumnLimit: 160
