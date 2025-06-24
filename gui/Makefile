@@ -66,7 +66,7 @@ uninstall:
 
 clean:
 	rm -f $(OBJ) $(TARGET)
-	rm -f .clang-format
+#	rm -f .clang-format
 	@echo "$(GREEN)Build-Dateien entfernt.$(NC)"
 
 # === Code-Formatierung ===
