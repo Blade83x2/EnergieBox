@@ -6,24 +6,24 @@
 extern uint8_t i2caddr;
 extern int fd;
 
-void mcp_begin(uint8_t addr);
-void mcp_initReg(void);
-void mcp_pinMode(uint8_t p, uint8_t d);
-void mcp_digitalWrite(uint8_t p, uint8_t d);
-void mcp_pullUp(uint8_t p, uint8_t d);
-uint8_t mcp_digitalRead(uint8_t p);
-void mcp_writeGPIOAB(uint16_t);
-uint16_t mcp_readGPIOAB(void);
-uint8_t mcp_readGPIO(uint8_t b);
-void mcp_setupInterrupts(uint8_t mirroring, uint8_t open, uint8_t polarity);
-void mcp_setupInterruptPin(uint8_t p, uint8_t mode);
-uint8_t mcp_getLastInterruptPin(void);
-uint8_t mcp_getLastInterruptPinValue(void);
-uint8_t mcp_bitForPin(uint8_t pin);
-uint8_t mcp_regForPin(uint8_t pin, uint8_t portAaddr, uint8_t portBaddr);
-uint8_t mcp_readRegister(uint8_t addr);
-void mcp_writeRegister(uint8_t addr, uint8_t value);
-void mcp_updateRegisterBit(uint8_t p, uint8_t pValue, uint8_t portAaddr, uint8_t portBaddr);
+void mcp_begin( uint8_t addr );
+void mcp_initReg( void );
+void mcp_pinMode( uint8_t p, uint8_t d );
+void mcp_digitalWrite( uint8_t p, uint8_t d );
+void mcp_pullUp( uint8_t p, uint8_t d );
+uint8_t mcp_digitalRead( uint8_t p );
+void mcp_writeGPIOAB( uint16_t );
+uint16_t mcp_readGPIOAB( void );
+uint8_t mcp_readGPIO( uint8_t b );
+void mcp_setupInterrupts( uint8_t mirroring, uint8_t open, uint8_t polarity );
+void mcp_setupInterruptPin( uint8_t p, uint8_t mode );
+uint8_t mcp_getLastInterruptPin( void );
+uint8_t mcp_getLastInterruptPinValue( void );
+uint8_t mcp_bitForPin( uint8_t pin );
+uint8_t mcp_regForPin( uint8_t pin, uint8_t portAaddr, uint8_t portBaddr );
+uint8_t mcp_readRegister( uint8_t addr );
+void mcp_writeRegister( uint8_t addr, uint8_t value );
+void mcp_updateRegisterBit( uint8_t p, uint8_t pValue, uint8_t portAaddr, uint8_t portBaddr );
 
 #define MCP23017_ADDRESS 0x20
 

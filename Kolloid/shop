@@ -28,7 +28,7 @@ if [[ ! -f ~/.mysql.cfg ]]; then
   echo "Die Datei ~/.mysql.cfg existiert nicht."
   echo "Bitte lege sie wie folgt an, um die MySQL-Zugangsdaten sicher zu speichern:"
   echo
-  echo "1️) Erstelle die Datei:"
+  echo "1️) Erstelle die Datei mit 440 und in energiebox gruppe:"
   echo "    nano ~/.mysql.cfg"
   echo
   echo "2️) Füge folgenden Inhalt ein (ersetze die Platzhalter):"

@@ -1,9 +1,9 @@
 /Energiebox
 [drwxrws--- root     energiebox]  /Energiebox/12V
 [-r-xr-x--- root     energiebox]  /Energiebox/12V/12V
-[-rwx------ root     energiebox]  /Energiebox/12V/12V.c
-[-rwx------ root     energiebox]  /Energiebox/12V/12V.o
-[-rw-rw---- root     energiebox]  /Energiebox/12V/config.ini
+[-rw------- root     energiebox]  /Energiebox/12V/12V.c
+[-rw------- root     energiebox]  /Energiebox/12V/12V.o
+[-rw-rw---- box      energiebox]  /Energiebox/12V/config.ini
 [drwxr-s--- root     energiebox]  /Energiebox/12V/img
 [-rw-r----- root     energiebox]  /Energiebox/12V/img/config.png
 [-rw-r----- root     energiebox]  /Energiebox/12V/img/help.png
@@ -13,21 +13,21 @@
 [-rw-r----- root     energiebox]  /Energiebox/12V/img/set.png
 [-rw-r----- root     energiebox]  /Energiebox/12V/img/set_time.png
 [-rw-r----- root     energiebox]  /Energiebox/12V/img/statusRelais.png
-[-rwx------ root     energiebox]  /Energiebox/12V/iniparse.c
-[-rwx------ root     energiebox]  /Energiebox/12V/iniparse.h
-[-rwx------ root     energiebox]  /Energiebox/12V/iniparse.o
-[-rwx------ root     energiebox]  /Energiebox/12V/Makefile
-[-rwx------ root     energiebox]  /Energiebox/12V/mymcp23017.c
-[-rwx------ root     energiebox]  /Energiebox/12V/mymcp23017.h
-[-rwx------ root     energiebox]  /Energiebox/12V/mymcp23017.o
+[-rw------- root     energiebox]  /Energiebox/12V/iniparse.c
+[-rw------- root     energiebox]  /Energiebox/12V/iniparse.h
+[-rw------- root     energiebox]  /Energiebox/12V/iniparse.o
+[-rw------- root     energiebox]  /Energiebox/12V/Makefile
+[-rw------- root     energiebox]  /Energiebox/12V/mymcp23017.c
+[-rw------- root     energiebox]  /Energiebox/12V/mymcp23017.h
+[-rw------- root     energiebox]  /Energiebox/12V/mymcp23017.o
 [-rw-r----- root     energiebox]  /Energiebox/12V/README.md
 [-rwxr-x--- root     energiebox]  /Energiebox/12V/setConfig.sh
 [-rwxr-x--- root     energiebox]  /Energiebox/12V/setIni.sh
 [drwxrws--- root     energiebox]  /Energiebox/230V
-[-rwxr-x--- root     energiebox]  /Energiebox/230V/230V
-[-rwx------ root     energiebox]  /Energiebox/230V/230V.c
-[-rwx------ root     energiebox]  /Energiebox/230V/230V.o
-[-rw-rw---- root     energiebox]  /Energiebox/230V/config.ini
+[-r-xr-x--- root     energiebox]  /Energiebox/230V/230V
+[-rw------- root     energiebox]  /Energiebox/230V/230V.c
+[-rw------- root     energiebox]  /Energiebox/230V/230V.o
+[-rw-rw---- box      energiebox]  /Energiebox/230V/config.ini
 [drwxr-s--- root     energiebox]  /Energiebox/230V/img
 [-rw-r----- root     energiebox]  /Energiebox/230V/img/config.png
 [-rw-r----- root     energiebox]  /Energiebox/230V/img/help.png
@@ -37,192 +37,192 @@
 [-rw-r----- root     energiebox]  /Energiebox/230V/img/set.png
 [-rw-r----- root     energiebox]  /Energiebox/230V/img/set_time.png
 [-rw-r----- root     energiebox]  /Energiebox/230V/img/statusRelais.png
-[-rwx------ root     energiebox]  /Energiebox/230V/iniparse.c
-[-rwx------ root     energiebox]  /Energiebox/230V/iniparse.h
-[-rwx------ root     energiebox]  /Energiebox/230V/iniparse.o
+[-rw------- root     energiebox]  /Energiebox/230V/iniparse.c
+[-rw------- root     energiebox]  /Energiebox/230V/iniparse.h
+[-rw------- root     energiebox]  /Energiebox/230V/iniparse.o
 [-rw------- root     energiebox]  /Energiebox/230V/Makefile
-[-rwx------ root     energiebox]  /Energiebox/230V/mymcp23017.c
-[-rwx------ root     energiebox]  /Energiebox/230V/mymcp23017.h
-[-rwx------ root     energiebox]  /Energiebox/230V/mymcp23017.o
+[-rw------- root     energiebox]  /Energiebox/230V/mymcp23017.c
+[-rw------- root     energiebox]  /Energiebox/230V/mymcp23017.h
+[-rw------- root     energiebox]  /Energiebox/230V/mymcp23017.o
 [-rw-r----- root     energiebox]  /Energiebox/230V/README.md
 [-rwxr-x--- root     energiebox]  /Energiebox/230V/setConfig.sh
 [-rwxr-x--- root     energiebox]  /Energiebox/230V/setIni.sh
 [drwxr-s--- root     energiebox]  /Energiebox/Bauteile
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/1bit digital tube display
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/1bit digital tube display/1bit digital tube display.pdf
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/1bit digital tube display/code
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/1bit digital tube display/code/C
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/1bit digital tube display/code/C/8segment_digital_tube.c
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/1bit digital tube display/code/Program execution.txt
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/1bit digital tube display/code/python
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/1bit digital tube display/code/python/8segment_digital_tube.py
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/1bit digital tube display/1bit digital tube display.pdf
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/1bit digital tube display/code
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/1bit digital tube display/code/C
+[-rw------- root     energiebox]  /Energiebox/Bauteile/1bit digital tube display/code/C/8segment_digital_tube.c
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/1bit digital tube display/code/Program execution.txt
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/1bit digital tube display/code/python
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/1bit digital tube display/code/python/8segment_digital_tube.py
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/74HC595
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/74HC595/74HC595.pdf
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/74HC595/code
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/74HC595/code/C
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/74HC595/code/C/74HC595.c
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/74HC595/code/Program execution.txt
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/74HC595/code/python
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/74HC595/code/python/74HC595.py
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/74HC595/74HC595.pdf
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/74HC595/code
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/74HC595/code/C
+[-rw------- root     energiebox]  /Energiebox/Bauteile/74HC595/code/C/74HC595.c
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/74HC595/code/Program execution.txt
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/74HC595/code/python
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/74HC595/code/python/74HC595.py
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/activeBuzzer
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/activeBuzzer/activeBuzzer.pdf
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/activeBuzzer/code
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/activeBuzzer/code/C
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/activeBuzzer/code/C/activeBuzzer
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/activeBuzzer/code/C/activeBuzzer.c
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/activeBuzzer/code/Program execution.txt
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/activeBuzzer/code/python
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/activeBuzzer/code/python/buzzer_active.py
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/activeBuzzer/activeBuzzer.pdf
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/activeBuzzer/code
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/activeBuzzer/code/C
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/activeBuzzer/code/C/activeBuzzer
+[-rw------- root     energiebox]  /Energiebox/Bauteile/activeBuzzer/code/C/activeBuzzer.c
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/activeBuzzer/code/Program execution.txt
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/activeBuzzer/code/python
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/activeBuzzer/code/python/buzzer_active.py
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/Analog Digital Wandler Datenblatt.pdf
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/C
-[-rw-r----- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/C/bcm2835.h
-[-rw-r----- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/C/pcf8591.c
-[-rw-r----- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/C/wiring.c
-[-rw-r----- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/ME088_DB-EN.pdf
-[-rw-r----- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/_PCF8591.py
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/PCF8591.py
-[-rw-r----- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/Warren Gay (auth.)-Custom Raspberry Pi ...for the Raspberry Pi-Apress (2017).pdf
-[-rw-r----- root     energiebox]  /Energiebox/Bauteile/bauen.jpg
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/Analog Digital Wandler Datenblatt.pdf
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/C
+[-rw------- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/C/bcm2835.h
+[-rw------- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/C/pcf8591.c
+[-rw------- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/C/wiring.c
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/ME088_DB-EN.pdf
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/_PCF8591.py
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/PCF8591.py
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/Analog Digital Wandler/Warren Gay (auth.)-Custom Raspberry Pi ...for the Raspberry Pi-Apress (2017).pdf
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/bauen.jpg
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/Breadboard Power Supply Module
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Breadboard Power Supply Module/Breadboard Power Supply Module Schematic.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Breadboard Power Supply Module/mb_102.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/Breadboard Power Supply Module/Breadboard Power Supply Module Schematic.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/Breadboard Power Supply Module/mb_102.pdf
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/button
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/button/button.pdf
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/button/code
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/button/code/C
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/button/code/C/button
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/button/code/C/button.c
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/button/code/Program execution.txt
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/button/code/python
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/button/code/python/button.py
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/button/button.pdf
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/button/code
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/button/code/C
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/button/code/C/button
+[-rw------- root     energiebox]  /Energiebox/Bauteile/button/code/C/button.c
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/button/code/Program execution.txt
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/button/code/python
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/button/code/python/button.py
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/datasheet
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/1_4W 1% Resisto.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/1 digit 7-segment Display .pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/1N4007.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/22pf 104 Ceramic Capacitor.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/74HC595.PDF
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/Active buzzer.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/Analog Digital Wandler Datenblatt.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/BC547.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/BC557.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/Button.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/Datasheet-Battery-Balancer-DE.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/Datasheet-Orion-Tr-DC-DC-converters-low-power,-non-isolated-EN.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/DHT11 module .pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/IR-Receiver-DP838.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/IR Remote Control.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/LCD 1602A.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/LED Datasheets.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/MT3608 Step-Up DC-DC SPannungsregler_DE.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/passive buzzer-TMB12C05 .pdf
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/datasheet/Read Me First
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/Read Me First/Breadboard instructions.docx
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/Read Me First/Read Me First.txt
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/RGB LED.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/datasheet/SG90 SPEC.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/1_4W 1% Resisto.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/1 digit 7-segment Display .pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/1N4007.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/22pf 104 Ceramic Capacitor.pdf
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/datasheet/74HC595.PDF
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/Active buzzer.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/Analog Digital Wandler Datenblatt.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/BC547.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/BC557.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/Button.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/Datasheet-Battery-Balancer-DE.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/Datasheet-Orion-Tr-DC-DC-converters-low-power,-non-isolated-EN.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/DHT11 module .pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/IR-Receiver-DP838.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/IR Remote Control.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/LCD 1602A.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/LED Datasheets.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/MT3608 Step-Up DC-DC SPannungsregler_DE.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/passive buzzer-TMB12C05 .pdf
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/datasheet/Read Me First
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/datasheet/Read Me First/Breadboard instructions.docx
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/datasheet/Read Me First/Read Me First.txt
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/RGB LED.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/datasheet/SG90 SPEC.pdf
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/DHT11
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/DHT11/code
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/DHT11/code/C
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/DHT11/code/C/dht
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/DHT11/code/C/dht11
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/DHT11/code/C/dht11.c
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/DHT11/code/Program execution.txt
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/DHT11/code/python
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/DHT11/code/python/dht11.py
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/DHT11/DHT11.pdf
-[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/I2C_Transporter_p82b715.pdf
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/DHT11/code
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/DHT11/code/C
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/DHT11/code/C/dht
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/DHT11/code/C/dht11
+[-rw------- root     energiebox]  /Energiebox/Bauteile/DHT11/code/C/dht11.c
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/DHT11/code/Program execution.txt
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/DHT11/code/python
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/DHT11/code/python/dht11.py
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/DHT11/DHT11.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/I2C_Transporter_p82b715.pdf
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/IRremote
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/IRremote/IRremote.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/IRremote/readme.txt
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/IRremote/IRremote.pdf
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/IRremote/readme.txt
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/LCD1602
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/LCD1602/code
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/LCD1602/code/C
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/LCD1602/code/C/lcd1602
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/LCD1602/code/C/lcd1602.c
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/LCD1602/code/Program execution.txt
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/LCD1602/code/python
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/LCD1602/code/python/lcd1602.py
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/LCD1602/LCD1602.pdf
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/LCD1602/code
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/LCD1602/code/C
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/LCD1602/code/C/lcd1602
+[-rw------- root     energiebox]  /Energiebox/Bauteile/LCD1602/code/C/lcd1602.c
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/LCD1602/code/Program execution.txt
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/LCD1602/code/python
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/LCD1602/code/python/lcd1602.py
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/LCD1602/LCD1602.pdf
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/Led
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/Led/code
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/Led/code/C
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Led/code/C/blinkLed.c
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Led/code/Program execution.txt
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/Led/code/python
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Led/code/python/blinkLed.py
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Led/Led.pdf
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/Led/code
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/Led/code/C
+[-rw------- root     energiebox]  /Energiebox/Bauteile/Led/code/C/blinkLed.c
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/Led/code/Program execution.txt
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/Led/code/python
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/Led/code/python/blinkLed.py
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/Led/Led.pdf
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-Bash-Library
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-Bash-Library/bash.sh
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library/main.c
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library/main.o
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library/Makefile
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library/mcp23017
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library/mymcp23017.c
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library/mymcp23017.h
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library/mymcp23017.o
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-Python-Library
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-Python-Library/mcp23017 input ouput demo.py
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-Python-Library/test.py
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP2307_IO_Expansion_Board_User_Manual_EN.pdf
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-Bash-Library
+[-rwx------ root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-Bash-Library/bash.sh
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library
+[-rw------- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library/main.c
+[-rw------- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library/main.o
+[-rw------- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library/Makefile
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library/mcp23017
+[-rw------- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library/mymcp23017.c
+[-rw------- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library/mymcp23017.h
+[-rw------- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-C-Library/mymcp23017.o
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-Python-Library
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-Python-Library/mcp23017 input ouput demo.py
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP23017-Raspberry-PI-Python-Library/test.py
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/MCP23017 IO Expansion Board/MCP2307_IO_Expansion_Board_User_Manual_EN.pdf
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/Passive Buzzer
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/code
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/code/C
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/code/C/passiveBuzzer
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/code/C/passiveBuzzer.c
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/code/Program execution.txt
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/code/python
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/code/python/buzzer_passive.py
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/Passive Buzzer.pdf
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/code
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/code/C
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/code/C/passiveBuzzer
+[-rw------- root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/code/C/passiveBuzzer.c
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/code/Program execution.txt
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/code/python
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/code/python/buzzer_passive.py
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/Passive Buzzer/Passive Buzzer.pdf
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/RGB
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/RGB/code
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/RGB/code/C
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/RGB/code/C/rgb
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/RGB/code/C/rgb.c
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/RGB/code/Program execution.txt
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/RGB/code/python
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/RGB/code/python/rgb.py
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/RGB/RGB.pdf
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/RGB/code
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/RGB/code/C
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/RGB/code/C/rgb
+[-rw------- root     energiebox]  /Energiebox/Bauteile/RGB/code/C/rgb.c
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/RGB/code/Program execution.txt
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/RGB/code/python
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/RGB/code/python/rgb.py
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/RGB/RGB.pdf
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/Servo
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/Servo/code
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/Servo/code/C
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Servo/code/C/servo
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Servo/code/C/servo.c
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Servo/code/Program execution.txt
-[drwxrws--- root     energiebox]  /Energiebox/Bauteile/Servo/code/python
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Servo/code/python/servo.py
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Servo/Servo.pdf
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/Servo/code
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/Servo/code/C
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/Servo/code/C/servo
+[-rw------- root     energiebox]  /Energiebox/Bauteile/Servo/code/C/servo.c
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/Servo/code/Program execution.txt
+[drwxr-s--- root     energiebox]  /Energiebox/Bauteile/Servo/code/python
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/Servo/code/python/servo.py
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/Servo/Servo.pdf
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/StepperMotor
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/StepperMotor/run.py
+[-rwxr-x--- root     energiebox]  /Energiebox/Bauteile/StepperMotor/run.py
 [drwxr-x--- root     energiebox]  /Energiebox/Bauteile/Victron Energie
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Victron Energie/Datasheet-Battery-Balancer-DE.pdf
-[-rwxrwxrwx root     energiebox]  /Energiebox/Bauteile/Victron Energie/Datasheet-Orion-Tr-DC-DC-converters-low-power,-non-isolated-EN.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/Victron Energie/Datasheet-Battery-Balancer-DE.pdf
+[-rw-rw---- root     energiebox]  /Energiebox/Bauteile/Victron Energie/Datasheet-Orion-Tr-DC-DC-converters-low-power,-non-isolated-EN.pdf
 [-rwx------ root     energiebox]  /Energiebox/build.sh
 [-rw-r----- root     energiebox]  /Energiebox/Changelog.txt
 [-rw-rw---- root     energiebox]  /Energiebox/error.log
 [drwxrws--- root     energiebox]  /Energiebox/Grid
-[-rw-rwS--- root     energiebox]  /Energiebox/Grid/config.ini
-[-rwxr-x--- root     energiebox]  /Energiebox/Grid/grid
-[-rwx------ root     energiebox]  /Energiebox/Grid/grid.c
-[-rwx------ root     energiebox]  /Energiebox/Grid/grid.o
+[-rw-rw---- root     energiebox]  /Energiebox/Grid/config.ini
+[-r-xr-x--- root     energiebox]  /Energiebox/Grid/grid
+[-rw------- root     energiebox]  /Energiebox/Grid/grid.c
+[-rw------- root     energiebox]  /Energiebox/Grid/grid.o
 [drwxr-s--- root     energiebox]  /Energiebox/Grid/img
 [-rw-r----- root     energiebox]  /Energiebox/Grid/img/config.png
 [-rw-r----- root     energiebox]  /Energiebox/Grid/img/help.png
 [-rw-r----- root     energiebox]  /Energiebox/Grid/img/load.png
 [-rw-r----- root     energiebox]  /Energiebox/Grid/img/stopload.png
-[-rwx------ root     energiebox]  /Energiebox/Grid/iniparse.c
-[-rwx------ root     energiebox]  /Energiebox/Grid/iniparse.h
-[-rwx------ root     energiebox]  /Energiebox/Grid/iniparse.o
-[-rwx------ root     energiebox]  /Energiebox/Grid/Makefile
-[-rwx------ root     energiebox]  /Energiebox/Grid/mymcp23017.c
-[-rwx------ root     energiebox]  /Energiebox/Grid/mymcp23017.h
-[-rwx------ root     energiebox]  /Energiebox/Grid/mymcp23017.o
+[-rw------- root     energiebox]  /Energiebox/Grid/iniparse.c
+[-rw------- root     energiebox]  /Energiebox/Grid/iniparse.h
+[-rw------- root     energiebox]  /Energiebox/Grid/iniparse.o
+[-rw------- root     energiebox]  /Energiebox/Grid/Makefile
+[-rw------- root     energiebox]  /Energiebox/Grid/mymcp23017.c
+[-rw------- root     energiebox]  /Energiebox/Grid/mymcp23017.h
+[-rw------- root     energiebox]  /Energiebox/Grid/mymcp23017.o
 [-rw-r----- root     energiebox]  /Energiebox/Grid/README.md
 [drwxrws--- root     energiebox]  /Energiebox/gui
 [-r-xr-x--- root     energiebox]  /Energiebox/gui/gui
-[-rwx------ root     energiebox]  /Energiebox/gui/gui.cpp
+[-rw------- root     energiebox]  /Energiebox/gui/gui.cpp
 [-rw------- root     energiebox]  /Energiebox/gui/gui.o
 [-rw-r----- root     energiebox]  /Energiebox/gui/icon.png
 [drwxr-s--- root     energiebox]  /Energiebox/gui/img
@@ -236,23 +236,23 @@
 [-rw-r----- root     energiebox]  /Energiebox/gui/style.css
 [drwxrws--- root     energiebox]  /Energiebox/h2o
 [-rw-rw---- root     energiebox]  /Energiebox/h2o/config2.ini
-[-rwx------ root     energiebox]  /Energiebox/h2o/config.h
+[-rw------- root     energiebox]  /Energiebox/h2o/config.h
 [-rw-rw---- root     energiebox]  /Energiebox/h2o/config.ini
-[-rwx------ root     energiebox]  /Energiebox/h2o/DebugLogger.cpp
-[-rwx------ root     energiebox]  /Energiebox/h2o/DebugLogger.h
-[-rwx------ root     energiebox]  /Energiebox/h2o/DebugLogger.o
-[-rwxr-x--- root     energiebox]  /Energiebox/h2o/h2o
-[-rwx------ root     energiebox]  /Energiebox/h2o/h2o.c
-[-rwx------ root     energiebox]  /Energiebox/h2o/H2OFilterManager.cpp
-[-rwx------ root     energiebox]  /Energiebox/h2o/H2OFilterManager.h
-[-rwx------ root     energiebox]  /Energiebox/h2o/H2OFilterManager.o
-[-rwx------ root     energiebox]  /Energiebox/h2o/h2o.o
-[-rwx------ root     energiebox]  /Energiebox/h2o/H2OSetupManager.cpp
-[-rwx------ root     energiebox]  /Energiebox/h2o/H2OSetupManager.h
-[-rwx------ root     energiebox]  /Energiebox/h2o/H2OSetupManager.o
-[-rwxr-x--- root     energiebox]  /Energiebox/h2o/h2o_test
-[-rwx------ root     energiebox]  /Energiebox/h2o/h2o_test.cpp
-[-rwx------ root     energiebox]  /Energiebox/h2o/h2o_test.o
+[-rw------- root     energiebox]  /Energiebox/h2o/DebugLogger.cpp
+[-rw------- root     energiebox]  /Energiebox/h2o/DebugLogger.h
+[-rw------- root     energiebox]  /Energiebox/h2o/DebugLogger.o
+[-r-xr-x--- root     energiebox]  /Energiebox/h2o/h2o
+[-rw------- root     energiebox]  /Energiebox/h2o/h2o.c
+[-rw------- root     energiebox]  /Energiebox/h2o/H2OFilterManager.cpp
+[-rw------- root     energiebox]  /Energiebox/h2o/H2OFilterManager.h
+[-rw------- root     energiebox]  /Energiebox/h2o/H2OFilterManager.o
+[-rw------- root     energiebox]  /Energiebox/h2o/h2o.o
+[-rw------- root     energiebox]  /Energiebox/h2o/H2OSetupManager.cpp
+[-rw------- root     energiebox]  /Energiebox/h2o/H2OSetupManager.h
+[-rw------- root     energiebox]  /Energiebox/h2o/H2OSetupManager.o
+[-rwxr-xr-x root     energiebox]  /Energiebox/h2o/h2o_test
+[-rw------- root     energiebox]  /Energiebox/h2o/h2o_test.cpp
+[-rw------- root     energiebox]  /Energiebox/h2o/h2o_test.o
 [drwxr-s--- root     energiebox]  /Energiebox/h2o/img
 [-rw-r----- root     energiebox]  /Energiebox/h2o/img/change.png
 [-rw-r----- root     energiebox]  /Energiebox/h2o/img/clean.png
@@ -261,15 +261,15 @@
 [-rw-r----- root     energiebox]  /Energiebox/h2o/img/setup.png
 [-rw-r----- root     energiebox]  /Energiebox/h2o/img/start.png
 [-rw-r----- root     energiebox]  /Energiebox/h2o/img/stats.png
-[-rwx------ root     energiebox]  /Energiebox/h2o/iniparse.c
-[-rwx------ root     energiebox]  /Energiebox/h2o/iniparse.h
-[-rwx------ root     energiebox]  /Energiebox/h2o/iniparse.o
-[-rwx------ root     energiebox]  /Energiebox/h2o/Makefile
-[-rwx------ root     energiebox]  /Energiebox/h2o/Makefile_c
-[-rwx------ root     energiebox]  /Energiebox/h2o/Makefile_cpp
-[-rwx------ root     energiebox]  /Energiebox/h2o/mymcp23017.c
-[-rwx------ root     energiebox]  /Energiebox/h2o/mymcp23017.h
-[-rwx------ root     energiebox]  /Energiebox/h2o/mymcp23017.o
+[-rw------- root     energiebox]  /Energiebox/h2o/iniparse.c
+[-rw------- root     energiebox]  /Energiebox/h2o/iniparse.h
+[-rw------- root     energiebox]  /Energiebox/h2o/iniparse.o
+[-rw------- root     energiebox]  /Energiebox/h2o/Makefile
+[-rw------- root     energiebox]  /Energiebox/h2o/Makefile_c
+[-rw------- root     energiebox]  /Energiebox/h2o/Makefile_cpp
+[-rw------- root     energiebox]  /Energiebox/h2o/mymcp23017.c
+[-rw------- root     energiebox]  /Energiebox/h2o/mymcp23017.h
+[-rw------- root     energiebox]  /Energiebox/h2o/mymcp23017.o
 [-rw-r----- root     energiebox]  /Energiebox/h2o/README.md
 [-rwxr-x--- root     energiebox]  /Energiebox/h2o/setIni2.sh
 [-rwxr-x--- root     energiebox]  /Energiebox/h2o/setIni.sh
@@ -294,59 +294,62 @@
 [-rwxr-x--- root     energiebox]  /Energiebox/Kolloid/libs/functions.sh
 [-rwxr-x--- root     energiebox]  /Energiebox/Kolloid/libs/getENV.sh
 [-rwxr-x--- root     energiebox]  /Energiebox/Kolloid/libs/getops.sh
-[-rw-r--r-- root     energiebox]  /Energiebox/Kolloid/libs/jhg
 [-rwxr-x--- root     energiebox]  /Energiebox/Kolloid/libs/pattern.sh
 [-rwxr-x--- root     energiebox]  /Energiebox/Kolloid/libs/startup.sh
 [-rw-r----- root     energiebox]  /Energiebox/Kolloid/README.md
 [-rwxr-x--- root     energiebox]  /Energiebox/Kolloid/shop
 [drwxr-s--- root     energiebox]  /Energiebox/Kolloid/sounds
-[-rwxr-x--- root     energiebox]  /Energiebox/Kolloid/sounds/disableTrafo
-[-rw-r----- root     energiebox]  /Energiebox/Kolloid/sounds/disableTrafo.c
-[-rwxr-x--- root     energiebox]  /Energiebox/Kolloid/sounds/enableTrafo
-[-rw-r----- root     energiebox]  /Energiebox/Kolloid/sounds/enableTrafo.c
-[-rwxr-x--- root     energiebox]  /Energiebox/Kolloid/sounds/finishedTrafo
-[-rw-r----- root     energiebox]  /Energiebox/Kolloid/sounds/finishedTrafo.c
+[-r-xr-x--- root     energiebox]  /Energiebox/Kolloid/sounds/disableTrafo
+[-rw------- root     energiebox]  /Energiebox/Kolloid/sounds/disableTrafo.c
+[-rw------- root     energiebox]  /Energiebox/Kolloid/sounds/disableTrafo.o
+[-r-xr-x--- root     energiebox]  /Energiebox/Kolloid/sounds/enableTrafo
+[-rw------- root     energiebox]  /Energiebox/Kolloid/sounds/enableTrafo.c
+[-rw------- root     energiebox]  /Energiebox/Kolloid/sounds/enableTrafo.o
+[-r-xr-x--- root     energiebox]  /Energiebox/Kolloid/sounds/finishedTrafo
+[-rw------- root     energiebox]  /Energiebox/Kolloid/sounds/finishedTrafo.c
+[-rw------- root     energiebox]  /Energiebox/Kolloid/sounds/finishedTrafo.o
+[-rw------- root     energiebox]  /Energiebox/Kolloid/sounds/Makefile
 [-rw-r----- root     energiebox]  /Energiebox/README.md
 [drwxr-s--- root     energiebox]  /Energiebox/Shutdown
-[-rwx------ root     energiebox]  /Energiebox/Shutdown/iniparse.c
-[-rwx------ root     energiebox]  /Energiebox/Shutdown/iniparse.h
-[-rwx------ root     energiebox]  /Energiebox/Shutdown/iniparse.o
+[-rw------- root     energiebox]  /Energiebox/Shutdown/iniparse.c
+[-rw------- root     energiebox]  /Energiebox/Shutdown/iniparse.h
+[-rw------- root     energiebox]  /Energiebox/Shutdown/iniparse.o
 [-rw------- root     energiebox]  /Energiebox/Shutdown/Makefile
 [-r-xr-x--- root     energiebox]  /Energiebox/Shutdown/mcp_shutdown
-[-rwx------ root     energiebox]  /Energiebox/Shutdown/mcp_shutdown.c
-[-rwx------ root     energiebox]  /Energiebox/Shutdown/mcp_shutdown.o
-[-rwx------ root     energiebox]  /Energiebox/Shutdown/mymcp23017.c
-[-rwx------ root     energiebox]  /Energiebox/Shutdown/mymcp23017.h
-[-rwx------ root     energiebox]  /Energiebox/Shutdown/mymcp23017.o
+[-rw------- root     energiebox]  /Energiebox/Shutdown/mcp_shutdown.c
+[-rw------- root     energiebox]  /Energiebox/Shutdown/mcp_shutdown.o
+[-rw------- root     energiebox]  /Energiebox/Shutdown/mymcp23017.c
+[-rw------- root     energiebox]  /Energiebox/Shutdown/mymcp23017.h
+[-rw------- root     energiebox]  /Energiebox/Shutdown/mymcp23017.o
 [drwxrws--- root     energiebox]  /Energiebox/Startup
-[-rwx------ root     energiebox]  /Energiebox/Startup/iniparse.c
-[-rwx------ root     energiebox]  /Energiebox/Startup/iniparse.h
-[-rwx------ root     energiebox]  /Energiebox/Startup/iniparse.o
-[-rwx------ root     energiebox]  /Energiebox/Startup/Makefile
+[-rw------- root     energiebox]  /Energiebox/Startup/iniparse.c
+[-rw------- root     energiebox]  /Energiebox/Startup/iniparse.h
+[-rw------- root     energiebox]  /Energiebox/Startup/iniparse.o
+[-rw------- root     energiebox]  /Energiebox/Startup/Makefile
 [-r-xr-x--- root     energiebox]  /Energiebox/Startup/mcp_startup
-[-rwx------ root     energiebox]  /Energiebox/Startup/mcp_startup.c
-[-rwx------ root     energiebox]  /Energiebox/Startup/mcp_startup.o
-[-rwx------ root     energiebox]  /Energiebox/Startup/mymcp23017.c
-[-rwx------ root     energiebox]  /Energiebox/Startup/mymcp23017.h
-[-rwx------ root     energiebox]  /Energiebox/Startup/mymcp23017.o
+[-rw------- root     energiebox]  /Energiebox/Startup/mcp_startup.c
+[-rw------- root     energiebox]  /Energiebox/Startup/mcp_startup.o
+[-rw------- root     energiebox]  /Energiebox/Startup/mymcp23017.c
+[-rw------- root     energiebox]  /Energiebox/Startup/mymcp23017.h
+[-rw------- root     energiebox]  /Energiebox/Startup/mymcp23017.o
 [drwxrws--- root     energiebox]  /Energiebox/System
 [-rwx------ root     energiebox]  /Energiebox/System/autoStartStop.sh
 [-rwxr-x--- root     energiebox]  /Energiebox/System/check.sh
 [-rwx------ root     energiebox]  /Energiebox/System/setup_db.sh
 [-rwxr-x--- root     energiebox]  /Energiebox/System/setup_permissions.sh
 [-rw-r----- root     energiebox]  /Energiebox/System/spinner.sh
-[-rw-r----- root      energiebox]  /Energiebox/System/tree_output.txt
+[-rw-r--r-- box      energiebox]  /Energiebox/System/tree_output.txt
 [drwxrws--- root     energiebox]  /Energiebox/Tracer
 [-rw------- root     energiebox]  /Energiebox/Tracer/BatteryStatus.cpp
 [-rw------- root     energiebox]  /Energiebox/Tracer/BatteryStatus.hpp
 [-rw------- root     energiebox]  /Energiebox/Tracer/BatteryStatus.o
-[-rwxr-x--- root     energiebox]  /Energiebox/Tracer/epever
+[-r-xr-x--- root     energiebox]  /Energiebox/Tracer/epever
 [-rw------- root     energiebox]  /Energiebox/Tracer/epever.cpp
 [-rw------- root     energiebox]  /Energiebox/Tracer/epever.o
 [-rw------- root     energiebox]  /Energiebox/Tracer/iniparse.c
 [-rw------- root     energiebox]  /Energiebox/Tracer/iniparse.h
 [-rw------- root     energiebox]  /Energiebox/Tracer/iniparse.o
-[-rwx------ root     energiebox]  /Energiebox/Tracer/Makefile
+[-rw------- root     energiebox]  /Energiebox/Tracer/Makefile
 [-rw------- root     energiebox]  /Energiebox/Tracer/mymcp23017.c
 [-rw------- root     energiebox]  /Energiebox/Tracer/mymcp23017.h
 [-rw------- root     energiebox]  /Energiebox/Tracer/mymcp23017.o
@@ -514,15 +517,14 @@
 [-rw-r----- root     energiebox]  /Energiebox/Tracer/pymodbus-3.6.9.dist-info/top_level.txt
 [-rw-r----- root     energiebox]  /Energiebox/Tracer/pymodbus-3.6.9.dist-info/WHEEL
 [-rw-r----- root     energiebox]  /Energiebox/Tracer/pymodbus-3.6.9.dist-info/zip-safe
-[-rwxr-xr-x root     energiebox]  /Energiebox/Tracer/readall.py
+[-rw-r----- root     energiebox]  /Energiebox/Tracer/readall.py
 [-rw------- root     energiebox]  /Energiebox/Tracer/StatusBlock.cpp
 [-rw------- root     energiebox]  /Energiebox/Tracer/StatusBlock.hpp
 [-rw------- root     energiebox]  /Energiebox/Tracer/StatusBlock.o
-[-rwx------ root     energiebox]  /Energiebox/Tracer/trace
+[-r-xr-x--- root     energiebox]  /Energiebox/Tracer/trace
 [-rw------- root     energiebox]  /Energiebox/Tracer/trace.cpp
 [-rw------- root     energiebox]  /Energiebox/Tracer/trace.o
 [-rw-rw---- root     energiebox]  /Energiebox/Tracer/trace.txt
-[-rw-r--r-- box      energiebox]  /Energiebox/tree_output.txt
 [drwxr-s--- root     energiebox]  /Energiebox/WiringPi
 [-rwxr-xr-x root     energiebox]  /Energiebox/WiringPi/build
 [-rwxr-xr-x root     energiebox]  /Energiebox/WiringPi/COPYING.LESSER

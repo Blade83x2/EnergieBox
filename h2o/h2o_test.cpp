@@ -3,7 +3,7 @@
 // Version: 1.6 (C++ Rewrite)
 // Date: 19.06.2025
 
-//  g++ -o h2o_test h2o_test.cpp H2OSetupManager.cpp DebugLogger.cpp H2OFilterManager.cpp iniparse.o mymcp23017.o -std=c++17 -lwiringPi
+//  sudo g++ -o h2o_test h2o_test.cpp H2OSetupManager.cpp DebugLogger.cpp H2OFilterManager.cpp iniparse.o mymcp23017.o -std=c++17 -lwiringPi
 
 
 #include <iostream>

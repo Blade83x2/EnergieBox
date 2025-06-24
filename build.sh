@@ -91,6 +91,23 @@ cd ..
 stop_spinner $?
 
 
+start_spinner 'box@Energiebox:/Energiebox/Kolloid/sounds:$ make'
+sleep 1
+cd /Energiebox/Kolloid/sounds
+sudo make  > /Energiebox/makeResult.txt;
+result=$?;
+if [ "$result" -eq "2" ]; then
+    stop_spinner 1
+    cat /Energiebox/makeResult.txt;
+    exit 1;
+fi
+cd ..
+cd ..
+stop_spinner $?
+
+
+
+
 start_spinner 'box@Energiebox:/Energiebox/Grid:$ make'
 sleep 1
 cd /Energiebox/Grid

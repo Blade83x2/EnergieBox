@@ -31,14 +31,6 @@ float warnLimitAbFilterMenge = 1000.f;
 int filterZeitFuerNullKommaEinsLiterInSekunden;
 
 
-
-
-
-
-
-
-
-
 // Faktor Abwassermenge zu Filtermenge. Beispiel: 
 // Bei 1:2 (1 Liter gefiltertes Wasser und 2 Liter Abwasserproduktion) hier eine 2 eintragen
 int faktorGefiltertZuAbwasser = 2;
@@ -159,6 +151,13 @@ void sigfunc(int sig)
 
 // Programmstart mit oder ohne Parameter
 int main(int argc, char* argv[]) { 
+    
+    // #ifdef DBUILD_DATE
+   // printf("  Version: %s\n", DBUILD_DATE);
+   // printf("  Build Date: %s\n", BUILD_DATE);
+   // #endif
+   
+    
     // Signale abfangen
     if(signal(SIGINT,sigfunc) == SIG_ERR
        || signal(SIGABRT,sigfunc) == SIG_ERR
@@ -520,6 +519,9 @@ void showHelp() {
     printf("  h2o -empty  [Setzt Tank für Abwasser auf 0 Liter]\n");
     printf("  h2o -stats  [Zeigt Statistik über Filter und Tank]\n");    
     printf("  h2o -setup  [Filter konfigurieren]\n\n");
+
+
+    
 }
 
 void showLogo() {
