@@ -77,14 +77,3 @@ format: .clang-format
 	@echo "→ Formatiere Quellcode mit clang-format..."
 	$(FORMATTER) -i $(SRC)
 
-.clang-format:
-	@echo "BasedOnStyle: LLVM"                        > .clang-format
-	@echo "IndentWidth: 4"                           >> .clang-format
-	@echo "TabWidth: 4"                              >> .clang-format
-	@echo "UseTab: Never"                            >> .clang-format
-	@echo "BreakBeforeBraces: Attach"                >> .clang-format
-	@echo "BinPackParameters: true"                  >> .clang-format
-	@echo "BinPackArguments: true"                   >> .clang-format
-	@echo "ColumnLimit: 0"                           >> .clang-format
-	@echo "AllowShortFunctionsOnASingleLine: Inline" >> .clang-format
-	@echo "SortIncludes: false"                      >> .clang-format
