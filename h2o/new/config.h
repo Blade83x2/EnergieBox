@@ -1,12 +1,10 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 #pragma once
-#include <fstream>   // Für std::ifstream, std::ofstream
-#include <iostream>  // Für std::cerr, std::cout
-#include <sstream>   // Falls verwendet
+
 #include <string>
-#include <map>
 #include <unordered_map>
+#include <map>
 #include <stdexcept>
 #include <type_traits>
 
@@ -14,8 +12,13 @@ class Config {
    public:
     explicit Config(const std::string &filepath);
 
+    // get ohne Default - wirft Ausnahme bei Key nicht gefunden
     template <typename T>
     T get(const std::string &key) const;
+
+    // get mit Default-Wert
+    template <typename T>
+    T get(const std::string &key, const T &defaultValue) const;
 
     template <typename T>
     void set(const std::string &key, const T &value);
@@ -38,7 +41,7 @@ class Config {
     static std::string convertFrom(const T &value);
 };
 
-// Template Implementierungen im Header, damit sie bei Verwendung sichtbar sind:
+// --- Template-Implementierungen ---
 
 template <typename T>
 T Config::get(const std::string &key) const {
@@ -54,12 +57,31 @@ T Config::get(const std::string &key) const {
 }
 
 template <typename T>
+T Config::get(const std::string &key, const T &defaultValue) const {
+    auto [section, name] = splitKey(key);
+    auto secIt = data.find(section);
+    if (secIt != data.end()) {
+        auto varIt = secIt->second.find(name);
+        if (varIt != secIt->second.end()) {
+            try {
+                return convertTo<T>(varIt->second);
+            } catch (...) {
+                // Falls Konvertierung fehlschlägt, Default zurückgeben
+                return defaultValue;
+            }
+        }
+    }
+    return defaultValue;
+}
+
+template <typename T>
 void Config::set(const std::string &key, const T &value) {
     auto [section, name] = splitKey(key);
     data[section][name] = convertFrom<T>(value);
     save();
 }
 
+// Beispiel-Konvertierungen
 template <typename T>
 T Config::convertTo(const std::string &value) {
     if constexpr (std::is_same<T, int>::value) {
@@ -86,7 +108,6 @@ std::string Config::convertFrom(const T &value) {
     }
 }
 
-// Spezialfall für std::string, da std::to_string nicht unterstützt wird
 template <>
 inline std::string Config::convertFrom<std::string>(const std::string &value) {
     return value;

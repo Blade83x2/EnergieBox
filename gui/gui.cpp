@@ -35,6 +35,7 @@
 #include <thread>
 #include <glibmm/optioncontext.h>
 #include <glibmm/optiongroup.h>
+#include "MySQLiWrapper.h"
 
 // Debug-Modus aktivieren/deaktivieren
 bool debug = false;
@@ -399,7 +400,7 @@ class GUI : public Gtk::Window {
         if (tabName.find("Energiebox") != std::string::npos) {
             system_status_label_.set_text("💬 System: Monitoring aktiv");
             if (!energiebox_timer_connection_.connected()) {
-                energiebox_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::update_energiebox_tab), 63);
+                energiebox_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::update_energiebox_tab), 60);
                 debugPrint("Energiebox-Timer gestartet", LogLevel::INFO);
                 update_energiebox_tab();
             }
@@ -535,7 +536,7 @@ class GUI : public Gtk::Window {
                 // Rote Farbe bestimmen für Werte die derzeit auf 0 stehen
                 zeroValue = value;
                 zeroValue.pop_back();
-                if (zeroValue == "0.0" || value == "0.0kWh") {
+                if (zeroValue == "0" || value == "0kWh") {
                     value_widget->get_style_context()->remove_class("data-value-green");
                     value_widget->get_style_context()->add_class("data-value-red");
                 } else {
@@ -554,79 +555,35 @@ class GUI : public Gtk::Window {
     // Liest die Datei /Energiebox/Tracer/trace.txt aus, parsed die Werte und aktualisiert den
     // Energietab
     bool update_energiebox_tab() {
-        const std::string filepath = "/Energiebox/Tracer/trace.txt";
-        const int max_attempts = 3;
-        const int retry_delay_seconds = 3;
-        std::map<std::string, std::string> values;
-        bool success = false;
-        for (int attempt = 1; attempt <= max_attempts; ++attempt) {
-            debugPrint("Lese Datei /Energiebox/Tracer/trace.txt", LogLevel::INFO);
-            std::ifstream file(filepath);
-            if (file) {
-                std::string line;
-                while (std::getline(file, line)) {
-                    auto pos = line.find('=');
-                    if (pos == std::string::npos) continue;
-                    std::string key = line.substr(0, pos);
-                    std::string val = line.substr(pos + 1);
-                    key.erase(0, key.find_first_not_of(" \t\r\n"));
-                    key.erase(key.find_last_not_of(" \t\r\n") + 1);
-                    val.erase(0, val.find_first_not_of(" \t\r\n"));
-                    val.erase(val.find_last_not_of(" \t\r\n") + 1);
-                    values[key] = val;
-                }
-                // Falls Werte erfolgreich gelesen wurden
-                if (!values.empty()) {
-                    success = true;
-                    if (attempt > 1) {
-                        debugPrint("Konnte Fehlerhafte Datei /Energiebox/Tracer/trace.txt im " + std::to_string(attempt) + " Versuch lesen", LogLevel::INFO);
-                    }
-                    break;
-                }
-            }
-            // Kein Erfolg – wenn letzter Versuch, abbrechen
-            if (attempt < max_attempts) {
-                debugPrint("Kann Datei /Energiebox/Tracer/trace.txt nicht lesen – warte " + std::to_string(retry_delay_seconds) +
-                               " Sekunden... Versuch: " + std::to_string(attempt),
-                           LogLevel::WARN);
-                std::this_thread::sleep_for(std::chrono::seconds(retry_delay_seconds));
-            }
-        }
-        if (!success) {
-            debugPrint("Konnte Datei /Energiebox/Tracer/trace.txt nach " + std::to_string(max_attempts) + " Versuchen nicht erfolgreich lesen.", LogLevel::ERROR);
-            // boxen ausblenden
+        MySQLiWrapper db("/home/box/.mysql_energiebox.cfg");
+        if (db.query("SELECT pv_volt, pv_ampere, pv_power, batt_volt, batt_ampere, batt_power, batt_soc, generated_power FROM messwerte ORDER BY id DESC LIMIT 1")) {
+            std::map<std::string, std::string> row = db.fetchArray();
+            // PV Daten
+            std::vector<std::pair<std::string, std::string>> pv_data = {{"Spannung (U)", row["pv_volt"] + "V"},
+                                                                        {"Ampere (I)", row["pv_ampere"] + "A"},
+                                                                        {"Leistung (P)", row["pv_power"] + "W"},
+                                                                        {"Tagesertrag (P)", row["generated_power"] + "kWh"}};
+            // Batterie Daten
+            std::vector<std::pair<std::string, std::string>> battery_data = {{"Spannung (U)", row["batt_volt"] + "V"},
+                                                                             {"Ampere (I)", row["batt_ampere"] + "A"},
+                                                                             {"Leistung (P)", row["batt_power"] + "W"},
+                                                                             {"SOC", row["batt_soc"] + "%"}};
+            // Bestehende GUI-Widgets entfernen
             auto children = energiebox_data_container_->get_children();
             for (auto *child : children) {
                 energiebox_data_container_->remove(*child);
             }
+            // Neue Tabellen erstellen
+            auto *pv_table = create_data_table(pv_data, "🌞 PV MPPT Status");
+            auto *battery_table = create_data_table(battery_data, "🔋 Batterie Ladestatus");
+            pv_table->set_margin_start(0);
+            pv_table->set_margin_end(20);
+            battery_table->set_margin_start(20);
+            battery_table->set_margin_end(0);
+            energiebox_data_container_->pack_start(*pv_table, Gtk::PACK_EXPAND_WIDGET);
+            energiebox_data_container_->pack_start(*battery_table, Gtk::PACK_EXPAND_WIDGET);
             energiebox_data_container_->show_all();
-            return true;  // Timer soll trotzdem weiterlaufen
         }
-        // PV Daten
-        std::vector<std::pair<std::string, std::string>> pv_data = {{"Spannung (U)", values["PV Array: Aktuelle Spannung in Volt"]},
-                                                                    {"Ampere (I)", values["PV Array: Aktueller Strom in Ampere"]},
-                                                                    {"Leistung (P)", values["PV Array: Aktuelle Leistung in Watt"]},
-                                                                    {"Tagesertrag (P)", values["PV Array: Generierte Energie heute"]}};
-        // Batterie Daten
-        std::vector<std::pair<std::string, std::string>> battery_data = {{"Spannung (U)", values["Batterie: Aktuelle Spannung in Volt"]},
-                                                                         {"Ampere (I)", values["Batterie: Derzeitiger Ladestrom in Ampere"]},
-                                                                         {"Leistung (P)", values["Batterie: Derzeitige Ladeleistung in Watt"]},
-                                                                         {"SOC", values["Batterie: Ladezustand in Prozent"]}};
-        // Bestehende GUI-Widgets entfernen
-        auto children = energiebox_data_container_->get_children();
-        for (auto *child : children) {
-            energiebox_data_container_->remove(*child);
-        }
-        // Neue Tabellen erstellen
-        auto *pv_table = create_data_table(pv_data, "🌞 PV MPPT Status");
-        auto *battery_table = create_data_table(battery_data, "🔋 Batterie Ladestatus");
-        pv_table->set_margin_start(0);
-        pv_table->set_margin_end(20);
-        battery_table->set_margin_start(20);
-        battery_table->set_margin_end(0);
-        energiebox_data_container_->pack_start(*pv_table, Gtk::PACK_EXPAND_WIDGET);
-        energiebox_data_container_->pack_start(*battery_table, Gtk::PACK_EXPAND_WIDGET);
-        energiebox_data_container_->show_all();
         return true;
     }
     Gtk::Notebook notebook_;                         // Tab-Widget

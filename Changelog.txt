@@ -21,6 +21,34 @@ Energiebox Ver.5 #
  
  
  
+CREATE TABLE `messwerte` (
+ `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+ `timestamp` int(10) unsigned NOT NULL,
+ `pv_volt` float unsigned DEFAULT NULL,
+ `pv_ampere` float unsigned DEFAULT NULL,
+ `pv_power` float unsigned DEFAULT NULL,
+ `batt_volt` float unsigned DEFAULT NULL,
+ `batt_ampere` float unsigned DEFAULT NULL,
+ `batt_power` float unsigned DEFAULT NULL,
+ `batt_soc` int(10) unsigned DEFAULT NULL,
+ `generated_power` float unsigned DEFAULT NULL,
+ `grid_load_active` int(11) DEFAULT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5395 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+ 
+ 
+[client]
+user=energiebox
+password=.......
+host=localhost
+database=energiebox
+
+ sudo chown root:energiebox /home/box/.mysql_energiebox.cfg
+ 
+ 
+ 
+ 
+ 
   [UPDATE] h2o konvertiert in C++. Setup Daten werden jetzt validiert. Option Tank/Ventil sowie Relais Abfrage für Frequenzgerät hinzugefügt
  
 _______________________________________________________________________________________________________________________________________
@@ -31,6 +59,7 @@ In dieser Version ist endlich das Grafische User Interface verfügbar. Beim boot
 Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die Ausgabe auf der Konsole von sämtlichen Programmen verbessert und optimiert. 
 Eine Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++.
 
+ [BUGFIX] gui stürzte manchmal ab weil versucht worden ist während dessen tracer die trace.txt Datei schreibt sie auszulesen
  [NEW] Gruppe energiebox erstellt
  [UPDATE] setup_permissions.sh Script erstellt welches die Berechtigungen herstellt nach einem git clone
  [UPDATE] Datei und Ordnerberechtigungen gesetzt.

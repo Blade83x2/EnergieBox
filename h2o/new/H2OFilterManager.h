@@ -1,15 +1,12 @@
 #ifndef H2OFILTERMANAGER_H
 #define H2OFILTERMANAGER_H
-
 #include "H2OSetupManager.h"
 #include <iostream>
 #include <cstdio>
 #include <unistd.h>
 #include <string>
 #include <cstdlib>
-#include "iniparse.h"
 #include "DebugLogger.h"
-
 #include <iomanip>  // für std::setw, std::fixed, std::setprecision
 #include <sstream>
 #include <algorithm>
@@ -51,7 +48,6 @@ class H2OFilterManager {
 
    private:
     Config& config;
-    char command[256];
 
     void printIfNotSilent(const std::string& message) {
         if (!silentMode) {

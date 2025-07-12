@@ -1,14 +1,12 @@
 #include "H2OFilterManager.h"
 #include "H2OSetupManager.h"
+#include "DebugLogger.h"
 #include "config.h"
 #include <iostream>
 #include <cstdio>
 #include <unistd.h>
 #include <string>
 #include <cstdlib>
-
-#include "DebugLogger.h"
-
 #include <iomanip>  // für std::setw, std::fixed, std::setprecision
 #include <sstream>
 #include <algorithm>

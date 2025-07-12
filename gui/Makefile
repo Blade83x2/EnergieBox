@@ -13,9 +13,9 @@
 
 CXX           = g++
 CXXFLAGS      = -Wall -std=c++17 `pkg-config gtkmm-3.0 --cflags`
-LDFLAGS       = `pkg-config gtkmm-3.0 --libs`
+LDFLAGS       = `pkg-config gtkmm-3.0 --libs` -lmysqlclient
 TARGET        = gui
-OBJ           = gui.o
+OBJ           = gui.o MySQLiWrapper.o
 INSTALL_DIR   = /usr/local/bin
 INSTALL_GROUP = energiebox
 
@@ -28,6 +28,8 @@ BUILD_DATE    := $(shell date +%Y-%m-%d)
 BUILD_VERSION := 1.0
 
 CXXFLAGS     += -DBUILD_DATE=\"$(BUILD_DATE)\" -DBUILD_VERSION=\"$(BUILD_VERSION)\"
+
+CXXFLAGS     += -D_GLIBCXX_USE_CXX11_ABI=1
 
 all: $(TARGET)
 
@@ -42,6 +44,13 @@ $(TARGET): $(OBJ)
 	chmod 600 $@
 	chgrp $(INSTALL_GROUP) $@
 	@echo "$(GREEN)Object-File $@ erstellt mit Rechten 600 und Gruppe $(INSTALL_GROUP).$(NC)"
+	
+MySQLiWrapper.o: MySQLiWrapper.cpp MySQLiWrapper.h
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	chmod 600 $@
+	chgrp $(INSTALL_GROUP) $@
+	@echo "$(GREEN)Object-File $@ erstellt mit Rechten 600 und Gruppe $(INSTALL_GROUP).$(NC)"
+
 
 install: $(TARGET)
 	@if getent group $(INSTALL_GROUP) > /dev/null; then \
