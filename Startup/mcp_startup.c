@@ -131,7 +131,7 @@ int main(int argc, char **argv) {
         mcp_digitalWrite(i, 1);
         sprintf(command, "bash /Energiebox/12V/setIni.sh %d %d", (i + 1), 0);
         system(command);
-        sleep(0.1);
+        sleep(0.2);
     }
     pMaxCurrent = 0;  // verfügbare Watt ausrechnen
     // Verbrauch von MicroController mit einbezoehen
@@ -157,7 +157,7 @@ int main(int argc, char **argv) {
                 system(command);
                 pMaxCurrent += devicePMax[f];
                 // printf("Neuer Verbrauch aller Geräte derzeit: %d Watt\n", pMaxCurrent);
-                sleep(0.4);
+                sleep(0.8);
             } else {
                 // Gerät kann nicht eingeschaltet werden weil nicht genug Leistung vorhanden ist
                 printf("\e[0;31m%s benötigt %d Watt. Derzeit ist nicht genügend Leistung verfügbar!\n", deviceNames[f], devicePMax[f]);
@@ -191,7 +191,7 @@ int main(int argc, char **argv) {
         mcp_digitalWrite(i, 1);
         sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", (i + 1), 0);
         system(command);
-        sleep(0.1);
+        sleep(0.2);
     }
     // Autostart Einträge aktivieren für 230V
 
@@ -215,7 +215,7 @@ int main(int argc, char **argv) {
                 // eltakostatus in config schreiben
                 sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", (f + 1), 1);
                 system(command);
-                sleep(0.7);
+                sleep(0.8);
             } else {
                 printf("\e[0;31m%s benötigt %d Watt. Derzeit maximal verfügbar: %d Watt!\n", deviceNames[f], devicePMax[f], config.mcp.maxOutputPower - pMaxCurrent);
             }

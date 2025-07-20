@@ -1,6 +1,15 @@
 #!/bin/bash
 #
+# https://github.com/settings/tokens für Token auslesen
+# sudo git config --global credential.helper store
+#
+# Usage without Git Commit
+#
 # sudo ./build.sh
+#
+# Usage with Git Commit
+#
+# sudo ./build.sh "Beschreibung der Änderung angeben!"
 #
 scriptPath=$(cd $(dirname "$0"); pwd);
 source "$scriptPath/System/spinner.sh" || exit 1;
@@ -58,7 +67,7 @@ stop_spinner $?
 
 start_spinner 'box@Energiebox:/Energiebox/h2o:$ make'
 sleep 1
-cd /Energiebox/h2o
+cd /Energiebox/h3o2
 sudo make clean  > /dev/null
 sudo make format  > /dev/null
 sudo make  > /Energiebox/makeResult.txt;
@@ -186,9 +195,4 @@ else
     echo -e "\n";
 fi
 
-# https://github.com/settings/tokens für Token auslesen
-# sudo git config --global credential.helper store
-# Usage without Git Commit
-#  sudo ./build.sh
-# with Git Commit
-#  sudo ./build.sh "Beschreibung der Änderung angeben!"
+

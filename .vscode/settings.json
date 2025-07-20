@@ -60,5 +60,6 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "valarray": "cpp"
-    }
+    },
+    "editor.acceptSuggestionOnEnter": "off"
 }

@@ -1,13 +1,15 @@
 
 # ENERGIEBOX Ver. 5 für Raspberry PI 4 32Bit
 
-### @Copyright 2023 by Johannes a.d.F. K r ä m e r
+### @Copyright 2025 by Johannes a.d.F. K r ä m e r
 
-> Diese Software ist konzipiert für einen Raspberry Pi 4 32Bit der verbunden ist mit 3 Port Expandern an
+> Diese Software ist konzipiert für einen Raspberry Pi 4 32Bit der verbunden ist mit 3 MCP23017 Port Expandern an
 denen insgesamt 34 Relais angeschlossen sind. Diese sollten dann starke Eltako Lastenstromstoßrelais steuern.
-Als Spannungsquelle ist eine Photovoltaik Anlage mit einem 5 KW Speicher angeschlossen. Die 
-Software beinhaltet ausserdem noch ein Programm zur Wasserfilterung sowie ein Programm zur Kolloid Herstellung.
+Als Spannungsquelle ist eine Photovoltaik Anlage mit einem 5 KW Speicher angeschlossen. 
+Der I²C Bus wurde mit P82B715 I2C Bus Extender erweitert wegen der Störanfäligkeiten.
+Die Software beinhaltet ausserdem noch ein Programm zur Wasserfilterung sowie ein Programm zur Kolloid Herstellung.
 Die Programme 12V und 230V schalten die Stromkreise an/aus und prüfen dabei die maximale Belastung.
+Das Programm grid kann dazu benutzt werden um Energie vom Netzbetreiber in die Batterien zu laden.
 
 <p align="center"> 
     <img src="img/sshEnergiebox.png" style="width: 85%;" alt="EnergieBox" >
@@ -44,7 +46,7 @@ Installation benötigter Pakete      |
 
 Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Installation verschiedener benötigter Pakete:
 
-`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install build-essential libgtk-3-dev ufw python3-dev python3-pip git manpages-de ufw kate krusader mat hwinfo apt install mariadb-server libmariadb-dev-compat libmariadb-dev fonts-noto-color-emoji libgtk-3-dev xterm libgtkmm-3.0-dev iputils-ping clang-format figlet -y`
+`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install build-essential libgtk-3-dev ufw python3-dev python3-pip git manpages-de ufw kate krusader mat hwinfo mariadb-server libmariadb-dev-compat libmariadb-dev fonts-noto-color-emoji libgtk-3-dev xterm libgtkmm-3.0-dev iputils-ping clang-format figlet -y`
 
 Sowie:
 
@@ -59,6 +61,19 @@ Installation Energiebox             |
 Zuerst wird dem Benutzer root ein Passwort vergeben. Dieses setzen wir mit:
 
 `sudo passwd root`
+
+
+Danach zwingen wir den User pi bei Systembefehlen zur Passworteingabe
+
+`sudo nano /etc/sudoers.d/010_pi-nopasswd`
+
+Nun ändern wir:
+
+`pi ALL=(ALL) NOPASSWD: ALL`
+
+zu 
+
+`pi ALL=(ALL) PASSWD: ALL`
 
 
 Danach wählen wir einen anderen Benutzernamen für den Standart User pi um die Sicherheit zu erhöhen. Hierfür geben wir
@@ -101,10 +116,6 @@ Es muss ein Root Passwort vergeben werden. Dann den anonymous User löschen sowi
 deaktivieren und die test Datenbank löschen. Anschliessend noch die Privilegien neu laden.
 
 
-Mit dem folgenden Befehl wird eine Datei ausgeführt, die die Berechtigungen für die Ordner und Dateien festlegt:
-
-`sudo /Energiebox/System/setup_permissions.sh`
-
 
 Als nächstes wird die Datenbank eingerichtet für die Energiebox. Diese ist dafür notwendig um MPPT Daten 
 sowie Netzladungen zu protokollieren. Hierzu folgendes Script aufrufen und den Anweisungen folgen:
@@ -120,21 +131,6 @@ Nach dem Datenbank Setup kann geprüft werden ob sie mit den Daten erreichbar is
 -------------------------------------
 Raspi Konfiguration                 |
 -------------------------------------
-
-
-Den User pi bei Systembefehlen zum Passwort zwingen
-
-`sudo nano /etc/sudoers.d/010_pi-nopasswd`
-
-Nun ändern wir:
-
-`pi ALL=(ALL) NOPASSWD: ALL`
-
-zu 
-
-`pi ALL=(ALL) PASSWD: ALL`
-
-
 
 Als nächstes wird der Raspberry konfiguriert damit die Hardware entsprechend zusammen Arbeiten kann.
 WLAN sowie Bluetooth werden ausgeschaltet und das System bekommt einen festen Kabelanschluss für die
@@ -219,7 +215,8 @@ aufrufen und alles was in dieser Datei steht wird ersetzt mit:
 
 Von Hier aus kann die gesamelte Sonnenenergie über Relais verteilt werden.
 Mit den Programmen 12V und 230V werden diese Relais angesteuert.
-Das Programm h2o filtert Wasser, kolloid stellt Kolloidale Dispersionen her!
+Das Programm h3o2 filtert Wasser, kolloid stellt Kolloidale Dispersionen her
+und mit grid kann Energie aus dem Netz geladen werden!
 
 
        Schaltbeispiel für 12V:           Schaltbeispiel für 230V:
@@ -389,7 +386,7 @@ Die Grafische Schnittstelle wird nun beim Starten geladen.
 ----------
 
 Als nächstes installieren wir 2 Cronjobs. Der eine ist dazu da, jede Minute zu prüfen ob
-ein Gerät an oder aus geschaltet werden soll und der andere prüft jede 3 Minten die
+ein Gerät an oder aus geschaltet werden soll und der andere prüft die
 Batteriespannung und schaltet falls notwendig das Netzladegerät an.
 
 `sudo crontab -e`
@@ -452,7 +449,7 @@ und tippen den folgenden Befehl ein:
 
 `sudo nano /etc/bash.bashrc`
 
-am Ende fügen wir die 10 Zeilen hinzu und speichern diese danach
+am Ende fügen wir die 6 Zeilen hinzu und speichern diese danach
 wieder ab mit Strg + x:
 
 `PATH=$PATH:/Energiebox/12V`
@@ -461,7 +458,7 @@ wieder ab mit Strg + x:
 
 `PATH=$PATH:/Energiebox/Kolloid`
 
-`PATH=$PATH:/Energiebox/h2o`
+`PATH=$PATH:/Energiebox/h3o2`
 
 `PATH=$PATH:/Energiebox/gui`
 
@@ -552,9 +549,7 @@ nicht mehr "Permission denied" sondern "Connection refused" an!
 Damit der Raspberry im Netzwerk als Server verfügbar ist, installieren
 wir noch Apache2, PHP und phpmyadmin sowie ein SSL Zertifikat
 
- `sudo apt install apache2 -y`
-
- `sudo apt install php -y`
+ `sudo apt install apache2 php -y`
 
  `sudo service apache2 restart`
 
@@ -594,6 +589,3 @@ Mit `sudo crontab -e` Editor aufrufen:
  `33 3 */2 * 7 certbot renew > /dev/null 2>&1`
 
 und speichern mit STRG + X
-
-
-

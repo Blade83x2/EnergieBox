@@ -237,36 +237,37 @@ int main(int argc, char** argv) {
             !checkMainParameter("relaisTime", atoi(argv[3]), &config)) {
             return showHelp(argv, &config);
         }
+        sleep(atoi(argv[3]));
+
         // wenn gewünschter relaiszustand und config stand gleich sind, nix machen
-        if (atoi(argv[2]) != getElkoState(atoi(argv[1]), &config)) {
-            sleep(atoi(argv[3]));
-            // wenn eingeschaltet wird
-            if (atoi(argv[2]) == 1) {
-                // falls bereits an ist, nichts machen
-                if (getElkoState(atoi(argv[1]), &config) == 0) {
-                    // prüfen ob DC Konverter  genug Leistung hat
-                    if (getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxPConverter) {
-                        // impuls für Elko
-                        setBit(atoi(argv[1]) - 1, atoi(argv[2]) == 1 ? 0 : 1);  // Relais einschalten
-                        //  elkoState in config.ini schreiben
-                        sprintf(command, "bash /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
-                        system(command);
-                        sleep(0.6);
-                    } else {
-                        // Nicht genug Watt verfügbar für neues Gerät
-                        printf("\e[0;31mDas Gerät benötigt %d Watt aber es sind nur %d Watt verfügbar!\n", getDevicePower(atoi(argv[1]), &config), getRestPower(&config));
-                        return 1;
-                    }
+        // if (atoi(argv[2]) != getElkoState(atoi(argv[1]), &config)) {
+        // wenn eingeschaltet wird
+        if (atoi(argv[2]) == 1) {
+            // falls bereits an ist, nichts machen
+            if (getElkoState(atoi(argv[1]), &config) == 0) {
+                // prüfen ob DC Konverter  genug Leistung hat
+                if (getRestPower(&config) >= getDevicePower(atoi(argv[1]), &config) && getDevicePower(atoi(argv[1]), &config) <= config.mcp.maxPConverter) {
+                    // impuls für Elko
+                    setBit(atoi(argv[1]) - 1, atoi(argv[2]) == 1 ? 0 : 1);  // Relais einschalten
+                    //  elkoState in config.ini schreiben
+                    sprintf(command, "bash /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
+                    system(command);
+                    sleep(0.6);
+                } else {
+                    // Nicht genug Watt verfügbar für neues Gerät
+                    printf("\e[0;31mDas Gerät benötigt %d Watt aber es sind nur %d Watt verfügbar!\n", getDevicePower(atoi(argv[1]), &config), getRestPower(&config));
+                    return 1;
                 }
-            } else {
-                // wenn ausgeschaltet wird
-                //  elkoState in config.ini schreiben
-                sprintf(command, "bash /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
-                system(command);
-                sleep(0.6);
-                setBit(atoi(argv[1]) - 1, 1);  // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
             }
+        } else {
+            // wenn ausgeschaltet wird
+            //  elkoState in config.ini schreiben
+            sprintf(command, "bash /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
+            system(command);
+            sleep(0.6);
+            setBit(atoi(argv[1]) - 1, 1);  // Relais ausschalten (1 setzt bit auf 0, 0 setzt bit auf 1)
         }
+        // }
     } else {
         return showHelp(argv, &config);
     }

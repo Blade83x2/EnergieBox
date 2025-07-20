@@ -5,19 +5,74 @@ Energiebox Ver.5 #
 
  TODO´s
  + Kaufen: Batterie Balancer HA12L-2S24V (2*24V) (LED Display) EUR 45,00/Stk.
- + H²O Ventiloption hinzufügen ~~~~ Abfluss statt Tank Option hinzufügen - SOFTWARE ANPASSEN
+ 
  + Lüftersteuerung hinzufügen
  + Alle Leitungsschutzschalter für gesamten 230V Kreislauf einbauen (Ceranfeld auf 20A, Rest auf 16A)
  + Hauptsicherung auf 125A beschränken wegen Batterien
  + EPEVER Setup https://www.youtube.com/watch?v=XjJsfhmdI9g
 
  
-  startup -> mehr pause zwischen dem einschalten der relais
+
   bilder und beschreibung anpassen in readme.md
-  build mit in readme
+  build.sh mit in readme
   kill -9 $(pidof gui) bei build beenden und nach build wieder aufrufen
+  
+  
+  -----------
+  Bestellen: |
+  -----------
+  Kabelkanal: 30x30mm: 10,-€
+  https://www.elektrofachmarkt-online.de/aufputzmaterial/weitere-kabelkanaele/verdrahtungskanal/verdrahtungskanal-30x30mm-laenge-2m.html
+  
+  
+  Batt
+  https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_-_rtc_batterie_fuer_raspberry_pi_5-360117
+  
+  Lüfter
+  https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_-_luefter_fuer_raspberry_pi_5-360116#closemodal
+  
+  
+  raspberry 5 16Gb - 134,50
+  https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_5_b_4x_2_4_ghz_16_gb_ram_wlan_bt-392948
+  
+  
+  display
+  https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_shield_-_display_lcd-touch_7_720x1280_pixel-387421
+  
+  netzteil
+  https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_-_netzteil_5_1_v_5_0_a_usb_type-c_eu-stecker_w-360112
+  
+  camera
+  https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_-_kamera_ki_ai_12mp_76_-383379
+  
+  logic level shifter
+  https://www.reichelt.de/de/de/shop/produkt/entwicklerboards_-_spannungswandler_level_shifter_txb0104-239275
+  
+  ----
+  320
+  
+  
+  
+  
+  später
+  logic level konverter
+  
+  https://www.amazon.de/dp/B07N7FFY2Q/ref=sspa_dk_detail_4?pd_rd_i=B07N7FFY2Q&pd_rd_w=FZ57a&content-id=amzn1.sym.bf6dbf94-e926-4351-8952-c09f45cdef70&pf_rd_p=bf6dbf94-e926-4351-8952-c09f45cdef70&pf_rd_r=HB591SWV42016EZ6C6N1&pd_rd_wg=yG15P&pd_rd_r=2afbd7d4-fd0d-4fd0-b3de-3a95cad13a03&sp_csd=d2lkZ2V0TmFtZT1zcF9kZXRhaWw&th=1
+  
+  
+  
+  
+  ai Kapazität
+  https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_shield_-_ai_ki_26_tops_raspberry_pi_5-390448
+ 
+ 
+ 
  
  BUILD.MD erstellen
+ 
+ 
+ BERECHTIGUNGSSCRIPT AKTUALiSIEREN
+ 
  
  
  
@@ -46,10 +101,10 @@ database=energiebox
  sudo chown root:energiebox /home/box/.mysql_energiebox.cfg
  
  
+   
  
- 
- 
-  [UPDATE] h2o konvertiert in C++. Setup Daten werden jetzt validiert. Option Tank/Ventil sowie Relais Abfrage für Frequenzgerät hinzugefügt
+ grid -> ladungen in datenbank eintragen
+  
  
 _______________________________________________________________________________________________________________________________________
  
@@ -57,10 +112,19 @@ NEUERUNGEN in Version 5
 
 In dieser Version ist endlich das Grafische User Interface verfügbar. Beim booten der Energiebox wird es direkt geladen und auf dem installierten Touch- Display angezeigt.
 Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die Ausgabe auf der Konsole von sämtlichen Programmen verbessert und optimiert. 
-Eine Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++.
+Eine automatische Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++.
 
+ [UPDATE] startup -> mehr pause zwischen dem einschalten der relais
+ [UPDATE] Die Readme.MD von h3o2 wurde aktualisiert
+ [UPDATE] h3o2 hat jetzt einen Parameter (--silent). Wird dieser aufgerufen mit z.B. "h3o2 ,2 -silent" dann wird 0,2 Liter Wasser gefiltert ohne Ausgabe oder belegter Konsole
+ [UPDATE] Der Cellavital Optimierer wurde Vollständig als Hexagonales Strukturierungsgerät in h3o2 eingebunden.
+ [BUGFIX] Änderung in 12V. Wurde versucht, ein Gerät per Bash per Zeitschaltfunktion auf z.B. aus zu schalten und das Gerät war in diesem Moment (kann vor der Schaltung noch aktiviert werden) aus, dann wurde nix geschaltet
+ [NEW] h3o2 hat jetzt einen Parameter (--speedtest) mit dem die Filtergeschwindigkeit ausgemessen und gespeichert wird. Somit ist jeder Wasserfilter exakt einstellbar
+ [UPDATE] h2o wurde umbennant in h3o2.
+ [UPDATE] h2o Filteransicht verschönert. Es kann jetzt zwichen Abwassertank und Abfluss gewählt werden. Beim Abfluss finden keine Prüfungen (Tankgröße etc.) statt
+ [UPDATE] h2o konvertiert in C++. Setup Daten werden jetzt validiert. Option Tank/Ventil sowie Relais Abfrage für Frequenzgerät hinzugefügt
  [BUGFIX] gui stürzte manchmal ab weil versucht worden ist während dessen tracer die trace.txt Datei schreibt sie auszulesen
- [NEW] Gruppe energiebox erstellt
+ [NEW] Gruppe energiebox erstellt. Jeder der in der Gruppe energiebox ist, kann die Software aufrufen 
  [UPDATE] setup_permissions.sh Script erstellt welches die Berechtigungen herstellt nach einem git clone
  [UPDATE] Datei und Ordnerberechtigungen gesetzt.
  [NEW] MySQL Datenbank hinzugefügt. Bei jedem Abruf von den Laderegler Statistiken wird jetzt alles in eine Datenbank gespeichert
