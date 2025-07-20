@@ -65,7 +65,7 @@ cd ..
 stop_spinner $?
 
 
-start_spinner 'box@Energiebox:/Energiebox/h2o:$ make'
+start_spinner 'box@Energiebox:/Energiebox/h3o2:$ make'
 sleep 1
 cd /Energiebox/h3o2
 sudo make clean  > /dev/null
