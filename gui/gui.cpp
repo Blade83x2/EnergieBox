@@ -375,6 +375,7 @@ class GUI : public Gtk::Window {
         // Status aktualisieren
         if (tabName.find("12V") != std::string::npos) {
             system_status_label_.set_text("💬 System: 12V Steuerung aktiv");
+            refresh_relais12V_status();  // <-- sofortiger Refresh
             if (!relais12V_timer_connection_.connected()) {
                 relais12V_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::refresh_relais12V_status), 10);
                 debugPrint("Relais12V-Timer gestartet", LogLevel::INFO);
@@ -387,6 +388,7 @@ class GUI : public Gtk::Window {
         }
         if (tabName.find("230V") != std::string::npos) {
             system_status_label_.set_text("💬 System: 230V Steuerung aktiv");
+            refresh_relais230V_status();  // <-- sofortiger Refresh
             if (!relais230V_timer_connection_.connected()) {
                 relais230V_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::refresh_relais230V_status), 10);
                 debugPrint("Relais230V-Timer gestartet", LogLevel::INFO);
