@@ -6,14 +6,8 @@ class StatusBlock {
     float extractValue(const std::string &line);
 
    public:
-    virtual bool update() = 0;
+    virtual StatusBlock &update() = 0;
     virtual void draw() const = 0;
-
-    // Datei lesen (nur einmal pro Schleife)
-    static bool loadTraceFile(const std::string &filename);
-
-    // Gemeinsamer Speicher für trace.txt Inhalt
-    static std::string traceData;
 
     // Hilfsfunktionen für Ausgabe und Terminalsteuerung
     static void clearScreen();

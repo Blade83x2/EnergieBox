@@ -14,3 +14,171 @@ Traceback (most recent call last):
   File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
     raise "prkl"
 TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException

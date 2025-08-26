@@ -1,28 +1,26 @@
 #include "BatteryStatus.hpp"
 #include "StatusBlock.hpp"
+#include "MySQLiWrapper.hpp"
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <string>
 
-bool BatteryStatus::update() {
+BatteryStatus& BatteryStatus::update() {
+    MySQLiWrapper db("/home/box/.mysql_energiebox.cfg");
     soc = 0.0f;
     voltage = 0.0f;
-
-    std::istringstream stream(traceData);
-    std::string line;
-    while (std::getline(stream, line)) {
-        if (line.find("Batterie: Ladezustand in Prozent =") != std::string::npos)
-            soc = extractValue(line);
-        else if (line.find("Batterie: Aktuelle Spannung in Volt =") != std::string::npos)
-            voltage = extractValue(line);
+    if (db.query("SELECT batt_volt, batt_soc FROM messwerte ORDER BY id DESC LIMIT 1")) {
+        std::map<std::string, std::string> row = db.fetchArray();
+        // Batterie Daten
+        soc = std::stof(row["batt_soc"]);
+        voltage = std::stof(row["batt_volt"]);
     }
-    return true;
+    return *this;
 }
 
 void BatteryStatus::draw() const {
     printHeader("Batterie Status");
-
     std::cout.width(WIDTH_LABEL);
     std::cout << std::left << "Ladezustand:"
               << " ";

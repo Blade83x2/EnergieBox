@@ -18,55 +18,13 @@ Energiebox Ver.5 #
   kill -9 $(pidof gui) bei build beenden und nach build wieder aufrufen
   
   
-  -----------
-  Bestellen: |
-  -----------
-  Kabelkanal: 30x30mm: 10,-€
-  https://www.elektrofachmarkt-online.de/aufputzmaterial/weitere-kabelkanaele/verdrahtungskanal/verdrahtungskanal-30x30mm-laenge-2m.html
-  
-  
-  Batt
-  https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_-_rtc_batterie_fuer_raspberry_pi_5-360117
-  
-  Lüfter
-  https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_-_luefter_fuer_raspberry_pi_5-360116#closemodal
-  
-  
-  raspberry 5 16Gb - 134,50
-  https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_5_b_4x_2_4_ghz_16_gb_ram_wlan_bt-392948
-  
-  
-  display
-  https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_shield_-_display_lcd-touch_7_720x1280_pixel-387421
-  
-  netzteil
-  https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_-_netzteil_5_1_v_5_0_a_usb_type-c_eu-stecker_w-360112
-  
-  camera
-  https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_-_kamera_ki_ai_12mp_76_-383379
-  
-  logic level shifter
-  https://www.reichelt.de/de/de/shop/produkt/entwicklerboards_-_spannungswandler_level_shifter_txb0104-239275
-  
-  ----
-  320
-  
-  
-  
+
   
   später
   logic level konverter
   
   https://www.amazon.de/dp/B07N7FFY2Q/ref=sspa_dk_detail_4?pd_rd_i=B07N7FFY2Q&pd_rd_w=FZ57a&content-id=amzn1.sym.bf6dbf94-e926-4351-8952-c09f45cdef70&pf_rd_p=bf6dbf94-e926-4351-8952-c09f45cdef70&pf_rd_r=HB591SWV42016EZ6C6N1&pd_rd_wg=yG15P&pd_rd_r=2afbd7d4-fd0d-4fd0-b3de-3a95cad13a03&sp_csd=d2lkZ2V0TmFtZT1zcF9kZXRhaWw&th=1
   
-  
-  
-  
-  ai Kapazität
-  https://www.reichelt.de/de/de/shop/produkt/raspberry_pi_shield_-_ai_ki_26_tops_raspberry_pi_5-390448
- 
- 
- 
  
  BUILD.MD erstellen
  
@@ -114,6 +72,7 @@ In dieser Version ist endlich das Grafische User Interface verfügbar. Beim boot
 Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die Ausgabe auf der Konsole von sämtlichen Programmen verbessert und optimiert. 
 Eine automatische Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++.
 
+ [NEW] Programm status hinzugefügt. Zeigt derzeitige PV & Batterie Daten an
  [UPDATE] startup -> mehr pause zwischen dem einschalten der relais
  [UPDATE] Die Readme.MD von h3o2 wurde aktualisiert
  [UPDATE] h3o2 hat jetzt einen Parameter (--silent). Wird dieser aufgerufen mit z.B. "h3o2 ,2 -silent" dann wird 0,2 Liter Wasser gefiltert ohne Ausgabe oder belegter Konsole

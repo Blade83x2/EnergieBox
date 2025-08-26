@@ -82,6 +82,7 @@ Danach wählen wir einen anderen Benutzernamen für den Standart User pi um die 
 
 ein und starten den Raspberry danach neu. Nach dem Neustart kommt eine Grafische Oberfläche wo der
 Benutzer geändert werden kann. Wir haben uns für den Benutzer `box` entschieden!
+Derzeit muss dieser Benutzername gewäht werden da Hardlinks in das /home/box/ Verzeichnis existieren!
 Nun ist der Raspberry bereit für die Installation der Software!
 
 
@@ -124,7 +125,7 @@ sowie Netzladungen zu protokollieren. Hierzu folgendes Script aufrufen und den A
 
 Nach dem Datenbank Setup kann geprüft werden ob sie mit den Daten erreichbar ist. Natürlich gibt es noch keine Einträge in der Datenbank!
 
-`watch -n 1 "sudo mysql --defaults-file=/home/$(whoami)/.mysql_energiebox.cfg -e \"SELECT * FROM messwerte;\" energiebox"`
+`watch -n 1 "sudo mysql --defaults-file=/home/$(whoami)/.mysql_energiebox.cfg -e \"SELECT * FROM messwerte LIMIT 10;\" energiebox"`
 
 
 
@@ -463,6 +464,8 @@ wieder ab mit Strg + x:
 `PATH=$PATH:/Energiebox/gui`
 
 `PATH=$PATH:/Energiebox/Grid`
+
+`PATH=$PATH:/Energiebox/Status`
 
 
 -------------------------------------

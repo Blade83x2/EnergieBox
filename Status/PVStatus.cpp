@@ -1,5 +1,6 @@
 #include "PVStatus.hpp"
 #include "StatusBlock.hpp"
+#include "MySQLiWrapper.hpp"
 #include <chrono>
 #include <iomanip>
 #include <iostream>
@@ -8,8 +9,7 @@
 #include <thread>
 
 /**
- * @brief Liest die PV-bezogenen Werte aus der geladenen traceData und aktualisiert die
- * Member-Variablen.
+ * @brief Liest die PV-bezogenen Werte aus der Datenbank
  *
  * Es werden folgende Daten extrahiert:
  * - Spannung (V)
@@ -19,40 +19,21 @@
  *
  * @return true Immer true, da aktuell keine Fehlerbehandlung für fehlende Daten erfolgt.
  */
-
-bool PVStatus::update() {
+PVStatus& PVStatus::update() {
+    MySQLiWrapper db("/home/box/.mysql_energiebox.cfg");
     voltage = 0.0f;
     current = 0.0f;
     power = 0.0f;
     generatedToday = 0.0f;
-
-    // Prüfen, ob die traceData leer ist (d.h. Datei wurde nicht gelesen)
-    if (traceData.empty()) {
-        std::this_thread::sleep_for(std::chrono::seconds(10));
-        StatusBlock::loadTraceFile("/Energiebox/Tracer/trace.txt");
+    if (db.query("SELECT pv_volt, pv_ampere, pv_power, generated_power FROM messwerte ORDER BY id DESC LIMIT 1")) {
+        std::map<std::string, std::string> row = db.fetchArray();
+        // PV Daten
+        voltage = std::stof(row["pv_volt"]);
+        current = std::stof(row["pv_ampere"]);
+        power = std::stof(row["pv_power"]);
+        generatedToday = std::stof(row["generated_power"]);
     }
-
-    // Nach Wartezeit erneut prüfen
-    if (traceData.empty()) {
-        std::cerr << "[FEHLER] trace.txt war mindestens 10 Sekunden lang leer.\n";
-        return false;
-    }
-
-    std::istringstream stream(traceData);
-    std::string line;
-
-    while (std::getline(stream, line)) {
-        if (line.find("PV Array: Aktuelle Spannung in Volt =") != std::string::npos)
-            voltage = extractValue(line);
-        else if (line.find("PV Array: Aktueller Strom in Ampere =") != std::string::npos)
-            current = extractValue(line);
-        else if (line.find("PV Array: Aktuelle Leistung in Watt =") != std::string::npos)
-            power = extractValue(line);
-        else if (line.find("PV Array: Generierte Energie heute =") != std::string::npos)
-            generatedToday = extractValue(line);
-    }
-
-    return true;
+    return *this;
 }
 
 /**

@@ -165,6 +165,23 @@ cd ..
 stop_spinner $?
 
 
+start_spinner 'box@Energiebox:/Energiebox/Status:$ make'
+sleep 1;
+cd /Energiebox/Status
+sudo make clean  > /dev/null
+sudo make format  > /dev/null
+sudo make  > /Energiebox/makeResult.txt;
+
+result=$?;
+if [ "$result" -eq "2" ]; then
+    stop_spinner 1
+    cat /Energiebox/makeResult.txt;
+    exit 1;
+fi
+cd ..
+stop_spinner $?
+
+
 start_spinner 'box@Energiebox:/Energiebox/Tracer:$ make'
 sleep 1;
 cd /Energiebox/Tracer

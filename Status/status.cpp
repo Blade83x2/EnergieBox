@@ -5,11 +5,25 @@
 #include <string>
 #include <thread>
 
+// Build-Infos (werden vom Makefile via -D gesetzt)
+#ifndef BUILD_DATE
+#define BUILD_DATE "unbekannt"
+#endif
+
+#ifndef BUILD_VERSION
+#define BUILD_VERSION "1.0"
+#endif
+
 void printUsage() {
-    std::cout << "Nutzung: epever [Option]\n"
+    std::cout << "Nutzung: status [Option]\n"
               << "Optionen:\n"
-              << "  -l, --loop      Wiederholt die Anzeige alle 60 Sekunden\n"
-              << "  -h, --help      Zeigt diese Hilfe an\n";
+              << "  -l, --loop      Wiederholt die Anzeige jede Sekunde\n"
+              << "  -v, --version   Zeigt die Versionsinformationen an\n"
+              << "  -h, --help      Zeigt diese Hilfe an\n\n";
+}
+
+void printVersion() {
+    std::cout << "status Version " << BUILD_VERSION << " (Build am " << BUILD_DATE << ")\n\n";
 }
 
 int main(int argc, char *argv[]) {
@@ -21,6 +35,9 @@ int main(int argc, char *argv[]) {
         if (arg == "--help" || arg == "-h") {
             printUsage();
             return 0;
+        } else if (arg == "--version" || arg == "-v") {
+            printVersion();
+            return 1;
         } else if (arg == "--loop" || arg == "-l") {
             loop = true;
         } else {
@@ -34,19 +51,11 @@ int main(int argc, char *argv[]) {
     BatteryStatus battery;
 
     do {
-        if (!StatusBlock::loadTraceFile("/Energiebox/Tracer/trace.txt")) {
-            std::cerr << "Fehler: trace.txt konnte nicht geladen werden\n";
-            return 1;
-        }
-        if (!pv.update() || !battery.update()) {
-            std::cerr << "Fehler beim Lesen der Daten\n";
-            return 1;
-        }
         StatusBlock::clearScreen();
-        pv.draw();
-        battery.draw();
+        pv.update().draw();
+        battery.update().draw();
         if (loop) {
-            std::this_thread::sleep_for(std::chrono::seconds(61));
+            std::this_thread::sleep_for(std::chrono::seconds(1));
         }
     } while (loop);
     return 0;

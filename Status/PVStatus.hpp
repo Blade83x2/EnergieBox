@@ -8,6 +8,6 @@ class PVStatus : public StatusBlock {
     float generatedToday = 0.0f;
 
    public:
-    bool update() override;
+    PVStatus& update() override;
     void draw() const override;
 };
