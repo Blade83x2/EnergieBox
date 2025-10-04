@@ -46,11 +46,8 @@ Installation benötigter Pakete      |
 
 Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Installation verschiedener benötigter Pakete:
 
-`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install build-essential libgtk-3-dev ufw python3-dev python3-pip git manpages-de ufw kate krusader mat hwinfo mariadb-server libmariadb-dev-compat libmariadb-dev fonts-noto-color-emoji libgtk-3-dev xterm libgtkmm-3.0-dev iputils-ping clang-format figlet -y`
+`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install build-essential libgtk-3-dev ufw python3-dev python3-pip git manpages-de ufw kate krusader mat hwinfo mariadb-server libmariadb-dev-compat libmariadb-dev fonts-noto-color-emoji libgtk-3-dev xterm libgtkmm-3.0-dev iputils-ping clang-format figlet -y && sudo pip install rpi.gpio pymodbus`
 
-Sowie:
-
-`sudo pip install rpi.gpio pymodbus`
 
 
 -------------------------------------
@@ -82,14 +79,12 @@ Danach wählen wir einen anderen Benutzernamen für den Standart User pi um die 
 
 ein und starten den Raspberry danach neu. Nach dem Neustart kommt eine Grafische Oberfläche wo der
 Benutzer geändert werden kann. Wir haben uns für den Benutzer `box` entschieden!
-Derzeit muss dieser Benutzername gewäht werden da Hardlinks in das /home/box/ Verzeichnis existieren!
 Nun ist der Raspberry bereit für die Installation der Software!
 
 
 Die Energiebox kann per git clone direkt an die richtige Stelle installiert werden:
  
 `sudo git clone https://github.com/Blade83x2/EnergieBox.git /Energiebox && sudo chmod -R 770 /Energiebox`
-
 
 Zunächst erstellen wir die Gruppe energiebox und weisen diese dem Hauptverzeichnis zu:
 
@@ -99,7 +94,6 @@ Danach werden die 2 Benuter root sowie box dieser Gruppe hinzugefügt:
 
 `sudo usermod -aG energiebox root && sudo usermod -aG energiebox box && newgrp energiebox`
 
-
 Als nächstes wird das Script für die Datei & Ordnerberechtigung ausgeführt. Es wird während dem Ablauf das root Passwort abgefragt!
 
 `cd /Energiebox/System && sudo chmod u+x setup_permissions.sh && bash setup_permissions.sh`
@@ -107,7 +101,6 @@ Als nächstes wird das Script für die Datei & Ordnerberechtigung ausgeführt. E
 Projekt Daten kompilieren:
 
 `cd /Energiebox/WiringPi && sudo ./build && cd .. && sudo ./build.sh`
-
 
 Danach wird die MySQL Datenbank die gerade installiert worden ist, abgesichert. Hierzu den folgenden Befehl verwenden:
 
@@ -125,7 +118,7 @@ sowie Netzladungen zu protokollieren. Hierzu folgendes Script aufrufen und den A
 
 Nach dem Datenbank Setup kann geprüft werden ob sie mit den Daten erreichbar ist. Natürlich gibt es noch keine Einträge in der Datenbank!
 
-`watch -n 1 "sudo mysql --defaults-file=/home/$(whoami)/.mysql_energiebox.cfg -e \"SELECT * FROM messwerte LIMIT 10;\" energiebox"`
+`watch -n 1 "sudo mysql --defaults-file=/home/$(whoami)/.mysql_energiebox.cfg -e \"SELECT * FROM messwerte;\" energiebox"`
 
 
 
@@ -465,18 +458,17 @@ wieder ab mit Strg + x:
 
 `PATH=$PATH:/Energiebox/Grid`
 
-`PATH=$PATH:/Energiebox/Status`
-
 
 -------------------------------------
 IP Setup & DynDNS Einrichtung       |
 -------------------------------------  
 
-IP Einstellungen aufrufen mit:
+Die IP Einstellungen des Raspberrys sind in unserem Fall statisch eingestellt. Dieses Setup hier geht davon aus, dass das Gateway die IP 10.0.0.1 hat und stellt den Raspberry auf 10.0.0.2!
+Die IP Einstellungen können aufrufen werden mit:
 
 `sudo nano /etc/dhcpcd.conf`
 
-und dort folgendes eintragen(vorher abändern)
+und dort folgendes eintragen:
 
 `interface eth0`
 

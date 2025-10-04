@@ -114,9 +114,6 @@ if [[ "$currentUser" != "root" ]]; then
                         fi
                     fi
                 done < "$inputFile"
-
-
-                
             else
                 echo -e "  -> Benutzer \"${currentUser}\" befindet sich nicht in der \"${groupName}\" Gruppe - abbruch!"
                 echo -e "  -> FIXIT: sudo usermod -aG ${groupName} ${currentUser}"
@@ -134,6 +131,3 @@ else
     echo -e "  -> Aufruf: bash $0"
 fi
 echo -e "\n"
-
-
- 
