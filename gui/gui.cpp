@@ -197,7 +197,7 @@ class GUI : public Gtk::Window {
         auto *title = Gtk::manage(new Gtk::Label("Energiebox V.5.0"));
         title->get_style_context()->add_class("welcome-title");
         title->set_halign(Gtk::ALIGN_START);  // text links ausrichten
-        auto *subtitle = Gtk::manage(new Gtk::Label("© 2025 Johannes Krämer"));
+        auto *subtitle = Gtk::manage(new Gtk::Label("© 2026 Johannes Krämer"));
         subtitle->get_style_context()->add_class("welcome-subtitle");
         subtitle->set_halign(Gtk::ALIGN_START);  // text links ausrichten
         // inhalt in die text_box laden
