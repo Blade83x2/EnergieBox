@@ -6,7 +6,8 @@ Energiebox Ver.5 #
 
  TODO´s
  + EPEVER Setup https://www.youtube.com/watch?v=XjJsfhmdI9g
-
+ + execOnStart & Stop in gui auslesen und schalten
+ + gui kopieren nach /Energiebox/gui-remote   -> damit Tablet und Display gleichzeitig funktionieren
   später
   logic level konverter
   
@@ -60,7 +61,7 @@ Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die A
 Eine automatische Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++. Ebenso wurden alle Stromkreise entsprechend für ihren Nutzen abgesichert.
 
 
- [UPDATE] 12V & 230V können jetzt Befehle ausführen beim Starten und Beenden
+ [UPDATE] 12V & 230V können jetzt eigene Befehle ausführen beim Schalten
  [UPDATE] Austausch SD Karte gegen 2,5" S-ATA 240GB Intel SSD Speicher mit USB3 Adapter
  [NEW] 12V Relais 14: Zusätzliche Schaltung auf Eltako Pin 3 & 4: Tasterfunktion
  [NEW] 12V Relais 15: Zusätzliche Schaltung auf Eltako Pin 4: +24V mit Feinsicherung (der - Pol ist separat auf Negativ Schiene)

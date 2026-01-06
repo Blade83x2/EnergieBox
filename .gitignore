@@ -1,8 +1,13 @@
 Bauteile/
 Tracer/trace.txt
 12V/config.ini
+12V/*.o
 230V/config.ini
+230V/*.o
 h3o2/config.ini
+h3o2/*.o
 .git
 .gitignore
 error.log
+
+
