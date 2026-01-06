@@ -14,6 +14,8 @@ int getElkoState(int relais, void* config);
 int getRestPower(void* config);
 int getCurrentPower(void* config);
 int getDevicePower(int relais, void* config);
+char* getExecOnStart(int relais);
+char* getExecOnStop(int relais);
 void setBit(int Port, int Status);
 int getBit(int Port);
 bool checkMainParameter(char* paramName, int number, void* config);
@@ -44,6 +46,8 @@ typedef struct {
     bool activateOnStart;
     int pMax;
     int eltakoState;
+    const char* execOnStart;
+    const char* execOnStop;
 } relais_config;
 
 typedef struct {
@@ -57,6 +61,8 @@ char deviceNames[16][40];
 char deviceActiveOnStart[16][6];
 int devicePowerMax[16][4];
 int deviceEltakoState[16][1];
+char deviceExecOnStart[16][200];
+char deviceExecOnStop[16][200];
 
 static int handler(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
@@ -84,6 +90,10 @@ static int handler(void* config, const char* section, const char* name, const ch
                     pconfig->r[idx].eltakoState = atoi(value);
                 } else if (strcmp(name, "pMax") == 0) {
                     pconfig->r[idx].pMax = atoi(value);
+                } else if (strcmp(name, "execOnStart") == 0) {
+                    strcpy(deviceExecOnStart[idx], strdup(value));
+                } else if (strcmp(name, "execOnStop") == 0) {
+                    strcpy(deviceExecOnStop[idx], strdup(value));
                 } else {
                     return 0;
                 }
@@ -126,6 +136,18 @@ int getDevicePower(int relais, void* config) {
     configuration* pconfig = (configuration*)config;
     if (relais < 1 || relais > 16) return 0;
     return pconfig->r[relais - 1].pMax;
+}
+
+// Gibt Auszuführenden Befehl nach Start zurück
+char* getExecOnStart(int relais) {
+    char* ret = deviceExecOnStart[relais - 1];
+    return ret;
+}
+
+// Gibt Auszuführenden Befehl nach Stop zurück
+char* getExecOnStop(int relais) {
+    char* ret = deviceExecOnStop[relais - 1];
+    return ret;
 }
 
 // Ermittelt den Ladezustand der Batterie (wird aus txt Datei gelesen)
@@ -207,6 +229,10 @@ int main(int argc, char** argv) {
                     //  elkoState in config.ini schreiben
                     sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
                     system(command);
+                    char* cmd = getExecOnStart(atoi(argv[1]));
+                    if (cmd != NULL) {
+                        system(cmd);
+                    }
                     sleep(0.6);
                     system("clear && 230V");
                     exit;
@@ -222,6 +248,10 @@ int main(int argc, char** argv) {
             //  elkoState in config.ini schreiben
             sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
             system(command);
+            char* cmd = getExecOnStop(atoi(argv[1]));
+            if (cmd != NULL) {
+                system(cmd);
+            }
             sleep(0.6);
             system("clear && 230V");
         }
@@ -242,6 +272,10 @@ int main(int argc, char** argv) {
                     //  elkoState in config.ini schreiben
                     sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
                     system(command);
+                    char* cmd = getExecOnStart(atoi(argv[1]));
+                    if (cmd != NULL) {
+                        system(cmd);
+                    }
                     sleep(0.6);
                 } else {
                     // Nicht genug Watt verfügbar für neues Gerät
@@ -255,6 +289,10 @@ int main(int argc, char** argv) {
             //  elkoState in config.ini schreiben
             sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
             system(command);
+            char* cmd = getExecOnStop(atoi(argv[1]));
+            if (cmd != NULL) {
+                system(cmd);
+            }
             sleep(0.6);
         }
     } else {
@@ -379,6 +417,8 @@ void getDataForConfigFile(int relais, void* config) {
     char* autoStart = NULL;
     char* autoStop = NULL;
     char* canStartFromGui = NULL;
+    char* execOnStart = NULL;
+    char* execOnStop = NULL;
     while (1) {
         printf(" -> Bezeichnung (leer = deaktiviert): ");
         char* input = readStdinLine();
@@ -390,6 +430,12 @@ void getDataForConfigFile(int relais, void* config) {
             stractivateOnStart = strdup("false");
             autoStart = strdup("-");
             autoStop = strdup("-");
+<<<<<<< HEAD
+=======
+            canStartFromGui = strdup("1");
+            execOnStart = strdup("");
+            execOnStop = strdup("");
+>>>>>>> b16c7bb (execOnStart & execOnStop implementiert in 12V und 230V. Nun können Bash Befehle bei der Schaltung definiert werden!)
             break;
         } else if (!isValidName(trimmed)) {
             printf("    Ungültig! Erlaubt sind: 1-20 Zeichen,\n    Leerzeichen, (a-zA-Z0-9),_+-,.ßäöüÄÖÜ\n");
@@ -439,7 +485,7 @@ void getDataForConfigFile(int relais, void* config) {
                 autoStart = strdup(trimmed);
                 free(input);
                 while (1) {
-                    printf(" -> Und wann soll das Gerät wiedern\n    ausgeschaltet werden? (HH:MM): ");
+                    printf(" -> Und wann soll das Gerät wieder\n    ausgeschaltet werden? (HH:MM): ");
                     char* input2 = readStdinLine();
                     char* trimmed2 = Trim(input2);
                     if (strlen(trimmed2) == 0) {
@@ -469,10 +515,32 @@ void getDataForConfigFile(int relais, void* config) {
         char* trimmed3 = Trim(input3);
         canStartFromGui = (trimmed3[0] == 'J' || trimmed3[0] == 'j') ? strdup("0") : strdup("1");
         free(input3);
+
+        // Soll ein Befehl beim starten des Gerätes ausgeführt werden?
+        printf(" -> Soll ein Befehl nach dem Einschalten ausgeführt werden?: ");
+        char* input4 = readStdinLine();
+        char* trimmed4 = Trim(input4);
+        if (strlen(trimmed4) == 0) {
+            execOnStart = strdup("");
+        } else {
+            execOnStart = strdup(trimmed4);
+        }
+        free(input4);
+
+        // Soll ein Befehl beim ausschalten des Gerätes ausgeführt werden?
+        printf(" -> Soll ein Befehl nach dem Ausschalten ausgeführt werden?: ");
+        char* input5 = readStdinLine();
+        char* trimmed5 = Trim(input5);
+        if (strlen(trimmed5) == 0) {
+            execOnStop = strdup("");
+        } else {
+            execOnStop = strdup(trimmed5);
+        }
+        free(input5);
     }
     char command[256];
-    snprintf(command, sizeof(command), "bash /Energiebox/230V/setConfig.sh %d '%s' '%s' '%s' '%s' '%s' '%s'", relais, strname, stractivateOnStart, strpMax, autoStart, autoStop,
-             canStartFromGui);
+    snprintf(command, sizeof(command), "bash /Energiebox/230V/setConfig.sh %d '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s'", relais, strname, stractivateOnStart, strpMax, autoStart,
+             autoStop, canStartFromGui, execOnStart, execOnStop);
     system(command);
     free(strname);
     free(strpMax);
@@ -480,6 +548,8 @@ void getDataForConfigFile(int relais, void* config) {
     free(autoStart);
     free(autoStop);
     free(canStartFromGui);
+    free(execOnStart);
+    free(execOnStop);
     sleep(0.5);
     system("clear && 230V");
 }

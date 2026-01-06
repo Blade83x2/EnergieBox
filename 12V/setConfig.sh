@@ -6,7 +6,8 @@ pMax="$4"
 autoStart="$5"
 autoStop="$6"
 canStartFromGui="$7"
-
+execOnStart="$8"
+execOnStop="$9"
 
 # Pfad zur Konfigurationsdatei
 CONFIG="/Energiebox/12V/config.ini"
@@ -24,3 +25,7 @@ sed -i "/$SECTION/,/^\[/ s/^pMax = .*/pMax = $pMax/" "$CONFIG"
 sed -i "/$SECTION/,/^\[/ s/^autoStart = .*/autoStart = $autoStart/" "$CONFIG"
 sed -i "/$SECTION/,/^\[/ s/^autoStop = .*/autoStop = $autoStop/" "$CONFIG"
 sed -i "/$SECTION/,/^\[/ s/^canStartFromGui = .*/canStartFromGui = $canStartFromGui/" "$CONFIG"
+escapedExecOnStart=$(printf '%s\n' "$execOnStart" | sed 's/[\/&]/\\&/g')
+sed -i "/$SECTION/,/^\[/ s/^execOnStart = .*/execOnStart = $escapedExecOnStart/" "$CONFIG"
+escapedExecOnStop=$(printf '%s\n' "$execOnStop" | sed 's/[\/&]/\\&/g')
+sed -i "/$SECTION/,/^\[/ s/^execOnStop = .*/execOnStop = $escapedExecOnStop/" "$CONFIG"
