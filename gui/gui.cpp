@@ -104,7 +104,6 @@ class IniReader {
             data_[currentSection + "/" + key] = value;
         }
     }
-
     std::string get(const std::string &sectionKey, const std::string &defaultVal = "") const {
         auto it = data_.find(sectionKey);
         if (it != data_.end()) return it->second;
@@ -274,7 +273,7 @@ class GUI : public Gtk::Window {
                 std::string canStart = ini.get(sektion + "/canStartFromGui", "1");
                 if (canStart != "1") {
                     Gtk::MessageDialog dialog(*this, "Schaltung nicht erlaubt", false, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK, true);
-                    dialog.set_secondary_text("Dieses Relais kann nicht über die GUI geschaltet werden.");
+                    dialog.set_secondary_text("Dieses Relais darf nicht über die GUI geschaltet werden.");
                     dialog.run();
                     debugPrint("Zugriff verweigert: " + name, LogLevel::INFO);
                     return;
@@ -291,7 +290,7 @@ class GUI : public Gtk::Window {
                     int needed = std::stoi(ini.get(sektion + "/pMax", "0"));
                     if (needed > (maxPower - usedPower)) {
                         Gtk::MessageDialog dialog(*this, "Nicht genug Leistung", false, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK, true);
-                        dialog.set_secondary_text("Dieses Relais kann nicht eingeschaltet werden, da nicht genug Leistung verfügbar ist.");
+                        dialog.set_secondary_text("Dieses Relais darf nicht eingeschaltet werden, da nicht genug Leistung verfügbar ist.");
                         dialog.run();
                         debugPrint("Zuwenig Leistung für: Relais " + std::to_string(i) + " (" + name + ")", LogLevel::INFO);
                         return;
@@ -554,8 +553,7 @@ class GUI : public Gtk::Window {
         return grid;
     }
 
-    // Liest die Datei /Energiebox/Tracer/trace.txt aus, parsed die Werte und aktualisiert den
-    // Energietab
+    // Liest messwerte aus der Datenbank aus und parst die Werte und aktualisiert den Energietab
     bool update_energiebox_tab() {
         MySQLiWrapper db("/home/box/.mysql_energiebox.cfg");
         if (db.query("SELECT pv_volt, pv_ampere, pv_power, batt_volt, batt_ampere, batt_power, batt_soc, generated_power FROM messwerte ORDER BY id DESC LIMIT 1")) {
