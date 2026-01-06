@@ -430,12 +430,9 @@ void getDataForConfigFile(int relais, void* config) {
             stractivateOnStart = strdup("false");
             autoStart = strdup("-");
             autoStop = strdup("-");
-<<<<<<< HEAD
-=======
             canStartFromGui = strdup("1");
             execOnStart = strdup("");
             execOnStop = strdup("");
->>>>>>> b16c7bb (execOnStart & execOnStop implementiert in 12V und 230V. Nun können Bash Befehle bei der Schaltung definiert werden!)
             break;
         } else if (!isValidName(trimmed)) {
             printf("    Ungültig! Erlaubt sind: 1-20 Zeichen,\n    Leerzeichen, (a-zA-Z0-9),_+-,.ßäöüÄÖÜ\n");
