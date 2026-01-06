@@ -3,37 +3,24 @@ Energiebox Ver.5 #
 ##################
 
 
+
  TODO´s
- + Kaufen: Batterie Balancer HA12L-2S24V (2*24V) (LED Display) EUR 45,00/Stk.
- 
- + Lüftersteuerung hinzufügen
- + Alle Leitungsschutzschalter für gesamten 230V Kreislauf einbauen (Ceranfeld auf 20A, Rest auf 16A)
- + Hauptsicherung auf 125A beschränken wegen Batterien
  + EPEVER Setup https://www.youtube.com/watch?v=XjJsfhmdI9g
 
- 
-
-  bilder und beschreibung anpassen in readme.md
-  build.sh mit in readme
-  kill -9 $(pidof gui) bei build beenden und nach build wieder aufrufen
-  
-  
-
-  
   später
   logic level konverter
   
   https://www.amazon.de/dp/B07N7FFY2Q/ref=sspa_dk_detail_4?pd_rd_i=B07N7FFY2Q&pd_rd_w=FZ57a&content-id=amzn1.sym.bf6dbf94-e926-4351-8952-c09f45cdef70&pf_rd_p=bf6dbf94-e926-4351-8952-c09f45cdef70&pf_rd_r=HB591SWV42016EZ6C6N1&pd_rd_wg=yG15P&pd_rd_r=2afbd7d4-fd0d-4fd0-b3de-3a95cad13a03&sp_csd=d2lkZ2V0TmFtZT1zcF9kZXRhaWw&th=1
-  
- 
+
+
  BUILD.MD erstellen
- 
- 
+
+
  BERECHTIGUNGSSCRIPT AKTUALiSIEREN
- 
- 
- 
- 
+
+
+
+docker run --help
 CREATE TABLE `messwerte` (
  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
  `timestamp` int(10) unsigned NOT NULL,
@@ -70,8 +57,27 @@ NEUERUNGEN in Version 5
 
 In dieser Version ist endlich das Grafische User Interface verfügbar. Beim booten der Energiebox wird es direkt geladen und auf dem installierten Touch- Display angezeigt.
 Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die Ausgabe auf der Konsole von sämtlichen Programmen verbessert und optimiert. 
-Eine automatische Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++.
+Eine automatische Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++. Ebenso wurden alle Stromkreise entsprechend für ihren Nutzen abgesichert.
 
+
+ [NEW] 12V Relais 14: Zusätzliche Schaltung auf Eltako Pin 3 & 4: Tasterfunktion
+ [NEW] 12V Relais 15: Zusätzliche Schaltung auf Eltako Pin 4: +24V mit Feinsicherung (der - Pol ist separat auf Negativ Schiene)
+ [NEW] 12V Relais 16: Zusätzliche Schaltung auf Eltako Pin 3 & 4: 48V mit 20A Feinsicherung
+ [BUGFIX] 12V Relais Arbeitsstromkreis mit 0,5A Feinsicherung gesichert
+ [BUGFIX] Zusätzlicher 24V DC -> 12V DC Konverter verbaut für Mikrokontroller
+ [UPDATE] 5A Feinsicherung eingebaut für Raspberry Spannungswandler
+ [BUGFIX] Externe 5V Spannungsversorgung für Relais Module 
+ [UPDATE] Kabelquerschnitt für PV Eingang von 16mm² auf 35mm² erhöht
+ [UPDATE] I²C Verbindungen geschirmt
+ [UPDATE] Molex Steckersystem verbaut für I²C Verbindungen zwischen Modulen
+ [UPDATE] Steckersystem verbaut zwischen Modulen für 12V
+ [UPDATE] Steckersystem verbaut zwischen Modulen für 5V
+ [UPDATE] Gesamter Aufbau aller Module auf OSB Platte (Kein Zerlegen beim Transport mehr nötig)
+ [UPDATE] Neuer Kabelkanal
+ [BUGFIX] 230V Zähler und Relais Arbeitsstromkreis mit 0,5A Feinsicherung gesichert
+ [BUGFIX] 230V Leitungsschutzt für Eltakos verbaut (16A für Relais 1-5, 16A für Relais 6-10, 16A für Relais 11-15, 20A für Relais 16, 16A für Steckdose)
+ [NEW] Schütz für Spannungswandler verbaut
+ [UPDATE] Lüsterklemmen ersetzt mit Blockklemmen für Hutschienen
  [NEW] Programm status hinzugefügt. Zeigt derzeitige PV & Batterie Daten an
  [UPDATE] startup -> mehr pause zwischen dem einschalten der relais
  [UPDATE] Die Readme.MD von h3o2 wurde aktualisiert
