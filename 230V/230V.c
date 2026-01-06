@@ -9,6 +9,11 @@
 #include <stdbool.h>
 #include <ctype.h>
 
+/*
+ * TODO
+ *  Batterie Ladezustand aus Datenbank lesen anstatt aus Datei
+ */
+
 static int handler(void* config, const char* section, const char* name, const char* value);
 int getElkoState(int relais, void* config);
 int getRestPower(void* config);
@@ -431,8 +436,8 @@ void getDataForConfigFile(int relais, void* config) {
             autoStart = strdup("-");
             autoStop = strdup("-");
             canStartFromGui = strdup("1");
-            execOnStart = strdup("");
-            execOnStop = strdup("");
+            execOnStart = strdup("-");
+            execOnStop = strdup("-");
             break;
         } else if (!isValidName(trimmed)) {
             printf("    Ungültig! Erlaubt sind: 1-20 Zeichen,\n    Leerzeichen, (a-zA-Z0-9),_+-,.ßäöüÄÖÜ\n");
@@ -518,7 +523,7 @@ void getDataForConfigFile(int relais, void* config) {
         char* input4 = readStdinLine();
         char* trimmed4 = Trim(input4);
         if (strlen(trimmed4) == 0) {
-            execOnStart = strdup("");
+            execOnStart = strdup("-");
         } else {
             execOnStart = strdup(trimmed4);
         }
@@ -529,7 +534,7 @@ void getDataForConfigFile(int relais, void* config) {
         char* input5 = readStdinLine();
         char* trimmed5 = Trim(input5);
         if (strlen(trimmed5) == 0) {
-            execOnStop = strdup("");
+            execOnStop = strdup("-");
         } else {
             execOnStop = strdup(trimmed5);
         }
