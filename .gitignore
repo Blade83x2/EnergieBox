@@ -2,5 +2,7 @@ Bauteile/
 Tracer/trace.txt
 12V/config.ini
 230V/config.ini
-h2o/config.ini
+h3o2/config.ini
 .git
+.gitignore
+error.log
