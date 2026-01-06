@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include <stdlib.h>  // atoi()
+#include <stdlib.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "mymcp23017.h"
 #include "iniparse.h"
-#include <unistd.h>  // sleep()
+#include <unistd.h>
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
@@ -138,12 +138,18 @@ int getDevicePower(int relais, void* config) {
 // Gibt Auszuführenden Befehl nach Start zurück
 char* getExecOnStart(int relais) {
     char* ret = deviceExecOnStart[relais - 1];
+    if (ret != NULL && strcmp(ret, "-") == 0) {
+        return "";
+    }
     return ret;
 }
 
 // Gibt Auszuführenden Befehl nach Stop zurück
 char* getExecOnStop(int relais) {
     char* ret = deviceExecOnStop[relais - 1];
+    if (ret != NULL && strcmp(ret, "-") == 0) {
+        return "";
+    }
     return ret;
 }
 
@@ -269,9 +275,6 @@ int main(int argc, char** argv) {
             return showHelp(argv, &config);
         }
         sleep(atoi(argv[3]));
-
-        // wenn gewünschter relaiszustand und config stand gleich sind, nix machen
-        // if (atoi(argv[2]) != getElkoState(atoi(argv[1]), &config)) {
         // wenn eingeschaltet wird
         if (atoi(argv[2]) == 1) {
             // falls bereits an ist, nichts machen
@@ -306,7 +309,6 @@ int main(int argc, char** argv) {
             }
             sleep(0.6);
         }
-        // }
     } else {
         return showHelp(argv, &config);
     }
@@ -439,8 +441,8 @@ void getDataForConfigFile(int relais, void* config) {
             autoStart = strdup("-");
             autoStop = strdup("-");
             canStartFromGui = strdup("1");
-            execOnStart = strdup("");
-            execOnStop = strdup("");
+            execOnStart = strdup("-");
+            execOnStop = strdup("-");
             break;
         } else if (!isValidName(trimmed)) {
             printf("    Ungültig! Erlaubt sind: 1-20 Zeichen,\n    Leerzeichen, (a-zA-Z0-9),_+-,.ßäöüÄÖÜ\n");
@@ -526,7 +528,7 @@ void getDataForConfigFile(int relais, void* config) {
         char* input4 = readStdinLine();
         char* trimmed4 = Trim(input4);
         if (strlen(trimmed4) == 0) {
-            execOnStart = strdup("");
+            execOnStart = strdup("-");
         } else {
             execOnStart = strdup(trimmed4);
         }
@@ -537,7 +539,7 @@ void getDataForConfigFile(int relais, void* config) {
         char* input5 = readStdinLine();
         char* trimmed5 = Trim(input5);
         if (strlen(trimmed5) == 0) {
-            execOnStop = strdup("");
+            execOnStop = strdup("-");
         } else {
             execOnStop = strdup(trimmed5);
         }

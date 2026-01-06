@@ -143,15 +143,21 @@ int getDevicePower(int relais, void* config) {
     return pconfig->r[relais - 1].pMax;
 }
 
-// Gibt Auszuführenden Befehl nach Start zurück
+// Gibt auszuführenden Befehl nach Start zurück
 char* getExecOnStart(int relais) {
     char* ret = deviceExecOnStart[relais - 1];
+    if (ret != NULL && strcmp(ret, "-") == 0) {
+        return "";
+    }
     return ret;
 }
 
 // Gibt Auszuführenden Befehl nach Stop zurück
 char* getExecOnStop(int relais) {
     char* ret = deviceExecOnStop[relais - 1];
+    if (ret != NULL && strcmp(ret, "-") == 0) {
+        return "";
+    }
     return ret;
 }
 
