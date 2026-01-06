@@ -8,6 +8,6 @@ h3o2/config.ini
 h3o2/*.o
 .git
 .gitignore
-error.log
-
+*.log
+*.o
 
