@@ -1,11 +1,17 @@
 /*
  * Grafisches Programm zur Steuerung der Relais
- * Vendor: Johannes Krämer
- * Version: 1.5
- * Date: 21.06.2025
+ * Vendor: Johannes a.d.F. K r ä m e r
+ * Version: 5.0
+ * Name: gui
+ * Date: 06.01.2026
  *
- * Um das Programm auf dem Raspberry zu beenden, kann folgender Befehl verwendet werden:
- * kill -9 $(pidof gui)
+ * Wenn die SSH Verbindung zur Energiebox mit dem Parameter -X aufgerufen wird,
+ * kann das Programm als Grafisches Remote Programm genutzt werden. Jedoch ist nur eine
+ * Instanz zur Gleichen Zeit erlaubt. Daher muss eine laufende Instanz mit
+ *
+ *      kill -9 $(pidof gui)
+ *
+ * beendet werden. Danach kann das Programm mit ./gui aufgerufen werden!
  *
  */
 #include <gtkmm/application.h>
@@ -36,6 +42,8 @@
 #include <glibmm/optioncontext.h>
 #include <glibmm/optiongroup.h>
 #include "MySQLiWrapper.h"
+
+std::string programmversion = "V.5.0";
 
 // Debug-Modus aktivieren/deaktivieren
 bool debug = false;
@@ -193,10 +201,10 @@ class GUI : public Gtk::Window {
         auto *text_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 1));
         text_box->set_valign(Gtk::ALIGN_CENTER);  // der inhalt dieser box von der höhe her mittig positionieren
         // inhalt für text_box
-        auto *title = Gtk::manage(new Gtk::Label("Energiebox V.5.0"));
+        auto *title = Gtk::manage(new Gtk::Label("Energiebox " + programmversion));
         title->get_style_context()->add_class("welcome-title");
         title->set_halign(Gtk::ALIGN_START);  // text links ausrichten
-        auto *subtitle = Gtk::manage(new Gtk::Label("© 2026 Johannes Krämer"));
+        auto *subtitle = Gtk::manage(new Gtk::Label("© 2026 Johannes a.d.F. K r ä m e r"));
         subtitle->get_style_context()->add_class("welcome-subtitle");
         subtitle->set_halign(Gtk::ALIGN_START);  // text links ausrichten
         // inhalt in die text_box laden
@@ -596,7 +604,7 @@ class GUI : public Gtk::Window {
 };
 
 int main(int argc, char *argv[]) {
-    auto app = Gtk::Application::create(argc, argv, "de.cplusplus-development.gui");
+    auto app = Gtk::Application::create(argc, argv, "de.Energiebox.gui");
     bool window_mode = false;
     bool debug_mode = false;
     // Registriert Start Parameter + Hilfe
