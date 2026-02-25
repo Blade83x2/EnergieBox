@@ -203,7 +203,7 @@ int main(int argc, char** argv) {
     }
     // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
     if (argc == 1) {
-        // system("clear");
+        system("clear");
         int ladezustand = get_battery_percentage(config.system.traceTxtFilePath);
         printf("\n\e[30;47m ID      %4dW  12V Gerätename      %3d%    \e[0m\n", getCurrentPower(&config), ladezustand);
         for (int x = 1; x <= config.mcp.numberOfRelaisActive; x++) {

@@ -2838,3 +2838,380 @@ Traceback (most recent call last):
   File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
     raise ConnectionException(f"Failed to connect[{self!s}]")
 pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /deERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+ERROR:pymodbus.logging:[Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0'
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+/Energiebox/Tracer/trace: MySQL-Verbindung fehlgeschlagen: Can't connect to local MySQL server through socket '/run/mysqld/mysqld.sock' (2)
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 43, in <module>
+    value = reg.decode(rr)
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 91, in decode
+    return Value(self, self.rawvalue(response))
+  File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
+    raise "prkl"
+TypeError: exceptions must derive from BaseException
+ERROR:pymodbus.logging:[Errno 11] Could not exclusively lock port /dev/ttyACM0: [Errno 11] Resource temporarily unavailable
+ERROR:pymodbus.logging:[Errno 11] Could not exclusively lock port /dev/ttyACM0: [Errno 11] Resource temporarily unavailable
+Traceback (most recent call last):
+  File "/Energiebox/Tracer/readall.py", line 20, in <module>
+    response = client.execute(request)
+  File "/Energiebox/Tracer/pymodbus/client/base.py", line 395, in execute
+    raise ConnectionException(f"Failed to connect[{self!s}]")
+pymodbus.exceptions.ConnectionException: Modbus Error: [Connection] Failed to connect[ModbusSerialClient /dev/ttyACM0:0]
