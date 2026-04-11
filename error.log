@@ -3466,3 +3466,54 @@ Traceback (most recent call last):
   File "/Energiebox/Tracer/pyepsolartracer/registers.py", line 79, in rawvalue
     raise "prkl"
 TypeError: exceptions must derive from BaseException
+/bin/sh: 1: ./trace: not found
+/bin/sh: 1: ./trace: not found
+/bin/sh: 1: ./trace: not found
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe
+/bin/sh: 1: ./trace: Permission denied
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_M_construct null not valid
+Aborted
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_M_construct null not valid
+Aborted
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_M_construct null not valid
+Aborted
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_M_construct null not valid
+Aborted
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_M_construct null not valid
+Aborted
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_M_construct null not valid
+Aborted
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_M_construct null not valid
+Aborted
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_M_construct null not valid
+Aborted
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_M_construct null not valid
+Aborted
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_M_construct null not valid
+Aborted
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_M_construct null not valid
+Aborted

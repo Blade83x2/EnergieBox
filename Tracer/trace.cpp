@@ -141,6 +141,7 @@ class BatteryController {
             std::cerr << "/Energiebox/Tracer/trace: Fehler: \"Konnte python3 /Energiebox/Tracer/readall.py\" nicht ausführen\n";
             return false;
         }
+        /*
         std::ofstream outfile(outputPath);
         if (!outfile.is_open()) {
             std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte trace.txt nicht öffnen\n";
@@ -148,6 +149,7 @@ class BatteryController {
             pclose(pipe);
             return false;
         }
+        */
         float pv_volt = 0, pv_ampere = 0, pv_power = 0;
         float batt_volt = 0, batt_ampere = 0, batt_power = 0;
         int batt_soc = 0;
@@ -156,7 +158,7 @@ class BatteryController {
         int grid_load_active = (access("/Energiebox/Grid/isLoading.lock", F_OK) == 0) ? 1 : 0;
         while (fgets(buffer.data(), buffer.size(), pipe) != nullptr) {
             std::string line(buffer.data());
-            outfile << line;
+            // outfile << line;
             sscanf(line.c_str(), "PV Array: Aktuelle Spannung in Volt = %fV", &pv_volt);
             sscanf(line.c_str(), "PV Array: Aktueller Strom in Ampere = %fA", &pv_ampere);
             sscanf(line.c_str(), "PV Array: Aktuelle Leistung in Watt = %fW", &pv_power);
@@ -181,7 +183,7 @@ class BatteryController {
                 }
             }
         }
-        outfile.close();
+        // outfile.close();
         pclose(pipe);
         speichereInDatenbank(pv_volt, pv_ampere, pv_power, batt_volt, batt_ampere, batt_power, batt_soc, generated_power, grid_load_active);
         return loadTriggered;
