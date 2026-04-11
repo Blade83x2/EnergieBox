@@ -1,9 +1,9 @@
 #!/bin/bash
 # @Name:            Kolloid Station
-# @Copyright:       @2023 by Johannes a.d.F. K r ä m e r
+# @Copyright:       @2026 by Johannes a.d.F. K r ä m e r
 
 programmName="Kolloid Station";
-programmVersion="1.6";
+programmVersion="1.7";
 heizplatteRelais=7;
 trafoRelais=13;
 scriptPath=$(cd $(dirname "$0"); pwd);
@@ -149,6 +149,7 @@ if [[ "$status" -eq 0 ]]; then
     230V $trafoRelais 0 1;
     exit 1;
 fi
+
 for number in $(seq 0 ${_endPlatte}) # Progress Bar anzeigen
 do
     sleep 1;
@@ -168,18 +169,22 @@ do
     $soundPath/enableTrafo;
     230V $trafoRelais 1 1;
     sleep 1;
+
     status=$(230V $trafoRelais)
     if [[ "$status" -eq 0 ]]; then
         230V $heizplatteRelais 0 1;
         exit 1;
     fi
-    [ $size -gt 200 ] && 230V $heizplatteRelais 1 1; # Wenn Menge >= 200 dann immer Köcheln
+    
+    
+    # TODO rundenkochzeit am anfang setzen für jede größe
+    [ $size -eq 200 ] && 230V $heizplatteRelais 1 1; # Wenn Menge >= 200 dann Heizplatte aktivieren
+    [ $size -eq 200 ] && 230V $heizplatteRelais 0 120 & disown; # Wenn Menge >= 200 dann Heizplatte nach x sekunden wieder ausschalten
+    
+    
     sleep 1;
-    status=$(230V $heizplatteRelais)
-    if [[ "$status" -eq 0 ]]; then
-        230V $trafoRelais 0 1;
-        exit 1;
-    fi
+
+    
     if [ $size -lt 1000 ]; then # Kleine Mengen mit vielen Runden
         if [ $(($r % 2)) == 0 ]; then  # jede zweite Runde Köcheln für 4 Minuten
             230V $heizplatteRelais 1 1;
@@ -193,6 +198,8 @@ do
         fi
     fi
     [ $time -lt $maxRuntime ] && _endt=$time || _endt=$maxRuntime;
+    
+    
     for numbera in $(seq 0 ${_endt})
     do
         sleep 1;
