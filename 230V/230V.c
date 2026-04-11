@@ -185,7 +185,6 @@ int main(int argc, char** argv) {
         fprintf(stderr, "DB Verbindung fehlgeschlagen. Datenbankdaten in mysql_energiebox.cfg prüfen!");
         return -1;
     }
-
     /* -------------------------
        Prepared SELECT
     --------------------------*/
@@ -194,15 +193,9 @@ int main(int argc, char** argv) {
         fprintf(stderr, "Prepare Statement Fehler");
         return -1;
     }
-
-    /* -------------------------
-       PARAMETER:
-    --------------------------*/
-
     DBResult* r = db_result_create(1);
     int ladezustand;
     db_result_set_int(r, 0, &ladezustand);
-
     DBParams* p = db_params_create(1);
     int max_id = db_get_max_id(conn, "messwerte");
     db_params_set_int(p, 0, max_id);
@@ -210,20 +203,15 @@ int main(int argc, char** argv) {
     db_stmt_bind_result(stmt, r);
     mysql_stmt_execute(stmt);
     mysql_stmt_store_result(stmt);
-
     mysql_stmt_fetch(stmt);
-
     /* cleanup */
     db_result_free(r);
     db_params_free(p);
     mysql_stmt_close(stmt);
     db_close(conn);
-
     // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
     if (argc == 1) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
-        // system("clear");
-
         printf("\n\e[30;47m ID      %4dW  230V Gerätename     %3d%    \e[0m\n", getCurrentPower(&config), ladezustand);
         for (int x = 1; x <= config.mcp.numberOfRelaisActive; x++) {
             printf("\033[1;97m %2d---->%s %4d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config) == 0) ? "\e[0;31m" : "\e[0;32m"), (getDevicePower(x, &config)), "W",
