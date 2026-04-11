@@ -8,11 +8,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
-
-/*
- * TODO
- *  Batterie Ladezustand aus Datenbank lesen anstatt aus Datei
- */
+#include "mysql_wrapper.h"
 
 static int handler(void* config, const char* section, const char* name, const char* value);
 int getElkoState(int relais, void* config);
@@ -34,7 +30,7 @@ int isValidTime(const char* timeStr);
 
 // 230V Setup
 typedef struct {
-    const char* traceTxtFilePath;
+    const char* mysqlCfgPath;
 } system_setup;
 
 // MCP Setup
@@ -72,8 +68,8 @@ char deviceExecOnStop[16][200];
 static int handler(void* config, const char* section, const char* name, const char* value) {
     configuration* pconfig = (configuration*)config;
 #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
-    if (MATCH("system", "traceTxtFilePath")) {
-        pconfig->system.traceTxtFilePath = strdup(value);
+    if (MATCH("system", "mysqlCfgPath")) {
+        pconfig->system.mysqlCfgPath = strdup(value);
     } else if (MATCH("mcp", "address")) {
         pconfig->mcp.address = atoi(value);
     } else if (MATCH("mcp", "numberOfRelaisActive")) {
@@ -161,28 +157,6 @@ char* getExecOnStop(int relais) {
     return ret;
 }
 
-// Ermittelt den Ladezustand der Batterie (wird aus txt Datei gelesen)
-int get_battery_percentage(const char* filepath) {
-    FILE* file = fopen(filepath, "r");
-    if (!file) {
-        perror("Datei konnte nicht geöffnet werden");
-        return -1;
-    }
-    const char* prefix = "Batterie: Ladezustand in Prozent = ";
-    char line[256];
-    while (fgets(line, sizeof(line), file)) {
-        if (strncmp(line, prefix, strlen(prefix)) == 0) {
-            int percent = -1;
-            if (sscanf(line + strlen(prefix), "%d", &percent) == 1) {
-                fclose(file);
-                return percent;
-            }
-        }
-    }
-    fclose(file);
-    return -1;  // Nicht gefunden
-}
-
 // Programmstart
 int main(int argc, char** argv) {
     configuration config;
@@ -200,11 +174,56 @@ int main(int argc, char** argv) {
         printf("wiringPi I2C Setup error!!!");
         return -1;
     }
+
+    DBConfig mysqlconfig = {0};
+    if (!load_db_config(config.system.mysqlCfgPath, &mysqlconfig)) {
+        fprintf(stderr, "mysql_energiebox.cfg konnte nicht geladen werden");
+        return -1;
+    }
+    MYSQL* conn = db_connect(&mysqlconfig);
+    if (!conn) {
+        fprintf(stderr, "DB Verbindung fehlgeschlagen. Datenbankdaten in mysql_energiebox.cfg prüfen!");
+        return -1;
+    }
+
+    /* -------------------------
+       Prepared SELECT
+    --------------------------*/
+    MYSQL_STMT* stmt = db_prepare(conn, "SELECT batt_soc FROM messwerte WHERE id = ?");
+    if (!stmt) {
+        fprintf(stderr, "Prepare Statement Fehler");
+        return -1;
+    }
+
+    /* -------------------------
+       PARAMETER:
+    --------------------------*/
+
+    DBResult* r = db_result_create(1);
+    int ladezustand;
+    db_result_set_int(r, 0, &ladezustand);
+
+    DBParams* p = db_params_create(1);
+    int max_id = db_get_max_id(conn, "messwerte");
+    db_params_set_int(p, 0, max_id);
+    db_stmt_bind(stmt, p);
+    db_stmt_bind_result(stmt, r);
+    mysql_stmt_execute(stmt);
+    mysql_stmt_store_result(stmt);
+
+    mysql_stmt_fetch(stmt);
+
+    /* cleanup */
+    db_result_free(r);
+    db_params_free(p);
+    mysql_stmt_close(stmt);
+    db_close(conn);
+
     // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
     if (argc == 1) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
         // system("clear");
-        int ladezustand = get_battery_percentage(config.system.traceTxtFilePath);
+
         printf("\n\e[30;47m ID      %4dW  230V Gerätename     %3d%    \e[0m\n", getCurrentPower(&config), ladezustand);
         for (int x = 1; x <= config.mcp.numberOfRelaisActive; x++) {
             printf("\033[1;97m %2d---->%s %4d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config) == 0) ? "\e[0;31m" : "\e[0;32m"), (getDevicePower(x, &config)), "W",
