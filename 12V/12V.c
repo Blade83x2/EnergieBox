@@ -165,11 +165,6 @@ int getRestPower(void* config) {
 
 // Ermittelt den Ladezustand der Batterie (wird aus Datenbank gelesen)
 int get_battery_percentage() {
-    
-
-    
-    
-    
     return -1;  // Nicht gefunden
 }
 
@@ -201,32 +196,25 @@ int main(int argc, char** argv) {
         fprintf(stderr, "DB Verbindung fehlgeschlagen. Datenbankdaten in mysql_energiebox.cfg prüfen!");
         return -1;
     }
-    
-    
-    
-    
-    
-    
-    
+
     /* -------------------------
        Prepared SELECT
     --------------------------*/
-    MYSQL_STMT *stmt = db_prepare(conn,"SELECT batt_soc FROM messwerte WHERE id = ?");
+    MYSQL_STMT* stmt = db_prepare(conn, "SELECT batt_soc FROM messwerte WHERE id = ?");
     if (!stmt) {
         fprintf(stderr, "Prepare Statement Fehler");
         return -1;
     }
 
     /* -------------------------
-       PARAMETER: 
+       PARAMETER:
     --------------------------*/
-    
-    DBResult *r = db_result_create(1);
+
+    DBResult* r = db_result_create(1);
     int ladezustand;
     db_result_set_int(r, 0, &ladezustand);
 
-
-    DBParams *p = db_params_create(1);
+    DBParams* p = db_params_create(1);
     int max_id = db_get_max_id(conn, "messwerte");
     db_params_set_int(p, 0, max_id);
     db_stmt_bind(stmt, p);
@@ -234,11 +222,7 @@ int main(int argc, char** argv) {
     mysql_stmt_execute(stmt);
     mysql_stmt_store_result(stmt);
 
-    
-    //mysql_stmt_fetch(stmt);
-
-
-    
+    mysql_stmt_fetch(stmt);
 
     /* cleanup */
     db_result_free(r);
@@ -248,8 +232,8 @@ int main(int argc, char** argv) {
 
     // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
     if (argc == 1) {
-        //system("clear");
-        
+        // system("clear");
+
         printf("\n\e[30;47m ID      %4dW  12V Gerätename      %3d%    \e[0m\n", getCurrentPower(&config), ladezustand);
         for (int x = 1; x <= config.mcp.numberOfRelaisActive; x++) {
             printf("\033[1;97m %2d---->%s %4d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config) == 0) ? "\e[0;31m" : "\e[0;32m"), (getDevicePower(x, &config)), "W",
