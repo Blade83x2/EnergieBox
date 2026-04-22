@@ -5,6 +5,19 @@ from pymodbus.pdu import ExceptionResponse
 from pyepsolartracer.registers import registerByName
 from datetime import datetime
 import logging
+
+import configparser
+# ConfigParser-Objekt erstellen
+config = configparser.ConfigParser()
+# ini Datei einlesen
+config.read('/Energiebox/Grid/config.ini')
+# Werte auslesen
+epever_port = config['system']['epeverPort']
+epever_baudrate = int(config['system']['epeverBaudrate'])
+
+
+
+
 _logger = logging.getLogger(__name__)
 
 class EPsolarTracerClient:
@@ -12,8 +25,8 @@ class EPsolarTracerClient:
     def __init__(self, unit = 1, serialclient = None, **kwargs):
         self.unit = unit
         if serialclient == None:
-            port = kwargs.get('port', '/dev/ttyACM0')
-            baudrate = kwargs.get('baudrate', 115200)
+            port = kwargs.get('port', epever_port)
+            baudrate = kwargs.get('baudrate', epever_baudrate)
             self.client = ModbusClient(method = 'rtu', port = port, baudrate = baudrate, kwargs = kwargs)
         else:
             self.client = serialclient

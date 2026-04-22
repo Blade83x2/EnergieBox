@@ -5,11 +5,24 @@ from pymodbus.mei_message import *
 from pyepsolartracer.registers import registers,coils
 import serial.rs485
 import logging
+
+import configparser
+# ConfigParser-Objekt erstellen
+config = configparser.ConfigParser()
+# ini Datei einlesen
+config.read('/Energiebox/Grid/config.ini')
+# Werte auslesen
+epever_port = config['system']['epeverPort']
+epever_baudrate = int(config['system']['epeverBaudrate'])
+
+
+
+
 logging.basicConfig()
 log = logging.getLogger()
 log.setLevel(logging.ERROR)
 # HIER sowie in Client.py PORT ANPASSEN, JENACHDEM WAS ls -la /dev/tty* ANZEIGT nach dem Einstecken des USB Kabels
-client = ModbusClient(method='rtu', port='/dev/ttyACM0', baudrate=115200, stopbits = 1, bytesize = 8, timeout=1)
+client = ModbusClient(method='rtu', port=epever_port, baudrate=epever_baudrate, stopbits = 1, bytesize = 8, timeout=1)
 client.connect()
 try:
     client.socket.rs485_mode = serial.rs485.RS485Settings()

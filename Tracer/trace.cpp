@@ -1,9 +1,8 @@
 /*
  *  Ruft python3 /Energiebox/Tracer/readall.py auf und liest die MPPT-Daten aus.
  *  Prüft, ob die Batterie eine Mindestspannung hat, und startet ggf. das Netzladeprogramm.
- *  Speichert die ausgelesenen Daten in eine MySQL-Datenbank und in trace.txt.
+ *  Speichert die ausgelesenen Daten in eine MySQL-Datenbank.
  */
-
 #include "iniparse.h"
 #include <array>
 #include <cstdio>
@@ -16,7 +15,8 @@
 #include <mysql/mysql.h>
 #include <stdexcept>
 #include <string>
-#include <unistd.h>  // für access() und F_OK
+#include <filesystem>
+
 // Strukt
 struct MCPSetup {
     int address = 0;
@@ -32,24 +32,28 @@ struct GridSetup {
     int loadingCapacityWh = 0;
 };
 // Strukt
+struct SystemSetup {
+    const char *mysqlCfgPath;
+    const char *lockFilePath;
+    const char *readallCmd;
+};
+// Alle Strukte zusammen führen
 struct Configuration {
     MCPSetup mcp;
     GridSetup grid;
+    SystemSetup system;
 };
-
-void schreibe_zeile_in_datei(const std::string &dateipfad, const std::string &textzeile) {
-    std::ofstream datei(dateipfad, std::ios::app);
-    if (datei.is_open()) {
-        datei << textzeile << std::endl;
-    } else {
-        std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte Datei nicht öffnen: " << dateipfad << std::endl;
-    }
-}
-
+// Handler für ini Konfiguration
 static int handler(void *config, const char *section, const char *name, const char *value) {
     Configuration *pconfig = static_cast<Configuration *>(config);
 #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
-    if (MATCH("mcp", "address")) {
+    if (MATCH("system", "mysqlCfgPath")) {
+        pconfig->system.mysqlCfgPath = strdup(value);
+    } else if (MATCH("system", "lockFilePath")) {
+        pconfig->system.lockFilePath = strdup(value);
+    } else if (MATCH("system", "readallCmd")) {
+        pconfig->system.readallCmd = strdup(value);
+    } else if (MATCH("mcp", "address")) {
         pconfig->mcp.address = std::atoi(value);
     } else if (MATCH("mcp", "numberOfRelaisActive")) {
         pconfig->mcp.numberOfRelaisActive = std::atoi(value);
@@ -75,9 +79,7 @@ class BatteryController {
    private:
     Configuration config;
     const std::string configPath = "/Energiebox/Grid/config.ini";
-    const std::string readallCmd = "python3 /Energiebox/Tracer/readall.py";
     const std::string voltagePrefix = "Batterie: Aktuelle Spannung in Volt = ";
-    const std::string outputPath = "/Energiebox/Tracer/trace.txt";
     bool loadConfig() { return ini_parse(configPath.c_str(), handler, &config) >= 0; }
     float parseVoltageLine(const std::string &line) {
         auto pos = line.find(voltagePrefix);
@@ -106,7 +108,7 @@ class BatteryController {
             std::cerr << "/Energiebox/Tracer/trace: MySQL-Init fehlgeschlagen\n";
             return;
         }
-        if (!mysql_options(conn, MYSQL_READ_DEFAULT_FILE, "/home/box/.mysql_energiebox.cfg")) {
+        if (!mysql_options(conn, MYSQL_READ_DEFAULT_FILE, config.system.mysqlCfgPath)) {
             if (mysql_real_connect(conn, nullptr, nullptr, nullptr, nullptr, 0, nullptr, 0)) {
                 unsigned int timestamp = static_cast<unsigned int>(std::time(nullptr));
                 std::string sql =
@@ -136,29 +138,19 @@ class BatteryController {
             return false;
         }
         std::array<char, 256> buffer;
-        FILE *pipe = popen(readallCmd.c_str(), "r");
+        FILE *pipe = popen(config.system.readallCmd, "r");
         if (!pipe) {
-            std::cerr << "/Energiebox/Tracer/trace: Fehler: \"Konnte python3 /Energiebox/Tracer/readall.py\" nicht ausführen\n";
+            std::cerr << "/Energiebox/Tracer/trace: Fehler: \"" << config.system.readallCmd << "\" nicht ausführen\n";
             return false;
         }
-        /*
-        std::ofstream outfile(outputPath);
-        if (!outfile.is_open()) {
-            std::cerr << "/Energiebox/Tracer/trace: Fehler: Konnte trace.txt nicht öffnen\n";
-            schreibe_zeile_in_datei("/Energiebox/error.log", "/Energiebox/Tracer/trace: Fehler: Konnte /Energiebox/Tracer/trace.txt nicht öffnen!");
-            pclose(pipe);
-            return false;
-        }
-        */
         float pv_volt = 0, pv_ampere = 0, pv_power = 0;
         float batt_volt = 0, batt_ampere = 0, batt_power = 0;
         int batt_soc = 0;
         float generated_power = 0.0f;
         bool loadTriggered = false;
-        int grid_load_active = (access("/Energiebox/Grid/isLoading.lock", F_OK) == 0) ? 1 : 0;
+        int grid_load_active = std::filesystem::exists(config.system.lockFilePath) ? 1 : 0;
         while (fgets(buffer.data(), buffer.size(), pipe) != nullptr) {
             std::string line(buffer.data());
-            // outfile << line;
             sscanf(line.c_str(), "PV Array: Aktuelle Spannung in Volt = %fV", &pv_volt);
             sscanf(line.c_str(), "PV Array: Aktueller Strom in Ampere = %fA", &pv_ampere);
             sscanf(line.c_str(), "PV Array: Aktuelle Leistung in Watt = %fW", &pv_power);
@@ -183,13 +175,12 @@ class BatteryController {
                 }
             }
         }
-        // outfile.close();
         pclose(pipe);
         speichereInDatenbank(pv_volt, pv_ampere, pv_power, batt_volt, batt_ampere, batt_power, batt_soc, generated_power, grid_load_active);
         return loadTriggered;
     }
 };
-
+// Programmstart
 int main() {
     BatteryController controller;
     if (!controller.run()) {

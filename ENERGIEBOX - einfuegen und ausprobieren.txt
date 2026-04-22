@@ -1,0 +1,159 @@
+// Update und Abhängigkeiten installieren:
+
+sudo apt update
+sudo apt install mbpoll mysql-client bc jq
+
+
+
+SQL:
+
+CREATE DATABASE epever;
+USE epever;
+CREATE TABLE modbus_raw (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timestamp DATETIME,
+    register_addr INT,
+    value INT
+);
+CREATE TABLE modbus_decoded (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timestamp DATETIME,
+    name VARCHAR(64),
+    value FLOAT
+);
+
+
+
+DATENABFRAGE EPEVER:
+
+
+#!/bin/bash
+
+# /Energiebox/System/epever_full_scan.sh
+
+
+PORT="/dev/ttyUSB0"
+SLAVE=1
+BAUD=115200
+
+DB_HOST="localhost"
+DB_USER="root"
+DB_PASS="deinpasswort"
+DB_NAME="epever"
+
+NOW=$(date "+%Y-%m-%d %H:%M:%S")
+
+# =========================
+# FUNKTION: REGISTER LESEN
+# =========================
+read_reg() {
+    mbpoll -m rtu -a $SLAVE -b $BAUD -r $1 -c 1 $PORT 2>/dev/null | grep -oP '\[\d+\]:\s+\K[-0-9]+'
+}
+
+# =========================
+# SCAN BEREICH (anpassbar)
+# =========================
+START=12288   # 0x3000
+END=13000     # begrenzen für Performance
+
+echo "Scan läuft..."
+
+for ((i=$START; i<=$END; i++)); do
+    VAL=$(read_reg $i)
+
+    if [[ ! -z "$VAL" ]]; then
+        echo "$i = $VAL"
+
+        mysql -h $DB_HOST -u $DB_USER -p$DB_PASS $DB_NAME <<EOF
+INSERT INTO modbus_raw (timestamp, register_addr, value)
+VALUES ('$NOW', $i, $VAL);
+EOF
+    fi
+done
+
+# =========================
+# DEKODIERUNG (bekannte Werte)
+# =========================
+
+decode_and_store() {
+
+    local reg=$1
+    local name=$2
+    local scale=$3
+
+    RAW=$(read_reg $reg)
+
+    if [[ ! -z "$RAW" ]]; then
+        VAL=$(echo "$RAW * $scale" | bc -l)
+
+        mysql -h $DB_HOST -u $DB_USER -p$DB_PASS $DB_NAME <<EOF
+INSERT INTO modbus_decoded (timestamp, name, value)
+VALUES ('$NOW', '$name', $VAL);
+EOF
+
+        echo "$name = $VAL"
+    fi
+}
+
+echo "Dekodierung..."
+
+decode_and_store 12548 "battery_voltage" 0.01
+decode_and_store 12549 "battery_current" 0.01
+decode_and_store 12560 "ac_voltage" 0.01
+decode_and_store 12561 "ac_current" 0.01
+decode_and_store 12562 "ac_power" 1
+decode_and_store 12573 "temperature" 0.01
+
+echo "Fertig."
+
+
+
+
+
+
+⏱️ Automatisierung (Cron)
+
+Alle 30 Sekunden:
+
+crontab -e
+*/1 * * * * /Energiebox/System/epever_full_scan.sh
+
+
+
+
+
+
+
+2. Baudrate prüfen
+
+Typisch:
+
+9600
+115200
+
+
+
+
+
+3. USB Adapter
+
+FTDI empfohlen
+/dev/ttyUSB0 prüfen:
+dmesg | grep tty
+
+
+
+
+
+🧪 6. Verbindung testen
+mbpoll -m rtu -a 1 -b 115200 -r 12548 -c 1 /dev/ttyUSB0
+
+Wenn alles passt → bekommst du einen Wert 👍
+
+
+
+
+
+
+
+

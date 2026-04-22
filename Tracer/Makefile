@@ -25,7 +25,7 @@ NC             = \033[0m
 
 # Build-Info
 BUILD_DATE     := $(shell date +%Y-%m-%d)
-BUILD_VERSION  := 1.0
+BUILD_VERSION  := 1.2
 CXXFLAGS       += -DBUILD_DATE=\"$(BUILD_DATE)\" -DBUILD_VERSION=\"$(BUILD_VERSION)\"
 CFLAGS         += -DBUILD_DATE=\"$(BUILD_DATE)\" -DBUILD_VERSION=\"$(BUILD_VERSION)\"
 
