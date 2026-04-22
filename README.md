@@ -458,7 +458,7 @@ und dort folgendes eintragen:
 
 `interface eth0`
 
-`static ip_address=10.0.0.2/24`
+`static ip_address=10.0.0.4/24`
 
 `static ip6_address=29c5:ef1d:3023:5c04::ff/64`
 
