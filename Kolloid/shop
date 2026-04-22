@@ -6,45 +6,49 @@
 
 
 programmName="Kolloid Station Shop Connector";
-programmVersion="1.0";
-shopUrl="kolloidalesgoldkaufen.de"
+programmVersion="1.2";
 scriptPath=$(cd $(dirname "$0"); pwd);
 libsPath="$scriptPath/libs";
 source "$libsPath/functions.sh" || exit 1;
-DB_NAME="d03ae23f"
 
 
-# Prüfen ob kolloidalesgoldkaufen.de erreichbar ist, wenn nicht, 
-# wird davon ausgegangen das keine Internetverbindung da ist oder der Shop offline ist
-# Beispiel:
-if ! check_host_reachable "$shopUrl"; then
-    echo "Error: $0: Der Host $shopUrl ist nicht erreichbar! Datenbank kann nicht erreicht werden."
-    exit 0
-fi
 
-
-# Prüfen, ob .mysql.cfg existiert
-if [[ ! -f ~/.mysql.cfg ]]; then
-  echo "Die Datei ~/.mysql.cfg existiert nicht."
+# Prüfen, ob ~/.mysql_energiebox_shop.cfg existiert
+if [[ ! -f ~/.mysql_energiebox_shop.cfg ]]; then
+  echo "Die Datei ~/.mysql_energiebox_shop.cfg existiert nicht."
   echo "Bitte lege sie wie folgt an, um die MySQL-Zugangsdaten sicher zu speichern:"
   echo
-  echo "1️) Erstelle die Datei mit 440 und in energiebox gruppe:"
-  echo "    nano ~/.mysql.cfg"
+  echo "1️) Erstelle die Datei und füge sie der energiebox Gruppe hinzu:"
+  echo "    nano ~/.mysql_energiebox_shop.cfg"
   echo
   echo "2️) Füge folgenden Inhalt ein (ersetze die Platzhalter):"
   echo
   cat <<EOF
 [client]
-user=
-password=
-host=
+user=..........
+password=..........
+database=d03ae23f
+host=kolloidalesgoldkaufen.de
+port=3306
 EOF
   echo
   echo "3️) Setze die richtigen Berechtigungen:"
-  echo "    chmod 600 ~/.mysql.cfg"
+  echo "    sudo chown root:energiebox ~/.mysql_energiebox_shop.cfg"
+  echo "    sudo chmod 640 ~/.mysql_energiebox_shop.cfg"
   echo
   exit 1
 fi
+
+
+# Prüfen ob host erreichbar ist, wenn nicht, 
+# wird davon ausgegangen das keine Internetverbindung da ist oder der Shop offline ist
+# Beispiel:
+shopUrl=$(awk -F= '/^host=/{print $2}' ~/.mysql_energiebox_shop.cfg)
+if ! check_host_reachable "$shopUrl"; then
+    echo "Error: $0: Der Host $shopUrl ist nicht erreichbar! Datenbank kann nicht erreicht werden."
+    exit 0
+fi
+
 
 
 
@@ -109,7 +113,7 @@ while IFS=$'\t' read -r zeit id ordernumber userId articlenumber menge; do
   
   
   
-done < <(mysql --defaults-file=~/.mysql.cfg -D "$DB_NAME" -e "$SQL_QUERY" --batch --raw | tail -n +2)
+done < <(mysql --defaults-file=~/.mysql_energiebox_shop.cfg -e "$SQL_QUERY" --batch --raw | tail -n +2)
 
 
 
