@@ -21,6 +21,7 @@ fi
 # Home-Verzeichnis des aufrufenden Users ermitteln
 USER_HOME=$(eval echo "~$SUDO_USER")
 CONFIG_FILE="$USER_HOME/.mysql_energiebox.cfg"
+# Datenbank User Name
 ENERGIEBOX_USER="energiebox"
 
 echo "ℹ️ MySQL-Konfigurationsdatei wird in $CONFIG_FILE gespeichert"
@@ -73,7 +74,7 @@ if [ "$DRY_RUN" = true ]; then
     echo "  - Datenbank 'energiebox' neu anlegen"
     echo "  - Zugriffsrechte für Benutzer '$ENERGIEBOX_USER' auf Datenbank gewähren"
     echo "  - Tabelle 'messwerte' mit Spalten anlegen"
-    echo "  - Konfigurationsdatei '$CONFIG_FILE' erzeugen mit Berechtigung 600 und Besitzer root:root"
+    echo "  - Konfigurationsdatei '$CONFIG_FILE' erzeugen mit Berechtigung 640 und Besitzer root:energiebox"
     echo "==============================="
     echo "Kein Datenbankbefehl wurde ausgeführt."
     exit 0
@@ -91,18 +92,19 @@ GRANT ALL PRIVILEGES ON energiebox.* TO '$ENERGIEBOX_USER'@'localhost';
 FLUSH PRIVILEGES;
 USE energiebox;
 CREATE TABLE messwerte (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    timestamp INT UNSIGNED NOT NULL,
-    pv_volt FLOAT UNSIGNED,
-    pv_ampere FLOAT UNSIGNED,
-    pv_power FLOAT UNSIGNED,
-    batt_volt FLOAT UNSIGNED,
-    batt_ampere FLOAT UNSIGNED,
-    batt_power FLOAT UNSIGNED,
-    batt_soc INT UNSIGNED,
-    generated_power FLOAT UNSIGNED,
-    grid_load_active INT
-);
+ id int(10) unsigned NOT NULL AUTO_INCREMENT,
+ timestamp int(10) unsigned NOT NULL,
+ pv_volt float unsigned DEFAULT NULL,
+ pv_ampere float unsigned DEFAULT NULL,
+ pv_power float unsigned DEFAULT NULL,
+ batt_volt float unsigned DEFAULT NULL,
+ batt_ampere float unsigned DEFAULT NULL,
+ batt_power float unsigned DEFAULT NULL,
+ batt_soc int(10) unsigned DEFAULT NULL,
+ generated_power float unsigned DEFAULT NULL,
+ grid_load_active int(11) DEFAULT NULL,
+ PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=5395 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 EOF
 
 # Konfigurationsdatei schreiben
@@ -113,10 +115,11 @@ user=$ENERGIEBOX_USER
 password=$ENERGIEBOX_PW
 host=localhost
 database=energiebox
+port=3306
 EOC
 
-chown root:root "$CONFIG_FILE"
-chmod 600 "$CONFIG_FILE"
+chown root:energiebox "$CONFIG_FILE"
+chmod 640 "$CONFIG_FILE"
 
 echo "✅ Datenbank-Setup abgeschlossen."
-echo "🔑 Zugang über: $CONFIG_FILE (Besitzer: root, Modus: 600)"
+echo "🔑 Zugang über: $CONFIG_FILE (Besitzer: root, Gruppe: energiebox, Modus: 640)"

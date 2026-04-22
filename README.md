@@ -401,35 +401,21 @@ Differenz des Befehls
 genutzt werden. Ist der RS-485 Adapter eingesteckt, wird ein Eintrag zusätzlich angezeigt.
 Bislang war es immer der Eintrag `/dev/ttyACM0`. Es kommt allerdings darauf an,
 wieviele USB Geräte angeschlossen sind. Nachdem diese Port Adresse ausfindig gemacht worden ist,
-muss diese im Script eingetragen werden. Hierzu folgenden Befehl aufrufen:
+muss diese iin der config.ini eingetragen werden. Hierzu folgenden Befehl aufrufen:
 
-`cd /Energiebox/Tracer/ && sudo nano readall.py`
+`cd /Energiebox/Grid/ && sudo nano config.ini`
 
-und in der Zeile 12 unter Port die Geräteadresse eintragen
-
-<p align="center"> 
-    <img src="img/usbport.png" style="width: 85%;" alt="USB Port Adresse" >
-</p>
-
-Den gleichen Eintrag ebenfalls in die client.py in Zeile 15 hinzufügen
-
-`cd pyepsolartracer && sudo nano client.py`
+und in der Zeile 10 unter `epeverPort = /dev/ttyACM0` die Geräteadresse eintragen
 
 <p align="center"> 
-    <img src="img/usbportclient.png" style="width: 85%;" alt="USB Port Adresse Client" >
+    <img src="img/usbport.png" style="width: 85%;" alt="EPEVER Port Adresse" >
 </p>
 
 Zum Testen in der Konsole 
 
-`python3 /Energiebox/Tracer/readall.py > /Energiebox/Tracer/trace.txt`
+`python3 /Energiebox/Tracer/readall.py`
 
-aufrufen. Mit 
-
-`cat /Energiebox/Tracer/trace.txt`
-
-sollten alle Ausgelesenen Daten angezeigt werden.
-
-
+aufrufen. Es sollten alle Daten vom EPEVER angezeigt werden.
 
 
 -------------------------------------

@@ -21,36 +21,13 @@ Energiebox Ver.5 #
 
 
 
-docker run --help
-CREATE TABLE `messwerte` (
- `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
- `timestamp` int(10) unsigned NOT NULL,
- `pv_volt` float unsigned DEFAULT NULL,
- `pv_ampere` float unsigned DEFAULT NULL,
- `pv_power` float unsigned DEFAULT NULL,
- `batt_volt` float unsigned DEFAULT NULL,
- `batt_ampere` float unsigned DEFAULT NULL,
- `batt_power` float unsigned DEFAULT NULL,
- `batt_soc` int(10) unsigned DEFAULT NULL,
- `generated_power` float unsigned DEFAULT NULL,
- `grid_load_active` int(11) DEFAULT NULL,
- PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5395 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
  
- 
-[client]
-user=energiebox
-password=.......
-host=localhost
-database=energiebox
 
- sudo chown root:energiebox /home/box/.mysql_energiebox.cfg
- 
  
    
  
  grid -> ladungen in datenbank eintragen
-  beschreibung für Port & Baudrate
+
  
 _______________________________________________________________________________________________________________________________________
  
@@ -62,7 +39,7 @@ Eine automatische Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis impl
 
 
  [UPDATE] Port & Baudrate für EPEVER wird jetzt aus /Energiebox/Grid/config.ini gelesen
- [UPDATE] 12V & 230V können jetzt eigene Befehle ausführen beim Schalten
+ [UPDATE] 12V & 230V können jetzt definierte Befehle ausführen beim An/Aus schalten
  [UPDATE] Austausch SD Karte gegen 2,5" S-ATA 240GB Intel SSD Speicher mit USB3 Adapter
  [NEW] 12V Relais 14: Zusätzliche Schaltung auf Eltako Pin 3 & 4: Tasterfunktion
  [NEW] 12V Relais 15: Zusätzliche Schaltung auf Eltako Pin 4: +24V mit Feinsicherung (der - Pol ist separat auf Negativ Schiene)
