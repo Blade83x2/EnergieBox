@@ -164,7 +164,7 @@ class BatteryController {
                 std::cout << "Aktuelle Batteriespannung: " << voltage << " V\n";
                 if (grid_load_active == 0) {
                     if (voltage < config.grid.battVoltageStartLoading) {
-                        std::cout << "Niedrige Spannung erkannt, lade Grid...\n";
+                        std::cout << "Niedrige Spannung erkannt, lade von Grid...\n";
                         triggerLoad();
                         loadTriggered = true;
                     } else {
