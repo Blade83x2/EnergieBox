@@ -5,6 +5,6 @@ Tracer/trace.txt
 h3o2/*.o
 .git
 .gitignore
-*.log
+/*.log
 *.o
 
