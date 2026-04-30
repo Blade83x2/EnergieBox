@@ -401,7 +401,7 @@ Differenz des Befehls
 genutzt werden. Ist der RS-485 Adapter eingesteckt, wird ein Eintrag zusätzlich angezeigt.
 Bislang war es immer der Eintrag `/dev/ttyACM0`. Es kommt allerdings darauf an,
 wieviele USB Geräte angeschlossen sind. Nachdem diese Port Adresse ausfindig gemacht worden ist,
-muss diese iin der config.ini eingetragen werden. Hierzu folgenden Befehl aufrufen:
+muss diese in der config.ini eingetragen werden. Hierzu folgenden Befehl aufrufen:
 
 `cd /Energiebox/Grid/ && sudo nano config.ini`
 
@@ -413,9 +413,26 @@ und in der Zeile 10 unter `epeverPort = /dev/ttyACM0` die Geräteadresse eintrag
 
 Zum Testen in der Konsole 
 
-`python3 /Energiebox/Tracer/readall.py`
+`python3 /Energiebox/Tracer/epever_tracer_an.py`
 
 aufrufen. Es sollten alle Daten vom EPEVER angezeigt werden.
+
+------------
+
+Whisper installation:
+
+Für die Transscription der Sprache wird whisper.cpp verwendet. 
+Zum Betrieb müssen einige fehlende Programme installiert werden:
+
+`sudo apt install ccache libavcodec-dev libavformat-dev libavutil-dev libatomic1 libatomic-ops-dev git build-essential libsdl2-dev`
+
+Nun werden die Modele geladen mit:
+
+`cd /Energiebox/whisper.cpp && bash ./models/download-ggml-model.sh base && bash ./models/download-ggml-model.sh tiny`
+
+Zuletzt wird whisper noch kompiliert:
+
+`rm -rf build && cmake -B build -DCMAKE_C_FLAGS="-latomic" -DCMAKE_CXX_FLAGS="-latomic" -DCMAKE_EXE_LINKER_FLAGS="-latomic" && cmake --build build -j --config Release`
 
 
 -------------------------------------

@@ -38,6 +38,7 @@ Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die A
 Eine automatische Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++. Ebenso wurden alle Stromkreise entsprechend für ihren Nutzen abgesichert.
 
 
+ [NEW] whisper.cpp zum Projekt hinzugefügt
  [UPDATE] Port & Baudrate für EPEVER wird jetzt aus /Energiebox/Grid/config.ini gelesen
  [UPDATE] 12V & 230V können jetzt definierte Befehle ausführen beim An/Aus schalten
  [UPDATE] Austausch SD Karte gegen 2,5" S-ATA 240GB Intel SSD Speicher mit USB3 Adapter
