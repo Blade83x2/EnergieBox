@@ -1,0 +1,99 @@
+Relais:
+
+  - name: relais_1_an
+    bedingungen:
+      - tonlaut: [tv, fernseher, fernseh, glotze, videokiste]
+      - tonlaut: [aktivieren, positiv, eins, an, ein, hell, einschalten, anschalten, zuschalten]
+    aktionen:
+      - command: "/Energiebox/230V/230V 1 1 0"
+      - speak: "Der Fernseher wurde eingeschaltet!"
+  - name: relais_1_aus
+    bedingungen:
+      - tonlaut: [tv, fernseher, fernseh, glotze, videokiste]
+      - tonlaut: [deaktivieren, negativ, null, aus, dunkel, ausschalten, abschalten, wegschalten]
+    aktionen:
+      - command: "/Energiebox/230V/230V 1 0 0"
+      - speak: "Der Fernseher wurde ausgeschaltet!"
+
+  - name: relais_2_an
+    bedingungen:
+      - tonlaut: [drucker, laserdrucker, brother, printer]
+      - tonlaut: [aktivieren, positiv, eins, an, ein, hell, einschalten, anschalten, zuschalten]
+    aktionen:
+      - command: "/Energiebox/230V/230V 2 1 0"
+      - speak: "Der Drucker wurde eingeschaltet!"
+  - name: relais_2_aus
+    bedingungen:
+      - tonlaut: [drucker, laserdrucker, brother, printer]
+      - tonlaut: [deaktivieren, negativ, null, aus, dunkel, ausschalten, abschalten, wegschalten]
+    aktionen:
+      - command: "/Energiebox/230V/230V 2 0 0"
+      - speak: "Der Drucker wurde ausgeschaltet!"
+
+  - name: relais_3_an
+    bedingungen:
+      - tonlaut: [gitarre]
+      - tonlaut: [aktivieren, positiv, eins, an, ein, hell, einschalten, anschalten, zuschalten]
+    aktionen:
+      - command: "/Energiebox/230V/230V 3 1 0"
+      - speak: "Die Gitarre wurde eingeschaltet!"
+  - name: relais_3_aus
+    bedingungen:
+      - tonlaut: [gitarre]
+      - tonlaut: [deaktivieren, negativ, null, aus, dunkel, ausschalten, abschalten, wegschalten]
+    aktionen:
+      - command: "/Energiebox/230V/230V 3 0 0"
+      - speak: "Die Gitarre wurde ausgeschaltet!"
+
+  - name: relais_4_an
+    bedingungen:
+      - tonlaut: [wasserkocher]
+      - tonlaut: [aktivieren, positiv, eins, an, ein, hell, einschalten, anschalten, zuschalten]
+    aktionen:
+      - command: "/Energiebox/230V/230V 4 1 0"
+      - speak: "Der Wasserkocher wurde eingeschaltet!"
+  - name: relais_4_aus
+    bedingungen:
+      - tonlaut: [wasserkocher]
+      - tonlaut: [deaktivieren, negativ, null, aus, dunkel, ausschalten, abschalten, wegschalten]
+    aktionen:
+      - command: "/Energiebox/230V/230V 4 0 0"
+      - speak: "Der Wasserkocher wurde ausgeschaltet!"
+
+  - name: relais_5_an
+    bedingungen:
+      - tonlaut: [destille, destilliergerät]
+      - tonlaut: [aktivieren, positiv, eins, an, ein, hell, einschalten, anschalten, zuschalten]
+    aktionen:
+      - command: "/Energiebox/230V/230V 5 1 0"
+      - speak: "Die Destille wurde eingeschaltet!"
+  - name: relais_5_aus
+    bedingungen:
+      - tonlaut: [destille, destilliergerät]
+      - tonlaut: [deaktivieren, negativ, null, aus, dunkel, ausschalten, abschalten, wegschalten]
+    aktionen:
+      - command: "/Energiebox/230V/230V 5 0 0"
+      - speak: "Die Destille wurde ausgeschaltet!"
+
+      
+      
+      
+      
+      
+      
+      
+
+  - name: relais_9_an
+    bedingungen:
+      - tonlaut: [licht, lampe, leuchte, laterne, sonne]
+      - tonlaut: [aktivieren, an, ein, hell, hoch, auf, einschalten, anschalten, zuschalten]
+    aktionen:
+      - command: "/Energiebox/230V/230V 9 1 0"
+      - speak: "Das Licht wurde eingeschaltet!"
+  - name: relais_9_aus
+    bedingungen:
+      - tonlaut: [licht, lampe, leuchte, laterne, sonne]
+      - tonlaut: [deaktivieren, aus, dunkel, runter, weg, ausschalten, abschalten, wegschalten]
+    aktionen:
+      - command: "/Energiebox/230V/230V 9 0 0"
+      - speak: "Das Licht wurde ausgeschaltet!"

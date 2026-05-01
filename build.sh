@@ -66,6 +66,7 @@ projects=(
     "gui"
     "Status"
     "Tracer"
+    "Jarvis"
 )
 
 for p in "${projects[@]}"; do
