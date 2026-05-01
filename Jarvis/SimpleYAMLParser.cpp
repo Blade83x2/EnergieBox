@@ -21,8 +21,7 @@ std::vector<Rule> SimpleYAMLParser::parse(const std::string& file) {
             rules.push_back(Rule());
             current = &rules.back();
             current->name = trim(line.substr(line.find(":") + 1));
-        }
-        else if (line.find("tonlaut:") != std::string::npos) {
+        } else if (line.find("tonlaut:") != std::string::npos) {
             std::vector<std::string> group;
             auto a = line.find("[");
             auto b = line.find("]");
@@ -33,18 +32,10 @@ std::vector<Rule> SimpleYAMLParser::parse(const std::string& file) {
                 group.push_back(trim(item));
             }
             current->conditions.push_back(group);
-        }
-        else if (line.find("command:") != std::string::npos) {
-            current->actions.push_back({
-                "command",
-                trim(line.substr(line.find(":") + 1))
-            });
-        }
-        else if (line.find("speak:") != std::string::npos) {
-            current->actions.push_back({
-                "speak",
-                trim(line.substr(line.find(":") + 1))
-            });
+        } else if (line.find("command:") != std::string::npos) {
+            current->actions.push_back({"command", trim(line.substr(line.find(":") + 1))});
+        } else if (line.find("speak:") != std::string::npos) {
+            current->actions.push_back({"speak", trim(line.substr(line.find(":") + 1))});
         }
     }
     return rules;

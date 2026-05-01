@@ -2,25 +2,25 @@
  * JARVIS Accoustic Listener Adapter
  * Vendor: Johannes Krämer
  * Builddate: 01.05.2026
- * 
+ *
  * Beschreibung: Dieses Konsolenprogramm dient zur Akustischen Kommunikation
- * mit der Energiebox. Dabei werden für alle angeschlossenen Geräte hinter 
+ * mit der Energiebox. Dabei werden für alle angeschlossenen Geräte hinter
  * den Relais Synonyme definiert die bei der Spracherkennung berücksichtigt werden.
  * Ein Gerät welches als "TV" eingetragen ist, bekommt Synonyme wie z.B. "Fernseher"
- * oder "Glotze". Diese Aussprache wird dann mit weiteren Worten wie "an", 
- * "einschalten", "aktivieren", "anmachen" usw. verglichen und somit lässt sich 
+ * oder "Glotze". Diese Aussprache wird dann mit weiteren Worten wie "an",
+ * "einschalten", "aktivieren", "anmachen" usw. verglichen und somit lässt sich
  * ein Schaltplan erstellen.
- * 
- * 
+ *
+ *
  * TODO
  * + *.wav löschen beim beenden
  * + areccord Return string pipen in whisper (keine physikalische Datei schreiben)
  * + setup für wakeword, remote SSH data OR localrun, microphone input select
  * + yaml zuende bauen 230V & 12V
  * + piper & whisper.cpp konfiguration dokumentieren
- * 
- * 
-*/
+ *
+ *
+ */
 #include <iostream>
 #include <cstdlib>
 #include <thread>
@@ -72,9 +72,10 @@ int exec(const std::string& cmd) {
 void speak(const std::string& text) {
     std::string model = config.count("piper_model") ? config["piper_model"] : "de_DE-thorsten-medium.onnx";
     std::string piperPath = config.count("piperpath") ? config["piperpath"] + "/piper" : "./piper";
-    std::string cmd = "echo \"" + text + "\" | " + piperPath + " --quiet --noise_w 0.8 --length_scale 0.9 --model " + model + " --output-raw | aplay -f S16_LE -r 22050 -c 1 2>/dev/null";
+    std::string cmd = "echo \"" + text + "\" | " + piperPath + " --quiet --noise_w 0.8 --length_scale 0.9 --model " + model +
+                      " --output-raw | aplay -f S16_LE -r 22050 -c 1 2>/dev/null";
     int result = std::system(cmd.c_str());
-    (void)result; // verhindert warning (optional)
+    (void)result;  // verhindert warning (optional)
 }
 
 // Übersetzt gesprochenes in Text
@@ -117,10 +118,11 @@ void waitForWakeword() {
         // TODO ausgabe pipen in transcribe()
         recordAudio("wake.wav");
         std::string text = transcribe("wake.wav");
-        
+
         std::transform(text.begin(), text.end(), text.begin(), ::tolower);
         if (text.find(wakeword) != std::string::npos) {
-            std::cout << "\n[Jarvis] Wakeword erkannt! Warte auf Befehle" << "\n";
+            std::cout << "\n[Jarvis] Wakeword erkannt! Warte auf Befehle"
+                      << "\n";
             recordAudio("cmd.wav");
             std::string cmd = transcribe("cmd.wav");
             // Whitespace & newline & tabs entfernen

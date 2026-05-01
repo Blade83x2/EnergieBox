@@ -4,6 +4,6 @@
 #include <string>
 
 class SimpleYAMLParser {
-public:
+   public:
     std::vector<Rule> parse(const std::string& file);
 };
