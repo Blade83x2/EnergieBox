@@ -20,6 +20,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include "mysql_wrapper.h"
 
 // MCP Setup
 typedef struct {
@@ -67,11 +68,12 @@ static int handler(void* config, const char* section, const char* name, const ch
         pconfig->grid.supplyMaxCurrent = atof(value);
     } else if (MATCH("system", "lockFilePath")) {
         pconfig->system.lockFilePath = strdup(value);
+    } else if (MATCH("system", "mysqlCfgPath")) {
+        pconfig->system.mysqlCfgPath = strdup(value);
     } else if (MATCH("system", "PIDFilePath")) {
         pconfig->system.PIDFilePath = strdup(value);
     } else if (MATCH("system", "readallCmd")) {
         pconfig->system.readallCmd = strdup(value);
-
     } else if (MATCH("grid", "supplyMinLoadWh")) {
         pconfig->grid.supplyMinLoadWh = atoi(value);
     } else if (MATCH("grid", "supplyMaxLoadWh")) {
@@ -85,6 +87,7 @@ static int handler(void* config, const char* section, const char* name, const ch
     }
     return 1;
 }
+#undef MATCH
 
 // ==========================================================
 // Liest Batteriespannung aus Python Script
@@ -110,6 +113,15 @@ float getBatteryVoltage(const char* script) {
     }
     pclose(fp);
     return voltage;
+}
+
+// Schreibt Ladunbg in die Datenbank
+void insertGridLoad(MYSQL* conn, const char* zustand) {
+    char query[256];
+    snprintf(query, sizeof(query), "INSERT INTO grid_loads (action) VALUES (%s)", zustand);
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "MySQL Fehler: %s\n", mysql_error(conn));
+    }
 }
 
 // Schreibt Bit für Relaiszustand
@@ -167,6 +179,21 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "wiringPi I2C Setup error!!!");
         return -1;
     }
+
+    // Datenbank Setup
+    DBConfig mysqlconfig = {0};
+    if (!load_db_config(config.system.mysqlCfgPath, &mysqlconfig)) {
+        fprintf(stderr, "mysql_energiebox.cfg konnte nicht geladen werden");
+        return -1;
+    }
+    MYSQL* conn = db_connect(&mysqlconfig);
+    if (!conn) {
+        fprintf(stderr, "DB Verbindung fehlgeschlagen. Datenbankdaten in mysql_energiebox.cfg prüfen!");
+        return -1;
+    }
+
+    insertGridLoad(conn, "start");
+
     if (argc == 1) {
         // Keine Parameterübergabe. Hilfe anzeigen
         return showHelp(argv, &config);
@@ -235,7 +262,7 @@ int main(int argc, char* argv[]) {
                 // Relais ausschalten
                 // ==========================================
                 setBit(1, 1);
-                sleep(5);
+                sleep(3);
                 setBit(0, 1);
                 // ==========================================
                 // PID Datei & lockfile löschen
@@ -292,7 +319,7 @@ int main(int argc, char* argv[]) {
                 // Relais einschalten
                 // ==========================================
                 setBit(0, 0);
-                sleep(5);
+                sleep(3);
                 setBit(1, 0);
                 // ==========================================
                 // Hintergrundprozess starten
@@ -315,6 +342,7 @@ int main(int argc, char* argv[]) {
                     sleep(3);
                     // Netzanschluss Relais ausschalten
                     setBit(0, 1);
+
                     // Lock freigeben
                     flock(lockFd, LOCK_UN);
                     close(lockFd);
@@ -330,7 +358,6 @@ int main(int argc, char* argv[]) {
                     fprintf(pidFile, "%d\n", pid);
                     fclose(pidFile);
                 }
-
                 printf("  %-26s %10d\n", "Prozess ID:", pid);
                 printf("\n");
                 close(lockFd);

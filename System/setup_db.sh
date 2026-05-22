@@ -125,7 +125,16 @@ CREATE TABLE schaltungen_230v (
     CHECK (relais BETWEEN 1 AND 16),
     CHECK (zustand IN (0, 1))
 );
+
+CREATE TABLE grid_loads (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    action ENUM('start', 'stop') NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
 EOF
+
 
 # Konfigurationsdatei schreiben
 echo "📁 Erstelle Konfigurationsdatei: $CONFIG_FILE"

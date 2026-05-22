@@ -112,8 +112,8 @@ static int handler(void* config, const char* section, const char* name, const ch
         return 0;
     }
     return 1;
-#undef MATCH
 }
+#undef MATCH
 
 // Berechnet die benötigte Ampere Zahl für die Sicherung
 float getFuseSize(float watt) {

@@ -103,9 +103,9 @@ static int handler(void* config, const char* section, const char* name, const ch
         }
         return 0;
     }
-#undef MATCH
     return 1;
 }
+#undef MATCH
 
 // Schreibt Schaltung in die Datenbank
 void insertSchaltung(MYSQL* conn, int relais, int zustand) {

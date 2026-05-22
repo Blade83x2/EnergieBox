@@ -1,33 +1,44 @@
 #
-# Makefile für grid 
+# Makefile für grid
 # Vendor: Johannes Krämer
 # Version: 1.1
-# Date: 24.06.2025
+# Date: 22.05.2026
 #
 # https://www.c-howto.de/tutorial/makefiles/
 # https://www.c-howto.de/tutorial/makefiles/erweiterungen/
+#
 
-OBJ 		= grid.o mymcp23017.o iniparse.o
-COMPILER 	= gcc
+OBJ         = grid.o mymcp23017.o iniparse.o mysql_wrapper.o
+COMPILER    = gcc
 
-grid:		$(OBJ)
-			$(COMPILER) -o $@ $(OBJ) -lwiringPi -std=gnu99
-			chmod 550 $@
+# Libraries
+LIBS        = -lwiringPi -lmysqlclient
 
-grid.o: 		grid.c
-			$(COMPILER) -c grid.c -lwiringPi -std=gnu99
-			chmod 600 $@
+# Compiler Flags
+CFLAGS      = -std=gnu99
 
-mymcp23017.o: 	mymcp23017.c
-			$(COMPILER) -c mymcp23017.c -lwiringPi -std=gnu99
-			chmod 600 $@
+grid: $(OBJ)
+	$(COMPILER) -o $@ $(OBJ) $(LIBS) $(CFLAGS)
+	chmod 550 $@
 
-iniparse.o: 	iniparse.c
-			$(COMPILER) -c iniparse.c -std=gnu99
-			chmod 600 $@
+grid.o: grid.c
+	$(COMPILER) -c grid.c $(LIBS) $(CFLAGS)
+	chmod 600 $@
+
+mymcp23017.o: mymcp23017.c
+	$(COMPILER) -c mymcp23017.c $(LIBS) $(CFLAGS)
+	chmod 600 $@
+
+iniparse.o: iniparse.c
+	$(COMPILER) -c iniparse.c $(CFLAGS)
+	chmod 600 $@
+	
+mysql_wrapper.o: mysql_wrapper.c mysql_wrapper.h
+	$(COMPILER) -c mysql_wrapper.c $(CFLAGS)
+	chmod 600 $@
 
 clean:
-		rm -f grid $(OBJ)
+	rm -f grid $(OBJ)
 
 # ==== Code-Formatierung ====
 FORMATTER = clang-format
