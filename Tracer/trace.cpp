@@ -109,30 +109,11 @@ class BatteryController {
     }
 
     // Startet den Ladevorgang.
-    // Startet den Ladevorgang.
     void triggerLoad() {
-        // pid_t pid = fork();
-        //  ==========================================
-        //  Fehler
-        //  ==========================================
-        // if (pid < 0) {
-        //     std::cerr << "/Energiebox/Tracer/trace: "  << "Fehler beim Starten des Grid Programms\n";
-        //     return;
-        // }
-        // ==========================================
-        // Kindprozess
-        // ==========================================
-        //  if (pid == 0) {
-        // Prozess vom Terminal lösen
-        //   setsid();
-
         // kapazität aus config.ini
         std::string wh = std::to_string(config.grid.loadingCapacityWh);
-        // Ladebefehl aufrufen
-
         std::string cmd = "/Energiebox/Grid/grid -w " + wh;
-
-        int ret = system(cmd.c_str());
+        (void)system(cmd.c_str());
     }
 
     // Speichert EPEVER Daten in Datenbank
