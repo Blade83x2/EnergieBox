@@ -115,7 +115,6 @@ float getBatteryVoltage(const char* script) {
     return voltage;
 }
 
-
 // Schreibt Ladung in die Datenbank
 void insertGridLoad(MYSQL* conn, const char* zustand) {
     char query[256];
@@ -124,8 +123,6 @@ void insertGridLoad(MYSQL* conn, const char* zustand) {
         fprintf(stderr, "MySQL Fehler: %s\n", mysql_error(conn));
     }
 }
-
-
 
 // Schreibt Bit für Relaiszustand
 void setBit(int Port, int Status) {
@@ -182,8 +179,7 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "wiringPi I2C Setup error!!!");
         return -1;
     }
-    
-    
+
     // Datenbank Setup
     DBConfig mysqlconfig = {0};
     if (!load_db_config(config.system.mysqlCfgPath, &mysqlconfig)) {
@@ -195,14 +191,7 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "DB Verbindung fehlgeschlagen. Datenbankdaten in mysql_energiebox.cfg prüfen!");
         return -1;
     }
-    
-    
-    insertGridLoad(conn, "start");
-    
-    
-    
-    
-    
+
     if (argc == 1) {
         // Keine Parameterübergabe. Hilfe anzeigen
         return showHelp(argv, &config);
@@ -330,6 +319,7 @@ int main(int argc, char* argv[]) {
                 setBit(0, 0);
                 sleep(3);
                 setBit(1, 0);
+                insertGridLoad(conn, "start");
                 // ==========================================
                 // Hintergrundprozess starten
                 // ==========================================
@@ -351,16 +341,8 @@ int main(int argc, char* argv[]) {
                     sleep(3);
                     // Netzanschluss Relais ausschalten
                     setBit(0, 1);
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                    // in Datenbank schreiben
+                    insertGridLoad(conn, "stop");
                     // Lock freigeben
                     flock(lockFd, LOCK_UN);
                     close(lockFd);
