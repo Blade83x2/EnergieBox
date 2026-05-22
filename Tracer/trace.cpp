@@ -16,6 +16,9 @@
 #include <stdexcept>
 #include <string>
 #include <filesystem>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 // Strukt
 struct MCPSetup {
@@ -92,15 +95,54 @@ class BatteryController {
         }
         return -1.0f;
     }
+
     void triggerLoad() {
-        std::string cmd = "/Energiebox/Grid/grid -w " + std::to_string(config.grid.loadingCapacityWh) + " &";
-        int ret = system(cmd.c_str());
-        if (ret == -1) {
-            std::cerr << "/Energiebox/Tracer/trace: Fehler beim Starten des Grid Programm\n";
-        } else {
-            std::cout << "Grid-Ladevorgang gestartet (" << config.grid.loadingCapacityWh << " Wh)\n";
+        pid_t pid = fork();
+
+        // ==========================================
+        // Fehler
+        // ==========================================
+
+        if (pid < 0) {
+            std::cerr << "/Energiebox/Tracer/trace: "
+                      << "Fehler beim Starten des Grid Programms\n";
+
+            return;
         }
+
+        // ==========================================
+        // Kindprozess
+        // ==========================================
+
+        if (pid == 0) {
+            // Prozess vom Terminal lösen
+            setsid();
+
+            std::string wh = std::to_string(config.grid.loadingCapacityWh);
+
+            execl("/Energiebox/Grid/grid", "grid", "-w", wh.c_str(), (char *)NULL);
+
+            // Nur bei Fehler erreichbar
+            exit(EXIT_FAILURE);
+        }
+
+        // ==========================================
+        // Elternprozess
+        // ==========================================
+
+        // PID speichern
+        std::ofstream pidFile("/Energiebox/Grid/PID");
+
+        if (pidFile.is_open()) {
+            pidFile << pid;
+            pidFile.close();
+        }
+
+        std::cout << "Grid-Ladevorgang gestartet (" << config.grid.loadingCapacityWh << " Wh)\n";
+
+        std::cout << "  %-26s " << pid << "\n";
     }
+
     void speichereInDatenbank(float pv_volt, float pv_ampere, float pv_power, float batt_volt, float batt_ampere, float batt_power, int batt_soc, float generated_power,
                               int grid_load_active) {
         MYSQL *conn = mysql_init(nullptr);
