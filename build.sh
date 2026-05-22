@@ -80,7 +80,7 @@ if [[ -n $1 || -n $2 ]]; then
     echo -e "\n\nUpdate Git Repository..."
     git add -A
     git commit -m "$1"
-    git push -u origin master
+    sudo -u "$SUDO_USER" git push -u origin master
 fi
 
 echo -e "\n\nFertig.\n"
