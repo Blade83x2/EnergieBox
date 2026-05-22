@@ -3,3 +3,5 @@ Bauteile/
 */*.o
 .git/
 *.onnx
+Grid/PID
+error.log
