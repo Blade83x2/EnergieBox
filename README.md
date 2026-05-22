@@ -474,7 +474,7 @@ Ganz unten fügen wir folgende Zeile hinzu:
 
 `* * * * * /Energiebox/System/autoStartStop.sh > /dev/null`
 
-`*/1 * * * * cd /Energiebox/Tracer && ./trace 2>> /Energiebox/error.log`
+`*/1 * * * * /Energiebox/Tracer/trace 2>> /Energiebox/error.log`
 
 
 
