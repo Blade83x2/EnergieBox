@@ -28,7 +28,7 @@ Energiebox Ver.5 #
  
  grid -> ladungen in datenbank eintragen
 
- trap shutdownRelays INT EXIT TERM HUP
+ 
 _______________________________________________________________________________________________________________________________________
  
 NEUERUNGEN in Version 5
@@ -37,7 +37,10 @@ In dieser Version ist endlich das Grafische User Interface verfügbar. Beim boot
 Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die Ausgabe auf der Konsole von sämtlichen Programmen verbessert und optimiert. 
 Eine automatische Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++. Ebenso wurden alle Stromkreise entsprechend für ihren Nutzen abgesichert.
 
- [UPDATE] grid: PID von aktuellem Prozess wird in /Energiebox/Grid/PID gespeichert und gekillt bei grid-s
+ [UPDATE] In 12V -set X wird am Ende die benötigte Sicherungsstärke angezeigt
+ [NEW] 230V: Schaltungen werden jetzt in Datenbank gespeichert
+ [NEW] 12V: Schaltungen werden jetzt in Datenbank gespeichert
+ [UPDATE] grid: PID von aktuellem Prozess wird in /Energiebox/Grid/PID gespeichert und gekillt bei grid -s
  [UPDATE] grid: Batteriespannung wird life ausgelesen beim Starten des Vorgangs 
  [UPDATE] gui: TAB Bash hinzugefügt
  [UPDATE] kolloid: Mobile Design Anpassung

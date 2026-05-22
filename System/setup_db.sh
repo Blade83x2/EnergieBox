@@ -104,7 +104,27 @@ CREATE TABLE messwerte (
  generated_power float unsigned DEFAULT NULL,
  grid_load_active int(11) DEFAULT NULL,
  PRIMARY KEY (id)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE schaltungen_12v (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    relais TINYINT UNSIGNED NOT NULL,
+    zustand TINYINT(1) NOT NULL,
+    datum DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CHECK (relais BETWEEN 1 AND 16),
+    CHECK (zustand IN (0, 1))
+);
+
+CREATE TABLE schaltungen_230v (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    relais TINYINT UNSIGNED NOT NULL,
+    zustand TINYINT(1) NOT NULL,
+    datum DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    CHECK (relais BETWEEN 1 AND 16),
+    CHECK (zustand IN (0, 1))
+);
 EOF
 
 # Konfigurationsdatei schreiben

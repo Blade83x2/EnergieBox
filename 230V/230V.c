@@ -103,9 +103,18 @@ static int handler(void* config, const char* section, const char* name, const ch
         }
         return 0;
     }
+#undef MATCH
     return 1;
 }
-#undef MATCH
+
+// Schreibt Schaltung in die Datenbank
+void insertSchaltung(MYSQL* conn, int relais, int zustand) {
+    char query[256];
+    snprintf(query, sizeof(query), "INSERT INTO schaltungen_230v (relais, zustand) VALUES (%d, %d)", relais, zustand);
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "MySQL Fehler: %s\n", mysql_error(conn));
+    }
+}
 
 // Gibt gespeicherten Zustandswert von einem Relais zurück
 int getElkoState(int relais, void* config) {
@@ -249,6 +258,8 @@ int main(int argc, char** argv) {
                     //  elkoState in config.ini schreiben
                     sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
                     system(command);
+                    // Schaltvorgang in Datenbank speichern
+                    insertSchaltung(conn, atoi(argv[1]), atoi(argv[2]));
                     char* cmd = getExecOnStart(atoi(argv[1]));
                     if (cmd != NULL) {
                         system(cmd);
@@ -268,6 +279,8 @@ int main(int argc, char** argv) {
             //  elkoState in config.ini schreiben
             sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
             system(command);
+            // Schaltvorgang in Datenbank speichern
+            insertSchaltung(conn, atoi(argv[1]), atoi(argv[2]));
             char* cmd = getExecOnStop(atoi(argv[1]));
             if (cmd != NULL) {
                 system(cmd);
@@ -292,6 +305,8 @@ int main(int argc, char** argv) {
                     //  elkoState in config.ini schreiben
                     sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
                     system(command);
+                    // Schaltvorgang in Datenbank speichern
+                    insertSchaltung(conn, atoi(argv[1]), atoi(argv[2]));
                     char* cmd = getExecOnStart(atoi(argv[1]));
                     if (cmd != NULL) {
                         system(cmd);
@@ -309,6 +324,8 @@ int main(int argc, char** argv) {
             //  elkoState in config.ini schreiben
             sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
             system(command);
+            // Schaltvorgang in Datenbank speichern
+            insertSchaltung(conn, atoi(argv[1]), atoi(argv[2]));
             char* cmd = getExecOnStop(atoi(argv[1]));
             if (cmd != NULL) {
                 system(cmd);

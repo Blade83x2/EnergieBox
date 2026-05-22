@@ -10,12 +10,10 @@
 #include <ctype.h>
 #include "mysql_wrapper.h"
 
-// TODO
-// Abfrage für Setup:
-// + Größentipp für Sicherung ausrechnen und drauf hinweisen!!!!
-
 // Funktionen vordeklarieren
 static int handler(void* config, const char* section, const char* name, const char* value);
+float getFuseSize(float watt);
+void insertSchaltung(MYSQL* conn, int relais, int zustand);
 int getElkoState(int relais, void* config);
 int getRestPower(void* config);
 int getCurrentPower(void* config);
@@ -114,8 +112,34 @@ static int handler(void* config, const char* section, const char* name, const ch
         return 0;
     }
     return 1;
-}
 #undef MATCH
+}
+
+// Berechnet die benötigte Ampere Zahl für die Sicherung
+float getFuseSize(float watt) {
+    /* mögliche Sicherungsgrößen */
+    const float fuses[] = {3, 5, 7.5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 75};
+    const int fuseCount = sizeof(fuses) / sizeof(fuses[0]);
+    /* 12V Berechnung */
+    float ampere = watt / 12.0f;
+    /* nächstgrößere Sicherung suchen */
+    for (int i = 0; i < fuseCount; i++) {
+        if (ampere <= fuses[i]) {
+            return fuses[i];
+        }
+    }
+    /* größer als größte Sicherung */
+    return -1;
+}
+
+// Schreibt Schaltung in die Datenbank
+void insertSchaltung(MYSQL* conn, int relais, int zustand) {
+    char query[256];
+    snprintf(query, sizeof(query), "INSERT INTO schaltungen_12v (relais, zustand) VALUES (%d, %d)", relais, zustand);
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "MySQL Fehler: %s\n", mysql_error(conn));
+    }
+}
 
 // Gibt gespeicherten Zustandswert von einem Relais zurück
 int getElkoState(int relais, void* config) {
@@ -220,7 +244,6 @@ int main(int argc, char** argv) {
         fprintf(stderr, "DB Verbindung fehlgeschlagen. Datenbankdaten in mysql_energiebox.cfg prüfen!");
         return -1;
     }
-
     // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
     if (argc == 1) {
         printf("\n\e[30;47m ID      %4dW  12V Gerätename      %3d%    \e[0m\n", getCurrentPower(&config), get_battery_percentage(conn));
@@ -260,6 +283,8 @@ int main(int argc, char** argv) {
                         // elkoState in config.ini schreiben
                         sprintf(command, "bash /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                         system(command);
+                        // Schaltvorgang in Datenbank speichern
+                        insertSchaltung(conn, atoi(argv[1]), atoi(argv[2]));
                         char* cmd = getExecOnStart(atoi(argv[1]));
                         if (cmd != NULL) {
                             system(cmd);
@@ -279,6 +304,8 @@ int main(int argc, char** argv) {
                 //  elkoState in config.ini schreiben
                 sprintf(command, "bash /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                 system(command);
+                // Schaltvorgang in Datenbank speichern
+                insertSchaltung(conn, atoi(argv[1]), atoi(argv[2]));
                 char* cmd = getExecOnStop(atoi(argv[1]));
                 if (cmd != NULL) {
                     system(cmd);
@@ -304,6 +331,8 @@ int main(int argc, char** argv) {
                     //  elkoState in config.ini schreiben
                     sprintf(command, "bash /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
                     system(command);
+                    // Schaltvorgang in Datenbank speichern
+                    insertSchaltung(conn, atoi(argv[1]), atoi(argv[2]));
                     char* cmd = getExecOnStart(atoi(argv[1]));
                     if (cmd != NULL) {
                         system(cmd);
@@ -321,6 +350,8 @@ int main(int argc, char** argv) {
             //  elkoState in config.ini schreiben
             sprintf(command, "bash /Energiebox/12V/setIni.sh %d %d", atoi(argv[1]), atoi(argv[2]));
             system(command);
+            // Schaltvorgang in Datenbank speichern
+            insertSchaltung(conn, atoi(argv[1]), atoi(argv[2]));
             char* cmd = getExecOnStop(atoi(argv[1]));
             if (cmd != NULL) {
                 system(cmd);
@@ -532,7 +563,7 @@ void getDataForConfigFile(int relais, void* config) {
         free(input);
         // Automatische Schaltung täglich
         while (1) {
-            printf(" -> Soll dieses Gerät automatisch starten\n    täglich? (HH:MM, leer = nein): ");
+            printf(" -> Soll dieses Gerät automatisch stabenötigterten\n    täglich? (HH:MM, leer = nein): ");
             char* input = readStdinLine();
             char* trimmed = Trim(input);
             if (strlen(trimmed) == 0) {
@@ -581,10 +612,6 @@ void getDataForConfigFile(int relais, void* config) {
 
         // Soll ein Befehl beim starten des Gerätes ausgeführt werden?
         printf(" -> Soll ein Befehl nach dem Einschalten ausgeführt werden?: ");
-
-        // TODO
-        // commands testen auf syntax
-
         char* input4 = readStdinLine();
         char* trimmed4 = Trim(input4);
         if (strlen(trimmed4) == 0) {
@@ -593,7 +620,6 @@ void getDataForConfigFile(int relais, void* config) {
             execOnStart = strdup(trimmed4);
         }
         free(input4);
-
         // Soll ein Befehl beim ausschalten des Gerätes ausgeführt werden?
         printf(" -> Soll ein Befehl nach dem Ausschalten ausgeführt werden?: ");
         char* input5 = readStdinLine();
@@ -609,13 +635,18 @@ void getDataForConfigFile(int relais, void* config) {
     snprintf(command, sizeof(command), "bash /Energiebox/12V/setConfig.sh %d '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s'", relais, strname, stractivateOnStart, strpMax, autoStart,
              autoStop, canStartFromGui, execOnStart, execOnStop);
     system(command);
-
     // yaml Datei schreiben für Spracherkennung
     sprintf(command, "bash /Energiebox/Jarvis/setYaml.sh 12V_relais_%d_an \"%s\" \"/Energiebox/12V/12V %d 1 0\" \"  %s\"", relais, strsynonyms, relais, strspeak);
     system(command);
     sprintf(command, "bash /Energiebox/Jarvis/setYaml.sh 12V_relais_%d_aus \"%s\" \"/Energiebox/12V/12V %d 0 0\" \"  %s\"", relais, strsynonyms, relais, strspeakout);
     system(command);
-
+    // Ampere anzeigen für Sicherung
+    if (strcmp(strname, "-") != 0) {
+        float fuse = getFuseSize(atof(strpMax));
+        printf("\n -> Absicherung für Relais %d: %.1fA!\n", relais, fuse);
+        printf(" -> ENTER drücken für fertig stellen!\n");
+        readStdinLine();
+    }
     free(strname);
     free(strpMax);
     free(stractivateOnStart);
