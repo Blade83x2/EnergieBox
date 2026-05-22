@@ -106,12 +106,22 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
     mcp_initReg();
-    for (int i = 0; i < config.mcp.numberOfRelaisActive; i++) {
-        mcp_pinMode(i, 0);
-        mcp_digitalWrite(i, 1);
-        sleep(0.7);
-    }
-    system("rm -f /Energiebox/Grid/isLoading.lock");
-    system("rm -f /Energiebox/Grid/PID");
+    
+    
+    
+    //for (int i = 0; i < config.mcp.numberOfRelaisActive; i++) {
+    //    mcp_pinMode(i, 0);
+    //    mcp_digitalWrite(i, 1);
+    //    sleep(0.7);
+    //}
+    
+    system("bash /Energiebox/Grid/grid -s");
+    
+    
+    //system("rm -f /Energiebox/Grid/PID");
+    
+    
+    
+    
     return 0;
 }
