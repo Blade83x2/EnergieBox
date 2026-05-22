@@ -22,13 +22,13 @@ Energiebox Ver.5 #
 
 
  
-
+ 12V dokumentations -set anpassem
  
    
  
  grid -> ladungen in datenbank eintragen
 
- 
+ trap shutdownRelays INT EXIT TERM HUP
 _______________________________________________________________________________________________________________________________________
  
 NEUERUNGEN in Version 5
@@ -37,7 +37,21 @@ In dieser Version ist endlich das Grafische User Interface verfügbar. Beim boot
 Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die Ausgabe auf der Konsole von sämtlichen Programmen verbessert und optimiert. 
 Eine automatische Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++. Ebenso wurden alle Stromkreise entsprechend für ihren Nutzen abgesichert.
 
-
+ [UPDATE] grid: PID von aktuellem Prozess wird in /Energiebox/Grid/PID gespeichert und gekillt bei grid-s
+ [UPDATE] grid: Batteriespannung wird life ausgelesen beim Starten des Vorgangs 
+ [UPDATE] gui: TAB Bash hinzugefügt
+ [UPDATE] kolloid: Mobile Design Anpassung
+ [UPDATE] kolloid: LOCKFILE sorgt für Singe Instance Nutzung - Kein Abbrechen mehr durch trap......
+ [UPDATE] kolloid: Parameter -m für Metal wurde in -e für Element geändert!
+ [BUGFIX] kolloid: SSH Verbindungsabbrüche oder andere Probleme zur Energiebox werden per trap als SIGNAL gelesen. Produktion wird dann gestoppt
+ [BUGFIX] kolloid: Bei der Elektrodenprüfungsanweisung geht es jetzt nur noch weiter wenn man wirklich die RETURN Taste drückt.
+ [BUGFIX] kolloid: Zeitschaltaufträge werden jetzt bei Verlaufsänderungen auch angepasst.
+ [NEW] kolloid: Parameter -y hinzugefügt. Produziert nach Aufruf ohne Nachfragen
+ [UPDATE] kolloid: Neues Design in der Shell (Bunte Textausgabe Statusmeldungen)
+ [UPDATE] gui: Lädt jetzt /home/box/.mysql_energiebox.cfg aus der Grid/config.ini 
+ [UPDATE] gui: Klassen ausgelagert nach ../inc/. Soll mit allen Programmen passieren. Gut für Objektorientierung
+ [UPDATE] gui incrementiert nun automatisch die Version und zeigt sie im Programm auch an
+ [UPDATE] In 12V -set X & 230V -set X wurden weitere Abfragen für Spracherkennungsdaten implementiert
  [NEW] whisper.cpp zum Projekt hinzugefügt
  [UPDATE] Port & Baudrate für EPEVER wird jetzt aus /Energiebox/Grid/config.ini gelesen
  [UPDATE] 12V & 230V können jetzt definierte Befehle ausführen beim An/Aus schalten

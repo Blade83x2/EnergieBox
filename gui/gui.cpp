@@ -13,6 +13,13 @@
  *
  * beendet werden. Danach kann das Programm mit ./gui aufgerufen werden!
  *
+ * TODO
+ *  --stop hinzufügen für beenden
+ *  statistik auf startseite hinzufügen für ladung
+ *  reboot und shuzdown funktion im progrtamm hinzufügen
+ *  setup in gui einbauen für relaisport konfiguration
+ *  2026 automatisch auslesen
+ *
  */
 #include <gtkmm/application.h>
 #include <gtkmm/window.h>
@@ -33,7 +40,6 @@
 #include <string>
 #include <cstdlib>
 #include <iostream>
-#include <fstream>
 #include <map>
 #include <ctime>
 #include <iomanip>
@@ -41,9 +47,14 @@
 #include <thread>
 #include <glibmm/optioncontext.h>
 #include <glibmm/optiongroup.h>
-#include "MySQLiWrapper.h"
+#include "MySQLiWrapper.h"  // wegen ../inc im Makefile geht das
+#include "IniReader.h"      // wegen ../inc im Makefile geht das
+#include <gtkmm/scrolledwindow.h>
+#include <gtkmm/textview.h>
+#include <vte/vte.h>
+#include <gtkmm/socket.h>
 
-std::string programmversion = "V.5.0";
+std::string programmversion = std::string("Ver.") + BUILD_VERSION;
 
 // Debug-Modus aktivieren/deaktivieren
 bool debug = false;
@@ -83,45 +94,6 @@ struct RelaisInfo {
     sigc::connection handler;  // Signal-Handler für Klick-Ereignis
 };
 
-// Einfache INI-Datei-Parser-Klasse
-class IniReader {
-   public:
-    explicit IniReader(const std::string &path) {
-        std::ifstream file(path);
-        debugPrint("Lese Datei: " + path, LogLevel::INFO);
-        if (!file) {
-            std::cerr << "Fehler beim Öffnen der INI: " << path << std::endl;
-            return;
-        }
-        std::string line;
-        std::string currentSection;
-        while (std::getline(file, line)) {
-            line.erase(0, line.find_first_not_of(" \t\r\n"));
-            line.erase(line.find_last_not_of(" \t\r\n") + 1);
-            if (line.empty() || line[0] == ';' || line[0] == '#') continue;
-            if (line.front() == '[' && line.back() == ']') {
-                currentSection = line.substr(1, line.size() - 2);
-                continue;
-            }
-            auto eqpos = line.find('=');
-            if (eqpos == std::string::npos) continue;
-            std::string key = line.substr(0, eqpos);
-            std::string value = line.substr(eqpos + 1);
-            key.erase(key.find_last_not_of(" \t\r\n") + 1);
-            value.erase(0, value.find_first_not_of(" \t\r\n"));
-            data_[currentSection + "/" + key] = value;
-        }
-    }
-    std::string get(const std::string &sectionKey, const std::string &defaultVal = "") const {
-        auto it = data_.find(sectionKey);
-        if (it != data_.end()) return it->second;
-        return defaultVal;
-    }
-
-   private:
-    std::map<std::string, std::string> data_;  // Schlüssel: "Sektion/Key" -> Wert
-};
-
 // Hauptklasse der GUI-Anwendung
 class GUI : public Gtk::Window {
    public:
@@ -139,6 +111,9 @@ class GUI : public Gtk::Window {
         notebook_.append_page(build_energiebox_tab(), "💻 Energiebox");
         notebook_.append_page(build_tab_12v(), "⚡ 12V");
         notebook_.append_page(build_tab_230v(), "⚡ 230V");
+
+        notebook_.append_page(build_bash_tab(), "🖥️ Bash");
+
         main_box_.pack_start(notebook_, Gtk::PACK_EXPAND_WIDGET);
         // Status-Leiste erstellen
         create_status_bar();
@@ -177,6 +152,29 @@ class GUI : public Gtk::Window {
         Gtk::StyleContext::add_provider_for_screen(screen, css_provider, GTK_STYLE_PROVIDER_PRIORITY_USER);
     }
 
+    Gtk::Widget &build_bash_tab() {
+        auto *main_container = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 10));
+        main_container->set_margin_top(10);
+        main_container->set_margin_bottom(10);
+        main_container->set_margin_start(10);
+        main_container->set_margin_end(10);
+        // Titel
+        auto *title = Gtk::manage(new Gtk::Label(""));
+        title->get_style_context()->add_class("data-title");
+        title->set_halign(Gtk::ALIGN_START);
+        main_container->pack_start(*title, Gtk::PACK_SHRINK);
+        // VTE Terminal erstellen
+        VteTerminal *terminal = VTE_TERMINAL(vte_terminal_new());
+        // Shell starten
+        const char *argv[] = {"/bin/bash", nullptr};
+        vte_terminal_spawn_async(terminal, VTE_PTY_DEFAULT, nullptr, (char **)argv, nullptr, G_SPAWN_DEFAULT, nullptr, nullptr, nullptr, -1, nullptr, nullptr, nullptr);
+        // GTK Widget wrappen
+        GtkWidget *term_widget = GTK_WIDGET(terminal);
+        // In Container einfügen
+        gtk_box_pack_start(GTK_BOX(main_container->gobj()), term_widget, TRUE, TRUE, 0);
+        return *main_container;
+    }
+
     // Energiebox Tab erstellen
     Gtk::Widget &build_energiebox_tab() {
         // Main Container erstellen
@@ -204,7 +202,12 @@ class GUI : public Gtk::Window {
         auto *title = Gtk::manage(new Gtk::Label("Energiebox " + programmversion));
         title->get_style_context()->add_class("welcome-title");
         title->set_halign(Gtk::ALIGN_START);  // text links ausrichten
-        auto *subtitle = Gtk::manage(new Gtk::Label("© 2026 Johannes a.d.F. K r ä m e r"));
+        // aktuelles Jahr auslesen für Display anzeige
+        auto now = std::chrono::system_clock::now();
+        std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+        std::tm *tm_time = std::localtime(&now_time);
+        std::string currentYear = std::to_string(1900 + tm_time->tm_year);
+        auto *subtitle = Gtk::manage(new Gtk::Label("© " + currentYear + " Johannes a.d.F. K r ä m e r"));
         subtitle->get_style_context()->add_class("welcome-subtitle");
         subtitle->set_halign(Gtk::ALIGN_START);  // text links ausrichten
         // inhalt in die text_box laden
@@ -418,6 +421,24 @@ class GUI : public Gtk::Window {
                 energiebox_timer_connection_.disconnect();
                 debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
             }
+        }
+
+        if (tabName.find("Bash") != std::string::npos) {
+            system_status_label_.set_text("💬 System: Bash Terminal aktiv");
+            if (energiebox_timer_connection_.connected()) {
+                energiebox_timer_connection_.disconnect();
+                debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
+            }
+            if (relais12V_timer_connection_.connected()) {
+                relais12V_timer_connection_.disconnect();
+                debugPrint("Relais12V-Timer gestoppt", LogLevel::INFO);
+            }
+            if (relais230V_timer_connection_.connected()) {
+                relais230V_timer_connection_.disconnect();
+                debugPrint("Relais230V-Timer gestoppt", LogLevel::INFO);
+            }
+
+        } else {
         }
     }
 

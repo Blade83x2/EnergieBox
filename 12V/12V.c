@@ -10,6 +10,10 @@
 #include <ctype.h>
 #include "mysql_wrapper.h"
 
+// TODO
+// Abfrage für Setup:
+// + Größentipp für Sicherung ausrechnen und drauf hinweisen!!!!
+
 // Funktionen vordeklarieren
 static int handler(void* config, const char* section, const char* name, const char* value);
 int getElkoState(int relais, void* config);
@@ -163,9 +167,29 @@ int getRestPower(void* config) {
     return pconfig->mcp.maxPConverter - watt;
 }
 
-// Ermittelt den Ladezustand der Batterie (wird aus Datenbank gelesen)
-int get_battery_percentage() {
-    return -1;  // Nicht gefunden
+// Ermittelt den Ladezustand der Batterie (wird aus Datenbank per Preparet Statement gelesen)
+int get_battery_percentage(MYSQL* conn) {
+    MYSQL_STMT* stmt = db_prepare(conn, "SELECT batt_soc FROM messwerte WHERE id = ?");
+    if (!stmt) {
+        fprintf(stderr, "Prepare Statement Fehler");
+        return -1;
+    }
+    DBResult* r = db_result_create(1);
+    int ladezustand;
+    db_result_set_int(r, 0, &ladezustand);
+    DBParams* p = db_params_create(1);
+    int max_id = db_get_max_id(conn, "messwerte");
+    db_params_set_int(p, 0, max_id);
+    db_stmt_bind(stmt, p);
+    db_stmt_bind_result(stmt, r);
+    mysql_stmt_execute(stmt);
+    mysql_stmt_store_result(stmt);
+    mysql_stmt_fetch(stmt);
+    /* cleanup */
+    db_result_free(r);
+    db_params_free(p);
+    mysql_stmt_close(stmt);
+    return ladezustand;
 }
 
 // Programmstart
@@ -185,7 +209,7 @@ int main(int argc, char** argv) {
         fprintf(stderr, "wiringPi I2C Setup error!!!");
         return -1;
     }
-
+    // Datenbank Setup
     DBConfig mysqlconfig = {0};
     if (!load_db_config(config.system.mysqlCfgPath, &mysqlconfig)) {
         fprintf(stderr, "mysql_energiebox.cfg konnte nicht geladen werden");
@@ -197,44 +221,9 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    /* -------------------------
-       Prepared SELECT
-    --------------------------*/
-    MYSQL_STMT* stmt = db_prepare(conn, "SELECT batt_soc FROM messwerte WHERE id = ?");
-    if (!stmt) {
-        fprintf(stderr, "Prepare Statement Fehler");
-        return -1;
-    }
-
-    /* -------------------------
-       PARAMETER:
-    --------------------------*/
-
-    DBResult* r = db_result_create(1);
-    int ladezustand;
-    db_result_set_int(r, 0, &ladezustand);
-
-    DBParams* p = db_params_create(1);
-    int max_id = db_get_max_id(conn, "messwerte");
-    db_params_set_int(p, 0, max_id);
-    db_stmt_bind(stmt, p);
-    db_stmt_bind_result(stmt, r);
-    mysql_stmt_execute(stmt);
-    mysql_stmt_store_result(stmt);
-
-    mysql_stmt_fetch(stmt);
-
-    /* cleanup */
-    db_result_free(r);
-    db_params_free(p);
-    mysql_stmt_close(stmt);
-    db_close(conn);
-
     // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
     if (argc == 1) {
-        // system("clear");
-
-        printf("\n\e[30;47m ID      %4dW  12V Gerätename      %3d%    \e[0m\n", getCurrentPower(&config), ladezustand);
+        printf("\n\e[30;47m ID      %4dW  12V Gerätename      %3d%    \e[0m\n", getCurrentPower(&config), get_battery_percentage(conn));
         for (int x = 1; x <= config.mcp.numberOfRelaisActive; x++) {
             printf("\033[1;97m %2d---->%s %4d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config) == 0) ? "\e[0;31m" : "\e[0;32m"), (getDevicePower(x, &config)), "W",
                    deviceNames[x - 1]);
@@ -284,7 +273,7 @@ int main(int argc, char** argv) {
                     }
                 }
             } else {
-                // wenn ausgeschaltet wirdgetExecOnStop
+                // wenn ausgeschaltet wird getExecOnStop
                 // Relais ausschalten
                 setBit(atoi(argv[1]) - 1, 1);  // Relais ausschalten
                 //  elkoState in config.ini schreiben
@@ -341,6 +330,7 @@ int main(int argc, char** argv) {
     } else {
         return showHelp(argv, &config);
     }
+    db_close(conn);
     return 0;
 }
 
@@ -451,6 +441,9 @@ void getDataForConfigFile(int relais, void* config) {
     system("clear");
     printf("Gerätekonfiguration für Relais Nr. -> %d bearbeiten:\n\n", relais);
     char* strname = NULL;
+    char* strsynonyms = NULL;
+    char* strspeakout = NULL;
+    char* strspeak = NULL;
     char* strpMax = NULL;
     char* stractivateOnStart = NULL;
     char* autoStart = NULL;
@@ -462,6 +455,7 @@ void getDataForConfigFile(int relais, void* config) {
         printf(" -> Bezeichnung (leer = deaktiviert): ");
         char* input = readStdinLine();
         char* trimmed = Trim(input);
+        // Wenn String leer ist
         if (strlen(trimmed) == 0) {
             free(input);
             strname = strdup("-");
@@ -472,6 +466,9 @@ void getDataForConfigFile(int relais, void* config) {
             canStartFromGui = strdup("1");
             execOnStart = strdup("-");
             execOnStop = strdup("-");
+            strsynonyms = "";
+            strspeakout = "";
+            strspeak = "";
             break;
         } else if (!isValidName(trimmed)) {
             printf("    Ungültig! Erlaubt sind: 1-20 Zeichen,\n    Leerzeichen, (a-zA-Z0-9),_+-,.ßäöüÄÖÜ\n");
@@ -484,6 +481,36 @@ void getDataForConfigFile(int relais, void* config) {
         }
     }
     if (strcmp(strname, "-") != 0) {
+        // Synonyme für diesen Eintrag
+        printf(" -> Synonyme für Sprachbefehl Erkennung? (mit , trennen!): ");
+        char* inputsynonyme = readStdinLine();
+        char* trimmedinputsynonyme = Trim(inputsynonyme);
+        if (strlen(trimmedinputsynonyme) == 0) {
+            strsynonyms = strdup("");
+        } else {
+            strsynonyms = strdup(trimmedinputsynonyme);
+        }
+        free(inputsynonyme);
+        // Sprachausgabe bei erfolgreicher Aktivierung
+        printf(" -> Ausgabetext bei erfolgreicher Aktivierung: ");
+        char* inputstrspeak = readStdinLine();
+        char* trimmedinputstrspeak = Trim(inputstrspeak);
+        if (strlen(trimmedinputstrspeak) == 0) {
+            strspeak = strdup("");
+        } else {
+            strspeak = strdup(trimmedinputstrspeak);
+        }
+        free(inputstrspeak);
+        // Sprachausgabe bei erfolgreicher Deaktivierung
+        printf(" -> Ausgabetext bei erfolgreicher Deaktivierung: ");
+        char* inputstrspeakout = readStdinLine();
+        char* trimmedinputstrspeakout = Trim(inputstrspeakout);
+        if (strlen(trimmedinputstrspeakout) == 0) {
+            strspeakout = strdup("");
+        } else {
+            strspeakout = strdup(trimmedinputstrspeakout);
+        }
+        free(inputstrspeakout);
         while (1) {
             printf(" -> Leistung (Watt, 1 bis %d): ", (pconfig->mcp.maxPConverter - pconfig->mcp.maxPMicroController));
             char* input = readStdinLine();
@@ -554,6 +581,10 @@ void getDataForConfigFile(int relais, void* config) {
 
         // Soll ein Befehl beim starten des Gerätes ausgeführt werden?
         printf(" -> Soll ein Befehl nach dem Einschalten ausgeführt werden?: ");
+
+        // TODO
+        // commands testen auf syntax
+
         char* input4 = readStdinLine();
         char* trimmed4 = Trim(input4);
         if (strlen(trimmed4) == 0) {
@@ -578,6 +609,13 @@ void getDataForConfigFile(int relais, void* config) {
     snprintf(command, sizeof(command), "bash /Energiebox/12V/setConfig.sh %d '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s'", relais, strname, stractivateOnStart, strpMax, autoStart,
              autoStop, canStartFromGui, execOnStart, execOnStop);
     system(command);
+
+    // yaml Datei schreiben für Spracherkennung
+    sprintf(command, "bash /Energiebox/Jarvis/setYaml.sh 12V_relais_%d_an \"%s\" \"/Energiebox/12V/12V %d 1 0\" \"  %s\"", relais, strsynonyms, relais, strspeak);
+    system(command);
+    sprintf(command, "bash /Energiebox/Jarvis/setYaml.sh 12V_relais_%d_aus \"%s\" \"/Energiebox/12V/12V %d 0 0\" \"  %s\"", relais, strsynonyms, relais, strspeakout);
+    system(command);
+
     free(strname);
     free(strpMax);
     free(stractivateOnStart);

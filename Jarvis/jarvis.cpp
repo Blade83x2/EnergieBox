@@ -1,5 +1,6 @@
 /*
  * JARVIS Accoustic Listener Adapter
+ * Project: Energiebox
  * Vendor: Johannes Krämer
  * Builddate: 01.05.2026
  *
@@ -16,9 +17,10 @@
  * + *.wav löschen beim beenden
  * + areccord Return string pipen in whisper (keine physikalische Datei schreiben)
  * + setup für wakeword, remote SSH data OR localrun, microphone input select
- * + yaml zuende bauen 230V & 12V
  * + piper & whisper.cpp konfiguration dokumentieren
+ * + model und vadmodel in beschreibung download
  *
+
  *
  */
 #include <iostream>
@@ -27,6 +29,10 @@
 #include <chrono>
 #include <fstream>
 #include <sstream>
+
+#include <unistd.h>
+#include <limits.h>
+
 #include <string>
 #include <filesystem>
 #include <csignal>
@@ -43,6 +49,20 @@ std::map<std::string, std::string> config;
 void signalHandler(int) {
     runLoop = false;
     std::cout << "\n[Jarvis]  beende Programm...\n";
+}
+
+// Gibt den aktuellen absoluten Pfad vom Projekt zurück
+std::string getProjectPath() {
+    char buffer[PATH_MAX];
+    if (getcwd(buffer, sizeof(buffer)) != nullptr) {
+        std::string path(buffer);
+        // Letzten 7 Zeichen (/jarvis) entfernen
+        if (path.length() >= 7) {
+            path.erase(path.length() - 7);
+        }
+        return path;
+    }
+    return "";
 }
 
 // Konfigurationsdatei auslesen
@@ -68,22 +88,59 @@ int exec(const std::string& cmd) {
     return std::system(cmd.c_str());
 }
 
+// Verbindet zu RemoteServer und setzt Befehl ab
+void remoteCommand(const std::string& host, const std::string& cmd) {
+    std::string sshHost = host;
+    std::string port = "22";  // Standardport
+    // Prüfen ob ":PORT" vorhanden ist
+    size_t pos = host.rfind(':');
+    if (pos != std::string::npos) {
+        std::string possiblePort = host.substr(pos + 1);
+        // Prüfen ob hinter ":" nur Zahlen stehen
+        bool isNumber = !possiblePort.empty() && std::all_of(possiblePort.begin(), possiblePort.end(), ::isdigit);
+        if (isNumber) {
+            port = possiblePort;
+            sshHost = host.substr(0, pos);
+        }
+    }
+    std::string full = "ssh -p " + port + " " + sshHost + " \"" + cmd + "\"";
+    int result = std::system(full.c_str());
+    if (result != 0) {
+        std::cerr << "\n[Jarvis] remoteCommand fehlgeschlagen: " << full << std::endl;
+    }
+    (void)result;  // verhindert warning
+}
+
+void localCommand(const std::string& cmd) {
+    int result = std::system(cmd.c_str());
+    if (result != 0) {
+        std::cerr << "\n[Jarvis] localCommand fehlgeschlagen: " << cmd << std::endl;
+    }
+    (void)result;  // verhindert warning (optional)
+}
+
 // TextToSpeech Funktion für Programmstatus
 void speak(const std::string& text) {
-    std::string model = config.count("piper_model") ? config["piper_model"] : "de_DE-thorsten-medium.onnx";
-    std::string piperPath = config.count("piperpath") ? config["piperpath"] + "/piper" : "./piper";
-    std::string cmd = "echo \"" + text + "\" | " + piperPath + " --quiet --noise_w 0.8 --length_scale 0.9 --model " + model +
+    std::string projectPath = getProjectPath();
+    std::string piperPath = projectPath + "/Jarvis/piper";
+    std::string pipermodel = piperPath + "/" + config["piper_model"];
+    std::string cmd = "echo \"" + text + "\" | " + piperPath + "/piper --quiet --noise_w 0.8 --length_scale 0.9 --model " + pipermodel +
                       " --output-raw | aplay -f S16_LE -r 22050 -c 1 2>/dev/null";
     int result = std::system(cmd.c_str());
     (void)result;  // verhindert warning (optional)
 }
 
 // Übersetzt gesprochenes in Text
-std::string transcribe(const std::string& audio) {
+std::string transcribe(const std::string& audiofile) {
     std::string model = config["model"];
-    std::string whisper = config["whisperpath"];
-    std::string cmd = whisper + "/whisper-cli -l de -m " + model + " -f " + audio + " -otxt -of result 2>/dev/null";
+    std::string vadmodel = config["vadmodel"];
+    std::string projectPath = getProjectPath();
+    std::string whisper = projectPath + "/whisper.cpp";
+    std::string cmd = whisper + "/build/bin/whisper-cli --vad --vad-model " + whisper + vadmodel + " --language de --threads 4 --model " + whisper + model + " --file " +
+                      audiofile + " -otxt -of result 2>/dev/null";
+
     exec(cmd);
+
     std::ifstream file("result.txt");
     if (!file) return "";
     std::stringstream ss;
@@ -99,23 +156,15 @@ void recordAudio(const std::string& file) {
     exec(cmd);
 }
 
-// Verbindet zu RemoteServer und setzt Befehl ab
-void remoteCommand(const std::string& host, const std::string& cmd) {
-    std::string full = "ssh " + host + " \"" + cmd + "\"";
-    exec(full);
-    return;
-    int result = std::system(full.c_str());
-    if (result != 0) {
-        std::cerr << "\n[Jarvis] remoteCommand fehlgeschlagen: " << full << std::endl;
-    }
-}
-
 // Tastet Microphone jede x Sekunden ab und vergleicht auf Wakeword
 void waitForWakeword() {
     std::string wakeword = config.count("wakeword") ? config["wakeword"] : "jarvis";
     std::cout << "\n[Jarvis] Warte auf Wakeword: " << wakeword << "\n";
     do {
         // TODO ausgabe pipen in transcribe()
+
+        //   arecord -D " + mic + "  -f S16_LE -c 1 -r 16000 -d 5 |  ./whisper-cli -m models/ggml-base.bin -f - --no-timestamps
+
         recordAudio("wake.wav");
         std::string text = transcribe("wake.wav");
 
@@ -123,6 +172,8 @@ void waitForWakeword() {
         if (text.find(wakeword) != std::string::npos) {
             std::cout << "\n[Jarvis] Wakeword erkannt! Warte auf Befehle"
                       << "\n";
+            speak("               ");
+            speak("   Dann lass mal hören!");
             recordAudio("cmd.wav");
             std::string cmd = transcribe("cmd.wav");
             // Whitespace & newline & tabs entfernen
@@ -143,9 +194,9 @@ int main() {
     loadConfig("jarvis.config");
     SimpleYAMLParser parser;
     auto rules = parser.parse("energieboxCommands.yaml");
-    engine = new RuleEngine(rules, config["ssh_remote_addr"]);
-    speak("     ");
+    engine = new RuleEngine(rules, config);
     speak("[Jarvis] Programm wurde gestartet!");
+
     waitForWakeword();
     speak("     ");
     speak("[Jarvis] Programm wurde beendet!");

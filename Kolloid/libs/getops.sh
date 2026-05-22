@@ -1,6 +1,10 @@
 #!/bin/bash
 # Liesst Parameter beim Programmaufruf aus. Falls nicht gesetzt werden diese in der Konsole abgefragt
 
+
+directstart=false
+
+
 function usage() {
     clear;
     showLogo
@@ -21,25 +25,29 @@ function usage() {
     
     -h,     help,       Zeigt diese Hilfe an
 
-    -m,     metal,      Metalauswahl [${kolloidElementsArray[*]}]
+    -e,     element,    Element [${kolloidElementsArray[*]}]
 
     -s,     size,       Dispersions Menge in ml [${kolloidWaterSizeArray[*]}]
     
     -p,     ppm,        Konzentration in PPM [1 ... 100]
+    
+    -y,                 Wartet nicht auf Bestätigung vom User
 
     
     -----------------------------------------------------------------------------
     
     Beispiel Aufruf für 100ml Gold mit 8PPM:
-    kolloid -m au -s 100 -p 8
+    kolloid -e au -s 100 -p 8
+    Beispiel Aufruf für sofortige Produktion
+    kolloid -eAu -s100 -p8 -y
     
 EOF
     exit 0;
 }
 
-while getopts ":m:s:p:h:" startupParams; do
+while getopts ":e:s:p:yh" startupParams; do
     case "${startupParams}" in
-        m)
+        e)
             metal=${OPTARG}
             metal=$(echo "$metal" | tr 'A-Z' 'a-z')
             # Prüfen ob übergebener Wert für Metalauswahl in ${kolloidElementsArray} vorhanden ist
@@ -65,6 +73,9 @@ while getopts ":m:s:p:h:" startupParams; do
                 usage
             fi
             ;;
+        y)
+            directstart=true
+            ;;
         h)
             usage
             ;;
@@ -77,10 +88,10 @@ shift $((OPTIND-1))
 showLogo
 
 # Kolloid
-if [ -z "${metal}" ]; then  # Wenn -m nicht übergeben worden ist
+if [ -z "${metal}" ]; then  # Wenn -e nicht übergeben worden ist
     while true; do
         echo -e "$Green"
-        echo -n " > Kolloid wählen [${kolloidElementsArray[*]}]: "; 
+        echo -n " > Kolloid [${kolloidElementsArray[*]}]: "; 
         read read_metal echo;
         # Prüfen ob übergebener Wert für Metalauswahl in Array vorhanden ist
         if [[ ! " ${kolloidElementsArray[*]} " =~ " ${read_metal} " ]]; then
@@ -92,7 +103,7 @@ if [ -z "${metal}" ]; then  # Wenn -m nicht übergeben worden ist
         fi
     done
 else
-    # Prüfen ob Wert von Parameter -m in ${kolloidElementsArray} vorhanden ist
+    # Prüfen ob Wert von Parameter -e in ${kolloidElementsArray} vorhanden ist
     if [[ ! " ${kolloidElementsArray[*]} " =~ " ${metal} " ]]; then
         usage        
     fi
@@ -102,7 +113,7 @@ fi
 if [ -z "${size}" ]; then # Wenn -s nicht übergeben worden ist
     while true; do
         echo -e "$Green";
-        echo -n " > Produktionsmenge in ml wählen [${kolloidWaterSizeArray[*]}]: "; 
+        echo -n " > ml [${kolloidWaterSizeArray[*]}]: "; 
         read read_size echo;
         # Prüfen ob übergebener Wert für Mengenauswahl in Array vorhanden ist
         if [[ ! " ${kolloidWaterSizeArray[*]} " =~ " ${read_size} " ]]; then
@@ -124,7 +135,7 @@ fi
 if [ -z "${ppm}" ]; then # Wenn -p nicht übergeben worden ist
     while true; do
         echo -e "$Green";
-        echo -n " > PPM Konzentration wählen [1 - 100]: "; 
+        echo -n " > PPM [1 - 100]: "; 
         read read_ppm echo;
         # Prüfen ob übergebener Wert Numerisch ist
         if ! [[ $read_ppm =~ $ppmPattern ]] ; then

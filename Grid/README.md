@@ -20,7 +20,9 @@ angepasst werden an die verfügbare Ladeleistung!
 <br><br>
 <ul>
     <li>supplyMaxCurrent - Eingestellte Ampere am Ladegerät</li>
-    <li>supplyMaxVoltage - Angezeigte Spannung am Ladegerät beim Ladestart</li>
+    <li>supplyMinLoadWh - Minimale Wattstunden pro Ladevorgang</li>
+    <li>supplyMaxLoadWh - Maximale Wattstunden pro Ladevorgang</li>
+    <li>loadingCapacityWh - Batterie Kapazität</li>
     <li>battVoltageStartLoading - Batteriespannung wenn Ladegerät starten soll</li>
 </ul>
 <br>
@@ -34,7 +36,7 @@ Das Programm berechnet aus diesen Daten die Ladezeit in Sekunden!
 
 <br>
 <br>
-Die Eingabe des Befehls <code>grid -s 50 & disown</code> beendet das Programm in 50 Sekunden und gibt die Konsole frei!
+Die Eingabe des Befehls <code>grid -s</code> beendet den zuvor gestarteten Ladevorgang und gibt die Konsole frei!
 <br><br>
 <p align="left"> 
     <img src="img/stopload.png" style="width: 70%;" alt="grid stop load" >

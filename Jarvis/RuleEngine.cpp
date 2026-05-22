@@ -7,10 +7,11 @@
 extern void speak(const std::string&);
 extern int exec(const std::string&);
 extern void remoteCommand(const std::string&, const std::string&);
+extern void localCommand(const std::string&);
 
-RuleEngine::RuleEngine(const std::vector<Rule>& r, const std::string& host) : rules(r), ssh_host(host) {}
+RuleEngine::RuleEngine(const std::vector<Rule>& r, std::map<std::string, std::string> config) : rules(r), ssh_host(config["ssh_remote_addr"]) {}
 
-// Durchläuft alle Gruppen aus yaml Datei
+// Durchläuft alle Gruppen aus yaml Datei und sucht übereinstimmung
 bool RuleEngine::match(const Rule& rule, const std::string& input) {
     for (auto& group : rule.conditions) {
         bool ok = false;
@@ -25,7 +26,7 @@ bool RuleEngine::match(const Rule& rule, const std::string& input) {
     return true;
 }
 
-// Vergleicht Eingabe mit yaml Datei
+// Führt command aus
 void RuleEngine::process(const std::string& input) {
     for (auto& r : rules) {
         if (match(r, input)) {
@@ -39,7 +40,14 @@ void RuleEngine::process(const std::string& input) {
 void RuleEngine::execute(const Rule& rule, const std::string&) {
     for (auto& a : rule.actions) {
         if (a.type == "command") {
-            remoteCommand(ssh_host, a.value);
+            // Prüfen ob ssh_host gesetzt ist
+            if (!ssh_host.empty()) {
+                // Remote ausführen
+                remoteCommand(ssh_host, a.value);
+            } else {
+                // Lokal ausführen
+                localCommand(a.value);
+            }
         }
         if (a.type == "speak") {
             speak(a.value);

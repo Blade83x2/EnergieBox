@@ -46,7 +46,7 @@ Installation benötigter Pakete      |
 
 Damit alles direkt funktioniert, starten wir zuerst mit der nachträglichen Installation verschiedener benötigter Pakete:
 
-`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install build-essential libgtk-3-dev ufw python3-dev python3-pip git manpages-de ufw kate krusader mat hwinfo mariadb-server libmariadb-dev-compat libmariadb-dev fonts-noto-color-emoji libgtk-3-dev xterm libgtkmm-3.0-dev iputils-ping clang-format figlet -y && sudo pip install rpi.gpio pymodbus`
+`sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install build-essential libgtk-3-dev ufw python3-dev python3-pip git libvte-2.91-dev manpages-de ufw kate krusader mat hwinfo mariadb-server libmariadb-dev-compat libmariadb-dev fonts-noto-color-emoji libgtk-3-dev xterm libgtkmm-3.0-dev iputils-ping clang-format figlet -y && sudo pip install rpi.gpio pymodbus`
 
 
 
@@ -132,6 +132,10 @@ Internet Verbindung damit Sie die Eltakos über das Internet steuern können. Hi
 
 `sudo nano /boot/config.txt`
 
+oder falls nicht vorhanden
+
+`sudo nano /boot/firmware/config.txt`
+
 vom Terminal aus aufgerufen und in der Datei folgendes auskommentieren:
 
 `dtoverlay=w1-gpio`
@@ -186,6 +190,20 @@ Dann suchen wir:
 und ersetzen es mit: 
 
 `X11Forwarding yes`
+
+Die Einträge 
+
+`X11DisplayOffset 10`
+
+`X11UseLocalhost yes`
+
+`ClientAliveInterval 30`
+
+`ClientAliveCountMax 10`
+
+`TCPKeepAlive yes`
+
+müssen auch aktiv sein.
 
 
 Speichern können wir wieder mit der Tastenkombination Strg + x.
@@ -426,13 +444,17 @@ Zum Betrieb müssen einige fehlende Programme installiert werden:
 
 `sudo apt install ccache libavcodec-dev libavformat-dev libavutil-dev libatomic1 libatomic-ops-dev git build-essential libsdl2-dev`
 
-Nun werden die Modele geladen mit:
+Nun werden die Module und VAD geladen + kompiliert
 
-`cd /Energiebox/whisper.cpp && bash ./models/download-ggml-model.sh base && bash ./models/download-ggml-model.sh tiny`
+`cd /Energiebox/whisper.cpp && sudo make build`
 
-Zuletzt wird whisper noch kompiliert:
+------------
 
-`rm -rf build && cmake -B build -DCMAKE_C_FLAGS="-latomic" -DCMAKE_CXX_FLAGS="-latomic" -DCMAKE_EXE_LINKER_FLAGS="-latomic" && cmake --build build -j --config Release`
+Piper insallation:
+
+`sudo apt install -y git cmake build-essential pkg-config libsndfile1-dev espeak-ng libespeak-ng-dev`
+
+`cd /Energiebox/Jarvis/ && git clone https://github.com/rhasspy/piper.git && cd piper && git submodule update --init --recursive`
 
 
 -------------------------------------
@@ -466,7 +488,7 @@ wieder ab mit Strg + x:
 IP Setup & DynDNS Einrichtung       |
 -------------------------------------  
 
-Die IP Einstellungen des Raspberrys sind in unserem Fall statisch eingestellt. Dieses Setup hier geht davon aus, dass das Gateway die IP 10.0.0.1 hat und stellt den Raspberry auf 10.0.0.2!
+Die IP Einstellungen des Raspberrys sind in unserem Fall statisch eingestellt. Dieses Setup hier geht davon aus, dass das Gateway die IP 10.0.0.1 hat und stellt den Raspberry auf 10.0.0.4!
 Die IP Einstellungen können aufrufen werden mit:
 
 `sudo nano /etc/dhcpcd.conf`

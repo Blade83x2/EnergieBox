@@ -2,10 +2,11 @@
 #include "Rule.h"
 #include <vector>
 #include <string>
+#include <map>
 
 class RuleEngine {
    public:
-    RuleEngine(const std::vector<Rule>& rules, const std::string& ssh_host);
+    RuleEngine(const std::vector<Rule>& rules, std::map<std::string, std::string> config);
     void process(const std::string& input);
 
    private:

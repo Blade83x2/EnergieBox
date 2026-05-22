@@ -151,7 +151,7 @@ for key in "${!elementData[@]}"; do
         ((wert++))
       done
       for (( i=0; i<rounds; i++ )); do
-        kolloid -m $element -s $mla -p $ppm
+        kolloid -e $element -s $mla -p $ppm
       done
     done
     

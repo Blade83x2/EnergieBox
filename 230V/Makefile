@@ -39,3 +39,4 @@ SRC := $(shell find . -type f \( -name "*.c" -o -name "*.cpp" -o -name "*.h" -o 
 format: .clang-format
 	@echo "→ Formatierung mit clang-format..."
 	$(FORMATTER) -i $(SRC)
+

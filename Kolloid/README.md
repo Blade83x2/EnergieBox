@@ -12,8 +12,6 @@ Weitere Informationen zu Kolloidalen Metallen auf <a href="https://kolloidalesgo
 Nachdem das Programm mit dem Befehl kolloid auf der Kommandozeile aufgerufen wird,
 werden spezifische Daten abgefragt. Zuerst wird gewählt um welches Metall es sich handelt.
 Danach wird die Produktionsmenge ausgewählt und danach die Konzentration des Metalls in der Dispersion.
-Der vierte Abfragewert ist optional und es kann ein Name für einen Kunden eingegeben werden. Dies dient
-zur Statistikerstellung.
 
 <p align="center"> 
     <img src="img/kolloid.png" style="width: 85%;" alt="kolloid Startseite" >
@@ -51,11 +49,3 @@ kolloid -h
 <p align="center"> 
     <img src="img/help.png" style="width: 85%;" alt="kolloid Hilfe" >
 </p>
-
-Falls bei der Ausführung des Programms ein Kundenname vergeben worden ist, wird dieser gelistet im Verzeichnis /home/$USER/KolloidProduktion/!
-
-
-
-
-
-

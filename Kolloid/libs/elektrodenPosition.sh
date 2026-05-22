@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ $metal == "au" ]; then
-    printf "\n > 3) Elektroden ~ 1,2 cm tief im Wasser positionieren!\n\n";
+    printf "\n > 3) Elektroden ~ 1,2 cm\n      tief im Wasser positionieren!\n\n";
     printf "           \          /      \n";
     printf "            \        /       \n";
     printf "   |         \      /        |\n";
@@ -19,7 +19,7 @@ if [ $metal == "au" ]; then
     printf "   |                         |\n";
     printf "   |_________________________|\n\n";
 elif [ $metal == "ag" ]; then
-    printf "\n > 3) Elektroden maximal ~ 2 mm tief im Wasser positionieren!\n\n";
+    printf "\n > 3) Elektroden maximal ~ 2 mm\n      tief im Wasser positionieren!\n\n";
     printf "              \    /          \n";
     printf "               \  /           \n";
     printf "   |~~~~~~~~~~~~\/~~~~~~~~~~~|\n";
@@ -38,7 +38,7 @@ elif [ $metal == "ag" ]; then
     printf "   |                         |\n";
     printf "   |_________________________|\n\n";
 elif [ $metal == "pt" ]; then
-    printf "\n > 3) Elektroden ~ 1,2 cm tief im Wasser positionieren!\n\n";
+    printf "\n > 3) Elektroden ~ 1,2 cm tief\n      im Wasser positionieren!\n\n";
     printf "           \          /      \n";
     printf "            \        /       \n";
     printf "   |         \      /        |\n";
@@ -57,26 +57,7 @@ elif [ $metal == "pt" ]; then
     printf "   |                         |\n";
     printf "   |_________________________|\n\n";
 elif [ $metal == "pd" ]; then
-    printf "\n > 3) Baren ~ 0,7 cm tief im Wasser positionieren!\n\n";
-    printf "           \          /      \n";
-    printf "            \        /       \n";
-    printf "   |         \      /        |\n";
-    printf "   |~~~~~~~~~~\~~~~/~~~~~~~~~|\n";
-    printf "   |           \  /          |\n";
-    printf "   |            \/           |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |                         |\n";
-    printf "   |_________________________|\n\n";
-elif [ $metal == "ir" ]; then
-    printf "\n > 3) Elektroden ~ 1,2 cm tief im Wasser positionieren!\n\n";
+    printf "\n > 3) Baren ~ 0,7 cm tief\n      im Wasser positionieren!\n\n";
     printf "           \          /      \n";
     printf "            \        /       \n";
     printf "   |         \      /        |\n";

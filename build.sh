@@ -78,7 +78,7 @@ rm -f "$RESULT"
 # Optional Git Update
 if [[ -n $1 || -n $2 ]]; then
     echo -e "\n\nUpdate Git Repository..."
-    git add -A
+    sudo git add -A
     git commit -m "$1"
     git push -u origin master
 fi

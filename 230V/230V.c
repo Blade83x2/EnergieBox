@@ -157,6 +157,31 @@ char* getExecOnStop(int relais) {
     return ret;
 }
 
+// Ermittelt den Ladezustand der Batterie (wird aus Datenbank per Preparet Statement gelesen)
+int get_battery_percentage(MYSQL* conn) {
+    MYSQL_STMT* stmt = db_prepare(conn, "SELECT batt_soc FROM messwerte WHERE id = ?");
+    if (!stmt) {
+        fprintf(stderr, "Prepare Statement Fehler");
+        return -1;
+    }
+    DBResult* r = db_result_create(1);
+    int ladezustand;
+    db_result_set_int(r, 0, &ladezustand);
+    DBParams* p = db_params_create(1);
+    int max_id = db_get_max_id(conn, "messwerte");
+    db_params_set_int(p, 0, max_id);
+    db_stmt_bind(stmt, p);
+    db_stmt_bind_result(stmt, r);
+    mysql_stmt_execute(stmt);
+    mysql_stmt_store_result(stmt);
+    mysql_stmt_fetch(stmt);
+    /* cleanup */
+    db_result_free(r);
+    db_params_free(p);
+    mysql_stmt_close(stmt);
+    return ladezustand;
+}
+
 // Programmstart
 int main(int argc, char** argv) {
     configuration config;
@@ -185,41 +210,18 @@ int main(int argc, char** argv) {
         fprintf(stderr, "DB Verbindung fehlgeschlagen. Datenbankdaten in mysql_energiebox.cfg prüfen!");
         return -1;
     }
-    /* -------------------------
-       Prepared SELECT
-    --------------------------*/
-    MYSQL_STMT* stmt = db_prepare(conn, "SELECT batt_soc FROM messwerte WHERE id = ?");
-    if (!stmt) {
-        fprintf(stderr, "Prepare Statement Fehler");
-        return -1;
-    }
-    DBResult* r = db_result_create(1);
-    int ladezustand;
-    db_result_set_int(r, 0, &ladezustand);
-    DBParams* p = db_params_create(1);
-    int max_id = db_get_max_id(conn, "messwerte");
-    db_params_set_int(p, 0, max_id);
-    db_stmt_bind(stmt, p);
-    db_stmt_bind_result(stmt, r);
-    mysql_stmt_execute(stmt);
-    mysql_stmt_store_result(stmt);
-    mysql_stmt_fetch(stmt);
-    /* cleanup */
-    db_result_free(r);
-    db_params_free(p);
-    mysql_stmt_close(stmt);
-    db_close(conn);
+
     // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
     if (argc == 1) {
         // Keine Parameterübergabe. Liste anzeigen was geschaltet ist
-        printf("\n\e[30;47m ID      %4dW  230V Gerätename     %3d%    \e[0m\n", getCurrentPower(&config), ladezustand);
+        printf("\n\e[30;47m ID      %4dW  230V Gerätename     %3d%    \e[0m\n", getCurrentPower(&config), get_battery_percentage(conn));
         for (int x = 1; x <= config.mcp.numberOfRelaisActive; x++) {
             printf("\033[1;97m %2d---->%s %4d%s \t%s  \e[0m\n", x, ((getElkoState(x, &config) == 0) ? "\e[0;31m" : "\e[0;32m"), (getDevicePower(x, &config)), "W",
                    deviceNames[x - 1]);
         }
         printf("\n");
     } else if (argc == 2) {  // Nur Relais Nummer übergeben,
-                             // wenn relaisNummer nicht valide
+        // wenn relaisNummer nicht valide
         if (!checkMainParameter("relaisNumber", atoi(argv[1]), &config)) {
             return showHelp(argv, &config);
         }
@@ -316,6 +318,7 @@ int main(int argc, char** argv) {
     } else {
         return showHelp(argv, &config);
     }
+    db_close(conn);
     return 0;
 }
 
@@ -430,6 +433,9 @@ void getDataForConfigFile(int relais, void* config) {
     system("clear");
     printf("Gerätekonfiguration für Relais Nr. -> %d bearbeiten:\n\n", relais);
     char* strname = NULL;
+    char* strsynonyms = NULL;
+    char* strspeakout = NULL;
+    char* strspeak = NULL;
     char* strpMax = NULL;
     char* stractivateOnStart = NULL;
     char* autoStart = NULL;
@@ -451,6 +457,9 @@ void getDataForConfigFile(int relais, void* config) {
             canStartFromGui = strdup("1");
             execOnStart = strdup("-");
             execOnStop = strdup("-");
+            strsynonyms = "";
+            strspeakout = "";
+            strspeak = "";
             break;
         } else if (!isValidName(trimmed)) {
             printf("    Ungültig! Erlaubt sind: 1-20 Zeichen,\n    Leerzeichen, (a-zA-Z0-9),_+-,.ßäöüÄÖÜ\n");
@@ -463,6 +472,39 @@ void getDataForConfigFile(int relais, void* config) {
         }
     }
     if (strcmp(strname, "-") != 0) {
+        // Synonyme für diesen Eintrag
+        printf(" -> Synonyme für Sprachbefehl Erkennung? (mit , trennen!): ");
+        char* inputsynonyme = readStdinLine();
+        char* trimmedinputsynonyme = Trim(inputsynonyme);
+        if (strlen(trimmedinputsynonyme) == 0) {
+            strsynonyms = strdup("");
+        } else {
+            strsynonyms = strdup(trimmedinputsynonyme);
+        }
+        free(inputsynonyme);
+
+        // Sprachausgabe bei erfolgreicher Aktivierung
+        printf(" -> Ausgabetext bei erfolgreicher Aktivierung: ");
+        char* inputstrspeak = readStdinLine();
+        char* trimmedinputstrspeak = Trim(inputstrspeak);
+        if (strlen(trimmedinputstrspeak) == 0) {
+            strspeak = strdup("");
+        } else {
+            strspeak = strdup(trimmedinputstrspeak);
+        }
+        free(inputstrspeak);
+
+        // Sprachausgabe bei erfolgreicher Deaktivierung
+        printf(" -> Ausgabetext bei erfolgreicher Deaktivierung: ");
+        char* inputstrspeakout = readStdinLine();
+        char* trimmedinputstrspeakout = Trim(inputstrspeakout);
+        if (strlen(trimmedinputstrspeakout) == 0) {
+            strspeakout = strdup("");
+        } else {
+            strspeakout = strdup(trimmedinputstrspeakout);
+        }
+        free(inputstrspeakout);
+
         while (1) {
             printf(" -> Leistung (Watt, 1 bis %d): ", pconfig->mcp.maxOutputPower);
             char* input = readStdinLine();
@@ -556,6 +598,11 @@ void getDataForConfigFile(int relais, void* config) {
     char command[256];
     snprintf(command, sizeof(command), "bash /Energiebox/230V/setConfig.sh %d '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s'", relais, strname, stractivateOnStart, strpMax, autoStart,
              autoStop, canStartFromGui, execOnStart, execOnStop);
+    system(command);
+    // yaml Datei schreiben für Spracherkennung
+    sprintf(command, "bash /Energiebox/Jarvis/setYaml.sh 12V_relais_%d_an \"%s\" \"/Energiebox/12V/12V %d 1 0\" \"  %s\"", relais, strsynonyms, relais, strspeak);
+    system(command);
+    sprintf(command, "bash /Energiebox/Jarvis/setYaml.sh 12V_relais_%d_aus \"%s\" \"/Energiebox/12V/12V %d 0 0\" \"  %s\"", relais, strsynonyms, relais, strspeakout);
     system(command);
     free(strname);
     free(strpMax);
