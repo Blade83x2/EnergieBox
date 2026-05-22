@@ -38,6 +38,7 @@ char command[100];
 
 int main(int argc, char **argv) {
     configuration config;
+
     /////////////////////
     //// 12 Volt  ///////
     /////////////////////
@@ -91,6 +92,11 @@ int main(int argc, char **argv) {
     ////////////////////
     ///// GRID      ////
     ////////////////////
+
+    sprintf(command, "/Energiebox/Grid/grid -s");
+    system(command);
+    sleep(5);
+
     if (ini_parse("/Energiebox/Grid/config.ini", handler, &config) < 0) {
         fprintf(stderr, "Can't load '/Energiebox/Grid/config.ini\n");
         exit(EXIT_FAILURE);
@@ -105,19 +111,13 @@ int main(int argc, char **argv) {
         fprintf(stderr, "wiringPi I2C Setup error\n");
         exit(EXIT_FAILURE);
     }
-
-    sprintf(command, "bash grid -s");
-    system(command);
-
-    sleep(1);
-
     mcp_initReg();
 
-    // for (int i = 0; i < config.mcp.numberOfRelaisActive; i++) {
-    //     mcp_pinMode(i, 0);
-    //     mcp_digitalWrite(i, 1);
-    //     sleep(0.7);
-    // }
+    for (int i = 0; i < config.mcp.numberOfRelaisActive; i++) {
+        mcp_pinMode(i, 0);
+        mcp_digitalWrite(i, 1);
+        sleep(0.7);
+    }
 
     // system("rm -f /Energiebox/Grid/PID");
 

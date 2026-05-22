@@ -262,6 +262,9 @@ int main(int argc, char* argv[]) {
                 setBit(1, 1);
                 sleep(3);
                 setBit(0, 1);
+                // ==========================================
+                // Ladestop in Datenbank eintragen
+                // ==========================================
                 insertGridLoad(conn, "stop");
                 // ==========================================
                 // PID Datei & lockfile löschen
@@ -320,6 +323,9 @@ int main(int argc, char* argv[]) {
                 setBit(0, 0);
                 sleep(3);
                 setBit(1, 0);
+                // ==========================================
+                // Ladestart in Datenbank eintragen
+                // ==========================================
                 insertGridLoad(conn, "start");
                 // ==========================================
                 // Hintergrundprozess starten
@@ -343,6 +349,9 @@ int main(int argc, char* argv[]) {
                     // Netzanschluss Relais ausschalten
                     setBit(0, 1);
                     // in Datenbank schreiben
+                    // ==========================================
+                    // Ladestop in Datenbank eintragen
+                    // ==========================================
                     insertGridLoad(conn, "stop");
                     // Lock freigeben
                     flock(lockFd, LOCK_UN);
