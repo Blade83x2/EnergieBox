@@ -262,6 +262,7 @@ int main(int argc, char* argv[]) {
                 setBit(1, 1);
                 sleep(3);
                 setBit(0, 1);
+                insertGridLoad(conn, "stop");
                 // ==========================================
                 // PID Datei & lockfile löschen
                 // ==========================================
