@@ -1,4 +1,5 @@
 Bauteile/
 *.o
+*/*.o
 .git/
 *.onnx
