@@ -129,7 +129,7 @@ CREATE TABLE schaltungen_230v (
 CREATE TABLE grid_loads (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     action ENUM('start', 'stop') NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    timestamp INT UNSIGNED NOT NULL DEFAULT (UNIX_TIMESTAMP()),
     PRIMARY KEY (id)
 );
 

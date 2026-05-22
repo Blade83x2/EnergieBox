@@ -105,6 +105,12 @@ int main(int argc, char **argv) {
         fprintf(stderr, "wiringPi I2C Setup error\n");
         exit(EXIT_FAILURE);
     }
+
+    sprintf(command, "bash grid -s");
+    system(command);
+
+    sleep(1);
+
     mcp_initReg();
 
     // for (int i = 0; i < config.mcp.numberOfRelaisActive; i++) {
@@ -112,8 +118,6 @@ int main(int argc, char **argv) {
     //     mcp_digitalWrite(i, 1);
     //     sleep(0.7);
     // }
-
-    system("bash /Energiebox/Grid/grid -s");
 
     // system("rm -f /Energiebox/Grid/PID");
 
