@@ -401,13 +401,14 @@ Als nächstes installieren wir 2 Cronjobs. Der eine ist dazu da, jede Minute zu 
 ein Gerät an oder aus geschaltet werden soll und der andere prüft die
 Batteriespannung und schaltet falls notwendig das Netzladegerät an.
 
-`sudo crontab -e`
+`crontab -e`
 
 Ganz unten fügen wir folgende Zeile hinzu:
 
+`* * * * * /Energiebox/System/autoStartStop.sh > /dev/null`
+
 `*/1 * * * * cd /Energiebox/Tracer && ./trace 2>> /Energiebox/error.log`
 
-`* * * * * /Energiebox/System/autoStartStop.sh 2>> /Energiebox/error.log`
 
 
 Der EP-EVER muss per RS-485 Adapter am USB Port des Raspberry's eingesteckt sein.

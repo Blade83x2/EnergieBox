@@ -19,6 +19,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <pwd.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 
 // Strukt
 struct MCPSetup {
@@ -39,6 +42,8 @@ struct SystemSetup {
     const char *mysqlCfgPath;
     const char *lockFilePath;
     const char *readallCmd;
+    const char *PIDFilePath;
+    const char *PIDUser;
 };
 // Alle Strukte zusammen führen
 struct Configuration {
@@ -56,6 +61,13 @@ static int handler(void *config, const char *section, const char *name, const ch
         pconfig->system.lockFilePath = strdup(value);
     } else if (MATCH("system", "readallCmd")) {
         pconfig->system.readallCmd = strdup(value);
+
+    } else if (MATCH("system", "PIDFilePath")) {
+        pconfig->system.PIDFilePath = strdup(value);
+
+    } else if (MATCH("system", "PIDUser")) {
+        pconfig->system.PIDUser = strdup(value);
+
     } else if (MATCH("mcp", "address")) {
         pconfig->mcp.address = std::atoi(value);
     } else if (MATCH("mcp", "numberOfRelaisActive")) {
@@ -97,38 +109,30 @@ class BatteryController {
     }
 
     // Startet den Ladevorgang.
+    // Startet den Ladevorgang.
     void triggerLoad() {
-        pid_t pid = fork();
-        // ==========================================
-        // Fehler
-        // ==========================================
-        if (pid < 0) {
-            std::cerr << "/Energiebox/Tracer/trace: "
-                      << "Fehler beim Starten des Grid Programms\n";
-            return;
-        }
+        // pid_t pid = fork();
+        //  ==========================================
+        //  Fehler
+        //  ==========================================
+        // if (pid < 0) {
+        //     std::cerr << "/Energiebox/Tracer/trace: "  << "Fehler beim Starten des Grid Programms\n";
+        //     return;
+        // }
         // ==========================================
         // Kindprozess
         // ==========================================
-        if (pid == 0) {
-            // Prozess vom Terminal lösen
-            setsid();
-            std::string wh = std::to_string(config.grid.loadingCapacityWh);
-            execl("/Energiebox/Grid/grid", "grid", "-w", wh.c_str(), (char *)NULL);
-            // Nur bei Fehler erreichbar
-            exit(EXIT_FAILURE);
-        }
-        // ==========================================
-        // Elternprozess
-        // ==========================================
-        // PID speichern
-        std::ofstream pidFile("/Energiebox/Grid/PID");
-        if (pidFile.is_open()) {
-            pidFile << pid;
-            pidFile.close();
-        }
-        std::cout << "Grid-Ladevorgang gestartet (" << config.grid.loadingCapacityWh << " Wh)\n";
-        std::cout << "  %-26s " << pid << "\n";
+        //  if (pid == 0) {
+        // Prozess vom Terminal lösen
+        //   setsid();
+
+        // kapazität aus config.ini
+        std::string wh = std::to_string(config.grid.loadingCapacityWh);
+        // Ladebefehl aufrufen
+
+        std::string cmd = "/Energiebox/Grid/grid -w " + wh;
+
+        int ret = system(cmd.c_str());
     }
 
     // Speichert EPEVER Daten in Datenbank
