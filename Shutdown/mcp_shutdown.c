@@ -112,5 +112,6 @@ int main(int argc, char **argv) {
         sleep(0.7);
     }
     system("rm -f /Energiebox/Grid/isLoading.lock");
+    system("rm -f /Energiebox/Grid/PID");
     return 0;
 }
