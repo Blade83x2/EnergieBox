@@ -238,9 +238,10 @@ int main(int argc, char* argv[]) {
                 sleep(5);
                 setBit(0, 1);
                 // ==========================================
-                // PID Datei löschen
+                // PID Datei & lockfile löschen
                 // ==========================================
                 unlink(pidFilePath);
+                unlink(lockFile);
                 return 0;
             }
 

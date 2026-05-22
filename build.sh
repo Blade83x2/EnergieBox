@@ -84,4 +84,3 @@ if [[ -n $1 || -n $2 ]]; then
 fi
 
 echo -e "\n\nFertig.\n"
-
