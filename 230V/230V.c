@@ -11,6 +11,7 @@
 #include "mysql_wrapper.h"
 
 static int handler(void* config, const char* section, const char* name, const char* value);
+void insertSchaltung(MYSQL* conn, int relais, char* zustand);
 int getElkoState(int relais, void* config);
 int getRestPower(void* config);
 int getCurrentPower(void* config);
@@ -108,11 +109,16 @@ static int handler(void* config, const char* section, const char* name, const ch
 #undef MATCH
 
 // Schreibt Schaltung in die Datenbank
-void insertSchaltung(MYSQL* conn, int relais, int zustand) {
+void insertSchaltung(MYSQL* conn, int relais, char* zustand) {
     char query[256];
-    snprintf(query, sizeof(query), "INSERT INTO schaltungen_230v (relais, zustand) VALUES (%d, %d)", relais, zustand);
+    snprintf(query, sizeof(query), "INSERT INTO schaltungen_230v (relais, zustand) VALUES (%d, '%s')", relais, zustand);
     if (mysql_query(conn, query)) {
         fprintf(stderr, "MySQL Fehler: %s\n", mysql_error(conn));
+        FILE* fp = fopen("/Energiebox/error.log", "a");
+        if (fp) {
+            fprintf(fp, "MySQL Fehler: %s\n", mysql_error(conn));
+            fclose(fp);
+        }
     }
 }
 
@@ -259,7 +265,7 @@ int main(int argc, char** argv) {
                     sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
                     system(command);
                     // Schaltvorgang in Datenbank speichern
-                    insertSchaltung(conn, atoi(argv[1]), atoi(argv[2]));
+                    insertSchaltung(conn, atoi(argv[1]), "an");
                     char* cmd = getExecOnStart(atoi(argv[1]));
                     if (cmd != NULL) {
                         system(cmd);
@@ -280,7 +286,7 @@ int main(int argc, char** argv) {
             sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
             system(command);
             // Schaltvorgang in Datenbank speichern
-            insertSchaltung(conn, atoi(argv[1]), atoi(argv[2]));
+            insertSchaltung(conn, atoi(argv[1]), "aus");
             char* cmd = getExecOnStop(atoi(argv[1]));
             if (cmd != NULL) {
                 system(cmd);
@@ -306,7 +312,7 @@ int main(int argc, char** argv) {
                     sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 1);
                     system(command);
                     // Schaltvorgang in Datenbank speichern
-                    insertSchaltung(conn, atoi(argv[1]), atoi(argv[2]));
+                    insertSchaltung(conn, atoi(argv[1]), "an");
                     char* cmd = getExecOnStart(atoi(argv[1]));
                     if (cmd != NULL) {
                         system(cmd);
@@ -325,7 +331,7 @@ int main(int argc, char** argv) {
             sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", atoi(argv[1]), 0);
             system(command);
             // Schaltvorgang in Datenbank speichern
-            insertSchaltung(conn, atoi(argv[1]), atoi(argv[2]));
+            insertSchaltung(conn, atoi(argv[1]), "aus");
             char* cmd = getExecOnStop(atoi(argv[1]));
             if (cmd != NULL) {
                 system(cmd);

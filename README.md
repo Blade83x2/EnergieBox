@@ -307,30 +307,71 @@ Startup & Shutdown Service          |
 Zwecks des Automatischen Einschalten von Stromkreisen (in config.ini einstellbar)
 geben wir im Terminal den Befehl
 
-`sudo nano /etc/rc.local`
+`sudo nano /etc/systemd/system/rcstartup.service`
 
-ein und fügen ganz unten über exit 0 folgende Zeile ein:
+ein und kopieren folgendes in diese Datei:
 
-`/Energiebox/Startup/mcp_startup`
+`[Unit]`
 
-Auch diese Aktion wird wieder mit Strg + x gespeichert.
-Danach wird der Befehl
+`Description=Schaltet autostart Relais ein`
 
-`sudo nano /etc/rc.shutdown`
+`After=network.target mariadb.service`
 
-eingegeben und in diese Datei wird folgendes rein kopiert:
+`Wants=network.target mariadb.service`
 
-`#!/bin/bash`
+`[Service]`
 
-`/Energiebox/Shutdown/mcp_shutdown`
+`Type=oneshot`
 
-`exit 0`
+`WorkingDirectory=/Energiebox`
+
+`ExecStart=/Energiebox/Startup/mcp_startup`
+
+`RemainAfterExit=no`
+
+`StandardOutput=journal`
+
+`StandardError=journal`
+
+`TimeoutStartSec=60`
+
+`[Install]`
+
+`WantedBy=multi-user.target`
 
 
-Diese Aktion wird wieder mit Strg + x gespeichert.
-Nun geben wir dieser Datei noch Ausführungsrechte mit 
 
-`sudo chmod +x /etc/rc.shutdown`
+Wie immer wird diese Aktion mit Strg + x gespeichert.
+Um diesen Service einzuschalten, muss er noch aktiviert werden.
+Dies geschieht mit folgendem Terminal Befehl:
+
+`sudo systemctl daemon-reload && sudo systemctl enable rcstartup.service && sudo systemctl start rcstartup.service`
+
+Service anzeigen (für eventuelle Fehlersuche:)
+
+`journalctl -fu rcshutdown.service`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Als nächstes wird der Befehl
 
@@ -340,17 +381,39 @@ in der Konsole abgesetzt und in diese Datei wird folgendes eingefügt:
 
 `[Unit]`
 
-`Description=/etc/rc.shutdown`
+`Description=Schalte alle Relais aus`
 
-`Before=shutdown.target`
+`DefaultDependencies=no`
+
+`Requires=mariadb.service`
+
+`After=network.target mariadb.service`
+
+`Before=shutdown.target reboot.target halt.target`
 
 `[Service]`
 
+`Type=oneshot`
+
 `ExecStart=/bin/true`
 
-`ExecStop=/etc/rc.shutdown`
+`ExecStop=/Energiebox/Shutdown/mcp_shutdown`
 
 `RemainAfterExit=yes`
+
+`TimeoutStopSec=60`
+
+`KillMode=control-group`
+Wie immer wird diese Aktion mit Strg + x gespeichert.
+Um diesen Service einzuschalten, muss er noch aktiviert werden.
+Dies geschieht mit folgendem Terminal Befehl:
+
+`sudo systemctl daemon-reload && sudo systemctl enable rcshutdown.service && sudo systemctl start rcstartup.service`
+
+Service anzeigen (für eventuelle Fehlersuche:)
+
+`journalctl -fu rcshutdown.service`
+
 
 `[Install]`
 
@@ -361,7 +424,11 @@ Wie immer wird diese Aktion mit Strg + x gespeichert.
 Um diesen Service einzuschalten, muss er noch aktiviert werden.
 Dies geschieht mit folgendem Terminal Befehl:
 
-`sudo systemctl enable rcshutdown.service`
+`sudo systemctl daemon-reload && sudo systemctl enable rcshutdown.service && sudo systemctl start rcstartup.service`
+
+Service anzeigen (für eventuelle Fehlersuche:)
+
+`journalctl -fu rcshutdown.service`
 
 
 ----------

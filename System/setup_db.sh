@@ -109,21 +109,19 @@ CREATE TABLE messwerte (
 CREATE TABLE schaltungen_12v (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     relais TINYINT UNSIGNED NOT NULL,
-    zustand TINYINT(1) NOT NULL,
-    datum DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    zustand  ENUM('an', 'aus') NOT NULL,
+    timestamp INT UNSIGNED NOT NULL DEFAULT (UNIX_TIMESTAMP()),
     PRIMARY KEY (id),
-    CHECK (relais BETWEEN 1 AND 16),
-    CHECK (zustand IN (0, 1))
+    CHECK (relais BETWEEN 1 AND 16)
 );
 
 CREATE TABLE schaltungen_230v (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     relais TINYINT UNSIGNED NOT NULL,
-    zustand TINYINT(1) NOT NULL,
-    datum DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    zustand ENUM('an', 'aus') NOT NULL,
+    timestamp INT UNSIGNED NOT NULL DEFAULT (UNIX_TIMESTAMP()),
     PRIMARY KEY (id),
-    CHECK (relais BETWEEN 1 AND 16),
-    CHECK (zustand IN (0, 1))
+    CHECK (relais BETWEEN 1 AND 16)
 );
 
 CREATE TABLE grid_loads (

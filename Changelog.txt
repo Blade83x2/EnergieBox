@@ -24,7 +24,7 @@ Energiebox Ver.5 #
  
  12V dokumentations -set anpassem
  
-   
+   on autostart 12V beim hochfahren in datenbank eintragen
  
  grid -> ladungen in datenbank eintragen
 
@@ -38,7 +38,7 @@ Eine Bedienung der Relais- Schaltkreise ist auch möglich. Weiterhin wurde die A
 Eine automatische Zeitschaltfunktion wurde ebenfalls für jeden Schaltkreis implementiert. Benutzereingaben werden nun alle validiert. Einige Programme wurden konvertiert von C nach C++. Ebenso wurden alle Stromkreise entsprechend für ihren Nutzen abgesichert.
 
  [UPDATE] In 12V -set X wird am Ende die benötigte Sicherungsstärke angezeigt
- [NEW] 230V: Schaltungen werden jetzt in Datenbank gespeichert
+ [NEW] 230V: Schaltungen werden jetzt in Datenbank gespeichert------------------
  [NEW] 12V: Schaltungen werden jetzt in Datenbank gespeichert
  [UPDATE] grid: PID von aktuellem Prozess wird in /Energiebox/Grid/PID gespeichert und gekillt bei grid -s
  [UPDATE] grid: Batteriespannung wird life ausgelesen beim Starten des Vorgangs 

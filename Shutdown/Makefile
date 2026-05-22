@@ -13,7 +13,7 @@
 # ==== Compiler-Konfiguration ====
 COMPILER    = gcc
 CFLAGS      = -std=gnu99 -Wall
-LIBS        = -lwiringPi
+LIBS        = -lwiringPi -lmysqlclient
 GROUP       = energiebox
 
 # ==== Build-Info ====
@@ -25,7 +25,7 @@ CFLAGS 	   += -DBUILD_DATE=\"$(BUILD_DATE)\"
 CFLAGS     += -DBUILD_VERSION=\"$(BUILD_VERSION)\"
 
 # ==== Quell- und Ziel-Dateien ====
-OBJ         = mcp_shutdown.o mymcp23017.o iniparse.o
+OBJ         = mcp_shutdown.o mymcp23017.o iniparse.o mysql_wrapper.o
 TARGET      = mcp_shutdown
 
 # ==== Standardziel ====

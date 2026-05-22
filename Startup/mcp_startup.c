@@ -9,6 +9,14 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include <stdlib.h>  // atoi()
+#include "mysql_wrapper.h"
+
+// system Setup
+typedef struct {
+    const char *mysqlCfgPath;
+    const char *PIDFilePath;
+    const char *lockFilePath;
+} system_setup;
 
 // MCP Setup
 typedef struct {
@@ -29,11 +37,6 @@ typedef struct {
     const char *autoStop;
 } relais_config;
 
-// xV Setup
-typedef struct {
-    const char *traceTxtFilePath;
-} system_setup;
-
 // Konfigurations Struktur
 typedef struct {
     mcp_setup mcp;
@@ -51,8 +54,12 @@ int pMaxCurrent;
 static int handler(void *config, const char *section, const char *name, const char *value) {
     configuration *pconfig = (configuration *)config;
 #define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
-    if (MATCH("system", "traceTxtFilePath")) {
-        pconfig->system.traceTxtFilePath = strdup(value);
+    if (MATCH("system", "mysqlCfgPath")) {
+        pconfig->system.mysqlCfgPath = strdup(value);
+    } else if (MATCH("system", "PIDFilePath")) {
+        pconfig->system.PIDFilePath = strdup(value);
+    } else if (MATCH("system", "lockFilePath")) {
+        pconfig->system.lockFilePath = strdup(value);
     } else if (MATCH("mcp", "address")) {
         pconfig->mcp.address = atoi(value);
     } else if (MATCH("mcp", "numberOfRelaisActive")) {
@@ -69,7 +76,8 @@ static int handler(void *config, const char *section, const char *name, const ch
             if (relaisNum >= 1 && relaisNum <= 16) {
                 int idx = relaisNum - 1;
                 if (strcmp(name, "name") == 0) {
-                    strcpy(deviceNames[idx], strdup(value));
+                    // strcpy(deviceNames[idx], value);
+                    snprintf(deviceNames[idx], sizeof(deviceNames[idx]), "%s", value);
                 } else if (strcmp(name, "activateOnStart") == 0) {
                     strcpy(deviceActiveOnStart[idx], value);
                 } else if (strcmp(name, "eltakoState") == 0) {
@@ -85,6 +93,40 @@ static int handler(void *config, const char *section, const char *name, const ch
         return 0;
     }
     return 1;
+}
+
+// Gibt gespeicherten Zustandswert von einem Relais zurück
+int getElkoState(int relais, void *config) {
+    configuration *pconfig = (configuration *)config;
+    if (relais < 1 || relais > 16) return 0;
+    return pconfig->r[relais - 1].eltakoState;
+}
+
+// Schreibt Schaltung in die Datenbank
+void insertSchaltung12V(MYSQL *conn, int relais, char *zustand) {
+    char query[256];
+    snprintf(query, sizeof(query), "INSERT INTO schaltungen_12v (relais, zustand) VALUES (%d, '%s')", relais, zustand);
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "MySQL Fehler: %s\n", mysql_error(conn));
+        FILE *fp = fopen("/Energiebox/error.log", "a");
+        if (fp) {
+            fprintf(fp, "MySQL Fehler: %s\n", mysql_error(conn));
+            fclose(fp);
+        }
+    }
+}
+// Schreibt Schaltung in die Datenbank
+void insertSchaltung230V(MYSQL *conn, int relais, char *zustand) {
+    char query[256];
+    snprintf(query, sizeof(query), "INSERT INTO schaltungen_230v (relais, zustand) VALUES (%d, '%s')", relais, zustand);
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "MySQL Fehler: %s\n", mysql_error(conn));
+        FILE *fp = fopen("/Energiebox/error.log", "a");
+        if (fp) {
+            fprintf(fp, "MySQL Fehler: %s\n", mysql_error(conn));
+            fclose(fp);
+        }
+    }
 }
 
 int getBit(int Port) {
@@ -124,6 +166,23 @@ int main(int argc, char **argv) {
         fprintf(stderr, "wiringPi I2C Setup error\n");
         exit(EXIT_FAILURE);
     }
+
+    // Datenbank Setup
+    DBConfig mysqlconfig = {0};
+    if (!load_db_config(config.system.mysqlCfgPath, &mysqlconfig)) {
+        fprintf(stderr, "%s konnte nicht geladen werden", config.system.mysqlCfgPath);
+        return -1;
+    }
+    MYSQL *conn = db_connect(&mysqlconfig);
+    if (!conn) {
+        fprintf(stderr, "DB Verbindung fehlgeschlagen. Datenbankdaten in %s prüfen! ", config.system.mysqlCfgPath);
+        return -1;
+    }
+    if (mysql_ping(conn) != 0) {
+        fprintf(stderr, "MySQL nicht erreichbar\n");
+        exit(EXIT_FAILURE);
+    }
+
     mcp_initReg();  // Register Bits
     // Alle als Output definieren und auf aus stellen
     for (int i = 0; i < config.mcp.numberOfRelaisActive; i++) {
@@ -152,6 +211,8 @@ int main(int argc, char **argv) {
             if ((pMaxCurrent + devicePMax[f]) <= config.mcp.maxPConverter) {
                 // Relais einschalten
                 mcp_digitalWrite(f, 0);
+                // Datenbank Eintrag für Statistik setzten
+                insertSchaltung12V(conn, f + 1, "an");
                 // eltakostatus in config schreiben
                 sprintf(command, "bash /Energiebox/12V/setIni.sh %d %d", (f + 1), 1);
                 system(command);
@@ -184,6 +245,17 @@ int main(int argc, char **argv) {
         fprintf(stderr, "wiringPi I2C Setup error\n");
         exit(EXIT_FAILURE);
     }
+    // Datenbank cocnfig für 230V laden
+    DBConfig mysqlconfig230 = {0};
+    if (!load_db_config(config.system.mysqlCfgPath, &mysqlconfig230)) {
+        fprintf(stderr, "%s konnte nicht geladen werden", config.system.mysqlCfgPath);
+        return -1;
+    }
+    MYSQL *conn230 = db_connect(&mysqlconfig230);
+    if (!conn230) {
+        fprintf(stderr, "DB Verbindung fehlgeschlagen. Datenbankdaten in mysql_energiebox.cfg prüfen!");
+        return -1;
+    }
     mcp_initReg();
     // Alle als OUTPUT definieren und ausschalten
     for (int i = 0; i < config.mcp.numberOfRelaisActive; i++) {
@@ -194,7 +266,6 @@ int main(int argc, char **argv) {
         sleep(0.2);
     }
     // Autostart Einträge aktivieren für 230V
-
     for (int f = 0; f < config.mcp.numberOfRelaisActive; f++) {
         // wenn autostart aktiviert ist,
         if (strcmp(deviceActiveOnStart[f], "true") == 0) {
@@ -212,6 +283,8 @@ int main(int argc, char **argv) {
             if ((pMaxCurrent + devicePMax[f]) <= config.mcp.maxOutputPower) {
                 // Relais einschalten
                 mcp_digitalWrite(f, 0);
+                // schreibe datenbank eintrag
+                insertSchaltung230V(conn230, f, "an");
                 // eltakostatus in config schreiben
                 sprintf(command, "bash /Energiebox/230V/setIni.sh %d %d", (f + 1), 1);
                 system(command);
@@ -242,6 +315,18 @@ int main(int argc, char **argv) {
         fprintf(stderr, "wiringPi I2C Setup error\n");
         exit(EXIT_FAILURE);
     }
+
+    // Datenbank cocnfig für 230V laden
+    DBConfig mysqlconfiggrid = {0};
+    if (!load_db_config(config.system.mysqlCfgPath, &mysqlconfiggrid)) {
+        fprintf(stderr, "%s konnte nicht geladen werden", config.system.mysqlCfgPath);
+        return -1;
+    }
+    MYSQL *conngrid = db_connect(&mysqlconfiggrid);
+    if (!conngrid) {
+        fprintf(stderr, "DB Verbindung fehlgeschlagen. Datenbankdaten in %s prüfen!", config.system.mysqlCfgPath);
+        return -1;
+    }
     mcp_initReg();
     // Alle als OUTPUT definieren und ausschalten
     for (int i = 0; i < config.mcp.numberOfRelaisActive; i++) {
@@ -249,7 +334,10 @@ int main(int argc, char **argv) {
         mcp_digitalWrite(i, 1);
         sleep(0.1);
     }
-    // sprintf(command, "rm -f /Energiebox/Grid/isLoading.lock");
-    // system(command);
+
+    sprintf(command, "rm -f %s", config.system.PIDFilePath);
+    system(command);
+    sprintf(command, "rm -f %s", config.system.lockFilePath);
+    system(command);
     return 0;
 }

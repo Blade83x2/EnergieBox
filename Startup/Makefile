@@ -13,7 +13,7 @@
 # ==== Compiler-Konfiguration ====
 COMPILER    = gcc
 CFLAGS      = -std=gnu99 -Wall
-LIBS        = -lwiringPi
+LIBS        = -lwiringPi -lmysqlclient
 GROUP       = energiebox
 
 # ==== Build-Info ====
@@ -25,7 +25,7 @@ CFLAGS     += -DBUILD_DATE=\"$(BUILD_DATE)\"
 CFLAGS     += -DBUILD_VERSION=\"$(BUILD_VERSION)\"
 
 # ==== Quell- und Ziel-Dateien ====
-OBJ         = mcp_startup.o mymcp23017.o iniparse.o
+OBJ         = mcp_startup.o mymcp23017.o iniparse.o mysql_wrapper.o
 TARGET      = mcp_startup
 
 # ==== Standardziel ====
@@ -37,11 +37,23 @@ $(TARGET): $(OBJ)
 	chmod 550 $@
 	chgrp $(GROUP) $@
 
-%.o: %.c
+mcp_startup.o: mcp_startup.c
 	$(COMPILER) -c $< $(CFLAGS) $(LIBS)
 	chmod 600 $@
 	chgrp $(GROUP) $@
+	
+mymcp23017.o: mymcp23017.c
+	$(COMPILER) -c mymcp23017.c $(CFLAGS)
+	chmod 600 $@
 
+iniparse.o: iniparse.c
+	$(COMPILER) -c iniparse.c $(CFLAGS)
+	chmod 600 $@
+	
+mysql_wrapper.o: mysql_wrapper.c mysql_wrapper.h
+	$(COMPILER) -c mysql_wrapper.c $(CFLAGS)
+	chmod 600 $@
+	
 # ==== Clean ====
 clean:
 	rm -f $(TARGET) $(OBJ)
