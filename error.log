@@ -1,0 +1,2 @@
+[Errno 11] Could not exclusively lock port /dev/ttyACM0: [Errno 11] Resource temporarily unavailable
+/bin/sh: 1: ./trace: not found

@@ -319,6 +319,7 @@ int main(int argc, char* argv[]) {
                     flock(lockFd, LOCK_UN);
                     close(lockFd);
                     unlink(config.system.PIDFilePath);
+                    unlink(config.system.lockFilePath);
                     exit(0);
                 }
                 // ==========================================
