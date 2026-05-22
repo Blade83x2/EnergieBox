@@ -96,53 +96,42 @@ class BatteryController {
         return -1.0f;
     }
 
+    // Startet den Ladevorgang.
     void triggerLoad() {
         pid_t pid = fork();
-
         // ==========================================
         // Fehler
         // ==========================================
-
         if (pid < 0) {
             std::cerr << "/Energiebox/Tracer/trace: "
                       << "Fehler beim Starten des Grid Programms\n";
-
             return;
         }
-
         // ==========================================
         // Kindprozess
         // ==========================================
-
         if (pid == 0) {
             // Prozess vom Terminal lösen
             setsid();
-
             std::string wh = std::to_string(config.grid.loadingCapacityWh);
-
             execl("/Energiebox/Grid/grid", "grid", "-w", wh.c_str(), (char *)NULL);
-
             // Nur bei Fehler erreichbar
             exit(EXIT_FAILURE);
         }
-
         // ==========================================
         // Elternprozess
         // ==========================================
-
         // PID speichern
         std::ofstream pidFile("/Energiebox/Grid/PID");
-
         if (pidFile.is_open()) {
             pidFile << pid;
             pidFile.close();
         }
-
         std::cout << "Grid-Ladevorgang gestartet (" << config.grid.loadingCapacityWh << " Wh)\n";
-
         std::cout << "  %-26s " << pid << "\n";
     }
 
+    // Speichert EPEVER Daten in Datenbank
     void speichereInDatenbank(float pv_volt, float pv_ampere, float pv_power, float batt_volt, float batt_ampere, float batt_power, int batt_soc, float generated_power,
                               int grid_load_active) {
         MYSQL *conn = mysql_init(nullptr);
@@ -224,8 +213,8 @@ class BatteryController {
 };
 // Programmstart
 int main() {
-    BatteryController controller;
-    if (!controller.run()) {
+    BatteryController trace;
+    if (!trace.run()) {
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
