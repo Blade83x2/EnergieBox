@@ -76,6 +76,33 @@ std::string programmversion = std::string("Ver.") + BUILD_VERSION;
 // Debug-Modus aktivieren/deaktivieren
 bool debug = false;
 enum class LogLevel { DEBUG, INFO, WARN, ERROR, TIMER };
+void debugPrint(const std::string &strMsg, LogLevel level = LogLevel::DEBUG) {
+    if (debug) {
+        auto now = std::chrono::system_clock::now();
+        std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+        std::tm *tm_time = std::localtime(&now_time);
+        std::ostringstream logPrefix;
+        logPrefix << std::put_time(tm_time, "%Y-%m-%d %H:%M:%S") << " ";
+        switch (level) {
+            case LogLevel::DEBUG:
+                logPrefix << "[DEBUG] ";
+                break;
+            case LogLevel::INFO:
+                logPrefix << "[INFO ] ";
+                break;
+            case LogLevel::WARN:
+                logPrefix << "[WARN ] ";
+                break;
+            case LogLevel::ERROR:
+                logPrefix << "[ERROR] ";
+                break;
+            case LogLevel::TIMER:
+                logPrefix << "[TIMER] ";
+                break;
+        }
+        std::cout << logPrefix.str() << strMsg << std::endl;
+    }
+}
 
 // Bildschirm anbleiben
 void disable_display_sleep() {
@@ -103,34 +130,6 @@ void enable_display_sleep() {
         DPMSSetTimeouts(dpy, 600, 900, 1200);
     }
     XCloseDisplay(dpy);
-}
-
-void debugPrint(const std::string &strMsg, LogLevel level = LogLevel::DEBUG) {
-    if (debug) {
-        auto now = std::chrono::system_clock::now();
-        std::time_t now_time = std::chrono::system_clock::to_time_t(now);
-        std::tm *tm_time = std::localtime(&now_time);
-        std::ostringstream logPrefix;
-        logPrefix << std::put_time(tm_time, "%Y-%m-%d %H:%M:%S") << " ";
-        switch (level) {
-            case LogLevel::DEBUG:
-                logPrefix << "[DEBUG] ";
-                break;
-            case LogLevel::INFO:
-                logPrefix << "[INFO ] ";
-                break;
-            case LogLevel::WARN:
-                logPrefix << "[WARN ] ";
-                break;
-            case LogLevel::ERROR:
-                logPrefix << "[ERROR] ";
-                break;
-            case LogLevel::TIMER:
-                logPrefix << "[TIMER] ";
-                break;
-        }
-        std::cout << logPrefix.str() << strMsg << std::endl;
-    }
 }
 
 // Struktur für Informationen zu einem einzelnen Relais
@@ -280,7 +279,7 @@ class GUI : public Gtk::Window {
                 vte_terminal_spawn_async(bash_terminal_, VTE_PTY_DEFAULT, nullptr, (char **)argv, nullptr, G_SPAWN_DEFAULT, nullptr, nullptr, nullptr, -1, nullptr, nullptr,
                                          nullptr);
             },
-            2000);
+            3500);
         // GTK Widget wrappen
         GtkWidget *term_widget = GTK_WIDGET(bash_terminal_);
         // Scrollcontainer erstellen
@@ -620,7 +619,7 @@ class GUI : public Gtk::Window {
                     return false;
                 }
             },
-            300000);
+            30000);
 
         // Status aktualisieren
         if (tabName.find("Energiebox") != std::string::npos) {
