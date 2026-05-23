@@ -75,29 +75,32 @@ std::string programmversion = std::string("Ver.") + BUILD_VERSION;
 
 // Debug-Modus aktivieren/deaktivieren
 bool debug = false;
-enum class LogLevel { DEBUG, INFO, WARN, ERROR, TIMER };
+enum class LogLevel { DEBUG, INFO, WARN, ERROR, TIMER, MSG, FATAL };
 void debugPrint(const std::string &strMsg, LogLevel level = LogLevel::DEBUG) {
     if (debug) {
         auto now = std::chrono::system_clock::now();
         std::time_t now_time = std::chrono::system_clock::to_time_t(now);
         std::tm *tm_time = std::localtime(&now_time);
         std::ostringstream logPrefix;
-        logPrefix << std::put_time(tm_time, "%Y-%m-%d %H:%M:%S") << " ";
+        logPrefix << std::put_time(tm_time, "%Y-%m-%d %H:%M:%S") << " | ";
         switch (level) {
             case LogLevel::DEBUG:
                 logPrefix << "[DEBUG] ";
                 break;
             case LogLevel::INFO:
-                logPrefix << "[INFO ] ";
+                logPrefix << " [INFO] ";
                 break;
             case LogLevel::WARN:
-                logPrefix << "[WARN ] ";
+                logPrefix << " [WARN] ";
                 break;
             case LogLevel::ERROR:
                 logPrefix << "[ERROR] ";
                 break;
-            case LogLevel::TIMER:
-                logPrefix << "[TIMER] ";
+            case LogLevel::MSG:
+                logPrefix << "  [MSG] ";
+                break;
+            case LogLevel::FATAL:
+                logPrefix << "[FATAL] ";
                 break;
         }
         std::cout << logPrefix.str() << strMsg << std::endl;
@@ -208,6 +211,136 @@ class GUI : public Gtk::Window {
         }
         auto screen = Gdk::Screen::get_default();
         Gtk::StyleContext::add_provider_for_screen(screen, css_provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    }
+
+    // Event-Handler für Tab-Wechsel
+    void on_tab_switched(Gtk::Widget *page, guint page_num) {
+        last_interaction_time_ = std::time(nullptr);
+        Gtk::Widget *tab_label_widget = notebook_.get_tab_label(*page);
+        Gtk::Label *tab_label = dynamic_cast<Gtk::Label *>(tab_label_widget);
+        std::string tabName = tab_label ? tab_label->get_text() : "<unbekannter Tab>";
+        debugPrint("Tab gewechselt zu " + tabName, LogLevel::INFO);
+        // alten Timer stoppen
+        if (renewInteraction_.connected()) {
+            renewInteraction_.disconnect();
+        }
+        // neuen Timer starten
+        renewInteraction_ = Glib::signal_timeout().connect(
+            [this]() -> bool {
+                // aktuellen Tab live holen
+                Gtk::Widget *current_page = notebook_.get_nth_page(notebook_.get_current_page());
+                if (!current_page) {
+                    return false;
+                }
+                Gtk::Widget *tab_label_widget = notebook_.get_tab_label(*current_page);
+                if (!tab_label_widget) {
+                    return false;
+                }
+                Gtk::Label *tab_label = dynamic_cast<Gtk::Label *>(tab_label_widget);
+                std::string currentTab = tab_label ? tab_label->get_text() : "<unbekannter Tab>";
+                // Wenn Tab Bash oder Colloid angeklickt worden ist,
+                // Timer auf Tab Energiebox (Update für geschaltetete Relais) unterbrechen
+                if ((currentTab.find("Colloid") != std::string::npos) || (currentTab.find("Bash") != std::string::npos)) {
+                    last_interaction_time_ = std::time(nullptr);
+                    debugPrint("CALL: last_interaction_time_ = std::time(nullptr)", LogLevel::TIMER);
+                    // Screensaver und Powersafe Mode deaktivieren
+                    disable_display_sleep();
+                    debugPrint("CALL: disable_display_sleep()", LogLevel::TIMER);
+                    return true;
+                } else {
+                    enable_display_sleep();
+                    debugPrint("CALL: enable_display_sleep()", LogLevel::TIMER);
+                    debugPrint("---END TIMER---", LogLevel::TIMER);
+                    return false;
+                }
+            },
+            30000);
+
+        // Status aktualisieren
+        if (tabName.find("Energiebox") != std::string::npos) {
+            system_status_label_.set_text("💬 System: Monitoring aktiv");
+            if (!energiebox_timer_connection_.connected()) {
+                energiebox_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::update_energiebox_tab), 60);
+                debugPrint("Energiebox-Timer gestartet", LogLevel::INFO);
+                update_energiebox_tab();
+            }
+        } else {
+            if (energiebox_timer_connection_.connected()) {
+                energiebox_timer_connection_.disconnect();
+                debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
+            }
+        }
+        if (tabName.find("12V") != std::string::npos) {
+            system_status_label_.set_text("💬 System: 12V Steuerung aktiv");
+            refresh_relais12V_status();  // <-- sofortiger Refresh
+            if (!relais12V_timer_connection_.connected()) {
+                relais12V_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::refresh_relais12V_status), 10);
+                debugPrint("Relais12V-Timer gestartet", LogLevel::INFO);
+            }
+        } else {
+            if (relais12V_timer_connection_.connected()) {
+                relais12V_timer_connection_.disconnect();
+                debugPrint("Relais12V-Timer gestoppt", LogLevel::INFO);
+            }
+        }
+        if (tabName.find("230V") != std::string::npos) {
+            system_status_label_.set_text("💬 System: 230V Steuerung aktiv");
+            refresh_relais230V_status();  // <-- sofortiger Refresh
+            if (!relais230V_timer_connection_.connected()) {
+                relais230V_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::refresh_relais230V_status), 10);
+                debugPrint("Relais230V-Timer gestartet", LogLevel::INFO);
+            }
+        } else {
+            if (relais230V_timer_connection_.connected()) {
+                relais230V_timer_connection_.disconnect();
+                debugPrint("Relais230V-Timer gestoppt", LogLevel::INFO);
+            }
+        }
+
+        if (tabName.find("Bash") != std::string::npos) {
+            system_status_label_.set_text("🖥️ System: Bash Terminal aktiv");
+            if (energiebox_timer_connection_.connected()) {
+                energiebox_timer_connection_.disconnect();
+                debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
+            }
+            if (relais12V_timer_connection_.connected()) {
+                relais12V_timer_connection_.disconnect();
+                debugPrint("Relais12V-Timer gestoppt", LogLevel::INFO);
+            }
+            if (relais230V_timer_connection_.connected()) {
+                relais230V_timer_connection_.disconnect();
+                debugPrint("Relais230V-Timer gestoppt", LogLevel::INFO);
+            }
+            // focus in die console setzen
+            if (bash_terminal_) {
+                Glib::signal_timeout().connect_once([this]() { gtk_widget_grab_focus(GTK_WIDGET(bash_terminal_)); }, 1000);
+            }
+        }
+
+        if (tabName.find("Colloid") != std::string::npos) {
+            system_status_label_.set_text("🖥️ Colloid Station aktiv");
+            if (energiebox_timer_connection_.connected()) {
+                energiebox_timer_connection_.disconnect();
+                debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
+            }
+            if (relais12V_timer_connection_.connected()) {
+                relais12V_timer_connection_.disconnect();
+                debugPrint("Relais12V-Timer gestoppt", LogLevel::INFO);
+            }
+            if (relais230V_timer_connection_.connected()) {
+                relais230V_timer_connection_.disconnect();
+                debugPrint("Relais230V-Timer gestoppt", LogLevel::INFO);
+            }
+
+            // menü wieder erscheinen lassen
+            // revealer->set_reveal_child(true);
+            // produktion starten button
+            // button->set_sensitive(true);
+            // ctrc+cc senden
+            // vte_terminal_feed_child(terminal,"\x03",1);
+            // reseten
+            // vte_terminal_reset(terminal, TRUE, TRUE);
+        }
     }
 
     // Energiebox Tab erstellen
@@ -579,133 +712,6 @@ class GUI : public Gtk::Window {
         timeStream << std::put_time(tm_time, "%H:%M:%S | %d.%m.%Y");
         time_label_.set_text(timeStream.str());
         return true;  // Timer wiederholen
-    }
-    // Event-Handler für Tab-Wechsel
-    void on_tab_switched(Gtk::Widget *page, guint page_num) {
-        last_interaction_time_ = std::time(nullptr);
-        Gtk::Widget *tab_label_widget = notebook_.get_tab_label(*page);
-        Gtk::Label *tab_label = dynamic_cast<Gtk::Label *>(tab_label_widget);
-        std::string tabName = tab_label ? tab_label->get_text() : "<unbekannter Tab>";
-        debugPrint("Tab gewechselt zu " + tabName, LogLevel::INFO);
-        // alten Timer stoppen
-        if (renewInteraction_.connected()) {
-            renewInteraction_.disconnect();
-        }
-        // neuen Timer starten
-        renewInteraction_ = Glib::signal_timeout().connect(
-            [this]() -> bool {
-                // aktuellen Tab live holen
-                Gtk::Widget *current_page = notebook_.get_nth_page(notebook_.get_current_page());
-                if (!current_page) {
-                    return false;
-                }
-                Gtk::Widget *tab_label_widget = notebook_.get_tab_label(*current_page);
-                if (!tab_label_widget) {
-                    return false;
-                }
-                Gtk::Label *tab_label = dynamic_cast<Gtk::Label *>(tab_label_widget);
-                std::string currentTab = tab_label ? tab_label->get_text() : "<unbekannter Tab>";
-                debugPrint("in renewInteraction_ " + currentTab, LogLevel::TIMER);
-                if ((currentTab.find("Colloid") != std::string::npos) || (currentTab.find("Bash") != std::string::npos)) {
-                    last_interaction_time_ = std::time(nullptr);
-                    debugPrint("CALL: last_interaction_time_ = std::time(nullptr)", LogLevel::TIMER);
-                    disable_display_sleep();
-                    debugPrint("CALL: disable_display_sleep()", LogLevel::TIMER);
-                    return true;
-                } else {
-                    enable_display_sleep();
-                    debugPrint("CALL: enable_display_sleep()", LogLevel::TIMER);
-                    debugPrint("---END TIMER---", LogLevel::TIMER);
-                    return false;
-                }
-            },
-            30000);
-
-        // Status aktualisieren
-        if (tabName.find("Energiebox") != std::string::npos) {
-            system_status_label_.set_text("💬 System: Monitoring aktiv");
-            if (!energiebox_timer_connection_.connected()) {
-                energiebox_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::update_energiebox_tab), 60);
-                debugPrint("Energiebox-Timer gestartet", LogLevel::INFO);
-                update_energiebox_tab();
-            }
-        } else {
-            if (energiebox_timer_connection_.connected()) {
-                energiebox_timer_connection_.disconnect();
-                debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
-            }
-        }
-        if (tabName.find("12V") != std::string::npos) {
-            system_status_label_.set_text("💬 System: 12V Steuerung aktiv");
-            refresh_relais12V_status();  // <-- sofortiger Refresh
-            if (!relais12V_timer_connection_.connected()) {
-                relais12V_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::refresh_relais12V_status), 10);
-                debugPrint("Relais12V-Timer gestartet", LogLevel::INFO);
-            }
-        } else {
-            if (relais12V_timer_connection_.connected()) {
-                relais12V_timer_connection_.disconnect();
-                debugPrint("Relais12V-Timer gestoppt", LogLevel::INFO);
-            }
-        }
-        if (tabName.find("230V") != std::string::npos) {
-            system_status_label_.set_text("💬 System: 230V Steuerung aktiv");
-            refresh_relais230V_status();  // <-- sofortiger Refresh
-            if (!relais230V_timer_connection_.connected()) {
-                relais230V_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::refresh_relais230V_status), 10);
-                debugPrint("Relais230V-Timer gestartet", LogLevel::INFO);
-            }
-        } else {
-            if (relais230V_timer_connection_.connected()) {
-                relais230V_timer_connection_.disconnect();
-                debugPrint("Relais230V-Timer gestoppt", LogLevel::INFO);
-            }
-        }
-
-        if (tabName.find("Bash") != std::string::npos) {
-            system_status_label_.set_text("🖥️ System: Bash Terminal aktiv");
-            if (energiebox_timer_connection_.connected()) {
-                energiebox_timer_connection_.disconnect();
-                debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
-            }
-            if (relais12V_timer_connection_.connected()) {
-                relais12V_timer_connection_.disconnect();
-                debugPrint("Relais12V-Timer gestoppt", LogLevel::INFO);
-            }
-            if (relais230V_timer_connection_.connected()) {
-                relais230V_timer_connection_.disconnect();
-                debugPrint("Relais230V-Timer gestoppt", LogLevel::INFO);
-            }
-            // focus in die console setzen
-            if (bash_terminal_) {
-                Glib::signal_timeout().connect_once([this]() { gtk_widget_grab_focus(GTK_WIDGET(bash_terminal_)); }, 1000);
-            }
-        }
-
-        if (tabName.find("Colloid") != std::string::npos) {
-            system_status_label_.set_text("🖥️ Colloid Station aktiv");
-            if (energiebox_timer_connection_.connected()) {
-                energiebox_timer_connection_.disconnect();
-                debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
-            }
-            if (relais12V_timer_connection_.connected()) {
-                relais12V_timer_connection_.disconnect();
-                debugPrint("Relais12V-Timer gestoppt", LogLevel::INFO);
-            }
-            if (relais230V_timer_connection_.connected()) {
-                relais230V_timer_connection_.disconnect();
-                debugPrint("Relais230V-Timer gestoppt", LogLevel::INFO);
-            }
-
-            // menü wieder erscheinen lassen
-            // revealer->set_reveal_child(true);
-            // produktion starten button
-            // button->set_sensitive(true);
-            // ctrc+cc senden
-            // vte_terminal_feed_child(terminal,"\x03",1);
-            // reseten
-            // vte_terminal_reset(terminal, TRUE, TRUE);
-        }
     }
 
     // 12V config.ini auslesen und eventuelle Relais Zustandsänderungen in der GUI updaten
