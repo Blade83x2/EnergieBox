@@ -96,6 +96,9 @@ void debugPrint(const std::string &strMsg, LogLevel level = LogLevel::DEBUG) {
             case LogLevel::ERROR:
                 logPrefix << "[ERROR] ";
                 break;
+            case LogLevel::TIMER:
+                logPrefix << "[TIMER] ";
+                break;
             case LogLevel::MSG:
                 logPrefix << "  [MSG] ";
                 break;
