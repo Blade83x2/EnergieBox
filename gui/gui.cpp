@@ -15,7 +15,12 @@
  *
  * TODO
  *  --stop hinzufügen für beenden
+ *
+ *
  *  statistik auf startseite hinzufügen für ladung
+ *
+ *
+ *
  *  reboot und shuzdown funktion im progrtamm hinzufügen
  *  setup in gui einbauen für relaisport konfiguration
  *
@@ -70,7 +75,7 @@ std::string programmversion = std::string("Ver.") + BUILD_VERSION;
 
 // Debug-Modus aktivieren/deaktivieren
 bool debug = false;
-enum class LogLevel { DEBUG, INFO, WARN, ERROR };
+enum class LogLevel { DEBUG, INFO, WARN, ERROR, TIMER };
 
 // Bildschirm anbleiben
 void disable_display_sleep() {
@@ -120,6 +125,9 @@ void debugPrint(const std::string &strMsg, LogLevel level = LogLevel::DEBUG) {
             case LogLevel::ERROR:
                 logPrefix << "[ERROR] ";
                 break;
+            case LogLevel::TIMER:
+                logPrefix << "[TIMER] ";
+                break;
         }
         std::cout << logPrefix.str() << strMsg << std::endl;
     }
@@ -133,6 +141,8 @@ struct RelaisInfo {
     Gtk::Button *button;       // Zeiger auf zugehörigen Button
     sigc::connection handler;  // Signal-Handler für Klick-Ereignis
 };
+
+sigc::connection renewInteraction_;
 
 // Hauptklasse der GUI-Anwendung
 class GUI : public Gtk::Window {
@@ -172,6 +182,12 @@ class GUI : public Gtk::Window {
         Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::update_time), 1);
         // Erstmal Energiebox-Tab direkt aktualisieren und füllen
         show_all_children();
+    }
+
+    ~GUI() {
+        if (renewInteraction_.connected()) {
+            renewInteraction_.disconnect();
+        }
     }
 
    private:
@@ -216,7 +232,7 @@ class GUI : public Gtk::Window {
         // bild in welcome_box laden
         welcome_box->pack_start(*image, Gtk::PACK_SHRINK);
         // Container für Textbereich (rechts in box)
-        auto *text_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 1));
+        auto *text_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 10));
         text_box->set_valign(Gtk::ALIGN_CENTER);  // der inhalt dieser box von der höhe her mittig positionieren
         // inhalt für text_box
         auto *title = Gtk::manage(new Gtk::Label("Energiebox " + programmversion));
@@ -230,6 +246,8 @@ class GUI : public Gtk::Window {
         auto *subtitle = Gtk::manage(new Gtk::Label("© " + currentYear + " Johannes a.d.F. K r ä m e r"));
         subtitle->get_style_context()->add_class("welcome-subtitle");
         subtitle->set_halign(Gtk::ALIGN_START);  // text links ausrichten
+
+        text_box->get_style_context()->add_class("text-box");
         // inhalt in die text_box laden
         text_box->pack_start(*title, Gtk::PACK_SHRINK);
         text_box->pack_start(*subtitle, Gtk::PACK_SHRINK);
@@ -570,8 +588,41 @@ class GUI : public Gtk::Window {
         Gtk::Label *tab_label = dynamic_cast<Gtk::Label *>(tab_label_widget);
         std::string tabName = tab_label ? tab_label->get_text() : "<unbekannter Tab>";
         debugPrint("Tab gewechselt zu " + tabName, LogLevel::INFO);
-        // Status aktualisieren
+        // alten Timer stoppen
+        if (renewInteraction_.connected()) {
+            renewInteraction_.disconnect();
+        }
+        // neuen Timer starten
+        renewInteraction_ = Glib::signal_timeout().connect(
+            [this]() -> bool {
+                // aktuellen Tab live holen
+                Gtk::Widget *current_page = notebook_.get_nth_page(notebook_.get_current_page());
+                if (!current_page) {
+                    return false;
+                }
+                Gtk::Widget *tab_label_widget = notebook_.get_tab_label(*current_page);
+                if (!tab_label_widget) {
+                    return false;
+                }
+                Gtk::Label *tab_label = dynamic_cast<Gtk::Label *>(tab_label_widget);
+                std::string currentTab = tab_label ? tab_label->get_text() : "<unbekannter Tab>";
+                debugPrint("in renewInteraction_ " + currentTab, LogLevel::TIMER);
+                if ((currentTab.find("Colloid") != std::string::npos) || (currentTab.find("Bash") != std::string::npos)) {
+                    last_interaction_time_ = std::time(nullptr);
+                    debugPrint("CALL: last_interaction_time_ = std::time(nullptr)", LogLevel::TIMER);
+                    disable_display_sleep();
+                    debugPrint("CALL: disable_display_sleep()", LogLevel::TIMER);
+                    return true;
+                } else {
+                    enable_display_sleep();
+                    debugPrint("CALL: enable_display_sleep()", LogLevel::TIMER);
+                    debugPrint("---END TIMER---", LogLevel::TIMER);
+                    return false;
+                }
+            },
+            300000);
 
+        // Status aktualisieren
         if (tabName.find("Energiebox") != std::string::npos) {
             system_status_label_.set_text("💬 System: Monitoring aktiv");
             if (!energiebox_timer_connection_.connected()) {
@@ -585,7 +636,6 @@ class GUI : public Gtk::Window {
                 debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
             }
         }
-
         if (tabName.find("12V") != std::string::npos) {
             system_status_label_.set_text("💬 System: 12V Steuerung aktiv");
             refresh_relais12V_status();  // <-- sofortiger Refresh
@@ -631,13 +681,8 @@ class GUI : public Gtk::Window {
             if (bash_terminal_) {
                 Glib::signal_timeout().connect_once([this]() { gtk_widget_grab_focus(GTK_WIDGET(bash_terminal_)); }, 1000);
             }
-            disable_display_sleep();  // Bildschirmschoner aus
-        } else {
-            // renewInteraction_.disconnect();
-            enable_display_sleep();  // Bildschirmschoner an
         }
 
-        sigc::connection renewInteraction_;
         if (tabName.find("Colloid") != std::string::npos) {
             system_status_label_.set_text("🖥️ Colloid Station aktiv");
             if (energiebox_timer_connection_.connected()) {
@@ -653,17 +698,6 @@ class GUI : public Gtk::Window {
                 debugPrint("Relais230V-Timer gestoppt", LogLevel::INFO);
             }
 
-            // jede 10 sekunden last_interaction_time_ reseten,
-            // Tab wechselt nicht zu Energiebox Startseite
-            renewInteraction_ = Glib::signal_timeout().connect(
-                [this]() -> bool {
-                    last_interaction_time_ = std::time(nullptr);
-                    debugPrint("Refresh von last_interaction_time_ Variable");
-                    return true;
-                },
-                10000);
-            disable_display_sleep();  // Tab aktiv
-
             // menü wieder erscheinen lassen
             // revealer->set_reveal_child(true);
             // produktion starten button
@@ -672,10 +706,6 @@ class GUI : public Gtk::Window {
             // vte_terminal_feed_child(terminal,"\x03",1);
             // reseten
             // vte_terminal_reset(terminal, TRUE, TRUE);
-
-        } else {
-            renewInteraction_.disconnect();
-            enable_display_sleep();  // Tab verlassen
         }
     }
 
