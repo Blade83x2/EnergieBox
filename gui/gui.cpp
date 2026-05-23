@@ -192,164 +192,7 @@ class GUI : public Gtk::Window {
             return;
         }
         auto screen = Gdk::Screen::get_default();
-        Gtk::StyleContext::add_provider_for_screen(screen, css_provider, GTK_STYLE_PROVIDER_PRIORITY_USER);
-    }
-
-    // colloid menü out of scope verfügbar machen
-    Gtk::Revealer *revealer = nullptr;
-    Gtk::Button *button = nullptr;
-    Gtk::Paned *main_container = nullptr;
-    VteTerminal *terminal = nullptr;
-    Gtk::Widget &build_colloid_tab() {
-        main_container = Gtk::manage(new Gtk::Paned(Gtk::ORIENTATION_HORIZONTAL));
-        main_container->set_margin_top(0);
-        main_container->set_margin_bottom(0);
-        main_container->set_margin_start(0);
-        main_container->set_margin_end(0);
-        // =========================================================
-        // LINKER BEREICH (Controls vertikal)
-        // =========================================================
-        auto *left_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 8));
-        left_box->set_size_request(200, -1);
-        left_box->set_margin_start(15);
-        left_box->set_margin_end(15);
-        left_box->set_margin_top(12);
-        left_box->set_margin_bottom(12);
-        // ================= Element =================
-        auto *metal_combo = Gtk::manage(new Gtk::ComboBoxText());
-        metal_combo->append("AU");
-        metal_combo->append("AG");
-        metal_combo->append("PT");
-        metal_combo->append("PD");
-        metal_combo->set_active(0);
-        auto *label = Gtk::manage(new Gtk::Label());
-        label->set_markup("<span size='large'><b>Element Auswahl</b></span>");
-        auto *metal_frame = Gtk::manage(new Gtk::Frame());
-        metal_frame->set_label_widget(*label);
-        metal_frame->set_label_align(0.5f, 0.5f);
-        metal_frame->add(*metal_combo);
-        metal_frame->set_margin_start(20);
-        metal_frame->set_margin_end(20);
-        metal_frame->set_margin_top(15);
-        metal_frame->set_margin_bottom(15);
-        // ================= Dispersionsmenge =================
-        auto *value_combo = Gtk::manage(new Gtk::ComboBoxText());
-        value_combo->append("100");
-        value_combo->append("200");
-        value_combo->append("400");
-        value_combo->append("1000");
-        value_combo->append("2000");
-        value_combo->set_active(2);
-        auto *labelm = Gtk::manage(new Gtk::Label());
-        labelm->set_markup("<span size='large'><b>Dispersionsmenge (ml)</b></span>");
-        auto *value_frame = Gtk::manage(new Gtk::Frame());
-        value_frame->set_label_widget(*labelm);
-        value_frame->set_label_align(0.5f, 0.5f);
-        value_frame->add(*value_combo);
-        value_frame->set_margin_start(20);
-        value_frame->set_margin_end(20);
-        value_frame->set_margin_top(15);
-        value_frame->set_margin_bottom(15);
-        // ================= Konzentration =================
-        auto *spin = Gtk::manage(new Gtk::SpinButton());
-        spin->set_range(1, 100);
-        spin->set_increments(1, 5);
-        spin->set_value(8);
-        auto *labelp = Gtk::manage(new Gtk::Label());
-        labelp->set_markup("<span size='large'><b>Konzentration (PPM)</b></span>");
-        auto *spin_frame = Gtk::manage(new Gtk::Frame());
-        spin_frame->set_label_widget(*labelp);
-        spin_frame->set_label_align(0.5f, 0.5f);
-        spin_frame->add(*spin);
-        spin_frame->set_margin_start(20);
-        spin_frame->set_margin_end(20);
-        spin_frame->set_margin_top(15);
-        spin_frame->set_margin_bottom(15);
-        // ================= Starte Produktion =================
-        button = Gtk::manage(new Gtk::Button("Starte Produktion"));
-        auto *button_frame = Gtk::manage(new Gtk::Frame(" "));
-        button_frame->add(*button);
-        button_frame->set_margin_start(20);
-        button_frame->set_margin_end(20);
-        button_frame->set_margin_top(15);
-        button_frame->set_margin_bottom(15);
-        // LEFT PACKING
-        left_box->pack_start(*metal_frame, Gtk::PACK_SHRINK);
-        left_box->pack_start(*value_frame, Gtk::PACK_SHRINK);
-        left_box->pack_start(*spin_frame, Gtk::PACK_SHRINK);
-        left_box->pack_start(*button_frame, Gtk::PACK_SHRINK);
-        // =========================================================
-        // RECHTER BEREICH (Terminal)
-        // =========================================================
-        auto *scroll = Gtk::manage(new Gtk::ScrolledWindow());
-        scroll->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
-        scroll->set_hexpand(true);
-        scroll->set_vexpand(true);
-        terminal = VTE_TERMINAL(vte_terminal_new());
-        // schrift vergrößern
-        vte_terminal_set_font(terminal, pango_font_description_from_string("Monospace 18"));
-        vte_terminal_set_scrollback_lines(terminal, -1);
-        scroll->add(*Glib::wrap(GTK_WIDGET(terminal)));
-        scroll->hide();
-        // =========================================================
-        // BUTTON ACTION
-        // =========================================================
-        revealer = Gtk::manage(new Gtk::Revealer());
-        revealer->set_transition_type(Gtk::REVEALER_TRANSITION_TYPE_SLIDE_LEFT);
-        revealer->set_transition_duration(377);
-        revealer->set_reveal_child(true);
-        revealer->add(*left_box);
-        main_container->add1(*revealer);
-        main_container->add2(*scroll);
-        button->signal_clicked().connect([=]() mutable {
-            button->set_sensitive(false);
-            std::string metal = metal_combo->get_active_text();
-            std::string value = value_combo->get_active_text();
-            int power = spin->get_value_as_int();
-            std::string cmd = "/Energiebox/Kolloid/kolloid -y -e " + metal + " -s " + value + " -p " + std::to_string(power);
-            system_status_label_.set_text(std::string(" 🖥️ ") + cmd);
-            const char *argv[] = {"/bin/bash", "-lc", cmd.c_str(), nullptr};
-            vte_terminal_spawn_async(terminal, VTE_PTY_DEFAULT, nullptr, (char **)argv, nullptr, G_SPAWN_DEFAULT, nullptr, nullptr, nullptr, -1, nullptr, nullptr, nullptr);
-            // Animation
-            revealer->set_reveal_child(false);
-        });
-        // =========================================================
-        // MAIN LAYOUT
-        // =========================================================
-        main_container->add1(*revealer);
-        main_container->add2(*scroll);
-        return *main_container;
-    }
-
-    Gtk::Widget &build_bash_tab() {
-        auto *main_container = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
-        main_container->set_margin_top(0);
-        main_container->set_margin_bottom(0);
-        main_container->set_margin_start(0);
-        main_container->set_margin_end(0);
-        bash_terminal_ = VTE_TERMINAL(vte_terminal_new());
-        vte_terminal_set_scrollback_lines(bash_terminal_, -1);
-        // bash etwas später laden
-        Glib::signal_timeout().connect_once(
-            [=]() {
-                // Shell starten
-                const char *argv[] = {"/bin/bash", nullptr};
-                vte_terminal_spawn_async(bash_terminal_, VTE_PTY_DEFAULT, nullptr, (char **)argv, nullptr, G_SPAWN_DEFAULT, nullptr, nullptr, nullptr, -1, nullptr, nullptr,
-                                         nullptr);
-            },
-            2000);
-        // GTK Widget wrappen
-        GtkWidget *term_widget = GTK_WIDGET(bash_terminal_);
-        // Scrollcontainer erstellen
-        auto *scroll = Gtk::manage(new Gtk::ScrolledWindow());
-        scroll->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
-        scroll->set_hexpand(true);
-        scroll->set_vexpand(true);
-        // Terminal hinzufügen
-        scroll->add(*Glib::wrap(term_widget));
-        // In Hauptcontainer einfügen
-        main_container->pack_start(*scroll, Gtk::PACK_EXPAND_WIDGET);
-        return *main_container;
+        Gtk::StyleContext::add_provider_for_screen(screen, css_provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
 
     // Energiebox Tab erstellen
@@ -400,6 +243,174 @@ class GUI : public Gtk::Window {
         main_container->pack_start(*energiebox_data_container_, Gtk::PACK_SHRINK);
         return *main_container;
     }
+
+    //  BASH TAB
+    //
+    Gtk::Widget &build_bash_tab() {
+        auto *main_container = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
+        main_container->set_margin_top(0);
+        main_container->set_margin_bottom(0);
+        main_container->set_margin_start(0);
+        main_container->set_margin_end(0);
+        bash_terminal_ = VTE_TERMINAL(vte_terminal_new());
+        vte_terminal_set_scrollback_lines(bash_terminal_, -1);
+        // bash etwas später laden
+        Glib::signal_timeout().connect_once(
+            [=]() {
+                // Shell starten
+                const char *argv[] = {"/bin/bash", nullptr};
+                vte_terminal_spawn_async(bash_terminal_, VTE_PTY_DEFAULT, nullptr, (char **)argv, nullptr, G_SPAWN_DEFAULT, nullptr, nullptr, nullptr, -1, nullptr, nullptr,
+                                         nullptr);
+            },
+            2000);
+        // GTK Widget wrappen
+        GtkWidget *term_widget = GTK_WIDGET(bash_terminal_);
+        // Scrollcontainer erstellen
+        auto *scroll = Gtk::manage(new Gtk::ScrolledWindow());
+        scroll->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
+        scroll->set_hexpand(true);
+        scroll->set_vexpand(true);
+        // Terminal hinzufügen
+        scroll->add(*Glib::wrap(term_widget));
+        // In Hauptcontainer einfügen
+        main_container->pack_start(*scroll, Gtk::PACK_EXPAND_WIDGET);
+        return *main_container;
+    }
+
+    //  COLLOID TAB
+    //
+    // colloid menü out of scope verfügbar machen
+    Gtk::Revealer *revealer = nullptr;
+    Gtk::Button *button = nullptr;
+    Gtk::Paned *main_container = nullptr;
+    VteTerminal *terminal = nullptr;
+    Gtk::Widget &build_colloid_tab() {
+        main_container = Gtk::manage(new Gtk::Paned(Gtk::ORIENTATION_HORIZONTAL));
+        main_container->set_margin_top(0);
+        main_container->set_margin_bottom(0);
+        main_container->set_margin_start(0);
+        main_container->set_margin_end(0);
+        // =========================================================
+        // LINKER BEREICH (Controls vertikal)
+        // =========================================================
+        auto *left_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 8));
+        left_box->set_size_request(215, -1);
+        left_box->set_margin_start(8);
+        left_box->set_margin_end(8);
+        left_box->set_margin_top(8);
+        left_box->set_margin_bottom(8);
+        // ================= Element =================
+        auto *metal_combo = Gtk::manage(new Gtk::ComboBoxText());
+        metal_combo->append("AU");
+        metal_combo->append("AG");
+        metal_combo->append("PT");
+        metal_combo->append("PD");
+        metal_combo->set_active(0);
+
+        auto *label = Gtk::manage(new Gtk::Label());
+        label->set_markup("<span size='large'><b>Element Auswahl</b></span>");
+        auto *metal_frame = Gtk::manage(new Gtk::Frame());
+        metal_frame->set_label_widget(*label);
+        metal_frame->set_label_align(0.5f, 0.5f);
+        metal_frame->add(*metal_combo);
+        metal_frame->set_margin_start(5);
+        metal_frame->set_margin_end(5);
+        metal_frame->set_margin_top(3);
+        metal_frame->set_margin_bottom(3);
+        // ================= Dispersionsmenge =================
+        auto *value_combo = Gtk::manage(new Gtk::ComboBoxText());
+        value_combo->append("100");
+        value_combo->append("200");
+        value_combo->append("400");
+        value_combo->append("1000");
+        value_combo->append("2000");
+        value_combo->set_active(2);
+
+        auto *labelm = Gtk::manage(new Gtk::Label());
+        labelm->set_markup("<span size='large'><b>Dispersionsmenge (ml)</b></span>");
+        auto *value_frame = Gtk::manage(new Gtk::Frame());
+        value_frame->set_label_widget(*labelm);
+        value_frame->set_label_align(0.5f, 0.5f);
+        value_frame->add(*value_combo);
+        value_frame->set_margin_start(5);
+        value_frame->set_margin_end(5);
+        value_frame->set_margin_top(3);
+        value_frame->set_margin_bottom(3);
+        // ================= Konzentration =================
+        auto *spin = Gtk::manage(new Gtk::SpinButton());
+        spin->set_range(1, 100);
+        spin->set_increments(1, 5);
+        spin->set_value(8);
+        auto *labelp = Gtk::manage(new Gtk::Label());
+        labelp->set_markup("<span size='large'><b>Konzentration (PPM)</b></span>");
+        auto *spin_frame = Gtk::manage(new Gtk::Frame());
+        spin_frame->set_label_widget(*labelp);
+        spin_frame->set_label_align(0.5f, 0.5f);
+        spin_frame->add(*spin);
+        spin_frame->set_margin_start(5);
+        spin_frame->set_margin_end(5);
+        spin_frame->set_margin_top(3);
+        spin_frame->set_margin_bottom(3);
+        // ================= Starte Produktion =================
+        auto *labelb = Gtk::manage(new Gtk::Label());
+        labelb->set_markup("<span size='large'><b>Produktion</b></span>");
+        button = Gtk::manage(new Gtk::Button("...starten..."));
+        auto *button_frame = Gtk::manage(new Gtk::Frame());
+        button_frame->set_label_widget(*labelb);
+        button_frame->set_label_align(0.5f, 0.5f);
+        button_frame->add(*button);
+        button_frame->set_margin_start(5);
+        button_frame->set_margin_end(5);
+        button_frame->set_margin_top(3);
+        button_frame->set_margin_bottom(3);
+        // LEFT PACKING
+        left_box->pack_start(*metal_frame, Gtk::PACK_SHRINK);
+        left_box->pack_start(*value_frame, Gtk::PACK_SHRINK);
+        left_box->pack_start(*spin_frame, Gtk::PACK_SHRINK);
+        left_box->pack_start(*button_frame, Gtk::PACK_SHRINK);
+        // =========================================================
+        // RECHTER BEREICH (Terminal)
+        // =========================================================
+        auto *scroll = Gtk::manage(new Gtk::ScrolledWindow());
+        scroll->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
+        scroll->set_hexpand(true);
+        scroll->set_vexpand(true);
+        terminal = VTE_TERMINAL(vte_terminal_new());
+        // schrift vergrößern
+        vte_terminal_set_font(terminal, pango_font_description_from_string("Monospace 18"));
+        vte_terminal_set_scrollback_lines(terminal, -1);
+        scroll->add(*Glib::wrap(GTK_WIDGET(terminal)));
+        scroll->hide();
+        // =========================================================
+        // BUTTON ACTION
+        // =========================================================
+        revealer = Gtk::manage(new Gtk::Revealer());
+        revealer->set_transition_type(Gtk::REVEALER_TRANSITION_TYPE_SLIDE_LEFT);
+        revealer->set_transition_duration(377);
+        revealer->set_reveal_child(true);
+        revealer->add(*left_box);
+        main_container->add1(*revealer);
+        main_container->add2(*scroll);
+        button->signal_clicked().connect([=]() mutable {
+            button->set_sensitive(false);
+            std::string metal = metal_combo->get_active_text();
+            std::string value = value_combo->get_active_text();
+            int power = spin->get_value_as_int();
+            std::string cmd = "/Energiebox/Kolloid/kolloid -y -e " + metal + " -s " + value + " -p " + std::to_string(power);
+            system_status_label_.set_text(std::string(" 🖥️ ") + cmd);
+            const char *argv[] = {"/bin/bash", "-lc", cmd.c_str(), nullptr};
+            vte_terminal_spawn_async(terminal, VTE_PTY_DEFAULT, nullptr, (char **)argv, nullptr, G_SPAWN_DEFAULT, nullptr, nullptr, nullptr, -1, nullptr, nullptr, nullptr);
+            // Animation
+            revealer->set_reveal_child(false);
+        });
+        // =========================================================
+        // MAIN LAYOUT
+        // =========================================================
+        main_container->add1(*revealer);
+        main_container->add2(*scroll);
+        return *main_container;
+    }
+
     // 12V Tab erstellen (mit Leistungsprüfung)
     Gtk::Widget &build_tab_12v() { return build_tab("/Energiebox/12V/config.ini", "/Energiebox/12V/12V", true, "12V"); }
     // 230V Tab erstellen (ohne Controller-Verbrauch)
@@ -604,7 +615,6 @@ class GUI : public Gtk::Window {
 
         if (tabName.find("Bash") != std::string::npos) {
             system_status_label_.set_text("🖥️ System: Bash Terminal aktiv");
-
             if (energiebox_timer_connection_.connected()) {
                 energiebox_timer_connection_.disconnect();
                 debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
