@@ -44,7 +44,7 @@ CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=1
 
 # Linker Flags
 LDFLAGS  = `pkg-config --libs $(PKG_CONFIG)`
-LDFLAGS += -lmysqlclient
+LDFLAGS += -lmysqlclient -lX11 -lXext -lXxf86vm
 
 OBJ = gui.o ../inc/MySQLiWrapper.o ../inc/IniReader.o
 
@@ -80,7 +80,6 @@ gui.o: gui.cpp ../inc/MySQLiWrapper.h ../inc/IniReader.h
 	@echo "$(GREEN)Object-File $@ erstellt mit Rechten 600 und Gruppe $(INSTALL_GROUP).$(NC)"
 
 install: $(TARGET)
-
 	@if getent group $(INSTALL_GROUP) > /dev/null; then \
 		echo "$(GREEN)Gruppe '$(INSTALL_GROUP)' existiert.$(NC)"; \
 	else \
@@ -88,16 +87,12 @@ install: $(TARGET)
 		echo "$(RED)Bitte erstellen mit: sudo groupadd $(INSTALL_GROUP)$(NC)"; \
 		exit 1; \
 	fi
-
 	@echo "Installiere $(TARGET) nach $(INSTALL_DIR)..."
-
 	install -g $(INSTALL_GROUP) -m 550 $(TARGET) $(INSTALL_DIR)/$(TARGET)
-
 	@echo "$(GREEN)Erfolgreich installiert als $(INSTALL_DIR)/$(TARGET) mit Gruppe $(INSTALL_GROUP) und Rechten 550.$(NC)"
 
 uninstall:
 	@echo "Entferne $(INSTALL_DIR)/$(TARGET)..."
-
 	@if [ -f $(INSTALL_DIR)/$(TARGET) ]; then \
 		rm -f $(INSTALL_DIR)/$(TARGET); \
 		echo "$(GREEN)Erfolgreich entfernt.$(NC)"; \
@@ -107,7 +102,6 @@ uninstall:
 
 clean:
 	rm -f $(OBJ) $(TARGET)
-
 	@echo "$(GREEN)Build-Dateien entfernt.$(NC)"
 
 # === Abhängigkeiten installieren ===
@@ -115,7 +109,7 @@ clean:
 deps:
 	sudo apt update
 	sudo apt install -y \
-		build-essential \
+		build-essential libxext-dev libx11-dev \
 		libgtkmm-3.0-dev \
 		libvte-2.91-dev \
 		libmysqlclient-dev \

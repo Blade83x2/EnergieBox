@@ -54,11 +54,51 @@
 #include <vte/vte.h>
 #include <gtkmm/socket.h>
 
+#include <gtkmm/box.h>
+#include <gtkmm/comboboxtext.h>
+#include <gtkmm/spinbutton.h>
+#include <gtkmm/button.h>
+#include <gtkmm/scrolledwindow.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/revealer.h>
+#include <gtkmm/paned.h>
+
+#include <X11/Xlib.h>
+#include <X11/extensions/dpms.h>
+
 std::string programmversion = std::string("Ver.") + BUILD_VERSION;
 
 // Debug-Modus aktivieren/deaktivieren
-bool debug = true;
+bool debug = false;
 enum class LogLevel { DEBUG, INFO, WARN, ERROR };
+
+// Bildschirm anbleiben
+void disable_display_sleep() {
+    Display *dpy = XOpenDisplay(nullptr);
+    if (!dpy) return;
+    XSetScreenSaver(dpy, 0, 0, DefaultBlanking, DefaultExposures);
+    if (DPMSCapable(dpy)) {
+        DPMSDisable(dpy);
+    }
+    XCloseDisplay(dpy);
+}
+void enable_display_sleep() {
+    Display *dpy = XOpenDisplay(nullptr);
+    if (!dpy) return;
+    // Standard Screen Saver wieder aktivieren (z.B. 600s)
+    int timeout = 600;  // Sekunden bis Blank
+    int interval = 600;
+    int prefer_blank = DefaultBlanking;
+    int allow_exposures = DefaultExposures;
+    XSetScreenSaver(dpy, timeout, interval, prefer_blank, allow_exposures);
+    // DPMS wieder einschalten
+    if (DPMSCapable(dpy)) {
+        DPMSEnable(dpy);
+        // optional: Energielevel zurücksetzen
+        DPMSSetTimeouts(dpy, 600, 900, 1200);
+    }
+    XCloseDisplay(dpy);
+}
 
 void debugPrint(const std::string &strMsg, LogLevel level = LogLevel::DEBUG) {
     if (debug) {
@@ -112,6 +152,7 @@ class GUI : public Gtk::Window {
         notebook_.append_page(build_tab_12v(), "⚡ 12V");
         notebook_.append_page(build_tab_230v(), "⚡ 230V");
         notebook_.append_page(build_bash_tab(), "🖥️ Bash");
+        notebook_.append_page(build_colloid_tab(), "🖥️ Colloid");
         main_box_.pack_start(notebook_, Gtk::PACK_EXPAND_WIDGET);
         // Status-Leiste erstellen
         create_status_bar();
@@ -154,17 +195,149 @@ class GUI : public Gtk::Window {
         Gtk::StyleContext::add_provider_for_screen(screen, css_provider, GTK_STYLE_PROVIDER_PRIORITY_USER);
     }
 
+    // colloid menü out of scope verfügbar machen
+    Gtk::Revealer *revealer = nullptr;
+    Gtk::Button *button = nullptr;
+    Gtk::Paned *main_container = nullptr;
+    VteTerminal *terminal = nullptr;
+    Gtk::Widget &build_colloid_tab() {
+        main_container = Gtk::manage(new Gtk::Paned(Gtk::ORIENTATION_HORIZONTAL));
+        main_container->set_margin_top(0);
+        main_container->set_margin_bottom(0);
+        main_container->set_margin_start(0);
+        main_container->set_margin_end(0);
+        // =========================================================
+        // LINKER BEREICH (Controls vertikal)
+        // =========================================================
+        auto *left_box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 8));
+        left_box->set_size_request(200, -1);
+        left_box->set_margin_start(15);
+        left_box->set_margin_end(15);
+        left_box->set_margin_top(12);
+        left_box->set_margin_bottom(12);
+        // ================= Element =================
+        auto *metal_combo = Gtk::manage(new Gtk::ComboBoxText());
+        metal_combo->append("AU");
+        metal_combo->append("AG");
+        metal_combo->append("PT");
+        metal_combo->append("PD");
+        metal_combo->set_active(0);
+        auto *label = Gtk::manage(new Gtk::Label());
+        label->set_markup("<span size='large'><b>Element Auswahl</b></span>");
+        auto *metal_frame = Gtk::manage(new Gtk::Frame());
+        metal_frame->set_label_widget(*label);
+        metal_frame->set_label_align(0.5f, 0.5f);
+        metal_frame->add(*metal_combo);
+        metal_frame->set_margin_start(20);
+        metal_frame->set_margin_end(20);
+        metal_frame->set_margin_top(15);
+        metal_frame->set_margin_bottom(15);
+        // ================= Dispersionsmenge =================
+        auto *value_combo = Gtk::manage(new Gtk::ComboBoxText());
+        value_combo->append("100");
+        value_combo->append("200");
+        value_combo->append("400");
+        value_combo->append("1000");
+        value_combo->append("2000");
+        value_combo->set_active(2);
+        auto *labelm = Gtk::manage(new Gtk::Label());
+        labelm->set_markup("<span size='large'><b>Dispersionsmenge (ml)</b></span>");
+        auto *value_frame = Gtk::manage(new Gtk::Frame());
+        value_frame->set_label_widget(*labelm);
+        value_frame->set_label_align(0.5f, 0.5f);
+        value_frame->add(*value_combo);
+        value_frame->set_margin_start(20);
+        value_frame->set_margin_end(20);
+        value_frame->set_margin_top(15);
+        value_frame->set_margin_bottom(15);
+        // ================= Konzentration =================
+        auto *spin = Gtk::manage(new Gtk::SpinButton());
+        spin->set_range(1, 100);
+        spin->set_increments(1, 5);
+        spin->set_value(8);
+        auto *labelp = Gtk::manage(new Gtk::Label());
+        labelp->set_markup("<span size='large'><b>Konzentration (PPM)</b></span>");
+        auto *spin_frame = Gtk::manage(new Gtk::Frame());
+        spin_frame->set_label_widget(*labelp);
+        spin_frame->set_label_align(0.5f, 0.5f);
+        spin_frame->add(*spin);
+        spin_frame->set_margin_start(20);
+        spin_frame->set_margin_end(20);
+        spin_frame->set_margin_top(15);
+        spin_frame->set_margin_bottom(15);
+        // ================= Starte Produktion =================
+        button = Gtk::manage(new Gtk::Button("Starte Produktion"));
+        auto *button_frame = Gtk::manage(new Gtk::Frame(" "));
+        button_frame->add(*button);
+        button_frame->set_margin_start(20);
+        button_frame->set_margin_end(20);
+        button_frame->set_margin_top(15);
+        button_frame->set_margin_bottom(15);
+        // LEFT PACKING
+        left_box->pack_start(*metal_frame, Gtk::PACK_SHRINK);
+        left_box->pack_start(*value_frame, Gtk::PACK_SHRINK);
+        left_box->pack_start(*spin_frame, Gtk::PACK_SHRINK);
+        left_box->pack_start(*button_frame, Gtk::PACK_SHRINK);
+        // =========================================================
+        // RECHTER BEREICH (Terminal)
+        // =========================================================
+        auto *scroll = Gtk::manage(new Gtk::ScrolledWindow());
+        scroll->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
+        scroll->set_hexpand(true);
+        scroll->set_vexpand(true);
+        terminal = VTE_TERMINAL(vte_terminal_new());
+        // schrift vergrößern
+        vte_terminal_set_font(terminal, pango_font_description_from_string("Monospace 18"));
+        vte_terminal_set_scrollback_lines(terminal, -1);
+        scroll->add(*Glib::wrap(GTK_WIDGET(terminal)));
+        scroll->hide();
+        // =========================================================
+        // BUTTON ACTION
+        // =========================================================
+        revealer = Gtk::manage(new Gtk::Revealer());
+        revealer->set_transition_type(Gtk::REVEALER_TRANSITION_TYPE_SLIDE_LEFT);
+        revealer->set_transition_duration(377);
+        revealer->set_reveal_child(true);
+        revealer->add(*left_box);
+        main_container->add1(*revealer);
+        main_container->add2(*scroll);
+        button->signal_clicked().connect([=]() mutable {
+            button->set_sensitive(false);
+            std::string metal = metal_combo->get_active_text();
+            std::string value = value_combo->get_active_text();
+            int power = spin->get_value_as_int();
+            std::string cmd = "/Energiebox/Kolloid/kolloid -y -e " + metal + " -s " + value + " -p " + std::to_string(power);
+            system_status_label_.set_text(std::string(" 🖥️ ") + cmd);
+            const char *argv[] = {"/bin/bash", "-lc", cmd.c_str(), nullptr};
+            vte_terminal_spawn_async(terminal, VTE_PTY_DEFAULT, nullptr, (char **)argv, nullptr, G_SPAWN_DEFAULT, nullptr, nullptr, nullptr, -1, nullptr, nullptr, nullptr);
+            // Animation
+            revealer->set_reveal_child(false);
+        });
+        // =========================================================
+        // MAIN LAYOUT
+        // =========================================================
+        main_container->add1(*revealer);
+        main_container->add2(*scroll);
+        return *main_container;
+    }
+
     Gtk::Widget &build_bash_tab() {
         auto *main_container = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
-        main_container->set_margin_top(3);
-        main_container->set_margin_bottom(3);
-        main_container->set_margin_start(3);
-        main_container->set_margin_end(3);
+        main_container->set_margin_top(0);
+        main_container->set_margin_bottom(0);
+        main_container->set_margin_start(0);
+        main_container->set_margin_end(0);
         bash_terminal_ = VTE_TERMINAL(vte_terminal_new());
         vte_terminal_set_scrollback_lines(bash_terminal_, -1);
-        // Shell starten
-        const char *argv[] = {"/bin/bash", "-lc", "/Energiebox/Kollod/kolloid", nullptr};
-        vte_terminal_spawn_async(bash_terminal_, VTE_PTY_DEFAULT, nullptr, (char **)argv, nullptr, G_SPAWN_DEFAULT, nullptr, nullptr, nullptr, -1, nullptr, nullptr, nullptr);
+        // bash etwas später laden
+        Glib::signal_timeout().connect_once(
+            [=]() {
+                // Shell starten
+                const char *argv[] = {"/bin/bash", nullptr};
+                vte_terminal_spawn_async(bash_terminal_, VTE_PTY_DEFAULT, nullptr, (char **)argv, nullptr, G_SPAWN_DEFAULT, nullptr, nullptr, nullptr, -1, nullptr, nullptr,
+                                         nullptr);
+            },
+            2000);
         // GTK Widget wrappen
         GtkWidget *term_widget = GTK_WIDGET(bash_terminal_);
         // Scrollcontainer erstellen
@@ -387,6 +560,21 @@ class GUI : public Gtk::Window {
         std::string tabName = tab_label ? tab_label->get_text() : "<unbekannter Tab>";
         debugPrint("Tab gewechselt zu " + tabName, LogLevel::INFO);
         // Status aktualisieren
+
+        if (tabName.find("Energiebox") != std::string::npos) {
+            system_status_label_.set_text("💬 System: Monitoring aktiv");
+            if (!energiebox_timer_connection_.connected()) {
+                energiebox_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::update_energiebox_tab), 60);
+                debugPrint("Energiebox-Timer gestartet", LogLevel::INFO);
+                update_energiebox_tab();
+            }
+        } else {
+            if (energiebox_timer_connection_.connected()) {
+                energiebox_timer_connection_.disconnect();
+                debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
+            }
+        }
+
         if (tabName.find("12V") != std::string::npos) {
             system_status_label_.set_text("💬 System: 12V Steuerung aktiv");
             refresh_relais12V_status();  // <-- sofortiger Refresh
@@ -414,22 +602,8 @@ class GUI : public Gtk::Window {
             }
         }
 
-        if (tabName.find("Energiebox") != std::string::npos) {
-            system_status_label_.set_text("💬 System: Monitoring aktiv");
-            if (!energiebox_timer_connection_.connected()) {
-                energiebox_timer_connection_ = Glib::signal_timeout().connect_seconds(sigc::mem_fun(*this, &GUI::update_energiebox_tab), 60);
-                debugPrint("Energiebox-Timer gestartet", LogLevel::INFO);
-                update_energiebox_tab();
-            }
-        } else {
-            if (energiebox_timer_connection_.connected()) {
-                energiebox_timer_connection_.disconnect();
-                debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
-            }
-        }
-
         if (tabName.find("Bash") != std::string::npos) {
-            system_status_label_.set_text("💬 System: Bash Terminal aktiv");
+            system_status_label_.set_text("🖥️ System: Bash Terminal aktiv");
 
             if (energiebox_timer_connection_.connected()) {
                 energiebox_timer_connection_.disconnect();
@@ -445,9 +619,53 @@ class GUI : public Gtk::Window {
             }
             // focus in die console setzen
             if (bash_terminal_) {
-                Glib::signal_timeout().connect_once([this]() { gtk_widget_grab_focus(GTK_WIDGET(bash_terminal_)); }, 100);
+                Glib::signal_timeout().connect_once([this]() { gtk_widget_grab_focus(GTK_WIDGET(bash_terminal_)); }, 1000);
             }
+            disable_display_sleep();  // Bildschirmschoner aus
         } else {
+            // renewInteraction_.disconnect();
+            enable_display_sleep();  // Bildschirmschoner an
+        }
+
+        sigc::connection renewInteraction_;
+        if (tabName.find("Colloid") != std::string::npos) {
+            system_status_label_.set_text("🖥️ Colloid Station aktiv");
+            if (energiebox_timer_connection_.connected()) {
+                energiebox_timer_connection_.disconnect();
+                debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
+            }
+            if (relais12V_timer_connection_.connected()) {
+                relais12V_timer_connection_.disconnect();
+                debugPrint("Relais12V-Timer gestoppt", LogLevel::INFO);
+            }
+            if (relais230V_timer_connection_.connected()) {
+                relais230V_timer_connection_.disconnect();
+                debugPrint("Relais230V-Timer gestoppt", LogLevel::INFO);
+            }
+
+            // jede 10 sekunden last_interaction_time_ reseten,
+            // Tab wechselt nicht zu Energiebox Startseite
+            renewInteraction_ = Glib::signal_timeout().connect(
+                [this]() -> bool {
+                    last_interaction_time_ = std::time(nullptr);
+                    debugPrint("Refresh von last_interaction_time_ Variable");
+                    return true;
+                },
+                10000);
+            disable_display_sleep();  // Tab aktiv
+
+            // menü wieder erscheinen lassen
+            // revealer->set_reveal_child(true);
+            // produktion starten button
+            // button->set_sensitive(true);
+            // ctrc+cc senden
+            // vte_terminal_feed_child(terminal,"\x03",1);
+            // reseten
+            // vte_terminal_reset(terminal, TRUE, TRUE);
+
+        } else {
+            renewInteraction_.disconnect();
+            enable_display_sleep();  // Tab verlassen
         }
     }
 

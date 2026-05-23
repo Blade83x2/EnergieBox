@@ -82,7 +82,7 @@ function ProgressBarRound()
     local current=$1
     local max=$2
     local title="$3"
-    local width=26
+    local width=28
     # Prozent berechnen
     local percent=$(( current * 100 / max ))
     # Gefüllte Zeichen berechnen
@@ -203,7 +203,7 @@ function extract_middle_number()
   echo "$found_digits"
 }
 
-# Berechnet aus Gesammt Herstellungsmenge (in ml) die benötigte Gkäsergrö0e zur Produktion
+# Berechnet aus Gesammt Herstellungsmenge (in ml) die benötigte Gläsergrö0e zur Produktion
 function calculate_count() 
 {
   local input=$1

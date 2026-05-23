@@ -1,10 +1,7 @@
 #!/bin/bash
 # Liesst Parameter beim Programmaufruf aus. Falls nicht gesetzt werden diese in der Konsole abgefragt
-
-
+# wenn -y übergeben wird
 directstart=false
-
-
 function usage() {
     clear;
     showLogo

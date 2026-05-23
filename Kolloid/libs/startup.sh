@@ -1,30 +1,21 @@
 #!/bin/bash
-
 echo -e "\nStarting ${programmName} Ver.${programmVersion}";
+sleep 1.1;
+echo -e "Detect System:";
+sleep 2.1;
+echo -e " + Distribution:\t$(detect_distro)";
 sleep 0.1;
-
-echo -e "\nDetect System: ";
+echo -e " + Release:\t\t$(detect_release)";
 sleep 0.1;
-
-echo -e " + Distribution:\t\t$(detect_distro)";
+echo -e " + Architekture:\t$(detect_arch)";
 sleep 0.1;
-
-echo -e " + Release:\t\t\t$(detect_release)";
+echo -e " + Kernel:\t\t$(uname -r)";
 sleep 0.1;
-
-echo -e " + Architekture:\t\t$(detect_arch)";
+echo -e " + User:\t\t$(whoami)";
 sleep 0.1;
-
-echo -e " + Kernel:\t\t\t$(uname -r)";
-sleep 0.1;
-
-echo -e " + User:\t\t\t$(whoami)";
-sleep 0.1;
-
-
-
-echo -e " + Script Path:\t\t\t$scriptPath";
-echo -e " + Libary Path:\t\t\t$libsPath";
-echo -e " + Sound Path:\t\t\t$soundPath";
-sleep 0.2
+echo -e " + Project Path:\t$projectDir";
+echo -e " + Script Path:\t\t$scriptPath";
+echo -e " + Libary Path:\t\t$libsPath";
+echo -e " + Sound Path:\t\t$soundPath";
+sleep 5.2
 clear
