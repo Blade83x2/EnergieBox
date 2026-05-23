@@ -18,7 +18,6 @@
  *  statistik auf startseite hinzufügen für ladung
  *  reboot und shuzdown funktion im progrtamm hinzufügen
  *  setup in gui einbauen für relaisport konfiguration
- *  2026 automatisch auslesen
  *
  */
 #include <gtkmm/application.h>
@@ -31,6 +30,7 @@
 #include <gtkmm/image.h>
 #include <gtkmm/cssprovider.h>
 #include <gtkmm/stylecontext.h>
+#include <gtkmm/settings.h>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/separator.h>
 #include <gtkmm/progressbar.h>
@@ -57,7 +57,7 @@
 std::string programmversion = std::string("Ver.") + BUILD_VERSION;
 
 // Debug-Modus aktivieren/deaktivieren
-bool debug = false;
+bool debug = true;
 enum class LogLevel { DEBUG, INFO, WARN, ERROR };
 
 void debugPrint(const std::string &strMsg, LogLevel level = LogLevel::DEBUG) {
@@ -103,23 +103,25 @@ class GUI : public Gtk::Window {
         // Hauptcontainer für Notebook und Status-Leiste
         main_box_.set_orientation(Gtk::ORIENTATION_VERTICAL);
         // Ränder für das Notebook (Tabs) setzen
-        notebook_.set_margin_top(10);
-        notebook_.set_margin_bottom(10);
-        notebook_.set_margin_start(10);
-        notebook_.set_margin_end(10);
+        notebook_.set_margin_top(0);
+        notebook_.set_margin_bottom(0);
+        notebook_.set_margin_start(0);
+        notebook_.set_margin_end(0);
         // Tabs hinzufügen: Energiebox, 12V, 230V
         notebook_.append_page(build_energiebox_tab(), "💻 Energiebox");
         notebook_.append_page(build_tab_12v(), "⚡ 12V");
         notebook_.append_page(build_tab_230v(), "⚡ 230V");
-
         notebook_.append_page(build_bash_tab(), "🖥️ Bash");
-
         main_box_.pack_start(notebook_, Gtk::PACK_EXPAND_WIDGET);
         // Status-Leiste erstellen
         create_status_bar();
         main_box_.pack_end(status_box_, Gtk::PACK_SHRINK);
         add(main_box_);  // Hauptcontainer dem Fenster hinzufügen
         apply_css();     // Schriftgröße etc. anpassen
+        auto settings = Gtk::Settings::get_default();
+        if (settings) {
+            settings->property_gtk_application_prefer_dark_theme() = true;
+        }
         // Event-Handler für Tab-Wechsel, um Timer zurückzusetzen
         notebook_.signal_switch_page().connect(sigc::mem_fun(*this, &GUI::on_tab_switched));
         // Timer: nach 30 Sekunden Inaktivität automatisch auf Info-Tab wechseln
@@ -153,25 +155,27 @@ class GUI : public Gtk::Window {
     }
 
     Gtk::Widget &build_bash_tab() {
-        auto *main_container = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 10));
-        main_container->set_margin_top(10);
-        main_container->set_margin_bottom(10);
-        main_container->set_margin_start(10);
-        main_container->set_margin_end(10);
-        // Titel
-        auto *title = Gtk::manage(new Gtk::Label(""));
-        title->get_style_context()->add_class("data-title");
-        title->set_halign(Gtk::ALIGN_START);
-        main_container->pack_start(*title, Gtk::PACK_SHRINK);
-        // VTE Terminal erstellen
-        VteTerminal *terminal = VTE_TERMINAL(vte_terminal_new());
+        auto *main_container = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
+        main_container->set_margin_top(3);
+        main_container->set_margin_bottom(3);
+        main_container->set_margin_start(3);
+        main_container->set_margin_end(3);
+        bash_terminal_ = VTE_TERMINAL(vte_terminal_new());
+        vte_terminal_set_scrollback_lines(bash_terminal_, -1);
         // Shell starten
-        const char *argv[] = {"/bin/bash", nullptr};
-        vte_terminal_spawn_async(terminal, VTE_PTY_DEFAULT, nullptr, (char **)argv, nullptr, G_SPAWN_DEFAULT, nullptr, nullptr, nullptr, -1, nullptr, nullptr, nullptr);
+        const char *argv[] = {"/bin/bash", "-lc", "/Energiebox/Kollod/kolloid", nullptr};
+        vte_terminal_spawn_async(bash_terminal_, VTE_PTY_DEFAULT, nullptr, (char **)argv, nullptr, G_SPAWN_DEFAULT, nullptr, nullptr, nullptr, -1, nullptr, nullptr, nullptr);
         // GTK Widget wrappen
-        GtkWidget *term_widget = GTK_WIDGET(terminal);
-        // In Container einfügen
-        gtk_box_pack_start(GTK_BOX(main_container->gobj()), term_widget, TRUE, TRUE, 0);
+        GtkWidget *term_widget = GTK_WIDGET(bash_terminal_);
+        // Scrollcontainer erstellen
+        auto *scroll = Gtk::manage(new Gtk::ScrolledWindow());
+        scroll->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
+        scroll->set_hexpand(true);
+        scroll->set_vexpand(true);
+        // Terminal hinzufügen
+        scroll->add(*Glib::wrap(term_widget));
+        // In Hauptcontainer einfügen
+        main_container->pack_start(*scroll, Gtk::PACK_EXPAND_WIDGET);
         return *main_container;
     }
 
@@ -409,6 +413,7 @@ class GUI : public Gtk::Window {
                 debugPrint("Relais230V-Timer gestoppt", LogLevel::INFO);
             }
         }
+
         if (tabName.find("Energiebox") != std::string::npos) {
             system_status_label_.set_text("💬 System: Monitoring aktiv");
             if (!energiebox_timer_connection_.connected()) {
@@ -425,6 +430,7 @@ class GUI : public Gtk::Window {
 
         if (tabName.find("Bash") != std::string::npos) {
             system_status_label_.set_text("💬 System: Bash Terminal aktiv");
+
             if (energiebox_timer_connection_.connected()) {
                 energiebox_timer_connection_.disconnect();
                 debugPrint("Energiebox-Timer gestoppt", LogLevel::INFO);
@@ -437,7 +443,10 @@ class GUI : public Gtk::Window {
                 relais230V_timer_connection_.disconnect();
                 debugPrint("Relais230V-Timer gestoppt", LogLevel::INFO);
             }
-
+            // focus in die console setzen
+            if (bash_terminal_) {
+                Glib::signal_timeout().connect_once([this]() { gtk_widget_grab_focus(GTK_WIDGET(bash_terminal_)); }, 100);
+            }
         } else {
         }
     }
@@ -585,7 +594,7 @@ class GUI : public Gtk::Window {
     // Liest messwerte aus der Datenbank ausund parst die Werte und aktualisiert den Energietab
     bool update_energiebox_tab() {
         MySQLiWrapper db("/home/box/.mysql_energiebox.cfg");
-        if (db.query("SELECT pv_volt, pv_ampere, pv_power, batt_volt, batt_ampere, batt_power, batt_soc, generated_power FROM messwerte ORDER BY id DESC LIMIT 1")) {
+        if (db.query("SELECT pv_volt, pv_ampere, pv_power, batt_volt, batt_ampere, batt_power, batt_soc, generated_power FROM mppt_trace ORDER BY id DESC LIMIT 1")) {
             std::map<std::string, std::string> row = db.fetchArray();
             // PV Daten
             std::vector<std::pair<std::string, std::string>> pv_data = {{"Spannung (U)", row["pv_volt"] + "V"},
@@ -622,6 +631,8 @@ class GUI : public Gtk::Window {
     std::map<int, bool> relais12v_status_;
     std::map<int, Gtk::Button *> relais230v_buttons_;
     std::map<int, bool> relais230v_status_;
+
+    VteTerminal *bash_terminal_ = nullptr;
 };
 
 int main(int argc, char *argv[]) {

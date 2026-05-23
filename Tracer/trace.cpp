@@ -31,7 +31,6 @@ struct MCPSetup {
 // Strukt
 struct GridSetup {
     float supplyMaxCurrent = 0.0f;
-    float supplyMaxVoltage = 0.0f;
     int supplyMinLoadWh = 0;
     int supplyMaxLoadWh = 0;
     float battVoltageStartLoading = 0.0f;
@@ -43,7 +42,6 @@ struct SystemSetup {
     const char *lockFilePath;
     const char *readallCmd;
     const char *PIDFilePath;
-    const char *PIDUser;
 };
 // Alle Strukte zusammen führen
 struct Configuration {
@@ -61,21 +59,14 @@ static int handler(void *config, const char *section, const char *name, const ch
         pconfig->system.lockFilePath = strdup(value);
     } else if (MATCH("system", "readallCmd")) {
         pconfig->system.readallCmd = strdup(value);
-
     } else if (MATCH("system", "PIDFilePath")) {
         pconfig->system.PIDFilePath = strdup(value);
-
-    } else if (MATCH("system", "PIDUser")) {
-        pconfig->system.PIDUser = strdup(value);
-
     } else if (MATCH("mcp", "address")) {
         pconfig->mcp.address = std::atoi(value);
     } else if (MATCH("mcp", "numberOfRelaisActive")) {
         pconfig->mcp.numberOfRelaisActive = std::atoi(value);
     } else if (MATCH("grid", "supplyMaxCurrent")) {
         pconfig->grid.supplyMaxCurrent = std::atof(value);
-    } else if (MATCH("grid", "supplyMaxVoltage")) {
-        pconfig->grid.supplyMaxVoltage = std::atof(value);
     } else if (MATCH("grid", "supplyMinLoadWh")) {
         pconfig->grid.supplyMinLoadWh = std::atoi(value);
     } else if (MATCH("grid", "supplyMaxLoadWh")) {
@@ -126,12 +117,12 @@ class BatteryController {
         }
         if (!mysql_options(conn, MYSQL_READ_DEFAULT_FILE, config.system.mysqlCfgPath)) {
             if (mysql_real_connect(conn, nullptr, nullptr, nullptr, nullptr, 0, nullptr, 0)) {
-                unsigned int timestamp = static_cast<unsigned int>(std::time(nullptr));
-                std::string sql =
-                    "INSERT INTO messwerte (timestamp, pv_volt, pv_ampere, pv_power, batt_volt, batt_ampere, batt_power, batt_soc, generated_power, grid_load_active) VALUES (" +
-                    std::to_string(timestamp) + ", " + std::to_string(pv_volt) + ", " + std::to_string(pv_ampere) + ", " + std::to_string(pv_power) + ", " +
-                    std::to_string(batt_volt) + ", " + std::to_string(batt_ampere) + ", " + std::to_string(batt_power) + ", " + std::to_string(batt_soc) + ", " +
-                    std::to_string(generated_power) + ", " + std::to_string(grid_load_active) + ")";
+                // unsigned int timestamp = static_cast<unsigned int>(std::time(nullptr));
+                std::string
+                    sql = "INSERT INTO mppt_trace ( pv_volt, pv_ampere, pv_power, batt_volt, batt_ampere, batt_power, batt_soc, generated_power, grid_load_active) VALUES (" +
+                          std::to_string(pv_volt) + ", " + std::to_string(pv_ampere) + ", " + std::to_string(pv_power) + ", " + std::to_string(batt_volt) + ", " +
+                          std::to_string(batt_ampere) + ", " + std::to_string(batt_power) + ", " + std::to_string(batt_soc) + ", " + std::to_string(generated_power) + ", " +
+                          std::to_string(grid_load_active) + ")";
                 if (mysql_query(conn, sql.c_str())) {
                     std::cerr << "/Energiebox/Tracer/trace: MySQL INSERT fehlgeschlagen: " << mysql_error(conn) << "\n";
                 } else {

@@ -118,7 +118,7 @@ float getBatteryVoltage(const char* script) {
 // Schreibt Ladung in die Datenbank
 void insertGridLoad(MYSQL* conn, const char* zustand) {
     char query[256];
-    snprintf(query, sizeof(query), "INSERT INTO grid_loads (action) VALUES ('%s')", zustand);
+    snprintf(query, sizeof(query), "INSERT INTO schaltungen_grid (zustand) VALUES ('%s')", zustand);
     if (mysql_query(conn, query)) {
         fprintf(stderr, "MySQL Fehler: %s\n", mysql_error(conn));
     }
@@ -265,7 +265,7 @@ int main(int argc, char* argv[]) {
                 // ==========================================
                 // Ladestop in Datenbank eintragen
                 // ==========================================
-                insertGridLoad(conn, "stop");
+                insertGridLoad(conn, "aus");
                 // ==========================================
                 // PID Datei & lockfile löschen
                 // ==========================================
@@ -326,7 +326,7 @@ int main(int argc, char* argv[]) {
                 // ==========================================
                 // Ladestart in Datenbank eintragen
                 // ==========================================
-                insertGridLoad(conn, "start");
+                insertGridLoad(conn, "an");
                 // ==========================================
                 // Hintergrundprozess starten
                 // ==========================================
@@ -352,7 +352,7 @@ int main(int argc, char* argv[]) {
                     // ==========================================
                     // Ladestop in Datenbank eintragen
                     // ==========================================
-                    insertGridLoad(conn, "stop");
+                    insertGridLoad(conn, "aus");
                     // Lock freigeben
                     flock(lockFd, LOCK_UN);
                     close(lockFd);

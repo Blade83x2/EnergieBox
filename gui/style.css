@@ -1,161 +1,232 @@
-/* Allgemeine Schrift */
-* {
-  font-family: 'Liberation Sans', sans-serif;
+/* =========================
+   GLOBAL
+========================= */
+
+/* Kompletten Hintergrund abdunkeln */
+
+window,
+notebook,
+notebook stack,
+notebook > stack,
+frame,
+grid,
+box,
+scrolledwindow,
+viewport {
+    background: #121212;
 }
 
-/* Notebook Tabs */
+/* =========================
+   NOTEBOOK TABS
+========================= */
+
+
+drawingarea {
+    background-color: #121212;
+}
+
+
+notebook {
+
+    border: none;
+    box-shadow: none;
+}
+
+notebook stack {
+    border: none;
+    box-shadow: none;
+    border-top: none;
+}
+
+frame {
+
+    border: none;
+}
+
+
+
+
+
+
+notebook header {
+    background: #121212;
+    border: none;
+    box-shadow: none;
+}
+
+notebook header.top {
+    border-bottom: none;
+}
+
 notebook tab {
-  background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
-  border: 1px solid #c0c0c0;
-  border-radius: 8px 8px 0 0;
-  padding: 8px 16px;
-  margin: 2px;
-  font-size: 14pt;
-  font-weight: bold;
+    border: none;
+    box-shadow: none;
+    background: #222;
+    color: #bbb;
+    border-radius: 8px 8px 0 0;
+    padding: 8px 14px;
 }
 
 notebook tab:checked {
-  background: linear-gradient(to bottom, #4a90e2, #357abd);
-  color: white;
+    background: #2d2d2d;
+    color: #ffffff;
 }
 
-/* Relais-Buttons mit runden Ecken */
-.relais-button {
-  font-family: Arial, sans-serif;
-  font-size: 12pt;
-  font-weight: bold;
-  min-height: 40px;
-  border-radius: 12px;
-  color: #000000;
-  transition: all 0.2s ease;
-}
+/* =========================
+   STATUS BAR
+========================= */
 
-/* Aktive/Inaktive Relais-Farben */
-.relais-active {
-  background: linear-gradient(to right, rgba(0,255,0,0.15), rgba(0,100,0,0.1));
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
-}
-
-.relais-inactive {
-  background: linear-gradient(to right, rgba(255,0,0,0.15), rgba(100,0,0,0.1));
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
-}
-
-/* Box für Schaltflächen */
-.schalt-boxen {
-  background: linear-gradient(to right, #EBEBEB, #DEEBEB);
-  border-radius: 12px;
-  padding: 10px;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.4);
-}
-
-/* Willkommensbox */
-.welcome-box {
-  background: linear-gradient(to right, #EBEBEB, #DEEBEB);
-  border-radius: 12px;
-  padding: 10px;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.4);
-}
-
-/* Willkommensnachricht */
-.welcome-title {
-  font-size: 24pt;
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-.welcome-subtitle {
-  font-size: 16pt;
-  font-weight: bold;
-  color: #555;
-}
-
-/* Daten-Tabellen */
-.data-table {
-  background: linear-gradient(to right, #EBEBEB, #DEEBEB);
-  border-radius: 12px;
-  padding: 10px;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
-}
-
-.data-title {
-  font-size: 18pt;
-  font-weight: bold;
-  color: #495057;
-}
-
-.data-label {
-  font-size: 14pt;
-  color: #6c757d;
-}
-
-.data-value {
-  font-size: 14pt;
-  font-weight: bold;
-}
-
-.data-value-red {
-  color: #ff0000;
-}
-.data-value-orange {
-  color: #FF7F50;
-}
-.data-value-green {
-  color: #01520e;
-}
-
-
-/* Status-Leiste */
 .status-bar {
-  background: linear-gradient(to right, #2c3e50, #34495e);
-  color: white;
-  padding: 8px 15px;
-  border-top: 2px solid #000;
+    background: #1a1a1a;
+    border-top: 1px solid #333;
+    padding: 8px;
 }
 
 .status-text {
-  font-size: 12pt;
-  font-weight: bold;
+    color: #cfcfcf;
+    font-size: 14px;
 }
 
-/* Bilddarstellung */
-.logo {
-  margin-left: 10px;
+/* =========================
+   WELCOME BOX
+========================= */
+
+.welcome-box {
+    background: #1d1d1d;
+    border-radius: 12px;
+    padding: 12px;
 }
 
-/* Batterie Progressbar */
-.soc-bar {
-  border: 0px;
-}
-.soc-bar progress {
-  min-height: 0px;
+.welcome-title {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.soc-bar-low {
-  
+.welcome-subtitle {
+    color: #9e9e9e;
+    font-size: 14px;
 }
+
+/* =========================
+   DATA TABLE
+========================= */
+
+.data-table {
+    background: #1d1d1d;
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.data-title {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.data-label {
+    color: #bdbdbd;
+    font-size: 15px;
+}
+
+.data-value {
+    color: #f5f5f5;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.data-value-green {
+    color: #4caf50;
+}
+
+.data-value-orange {
+    color: #ff9800;
+}
+
+.data-value-red {
+    color: #f44336;
+}
+
+/* =========================
+   RELAIS BUTTONS
+========================= */
+
+.relais-button {
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px;
+    border: none;
+}
+
+.relais-active {
+    background: #2e7d32;
+    color: white;
+}
+
+.relais-active:hover {
+    background: #388e3c;
+}
+
+.relais-inactive {
+    background: #424242;
+    color: #e0e0e0;
+}
+
+.relais-inactive:hover {
+    background: #555;
+}
+
+/* =========================
+   SOC PROGRESSBAR
+========================= */
+
+progressbar trough {
+    background: #2a2a2a;
+    border-radius: 10px;
+    min-height: 14px;
+}
+
+progressbar progress {
+    border-radius: 10px;
+}
+
 .soc-bar-low progress {
-  background: #ff0000;
-  min-height: 5px;
+    background: #f44336;
 }
-.soc-bar-middle {
-  
-}
+
 .soc-bar-middle progress {
-  background: #FF7F50;
-  min-height: 5px;
+    background: #ff9800;
 }
-.soc-bar-high {
-  
-}
+
 .soc-bar-high progress {
-  background: #01520e;
-  min-height: 5px;
+    background: #4caf50;
 }
 
+/* =========================
+   SCROLLBAR
+========================= */
 
+scrollbar {
+    background: #1e1e1e;
+}
 
+scrollbar slider {
+    background: #555;
+    border-radius: 20px;
+    min-width: 10px;
+    min-height: 10px;
+}
 
+scrollbar slider:hover {
+    background: #777;
+}
 
+/* =========================
+   TERMINAL
+========================= */
 
-
+vte-terminal {
+    background: #000000;
+    color: #d0d0d0;
+}

@@ -198,7 +198,7 @@ int getRestPower(void* config) {
 
 // Ermittelt den Ladezustand der Batterie (wird aus Datenbank per Preparet Statement gelesen)
 int get_battery_percentage(MYSQL* conn) {
-    MYSQL_STMT* stmt = db_prepare(conn, "SELECT batt_soc FROM messwerte WHERE id = ?");
+    MYSQL_STMT* stmt = db_prepare(conn, "SELECT batt_soc FROM mppt_trace WHERE id = ?");
     if (!stmt) {
         fprintf(stderr, "Prepare Statement Fehler");
         return -1;
@@ -207,7 +207,7 @@ int get_battery_percentage(MYSQL* conn) {
     int ladezustand;
     db_result_set_int(r, 0, &ladezustand);
     DBParams* p = db_params_create(1);
-    int max_id = db_get_max_id(conn, "messwerte");
+    int max_id = db_get_max_id(conn, "mppt_trace");
     db_params_set_int(p, 0, max_id);
     db_stmt_bind(stmt, p);
     db_stmt_bind_result(stmt, r);
@@ -241,7 +241,7 @@ int main(int argc, char** argv) {
     // Datenbank Setup
     DBConfig mysqlconfig = {0};
     if (!load_db_config(config.system.mysqlCfgPath, &mysqlconfig)) {
-        fprintf(stderr, "mysql_energiebox.cfg konnte nicht geladen werden");
+        fprintf(stderr, "%s konnte nicht geladen werden", config.system.mysqlCfgPath);
         return -1;
     }
     MYSQL* conn = db_connect(&mysqlconfig);

@@ -109,7 +109,7 @@ void insertSchaltung230V(MYSQL *conn, int relais, char *zustand) {
 
 void insertSchaltunggrid(MYSQL *conn, char *zustand) {
     char query[256];
-    snprintf(query, sizeof(query), "INSERT INTO grid_loads (action) VALUES ('%s')", zustand);
+    snprintf(query, sizeof(query), "INSERT INTO schaltungen_grid (zustand) VALUES ('%s')", zustand);
     if (mysql_query(conn, query)) {
         fprintf(stderr, "MySQL Fehler: %s\n", mysql_error(conn));
         FILE *fp = fopen("/Energiebox/error.log", "a");
@@ -269,15 +269,16 @@ int main(int argc, char **argv) {
             fclose(fp);
             printf("grid PID gefunden: %d\n", pid);
             if (kill(pid, SIGTERM) == 0) {
-                printf("Prozess beendet, PID File löschen und auf stop setzten in Datenbank\n");
-                sprintf(command, "rm -f %s", PIDFilePath);
-                system(command);
-                sprintf(command, "rm -f %s", config.system.lockFilePath);
-                system(command);
-                insertSchaltunggrid(conngrid, "stop");
+                printf("Prozess beendet\n");
             } else {
-                perror("kill");
+                printf("Kein Zugriff auf Prozess\n");
             }
+            printf("PID File löschen und auf stop setzten in Datenbank\n");
+            sprintf(command, "rm -f %s", PIDFilePath);
+            system(command);
+            sprintf(command, "rm -f %s", config.system.lockFilePath);
+            system(command);
+            insertSchaltunggrid(conngrid, "aus");
         }
     }
 

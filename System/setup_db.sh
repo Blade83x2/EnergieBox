@@ -91,9 +91,9 @@ CREATE DATABASE energiebox;
 GRANT ALL PRIVILEGES ON energiebox.* TO '$ENERGIEBOX_USER'@'localhost';
 FLUSH PRIVILEGES;
 USE energiebox;
-CREATE TABLE messwerte (
+CREATE TABLE mppt_trace (
  id int(10) unsigned NOT NULL AUTO_INCREMENT,
- timestamp int(10) unsigned NOT NULL,
+ timestamp INT UNSIGNED NOT NULL DEFAULT (UNIX_TIMESTAMP()),
  pv_volt float unsigned DEFAULT NULL,
  pv_ampere float unsigned DEFAULT NULL,
  pv_power float unsigned DEFAULT NULL,
@@ -124,9 +124,9 @@ CREATE TABLE schaltungen_230v (
     CHECK (relais BETWEEN 1 AND 16)
 );
 
-CREATE TABLE grid_loads (
+CREATE TABLE schaltungen_grid (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    action ENUM('start', 'stop') NOT NULL,
+    zustand ENUM('an', 'aus') NOT NULL,
     timestamp INT UNSIGNED NOT NULL DEFAULT (UNIX_TIMESTAMP()),
     PRIMARY KEY (id)
 );

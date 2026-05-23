@@ -23,11 +23,11 @@ VERSION_FILE  = .build_version
 BUILD_DATE    := $(shell date +%Y-%m-%d)
 
 # Falls Datei nicht existiert -> initialisieren
-$(shell [ -f $(VERSION_FILE) ] || echo "1.00" > $(VERSION_FILE))
+$(shell [ -f $(VERSION_FILE) ] || echo "1.000" > $(VERSION_FILE))
 
 # Versionsnummer erhöhen
 OLD_VERSION := $(shell cat $(VERSION_FILE))
-NEW_VERSION := $(shell awk "BEGIN { printf \"%.2f\", $(OLD_VERSION) + 0.01 }")
+NEW_VERSION := $(shell awk "BEGIN { printf \"%.3f\", $(OLD_VERSION) + 0.001 }")
 $(shell echo "$(NEW_VERSION)" > $(VERSION_FILE))
 BUILD_VERSION := $(shell cat $(VERSION_FILE))
 
